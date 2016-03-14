@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7701" systemVersion="14E46" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+ <entity name="Shop" syncable="YES">
+         <attribute name="ignored" attributeType="String" syncable="YES"/>
+         <attribute name="name" attributeType="String" syncable="YES"/>
+         <attribute name="readOnly" attributeType="String" syncable="YES">
+             <userInfo>
+                 <entry key="realmReadOnly" value="return self.name ;"/>
+             </userInfo>
+         </attribute>
+         <relationship name="products" toMany="YES" deletionRule="Nullify" destinationEntity="Product" syncable="YES"/>
+     </entity>
+</model>

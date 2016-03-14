@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7701" systemVersion="14E46" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="DBAnimal" syncable="YES">
+        <attribute name="age" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="animal" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="birthDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="vaccinated" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="weight" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <relationship name="pedigree" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="DBPedigree" inverseName="animal" inverseEntity="DBPedigree" syncable="YES"/>
+    </entity>
+    <entity name="DBChien" parentEntity="DBAnimal" syncable="YES">
+        <attribute name="chien" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="DBChienAnimal" isAbstract="YES" parentEntity="DBChien" syncable="YES">
+        <attribute name="chienAnimal" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="pedigreeChienAnimal" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DBPedigreeChienAnimal" inverseName="chienAnimal" inverseEntity="DBPedigreeChienAnimal" syncable="YES"/>
+    </entity>
+    <entity name="DBLabrador" parentEntity="DBChien" syncable="YES">
+        <attribute name="labrador" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="DBPedigree" syncable="YES">
+        <relationship name="animal" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="DBAnimal" inverseName="pedigree" inverseEntity="DBAnimal" syncable="YES"/>
+    </entity>
+    <entity name="DBPedigreeChienAnimal" syncable="YES">
+        <relationship name="chienAnimal" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DBChienAnimal" inverseName="pedigreeChienAnimal" inverseEntity="DBChienAnimal" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="DBAnimal" positionX="-63" positionY="-18" width="128" height="133"/>
+        <element name="DBChien" positionX="-63" positionY="81" width="128" height="58"/>
+        <element name="DBChienAnimal" positionX="81" positionY="146" width="128" height="73"/>
+        <element name="DBLabrador" positionX="-74" positionY="225" width="128" height="58"/>
+        <element name="DBLabradorAnimal" positionX="135" positionY="270" width="128" height="58"/>
+        <element name="DBPedigree" positionX="207" positionY="-81" width="128" height="58"/>
+        <element name="DBPedigreeChienAnimal" positionX="295" positionY="99" width="128" height="58"/>
+    </elements>
+</model>

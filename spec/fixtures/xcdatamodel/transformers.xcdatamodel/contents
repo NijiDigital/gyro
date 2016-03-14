@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7701" systemVersion="14E46" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="RLMShop" syncable="YES">
+        <attribute name="attrDecimal" attributeType="Decimal" defaultValueString="0.0" syncable="YES">
+            <userInfo>
+                <entry key="transformer" value="MPDecimalTransformer"/>
+            </userInfo>
+        </attribute>
+        <attribute name="attrDouble" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="attrFloat" attributeType="Float" defaultValueString="0.0" syncable="YES">
+            <userInfo>
+                <entry key="transformer" value="MPDecimalTransformer"/>
+            </userInfo>
+        </attribute>
+        <attribute name="attrInteger16" attributeType="Integer 16" defaultValueString="0" syncable="YES">
+            <userInfo>
+                <entry key="transformer" value="MPIntegerTransformer"/>
+            </userInfo>
+        </attribute>
+        <attribute name="attrInteger32" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="attrInteger64" attributeType="Integer 64" defaultValueString="0" syncable="YES">
+            <userInfo>
+                <entry key="transformer" value="MPIntegerTransformer"/>
+            </userInfo>
+        </attribute>
+    </entity>
+    <elements>
+        <element name="RLMShop" positionX="160" positionY="192" width="128" height="135"/>
+    </elements>
+</model>
