@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9525" systemVersion="15C50" minimumToolsVersion="Xcode 4.3">
+    <entity name="RLMOwner" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="shop" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RLMShop" inverseName="owner" inverseEntity="RLMShop" syncable="YES">
+            <userInfo>
+                <entry key="realmIgnored" value="value"/>
+            </userInfo>
+        </relationship>
+    </entity>
+    <entity name="RLMProduct" syncable="YES">
+        <relationship name="shop" maxCount="1" deletionRule="Nullify" destinationEntity="RLMShop" inverseName="products" inverseEntity="RLMShop" syncable="YES"/>
+    </entity>
+    <entity name="RLMShop" syncable="YES">
+        <attribute name="ignored" attributeType="String" syncable="YES">
+            <userInfo>
+                <entry key="realmIgnored" value="value"/>
+            </userInfo>
+        </attribute>
+        <attribute name="name" attributeType="String" syncable="YES"/>
+        <attribute name="readOnly" attributeType="String" syncable="YES">
+            <userInfo>
+                <entry key="realmReadOnly" value="return self.name;"/>
+            </userInfo>
+        </attribute>
+        <relationship name="owner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RLMOwner" inverseName="shop" inverseEntity="RLMOwner" syncable="YES"/>
+        <relationship name="products" toMany="YES" deletionRule="Nullify" destinationEntity="RLMProduct" inverseName="shop" inverseEntity="RLMProduct" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="RLMProduct" positionX="216" positionY="279" width="128" height="60"/>
+        <element name="RLMShop" positionX="54" positionY="144" width="128" height="120"/>
+        <element name="RLMOwner" positionX="135" positionY="225" width="128" height="75"/>
+    </elements>
+</model>

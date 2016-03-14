@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7701" systemVersion="14E46" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="RLMShop" syncable="YES">
+        <attribute name="name" attributeType="String" syncable="YES"/>
+        <attribute name="type" attributeType="Integer 16" defaultValueString="0" syncable="YES">
+            <userInfo>
+                <entry key="enumType" value="RLMType"/>
+                <entry key="enumValues" value="RLMTypeOne,RLMTypeTwo,RLMTypeThree"/>
+            </userInfo>
+        </attribute>
+    </entity>
+    <elements>
+        <element name="RLMShop" positionX="160" positionY="192" width="128" height="75"/>
+    </elements>
+</model>

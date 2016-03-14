@@ -1,0 +1,81 @@
+module DBGenerator
+  module XCDataModel
+    module Parser
+
+      class Attribute
+
+        attr_accessor :entity_name, :name, :type, :optional, :indexed, :default
+        attr_accessor :realm_ignored, :realm_read_only, :enum_type, :enum_values
+        attr_accessor :json_key_path, :json_values, :transformer, :comment
+
+        alias_method :optional?, :optional
+        alias_method :indexed?, :indexed
+        alias_method :realm_ignored?, :realm_ignored
+
+        def initialize (attribute_xml, entity_name)
+          @entity_name = entity_name
+          @name = attribute_xml.xpath('@name').to_s
+          @optional = attribute_xml.xpath('@optional').to_s == 'YES' ? true : false
+          @indexed = attribute_xml.xpath('@indexed').to_s == 'YES' ? true : false
+          @default = attribute_xml.xpath('@defaultValueString').to_s
+          @type = attribute_xml.xpath('@attributeType').to_s.downcase.gsub(' ', '_').to_sym
+          @realm_ignored = attribute_xml.xpath(USERINFO_VALUE%['realmIgnored']).to_s.empty? ? false : true
+          @realm_read_only = attribute_xml.xpath(USERINFO_VALUE%['realmReadOnly']).to_s
+          @enum_type = attribute_xml.xpath(USERINFO_VALUE%['enumType']).to_s
+          @enum_values = attribute_xml.xpath(USERINFO_VALUE%['enumValues']).to_s
+          @json_key_path = attribute_xml.xpath(USERINFO_VALUE%['JSONKeyPath']).to_s
+          @json_values = attribute_xml.xpath(USERINFO_VALUE%['JSONValues']).to_s
+          @transformer = attribute_xml.xpath(USERINFO_VALUE%['transformer']).to_s.strip
+          @comment = attribute_xml.xpath(USERINFO_VALUE%['comment']).to_s
+          search_for_error
+        end
+
+        def enum?
+          !@enum_type.empty?
+        end
+
+        def read_only?
+          !@realm_read_only.empty?
+        end
+
+        def has_default?
+          !@default.empty?
+        end
+
+        def to_s
+          "\tAttribute => name=#{@name} | type=#{@type} | optional=#{@optional} | default=#{@default} | indexed=#{@indexed}\n"
+        end
+
+        def is_decimal?
+          @type == :decimal or @type == :double or @type == :float
+        end
+
+        def is_integer?
+          @type == :integer_16 or @type == :integer_32 or @type == :integer_64
+        end
+
+        def is_number?
+          is_decimal? or is_integer?
+        end
+
+        def need_transformer?
+          !@enum_type.empty? or @type == :boolean or !@transformer.empty?
+        end
+
+        private ################################################################
+
+        def search_for_error
+          Raise::error("The attribute \"%s\" from \"%s\" has no type - please fix it"%[@name, @entity_name]) if @type == :undefined || @type.empty?
+          Raise::error("The attribute \"%s\" from \"%s\" is enum with incorrect type (not Integer) - please fix it"%[@name, @entity_name]) if !@enum_type.empty? and !@enum_values.empty? and !is_integer?
+          if !@json_key_path.empty? and !enum_values.empty?
+            enum_values = @enum_values.split(',')
+            json_values = @json_values.split(',')
+            Raise::error("The attribute \"%s\" from \"%s\" is wrongly annotated enum - please fix it"%[@name, @entity_name]) if enum_values.size != json_values.size
+          end
+        end
+
+      end
+
+    end
+  end
+end
