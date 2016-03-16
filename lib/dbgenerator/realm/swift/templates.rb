@@ -16,7 +16,7 @@ module DBGenerator
 
         # CLASS
         ARRAY_TEMPLATE ='%s, '
-        CLASS_TEMPLATE = 'class %s: Object {'
+        CLASS_TEMPLATE = 'final class %s: Object {'
         PROPERTY_DEFAULT_TEMPLATE = 'dynamic var %s: %s = %s'
         PROPERTY_OBJECT_TEMPLATE = 'dynamic var %s: %s?'
         PROPERTY_LIST_TEMPLATE = 'let %s = List<%s>()'
