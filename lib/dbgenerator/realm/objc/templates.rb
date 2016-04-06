@@ -73,9 +73,9 @@ module DBGenerator
         JSON_TRANSFORMER_DEF = '+ (NSValueTransformer *)%sJSONTransformer'
         JSON_CATEGORY_IMPLEMENTATION = '@implementation %s (JSON)'
         JSON_CATEGORY_INTERFACE = '@interface %s (JSON)'
-        TRANSFORMER_BOOL_JSON = ['@"null"', '[NSNull null]', '@"false"', '@"true"', '@(NO)', '@(YES)']
-        TRANSFORMER_BOOL_MODEL = %w(NO NO NO YES NO YES)
-        TRANSFORMER_ENUM_JSON = ['@"null"', '[NSNull null]', '@""']
+        TRANSFORMER_BOOL_JSON = ['@"null"', '[NSNull null]', '@"<null>"', '@"false"', '@"true"', '@(NO)', '@(YES)']
+        TRANSFORMER_BOOL_MODEL = %w(NO NO NO NO YES NO YES)
+        TRANSFORMER_ENUM_JSON = ['@"null"', '[NSNull null]', '@"<null>"', '@""']
         TRANSFORMER = 'return [[%s alloc] init];'
 
       end

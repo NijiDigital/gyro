@@ -122,6 +122,7 @@ module DBGenerator
                     default = enums[attribute.default.to_i]
                   end
                   model_values = [default, default, default] + enums
+                  model_values = [default, default, default, default] + enums
                 end
                 json_transformer_string << format_json_transformers(json_values, model_values)
 
