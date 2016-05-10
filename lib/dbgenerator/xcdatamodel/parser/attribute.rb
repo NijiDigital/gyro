@@ -58,6 +58,10 @@ module DBGenerator
           is_decimal? or is_integer?
         end
 
+        def is_bool?
+          @type == :boolean
+        end
+
         def need_transformer?
           !@enum_type.empty? or @type == :boolean or !@transformer.empty?
         end

@@ -121,7 +121,7 @@ module DBGenerator
         def write_optional_attribute(attribute)
           optional_string = String.new
           type = convert_type(attribute.type)
-          if attribute.is_number?
+          if attribute.is_number? or attribute.is_bool?
             optional_string << '    ' + PROPERTY_OPTIONAL_NUMBER_TEMPLATE%[attribute.name, type]
           else
             optional_string << '    ' + PROPERTY_OPTIONAL_NON_NUMBER_TEMPLATE%[attribute.name, type]
