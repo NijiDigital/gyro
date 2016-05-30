@@ -9,6 +9,7 @@ module DBGenerator
         # IMPORTS
         IMPORT_REALM = 'import RealmSwift'
         SWIFT_FILE_TEMPLATE = '%s.swift'
+        IMPORT_OBJECT_MAPPER = 'import ObjectMapper'
 
         # ENUM
         ENUM_STRING_DEF_TEMPLATE = 'enum %s: String {'
@@ -26,6 +27,11 @@ module DBGenerator
         PROPERTY_MANY_INVERSE_TEMPLATE = 'return linkingObjects(%s.self, forProperty: "%s")'
         PROPERTY_OPTIONAL_NON_NUMBER_TEMPLATE = 'dynamic var %s: %s? = nil'
         PROPERTY_OPTIONAL_NUMBER_TEMPLATE = 'let %s = RealmOptional<%s>()'
+
+        # EXTENSION
+        EXTENSION_TEMPLATE = 'extension %s: %s {'
+        EXTENSION_NAME = '%s+ObjectMapper'
+        SOURCE_TEMPLATE = '%s.swift'
 
         # COMMENTS
         CLASS_COMMENT_TEMPLATE = '/**\n * %s\n */'

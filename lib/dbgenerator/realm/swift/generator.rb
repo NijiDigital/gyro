@@ -5,6 +5,7 @@ require File.expand_path('../../xcdatamodel/parser/relationship', File.dirname(_
 require File.expand_path('converter', File.dirname(__FILE__))
 require File.expand_path('enum_generator', File.dirname(__FILE__))
 require File.expand_path('templates', File.dirname(__FILE__))
+require File.expand_path('object_mapper_generator', File.dirname(__FILE__))
 
 module DBGenerator
   module Realm
@@ -18,16 +19,18 @@ module DBGenerator
         include Converter
         include EnumGenerator
         include Templates
+        include ObjectMapperGenerator
 
         # PUBLIC METHODS #######################################################
 
-        def initialize(path, xcdatamodel)
+        def initialize(path, xcdatamodel, json = false)
           puts "\n"
           Log::title('Swift Realm')
           xcdatamodel.entities.each do |_, entity|
             unless entity.abstract?
               Log::success("Generating entity #{entity.name}...")
               generate_class(path, entity)
+              generate_object_mapper_categories(path, xcdatamodel) if json
             end
           end
         end

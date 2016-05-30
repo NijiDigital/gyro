@@ -89,7 +89,7 @@ else
   if Dir.exist?(options[:ios_dir])
     xcdatamodel = DBGenerator::XCDataModel::Parser::XCDataModel.new(options[:model])
     if options[:ios_swift]
-      DBGenerator::Realm::Swift::Generator.new(options[:ios_dir], xcdatamodel)
+      DBGenerator::Realm::Swift::Generator.new(options[:ios_dir], xcdatamodel, options[:ios_json])
     else
       DBGenerator::Realm::ObjC::Generator.new(options[:ios_dir], xcdatamodel, options[:ios_json], options[:ios_framework], options[:ios_nsnumber])
     end
