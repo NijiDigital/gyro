@@ -76,7 +76,11 @@ module DBGenerator
           relationships << "\n    // MARK: Relationships\n"
           entity.relationships.each do |_, relationship|
             relationKey = relationship.json_key_path.empty? ? relationship.name : relationship.json_key_path
-            relationships << "    self." + relationship.name + " <- (map[" + relationKey.add_quotes + "], ListTransform<" + relationship.inverse_type + ">())\n"
+            if relationship.type == :to_many
+              relationships << "    self." + relationship.name + " <- (map[" + relationKey.add_quotes + "], ListTransform<" + relationship.inverse_type + ">())\n"
+            else 
+              relationships << "    self." + relationship.name + " <- map[" + relationKey.add_quotes + "]\n"
+            end
           end
           relationships
         end
