@@ -21,12 +21,14 @@ module DBGenerator
         PROPERTY_DEFAULT_TEMPLATE = 'dynamic var %s: %s = %s'
         PROPERTY_OBJECT_TEMPLATE = 'dynamic var %s: %s?'
         PROPERTY_LIST_TEMPLATE = 'let %s = List<%s>()'
+        PROPERTY_LIST_VAR_TEMPLATE = 'var %s = List<%s>()'
         PROPERTY_PRIVATE_ENUM_TEMPLATE = 'private dynamic var %s: String?'
         PROPERTY_COMPUTED_TEMPLATE = 'var %s: %s {'
         PROPERTY_ONE_INVERSE_TEMPLATE = 'return linkingObjects(%s.self, forProperty: "%s").first!'
         PROPERTY_MANY_INVERSE_TEMPLATE = 'return linkingObjects(%s.self, forProperty: "%s")'
         PROPERTY_OPTIONAL_NON_NUMBER_TEMPLATE = 'dynamic var %s: %s? = nil'
         PROPERTY_OPTIONAL_NUMBER_TEMPLATE = 'let %s = RealmOptional<%s>()'
+        PROPERTY_OPTIONAL_NUMBER_VAR_TEMPLATE = 'var %s = RealmOptional<%s>()'
 
         # EXTENSION
         EXTENSION_TEMPLATE = 'extension %s: %s {'

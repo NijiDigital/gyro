@@ -25,6 +25,7 @@ module DBGenerator
 
         def initialize(path, xcdatamodel, json = false)
           puts "\n"
+          @has_json = json
           Log::title('Swift Realm')
           xcdatamodel.entities.each do |_, entity|
             unless entity.abstract?
@@ -93,7 +94,11 @@ module DBGenerator
               name = relationship.name
               type = relationship.inverse_type.delete_objc_prefix
               if is_list
-                attributes_string << '    ' + PROPERTY_LIST_TEMPLATE%[name, type] + "\n"
+                if @has_json
+                  attributes_string << '    ' + PROPERTY_LIST_VAR_TEMPLATE%[name, type] + "\n"
+                else
+                  attributes_string << '    ' + PROPERTY_LIST_TEMPLATE%[name, type] + "\n"
+                end
               else
                 attributes_string << '    ' + PROPERTY_OBJECT_TEMPLATE%[name, type] + "\n"
               end
@@ -125,7 +130,12 @@ module DBGenerator
           optional_string = String.new
           type = convert_type(attribute.type)
           if attribute.is_number? or attribute.is_bool?
-            optional_string << '    ' + PROPERTY_OPTIONAL_NUMBER_TEMPLATE%[attribute.name, type]
+            if @has_json
+              optional_string << '    ' + PROPERTY_OPTIONAL_NUMBER_VAR_TEMPLATE%[attribute.name, type]
+            else
+              optional_string << '    ' + PROPERTY_OPTIONAL_NUMBER_TEMPLATE%[attribute.name, type]
+            end
+            
           else
             optional_string << '    ' + PROPERTY_OPTIONAL_NON_NUMBER_TEMPLATE%[attribute.name, type]
           end
