@@ -66,7 +66,12 @@ module DBGenerator
           attributes << "\n    // MARK: Attributes\n"
           entity.attributes.each do |_, attribute|
             attrKey = attribute.json_key_path.empty? ? attribute.name : attribute.json_key_path
-            attributes << "    self." + attribute.name + " <- map[" + attrKey.add_quotes + "]\n"
+            if attribute.type == :date
+              attributes << "    self." + attribute.name + " <- (map[" + attrKey.add_quotes + "], ISO8601DateTransform())\n"
+            else
+              #TODO: Add other tranformers cases
+              attributes << "    self." + attribute.name + " <- map[" + attrKey.add_quotes + "]\n"
+            end
           end
           attributes
         end
