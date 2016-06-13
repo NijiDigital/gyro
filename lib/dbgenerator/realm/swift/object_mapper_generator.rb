@@ -66,11 +66,21 @@ module DBGenerator
           attributes << "\n    // MARK: Attributes\n"
           entity.attributes.each do |_, attribute|
             attrKey = attribute.json_key_path.empty? ? attribute.name : attribute.json_key_path
-            if attribute.type == :date
-              attributes << "    self." + attribute.name + " <- (map[" + attrKey.add_quotes + "], ISO8601DateTransform())\n"
-            else
-              #TODO: Add other tranformers cases
-              attributes << "    self." + attribute.name + " <- map[" + attrKey.add_quotes + "]\n"
+            case 
+              when attribute.type == :date
+                attributes << "    self." + attribute.name + " <- (map[" + attrKey.add_quotes + "], ISO8601DateTransform())\n"
+              when attribute.type == :integer_16 && attribute.optional
+                attributes << "    self." + attribute.name + " <- (map[" + attrKey.add_quotes + "], RealmOptionalInt16Transform())\n"
+              when attribute.type == :integer_32 && attribute.optional
+                attributes << "    self." + attribute.name + " <- (map[" + attrKey.add_quotes + "], RealmOptionalInt32Transform())\n"
+              when attribute.type == :integer_64 && attribute.optional
+                attributes << "    self." + attribute.name + " <- (map[" + attrKey.add_quotes + "], RealmOptionalInt64Transform())\n"
+              when attribute.type == :float && attribute.optional
+                attributes << "    self." + attribute.name + " <- (map[" + attrKey.add_quotes + "], RealmOptionalFloatTransform())\n"
+              when attribute.type == :double && attribute.optional
+                attributes << "    self." + attribute.name + " <- (map[" + attrKey.add_quotes + "], RealmOptionalDoubleTransform())\n"
+              when 
+                attributes << "    self." + attribute.name + " <- map[" + attrKey.add_quotes + "]\n"
             end
           end
           attributes
