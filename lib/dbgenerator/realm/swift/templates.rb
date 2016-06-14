@@ -32,7 +32,7 @@ module DBGenerator
 
         # EXTENSION
         EXTENSION_TEMPLATE = 'extension %s: %s {'
-        EXTENSION_NAME = '%s+ObjectMapper'
+        EXTENSION_NAME = '%sMapper'
         SOURCE_TEMPLATE = '%s.swift'
 
         # COMMENTS
