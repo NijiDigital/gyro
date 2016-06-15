@@ -69,7 +69,7 @@ module DBGenerator
             case 
               when attribute.type == :date
                 attributes << "    self." + attribute.name + " <- (map[" + attrKey.add_quotes + "], ISO8601DateTransform())\n"
-              when attribute.type == :integer_16 && attribute.optional
+              when attribute.type == :integer_16 && attribute.optional && attribute.enum_type == ""
                 attributes << "    self." + attribute.name + " <- (map[" + attrKey.add_quotes + "], RealmOptionalInt16Transform())\n"
               when attribute.type == :integer_32 && attribute.optional
                 attributes << "    self." + attribute.name + " <- (map[" + attrKey.add_quotes + "], RealmOptionalInt32Transform())\n"

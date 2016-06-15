@@ -144,7 +144,11 @@ module DBGenerator
 
         def write_enum_attribute(attribute)
           enum_string = String.new
-          enum_string << '    ' + PROPERTY_PRIVATE_ENUM_TEMPLATE%[attribute.name] + "\n\n"
+          if @has_json
+            enum_string << '    ' + PROPERTY_ENUM_TEMPLATE%[attribute.name] + "\n\n"
+          else
+            enum_string << '    ' + PROPERTY_PRIVATE_ENUM_TEMPLATE%[attribute.name] + "\n\n"
+          end
           enum_type = attribute.enum_type.delete_objc_prefix
           enum_name = attribute.name+'Enum'
           enum_string << '    ' + PROPERTY_COMPUTED_TEMPLATE%[enum_name, enum_type] + "\n"

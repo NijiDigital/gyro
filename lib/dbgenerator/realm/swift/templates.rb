@@ -23,6 +23,7 @@ module DBGenerator
         PROPERTY_LIST_TEMPLATE = 'let %s = List<%s>()'
         PROPERTY_LIST_VAR_TEMPLATE = 'var %s = List<%s>()'
         PROPERTY_PRIVATE_ENUM_TEMPLATE = 'private dynamic var %s: String?'
+        PROPERTY_ENUM_TEMPLATE = 'dynamic var %s: String?'
         PROPERTY_COMPUTED_TEMPLATE = 'var %s: %s {'
         PROPERTY_ONE_INVERSE_TEMPLATE = 'return linkingObjects(%s.self, forProperty: "%s").first!'
         PROPERTY_MANY_INVERSE_TEMPLATE = 'return linkingObjects(%s.self, forProperty: "%s")'
