@@ -35,7 +35,7 @@ OptionParser.new do |opts|
   opts.on('-i PATH', '--ios PATH', %q(Specify iOS Realm model classes dir)) do |path|
     options[:ios_dir] = path
   end
-  opts.on('-j', '--json', %q(Additionally generate Realm-JSON categories (see https://github.com/matthewcheok/Realm-JSON for more info))) do
+  opts.on('-j', '--json', %q(Additionally generate Realm-JSON categories (Objective-C) or ObjectMapper artifacts (Swift))) do
     options[:ios_json] = true
   end
   opts.on('-f', '--framework', %q(If you use CocoaPods Frameworks instead of static libraries)) do
@@ -53,7 +53,7 @@ OptionParser.new do |opts|
 end
 
 if options[:model].nil?
-  Log::info("No model provided, trying to find one in the local directory…")
+  Log::info('No model provided, trying to find one in the local directory…')
   options[:model] = File.find_xcdatamodel(dir)
   Log::info("Unable to find any .xcdatamodel in #{dir}") if options[:model].nil?
 end
@@ -89,7 +89,7 @@ else
   if Dir.exist?(options[:ios_dir])
     xcdatamodel = DBGenerator::XCDataModel::Parser::XCDataModel.new(options[:model])
     if options[:ios_swift]
-      DBGenerator::Realm::Swift::Generator.new(options[:ios_dir], xcdatamodel)
+      DBGenerator::Realm::Swift::Generator.new(options[:ios_dir], xcdatamodel, options[:ios_json])
     else
       DBGenerator::Realm::ObjC::Generator.new(options[:ios_dir], xcdatamodel, options[:ios_json], options[:ios_framework], options[:ios_nsnumber])
     end
