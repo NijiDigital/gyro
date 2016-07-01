@@ -2,9 +2,9 @@
 
 import RealmSwift
 
-class Person : Object {
+final class Person: Object {
 
-    enum Relationships : String {
+    enum Relationships: String {
         case Dogs = "dogs"
     }
 

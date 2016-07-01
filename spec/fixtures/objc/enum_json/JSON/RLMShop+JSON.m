@@ -36,6 +36,7 @@
     return [MCJSONValueTransformer valueTransformerWithMappingDictionary:@{
         @"null" : @(RLMTypeOne),
         [NSNull null] : @(RLMTypeOne),
+        @"<null>" : @(RLMTypeOne),
         @"" : @(RLMTypeOne),
         @"json_type_one" : @(RLMTypeOne),
         @"json_type_two" : @(RLMTypeTwo),
@@ -48,6 +49,7 @@
     return [MCJSONValueTransformer valueTransformerWithMappingDictionary:@{
         @"null" : @(RLMType2None),
         [NSNull null] : @(RLMType2None),
+        @"<null>" : @(RLMType2None),
         @"" : @(RLMType2None),
         @"json_type_one" : @(RLMType2One),
         @"json_type_two" : @(RLMType2Two),

@@ -18,7 +18,7 @@ def compare_dirs(generated_files_dir, fixtures_files_dir)
   # puts generated_files
   # generated_files.each { |generated_file|
   #   File.open(generated_file) { |file|
-  #     puts file.read
+  #     puts file.read unless File.directory?(file)
   #   }
   # }
   nb_generated_files = generated_files.count { |file| File.file?(file) }

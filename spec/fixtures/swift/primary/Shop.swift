@@ -2,17 +2,17 @@
 
 import RealmSwift
 
-class Shop : Object {
+final class Shop: Object {
 
-    enum Attributes : String {
+    enum Attributes: String {
         case Name = "name"
     }
 
-    enum Relationships : String {
+    enum Relationships: String {
         case Products = "products"
     }
 
-    dynamic var name = ""
+    dynamic var name: String = ""
     let products = List<Product>()
 
     override static func primaryKey() -> String? {

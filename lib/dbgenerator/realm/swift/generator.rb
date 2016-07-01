@@ -133,9 +133,16 @@ module DBGenerator
           enum_string = String.new
           enum_string << '    ' + PROPERTY_PRIVATE_ENUM_TEMPLATE%[attribute.name] + "\n\n"
           enum_type = attribute.enum_type.delete_objc_prefix
-          enum_name = attribute.name+'Enum'
+          enum_name = attribute.name + 'Enum'
           enum_string << '    ' + PROPERTY_COMPUTED_TEMPLATE%[enum_name, enum_type] + "\n"
-          enum_string << '        ' + "get { return #{enum_type}(rawValue: #{attribute.name}!)! }" + "\n"
+          enum_string << '        ' + 'get {' + "\n"
+          if attribute.optional?
+            enum_string << '            ' + "if let #{attribute.name} = #{attribute.name}, enumValue = #{enum_type}(rawValue: #{attribute.name}) { return enumValue }" + "\n"
+          else
+            enum_string << '            ' + "if let enumValue = #{enum_type}(rawValue: #{attribute.name}) { return enumValue }" + "\n"
+          end
+          enum_string << '            ' + "return #{enum_type}.#{attribute.enum_values[0].delete_objc_prefix}" + "\n"
+          enum_string << '        ' + '}' + "\n"
           enum_string << '        ' + "set { #{attribute.name} = newValue.rawValue }" + "\n"
           enum_string << '    ' + '}' + "\n\n"
         end
@@ -160,7 +167,6 @@ module DBGenerator
               ignored_properties << ARRAY_TEMPLATE%[attribute.name.add_quotes] if attribute.realm_ignored?
             end
             entity.relationships.each do |_, relationship|
-              puts relationship.name
               ignored_properties << ARRAY_TEMPLATE%[relationship.name.add_quotes] if relationship.realm_ignored?
             end
             ignored_properties = ignored_properties[0..ignored_properties.length - 3] # delete last coma
@@ -174,16 +180,13 @@ module DBGenerator
           inverse_properties = String.new
           entity.relationships.each do |_, relationship|
             if relationship.inverse?
-              if relationship.type == :to_many
-                definition = PROPERTY_COMPUTED_TEMPLATE%[relationship.name.delete_inverse_suffix, "[#{relationship.inverse_type.delete_objc_prefix}]"]
-                value = PROPERTY_MANY_INVERSE_TEMPLATE%[relationship.inverse_type.delete_objc_prefix, relationship.inverse_name]
-              else
-                definition = PROPERTY_COMPUTED_TEMPLATE%[relationship.name.delete_inverse_suffix, relationship.inverse_type.delete_objc_prefix]
-                value = PROPERTY_ONE_INVERSE_TEMPLATE%[relationship.inverse_type.delete_objc_prefix, relationship.inverse_name]
-              end
-              inverse_properties << '    ' + definition + "\n"
-              inverse_properties << '        ' + value + "\n"
-              inverse_properties << '    ' + '}' + "\n\n"
+              value = PROPERTY_INVERSE_TEMPLATE%[
+                  relationship.name.delete_inverse_suffix,
+                  relationship.inverse_type.delete_objc_prefix,
+                  relationship.inverse_type.delete_objc_prefix,
+                  relationship.inverse_name
+              ]
+              inverse_properties << '    ' + value + "\n\n"
             end
           end
           inverse_properties

@@ -66,7 +66,7 @@ module DBGenerator
         NUMBER_ACCESSOR_SOURCE_TEMPLATES = "-(%s)%sValue\n{\n    return [self.%s %s];\n}\n-(void)set%sValue:(%s)value\n{\n    self.%s = @(value);\n}"
         INVERSE_DEF_TEMPLATE = '- (%s *)%s'
         INVERSE_MANY_TEMPLATE = 'return [self linkingObjectsOfClass:@"%s" forProperty:@"%s"];'
-        INVERSE_ONE_TEMPLATE =  'return [[self linkingObjectsOfClass:@"%s" forProperty:@"%s"] objectAtIndex:0];'
+        INVERSE_ONE_TEMPLATE = 'return [[self linkingObjectsOfClass:@"%s" forProperty:@"%s"] objectAtIndex:0];'
 
         # JSON_CATEGORY
         JSON_CATEGORY_NAME = '%s+JSON'

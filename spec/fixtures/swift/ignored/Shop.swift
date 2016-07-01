@@ -2,20 +2,20 @@
 
 import RealmSwift
 
-class Shop : Object {
+final class Shop: Object {
 
-    enum Attributes : String {
+    enum Attributes: String {
         case Name = "name"
     }
 
-    enum Relationships : String {
+    enum Relationships: String {
         case Owner = "owner"
         case Products = "products"
     }
 
-    dynamic var ignored = ""
-    dynamic var name = ""
-    dynamic var owner :Owner?
+    dynamic var ignored: String = ""
+    dynamic var name: String = ""
+    dynamic var owner: Owner?
     let products = List<Product>()
 
     // Specify properties to ignore (Realm won't persist these)

@@ -29,7 +29,6 @@ module DBGenerator
             :binary => 'NSData()'
         }
 
-
         def convert_type(type)
           TYPES[type]
         end
@@ -40,12 +39,12 @@ module DBGenerator
           end
           # Do some conversions for some special types
           case [type, value]
-          when [:boolean, 'YES']
-            return 'true'
-          when [:boolean, 'NO']
-            return 'false'
-          else
-            return value
+            when [:boolean, 'YES']
+              return 'true'
+            when [:boolean, 'NO']
+              return 'false'
+            else
+              return value
           end
         end
 

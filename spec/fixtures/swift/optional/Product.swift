@@ -2,16 +2,16 @@
 
 import RealmSwift
 
-class Product : Object {
+final class Product: Object {
 
-    enum Attributes : String {
+    enum Attributes: String {
         case Brand = "brand"
         case Name = "name"
         case Price = "price"
     }
 
-    dynamic var brand :String? = nil
-    dynamic var name = ""
+    dynamic var brand: String? = nil
+    dynamic var name: String = ""
     let price = RealmOptional<Int32>()
 
 }

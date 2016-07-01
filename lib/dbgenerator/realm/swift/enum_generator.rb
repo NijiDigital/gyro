@@ -8,6 +8,7 @@ module DBGenerator
       module EnumGenerator
 
         # INCLUDES #############################################################
+
         include Templates
 
         # PUBLIC METHODS #######################################################
@@ -23,15 +24,14 @@ module DBGenerator
           end
         end
 
-        private #################################################################
+        private ################################################################
 
         def generate_enum(path, enum_name, enum_values, raw_values)
           enum_file = String.new
           enum_file << GENERATED_MESSAGE + "\n\n"
           enum_file << ENUM_STRING_DEF_TEMPLATE%[enum_name] + "\n"
-          enum_values = enum_values.split(',')
-          raw_values = get_raw_values(enum_values, raw_values).split(',')
-          if enum_values.length != 0 and raw_values.length == enum_values.length
+          raw_values = raw_values(enum_values, raw_values)
+          if !enum_values.empty? and raw_values.length == enum_values.length
             (0..enum_values.length - 1).each { |idx|
               enum_value = enum_values[idx].delete_objc_prefix
               raw_value = raw_values[idx]
@@ -42,7 +42,7 @@ module DBGenerator
           end
         end
 
-        def get_raw_values(enum_values, raw_values)
+        def raw_values(enum_values, raw_values)
           if raw_values.empty?
             enum_values.each_with_index { |value, idx|
               value = value.delete_objc_prefix.underscore
@@ -51,6 +51,7 @@ module DBGenerator
           end
           raw_values
         end
+
       end
     end
   end

@@ -2,18 +2,21 @@
 
 import RealmSwift
 
-class Shop : Object {
+final class Shop: Object {
 
-    enum Attributes : String {
+    enum Attributes: String {
         case Name = "name"
         case Type = "type"
     }
 
-    dynamic var name = ""
-    private dynamic var type :String?
+    dynamic var name: String = ""
+    private dynamic var type: String?
 
-    var typeEnum :Type {
-        get { return Type(rawValue: type!)! }
+    var typeEnum: Type {
+        get {
+            if let enumValue = Type(rawValue: type) { return enumValue }
+            return Type.TypeOne
+        }
         set { type = newValue.rawValue }
     }
 

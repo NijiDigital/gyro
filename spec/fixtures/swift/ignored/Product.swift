@@ -2,12 +2,12 @@
 
 import RealmSwift
 
-class Product : Object {
+final class Product: Object {
 
-    enum Relationships : String {
+    enum Relationships: String {
         case Shop = "shop"
     }
 
-    dynamic var shop :Shop?
+    dynamic var shop: Shop?
 
 }

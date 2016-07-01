@@ -2,18 +2,16 @@
 
 import RealmSwift
 
-class Dog : Object {
+final class Dog: Object {
 
-    enum Attributes : String {
+    enum Attributes: String {
         case Age = "age"
         case Name = "name"
     }
 
-    dynamic var age = 0
-    dynamic var name = ""
+    dynamic var age: Int16 = 0
+    dynamic var name: String = ""
 
-    var owner :Person {
-        return linkingObjects(Person.self, forProperty: "dogs").first!
-    }
+    let owner: Person = LinkingObjects(fromType: Person.self, property: "dogs")
 
 }
