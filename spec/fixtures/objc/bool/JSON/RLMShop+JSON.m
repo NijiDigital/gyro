@@ -35,6 +35,7 @@
     return [MCJSONValueTransformer valueTransformerWithMappingDictionary:@{
         @"null" : @(NO),
         [NSNull null] : @(NO),
+        @"<null>" : @(NO),
         @"false" : @(NO),
         @"true" : @(YES),
         @(NO) : @(NO),
@@ -47,6 +48,7 @@
     return [MCJSONValueTransformer valueTransformerWithMappingDictionary:@{
         @"null" : @(NO),
         [NSNull null] : @(NO),
+        @"<null>" : @(NO),
         @"false" : @(NO),
         @"true" : @(YES),
         @(NO) : @(NO),

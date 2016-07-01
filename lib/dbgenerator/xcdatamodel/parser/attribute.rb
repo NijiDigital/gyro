@@ -22,9 +22,9 @@ module DBGenerator
           @realm_ignored = attribute_xml.xpath(USERINFO_VALUE%['realmIgnored']).to_s.empty? ? false : true
           @realm_read_only = attribute_xml.xpath(USERINFO_VALUE%['realmReadOnly']).to_s
           @enum_type = attribute_xml.xpath(USERINFO_VALUE%['enumType']).to_s
-          @enum_values = attribute_xml.xpath(USERINFO_VALUE%['enumValues']).to_s
+          @enum_values = attribute_xml.xpath(USERINFO_VALUE%['enumValues']).to_s.split(',')
           @json_key_path = attribute_xml.xpath(USERINFO_VALUE%['JSONKeyPath']).to_s
-          @json_values = attribute_xml.xpath(USERINFO_VALUE%['JSONValues']).to_s
+          @json_values = attribute_xml.xpath(USERINFO_VALUE%['JSONValues']).to_s.split(',')
           @transformer = attribute_xml.xpath(USERINFO_VALUE%['transformer']).to_s.strip
           @comment = attribute_xml.xpath(USERINFO_VALUE%['comment']).to_s
           search_for_error
@@ -58,6 +58,10 @@ module DBGenerator
           is_decimal? or is_integer?
         end
 
+        def is_bool?
+          @type == :boolean
+        end
+
         def need_transformer?
           !@enum_type.empty? or @type == :boolean or !@transformer.empty?
         end
@@ -67,11 +71,7 @@ module DBGenerator
         def search_for_error
           Raise::error("The attribute \"%s\" from \"%s\" has no type - please fix it"%[@name, @entity_name]) if @type == :undefined || @type.empty?
           Raise::error("The attribute \"%s\" from \"%s\" is enum with incorrect type (not Integer) - please fix it"%[@name, @entity_name]) if !@enum_type.empty? and !@enum_values.empty? and !is_integer?
-          if !@json_key_path.empty? and !enum_values.empty?
-            enum_values = @enum_values.split(',')
-            json_values = @json_values.split(',')
-            Raise::error("The attribute \"%s\" from \"%s\" is wrongly annotated enum - please fix it"%[@name, @entity_name]) if enum_values.size != json_values.size
-          end
+          Raise::error("The attribute \"%s\" from \"%s\" is wrongly annotated enum - please fix it"%[@name, @entity_name]) if !@json_key_path.empty? and !@enum_values.empty? and @enum_values.size != @json_values.size
         end
 
       end

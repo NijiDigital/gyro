@@ -45,7 +45,7 @@ module DBGenerator
           enum_string << ENUM_TYPEDEF_TEMPLATE%[int_type, enum_name] + "\n"
           enum_values = Array.new
           enum_values += %W(#{enum_name}None) if attribute.optional?
-          enum_values += attribute.enum_values.split(',')
+          enum_values += attribute.enum_values
           if enum_values.length != 0
             # First one
             value = enum_values[0]

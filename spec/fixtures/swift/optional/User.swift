@@ -2,19 +2,19 @@
 
 import RealmSwift
 
-class User : Object {
+final class User: Object {
 
-    enum Attributes : String {
+    enum Attributes: String {
         case Birthday = "birthday"
         case Name = "name"
     }
 
-    enum Relationships : String {
+    enum Relationships: String {
         case FidelityCard = "fidelityCard"
     }
 
-    dynamic var birthday = NSDate()
-    dynamic var name = ""
-    dynamic var fidelityCard :FidelityCard?
+    dynamic var birthday: NSDate = NSDate()
+    dynamic var name: String = ""
+    dynamic var fidelityCard: FidelityCard?
 
 }

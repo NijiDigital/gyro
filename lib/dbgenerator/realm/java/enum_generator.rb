@@ -40,8 +40,7 @@ module DBGenerator
           enum_file << PACKAGE_TEMPLATE%[package] + "\n\n"
           enum_file << GENERATED_MESSAGE + "\n\n"
           enum_file << ENUM_TEMPLATE%[enum_name] + "\n\n"
-          enum_values = enum_values.split(',')
-          json_values = get_json_values(enum_values, json_values).split(',')
+          json_values = get_json_values(enum_values, json_values)
           if enum_values.length != 0
             (0..enum_values.length - 1).each { |idx|
               gson_value = json_values[idx]
@@ -89,9 +88,8 @@ module DBGenerator
 
         def get_json_values(enum_values, json_values)
           if json_values.empty?
-            enum_values.each_with_index { |value, idx|
-              value = value.delete_objc_prefix.underscore
-              json_values << (idx != enum_values.size - 1 ? value + ',' : value)
+            enum_values.each { |value|
+              json_values << value.delete_objc_prefix.underscore
             }
           end
           json_values

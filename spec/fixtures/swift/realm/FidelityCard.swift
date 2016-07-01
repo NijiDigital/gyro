@@ -2,19 +2,19 @@
 
 import RealmSwift
 
-class FidelityCard : Object {
+final class FidelityCard: Object {
 
-    enum Attributes : String {
+    enum Attributes: String {
         case Identifier = "identifier"
         case Points = "points"
     }
 
-    enum Relationships : String {
+    enum Relationships: String {
         case User = "user"
     }
 
-    dynamic var identifier = 0
-    dynamic var points = 0
-    dynamic var user :User?
+    dynamic var identifier: Int16 = 0
+    dynamic var points: Int32 = 0
+    dynamic var user: User?
 
 }

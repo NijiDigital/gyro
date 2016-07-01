@@ -66,16 +66,16 @@ module DBGenerator
         NUMBER_ACCESSOR_SOURCE_TEMPLATES = "-(%s)%sValue\n{\n    return [self.%s %s];\n}\n-(void)set%sValue:(%s)value\n{\n    self.%s = @(value);\n}"
         INVERSE_DEF_TEMPLATE = '- (%s *)%s'
         INVERSE_MANY_TEMPLATE = 'return [self linkingObjectsOfClass:@"%s" forProperty:@"%s"];'
-        INVERSE_ONE_TEMPLATE =  'return [[self linkingObjectsOfClass:@"%s" forProperty:@"%s"] objectAtIndex:0];'
+        INVERSE_ONE_TEMPLATE = 'return [[self linkingObjectsOfClass:@"%s" forProperty:@"%s"] objectAtIndex:0];'
 
         # JSON_CATEGORY
         JSON_CATEGORY_NAME = '%s+JSON'
         JSON_TRANSFORMER_DEF = '+ (NSValueTransformer *)%sJSONTransformer'
         JSON_CATEGORY_IMPLEMENTATION = '@implementation %s (JSON)'
         JSON_CATEGORY_INTERFACE = '@interface %s (JSON)'
-        TRANSFORMER_BOOL_JSON = ['@"null"', '[NSNull null]', '@"false"', '@"true"', '@(NO)', '@(YES)']
-        TRANSFORMER_BOOL_MODEL = %w(NO NO NO YES NO YES)
-        TRANSFORMER_ENUM_JSON = ['@"null"', '[NSNull null]', '@""']
+        TRANSFORMER_BOOL_JSON = ['@"null"', '[NSNull null]', '@"<null>"', '@"false"', '@"true"', '@(NO)', '@(YES)']
+        TRANSFORMER_BOOL_MODEL = %w(NO NO NO NO YES NO YES)
+        TRANSFORMER_ENUM_JSON = ['@"null"', '[NSNull null]', '@"<null>"', '@""']
         TRANSFORMER = 'return [[%s alloc] init];'
 
       end

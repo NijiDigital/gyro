@@ -5,6 +5,7 @@ require File.expand_path('../../xcdatamodel/parser/relationship', File.dirname(_
 require File.expand_path('converter', File.dirname(__FILE__))
 require File.expand_path('enum_generator', File.dirname(__FILE__))
 require File.expand_path('templates', File.dirname(__FILE__))
+require File.expand_path('object_mapper_generator', File.dirname(__FILE__))
 
 module DBGenerator
   module Realm
@@ -18,27 +19,29 @@ module DBGenerator
         include Converter
         include EnumGenerator
         include Templates
+        include ObjectMapperGenerator
 
         # PUBLIC METHODS #######################################################
 
-        def initialize(path, xcdatamodel)
+        def initialize(path, xcdatamodel, json = false)
           puts "\n"
           Log::title('Swift Realm')
           xcdatamodel.entities.each do |_, entity|
             unless entity.abstract?
               Log::success("Generating entity #{entity.name}...")
-              generate_class(path, entity)
+              generate_class(path, entity, json)
+              generate_object_mapper_categories(path, xcdatamodel) if json
             end
           end
         end
 
         private ################################################################
 
-        def generate_class(path, entity)
+        def generate_class(path, entity, json)
           class_file = String.new
           entity.name = entity.name.delete_objc_prefix
           class_file << generate_header(entity)
-          class_file << generate_attributes(entity.attributes, entity.relationships)
+          class_file << generate_attributes(entity.attributes, entity.relationships, json)
           class_file << generate_inverse_properties(entity)
           class_file << generate_primary_key(entity)
           class_file << generate_indexed_properties(entity)
@@ -80,9 +83,9 @@ module DBGenerator
           attribute_constants + relationship_constants
         end
 
-        def generate_attributes(attributes, relationships)
+        def generate_attributes(attributes, relationships, json)
           # "NORMAL" ATTRIBUTES
-          attributes_string = write_attributes(attributes)
+          attributes_string = write_attributes(attributes, json)
           # "RELATIONSHIP" ATTRIBUTES
           relationships.each do |_, relationship|
             unless relationship.inverse?
@@ -90,7 +93,11 @@ module DBGenerator
               name = relationship.name
               type = relationship.inverse_type.delete_objc_prefix
               if is_list
-                attributes_string << '    ' + PROPERTY_LIST_TEMPLATE%[name, type] + "\n"
+                if json
+                  attributes_string << '    ' + PROPERTY_LIST_VAR_TEMPLATE%[name, type] + "\n"
+                else
+                  attributes_string << '    ' + PROPERTY_LIST_TEMPLATE%[name, type] + "\n"
+                end
               else
                 attributes_string << '    ' + PROPERTY_OBJECT_TEMPLATE%[name, type] + "\n"
               end
@@ -99,15 +106,15 @@ module DBGenerator
           attributes_string + "\n"
         end
 
-        def write_attributes(attributes)
+        def write_attributes(attributes, json)
           attributes_string = String.new
           attributes.each_with_index do |(_, attribute)|
             unless attribute.read_only?
               if attribute.enum?
-                attributes_string << write_enum_attribute(attribute)
+                attributes_string << write_enum_attribute(attribute, json)
               else
                 if attribute.optional?
-                  attributes_string << write_optional_attribute(attribute) + "\n"
+                  attributes_string << write_optional_attribute(attribute, json) + "\n"
                 else
                   default_value = convert_default(attribute.type, attribute.has_default? ? attribute.default : nil)
                   attributes_string << '    ' + PROPERTY_DEFAULT_TEMPLATE%[attribute.name, convert_type(attribute.type), default_value] + "\n"
@@ -118,24 +125,39 @@ module DBGenerator
           attributes_string
         end
 
-        def write_optional_attribute(attribute)
+        def write_optional_attribute(attribute, json)
           optional_string = String.new
           type = convert_type(attribute.type)
-          if attribute.is_number?
-            optional_string << '    ' + PROPERTY_OPTIONAL_NUMBER_TEMPLATE%[attribute.name, type]
+          if attribute.is_number? or attribute.is_bool?
+            if json
+              optional_string << '    ' + PROPERTY_OPTIONAL_NUMBER_VAR_TEMPLATE%[attribute.name, type]
+            else
+              optional_string << '    ' + PROPERTY_OPTIONAL_NUMBER_TEMPLATE%[attribute.name, type]
+            end
           else
             optional_string << '    ' + PROPERTY_OPTIONAL_NON_NUMBER_TEMPLATE%[attribute.name, type]
           end
           optional_string
         end
 
-        def write_enum_attribute(attribute)
+        def write_enum_attribute(attribute, json)
           enum_string = String.new
-          enum_string << '    ' + PROPERTY_PRIVATE_ENUM_TEMPLATE%[attribute.name] + "\n\n"
+          if json
+            enum_string << '    ' + PROPERTY_ENUM_TEMPLATE%[attribute.name] + "\n\n"
+          else
+            enum_string << '    ' + PROPERTY_PRIVATE_ENUM_TEMPLATE%[attribute.name] + "\n\n"
+          end
           enum_type = attribute.enum_type.delete_objc_prefix
-          enum_name = attribute.name+'Enum'
+          enum_name = attribute.name + 'Enum'
           enum_string << '    ' + PROPERTY_COMPUTED_TEMPLATE%[enum_name, enum_type] + "\n"
-          enum_string << '        ' + "get { return #{enum_type}(rawValue: #{attribute.name}!)! }" + "\n"
+          enum_string << '        ' + 'get {' + "\n"
+          if attribute.optional?
+            enum_string << '            ' + "if let #{attribute.name} = #{attribute.name}, enumValue = #{enum_type}(rawValue: #{attribute.name}) { return enumValue }" + "\n"
+          else
+            enum_string << '            ' + "if let enumValue = #{enum_type}(rawValue: #{attribute.name}) { return enumValue }" + "\n"
+          end
+          enum_string << '            ' + "return #{enum_type}.#{attribute.enum_values[attribute.default.to_i].delete_objc_prefix}" + "\n"
+          enum_string << '        ' + '}' + "\n"
           enum_string << '        ' + "set { #{attribute.name} = newValue.rawValue }" + "\n"
           enum_string << '    ' + '}' + "\n\n"
         end
@@ -160,7 +182,6 @@ module DBGenerator
               ignored_properties << ARRAY_TEMPLATE%[attribute.name.add_quotes] if attribute.realm_ignored?
             end
             entity.relationships.each do |_, relationship|
-              puts relationship.name
               ignored_properties << ARRAY_TEMPLATE%[relationship.name.add_quotes] if relationship.realm_ignored?
             end
             ignored_properties = ignored_properties[0..ignored_properties.length - 3] # delete last coma
@@ -174,16 +195,13 @@ module DBGenerator
           inverse_properties = String.new
           entity.relationships.each do |_, relationship|
             if relationship.inverse?
-              if relationship.type == :to_many
-                definition = PROPERTY_COMPUTED_TEMPLATE%[relationship.name.delete_inverse_suffix, "[#{relationship.inverse_type.delete_objc_prefix}]"]
-                value = PROPERTY_MANY_INVERSE_TEMPLATE%[relationship.inverse_type.delete_objc_prefix, relationship.inverse_name]
-              else
-                definition = PROPERTY_COMPUTED_TEMPLATE%[relationship.name.delete_inverse_suffix, relationship.inverse_type.delete_objc_prefix]
-                value = PROPERTY_ONE_INVERSE_TEMPLATE%[relationship.inverse_type.delete_objc_prefix, relationship.inverse_name]
-              end
-              inverse_properties << '    ' + definition + "\n"
-              inverse_properties << '        ' + value + "\n"
-              inverse_properties << '    ' + '}' + "\n\n"
+              value = PROPERTY_INVERSE_TEMPLATE%[
+                  relationship.name.delete_inverse_suffix,
+                  relationship.inverse_type.delete_objc_prefix,
+                  relationship.inverse_type.delete_objc_prefix,
+                  relationship.inverse_name
+              ]
+              inverse_properties << '    ' + value + "\n\n"
             end
           end
           inverse_properties

@@ -114,14 +114,15 @@ module DBGenerator
                   if attribute.json_values.empty?
                     Raise::error("The attribute \"%s\" from \"%s\" is enum without JSONValues - please fix it"%[attribute.name, attribute.entity_name])
                   end
-                  json_values = TRANSFORMER_ENUM_JSON + attribute.json_values.split(',').map { |enum| '@' + enum.add_quotes }
-                  enums = attribute.enum_values.split(',')
+                  json_values = TRANSFORMER_ENUM_JSON + attribute.json_values.map { |enum| '@' + enum.add_quotes }
+                  enums = attribute.enum_values
                   if attribute.optional?
                     default = attribute.enum_type + 'None'
                   else
                     default = enums[attribute.default.to_i]
                   end
                   model_values = [default, default, default] + enums
+                  model_values = [default, default, default, default] + enums
                 end
                 json_transformer_string << format_json_transformers(json_values, model_values)
 
