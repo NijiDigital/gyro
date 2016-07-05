@@ -12,13 +12,11 @@ final class Shop: Object {
     dynamic var name: String = ""
     private dynamic var type: String?
 
-    var typeEnum: Type {
-        get {
-            if let enumValue = Type(rawValue: type) { return enumValue }
-            return Type.TypeOne
+    func typeEnum() throws -> Type {
+        guard let enumValue = Type(rawValue: type) else {
+            throw NSError(domain: NSRangeException, code: 0, userInfo: [NSLocalizedDescriptionKey: "\(type) is not a a valid Type."])
         }
-        set { type = newValue.rawValue }
+        return enumValue
     }
-
 
 }
