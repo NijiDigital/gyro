@@ -192,20 +192,31 @@ module DBGenerator
         end
 
         def generate_inverse_properties(entity)
-          inverse_properties = String.new
+          inverse_properties = []
           entity.relationships.each do |_, relationship|
             if relationship.inverse?
-              inv_relationship_template = (relationship.type == :to_one) ? PROPERTY_INVERSE_ONE_TEMPLATE : PROPERTY_INVERSE_MANY_TEMPLATE
-              value = inv_relationship_template%[
-                relationship.name.delete_inverse_suffix,
-                relationship.inverse_type.delete_objc_prefix,
-                relationship.inverse_type.delete_objc_prefix,
-                relationship.inverse_name
-              ]
-              inverse_properties << '    ' + value + "\n\n"
+              if relationship.type == :to_many
+                inverse_properties << PROPERTY_INVERSE_MANY_TEMPLATE%[
+                  relationship.name.delete_inverse_suffix,
+                  relationship.inverse_type.delete_objc_prefix,
+                  relationship.inverse_name
+                ]
+              else
+                inverse_properties << 'private ' + PROPERTY_INVERSE_MANY_TEMPLATE%[
+                  relationship.name.delete_inverse_suffix + 'LinkingObjects',
+                  relationship.inverse_type.delete_objc_prefix,
+                  relationship.inverse_name
+                ]
+                inverse_properties << PROPERTY_INVERSE_ONE_TEMPLATE%[
+                  relationship.name.delete_inverse_suffix,
+                  relationship.inverse_type.delete_objc_prefix,
+                  relationship.name.delete_inverse_suffix + 'LinkingObjects'
+                ]
+              end
             end
           end
-          inverse_properties
+          return '' if inverse_properties.empty?
+          inverse_properties.map { |value| "    #{value}\n" }.join + "\n"
         end
 
         def generate_indexed_properties(entity)
