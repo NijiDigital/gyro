@@ -195,6 +195,16 @@ __iOS__
 
 ---
 
+#### Relationships Inverses
+
+En realm, quand on a une RelationShip A -> B et une B -> A, il faut en choisir une qui est la principale (par exemple A -> B) et la relation inverse sera alors calculée. [Pour plus d'infos, voir la doc Realm Swift sur les Inverse Relationships](https://realm.io/docs/swift/latest/#inverse-relationships).
+
+Pour marquer une relationship comme étant la relation inverse (la relation B -> A et non pas la relation principale A -> B), il suffit de suffixer le nom de la relationship par un underscore `_`.
+
+> Cela génèrera alors en Swift le code utilisant `LinkingObjects(fromType: A.self, property: "b")` pour la relation inverse en question.
+
+---
+
 #### Gérer les enum
 
 Certains attributs de type Int peuvent représenter des enum. Pour gérer ce cas, il faut ajouter les deux paires clé-valeur suivantes à **l'attribut** :
