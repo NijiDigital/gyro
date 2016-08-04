@@ -183,11 +183,12 @@ module DBGenerator
           inverse_properties = String.new
           entity.relationships.each do |_, relationship|
             if relationship.inverse?
-              value = PROPERTY_INVERSE_TEMPLATE%[
-                  relationship.name.delete_inverse_suffix,
-                  relationship.inverse_type.delete_objc_prefix,
-                  relationship.inverse_type.delete_objc_prefix,
-                  relationship.inverse_name
+              inv_relationship_template = (relationship.type == :to_one) ? PROPERTY_INVERSE_ONE_TEMPLATE : PROPERTY_INVERSE_MANY_TEMPLATE
+              value = inv_relationship_template%[
+                relationship.name.delete_inverse_suffix,
+                relationship.inverse_type.delete_objc_prefix,
+                relationship.inverse_type.delete_objc_prefix,
+                relationship.inverse_name
               ]
               inverse_properties << '    ' + value + "\n\n"
             end
