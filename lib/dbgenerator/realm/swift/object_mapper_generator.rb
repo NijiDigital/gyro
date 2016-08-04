@@ -90,6 +90,7 @@ module DBGenerator
           relationships = String.new
           relationships << "\n    // MARK: Relationships\n"
           entity.relationships.each do |_, relationship|
+            next if relationship.inverse?
             relationKey = relationship.json_key_path.empty? ? relationship.name : relationship.json_key_path
             if relationship.type == :to_many
               relationships << "    self." + relationship.name + " <- (map[" + relationKey.add_quotes + "], ListTransform<" + relationship.inverse_type + ">())\n"
