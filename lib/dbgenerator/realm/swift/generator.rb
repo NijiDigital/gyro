@@ -46,7 +46,6 @@ module DBGenerator
           class_file << generate_primary_key(entity)
           class_file << generate_indexed_properties(entity)
           class_file << generate_ignored_properties(entity)
-          class_file << generate_func_enums(entity)
           class_file << '}' + "\n"
           File.write_file_with_name(path, SWIFT_FILE_TEMPLATE%[entity.name], class_file)
           generate_enums(path, entity.attributes)
@@ -144,10 +143,23 @@ module DBGenerator
         def write_enum_attribute(attribute, json)
           enum_string = String.new
           if json
-            enum_string << '    ' + PROPERTY_ENUM_TEMPLATE%[attribute.name] + "\n"
+            enum_string << '    ' + PROPERTY_ENUM_TEMPLATE%[attribute.name] + "\n\n"
           else
-            enum_string << '    ' + PROPERTY_PRIVATE_ENUM_TEMPLATE%[attribute.name] + "\n"
+            enum_string << '    ' + PROPERTY_PRIVATE_ENUM_TEMPLATE%[attribute.name] + "\n\n"
           end
+          enum_type = attribute.enum_type.delete_objc_prefix
+          enum_name = attribute.name + 'Enum'
+          enum_string << '    ' + PROPERTY_COMPUTED_TEMPLATE%[enum_name, enum_type] + "\n"
+          enum_string << '        ' + 'get {' + "\n"
+          if attribute.optional?
+            enum_string << '            ' + "if let #{attribute.name} = #{attribute.name}, enumValue = #{enum_type}(rawValue: #{attribute.name}) { return enumValue }" + "\n"
+          else
+            enum_string << '            ' + "if let enumValue = #{enum_type}(rawValue: #{attribute.name}) { return enumValue }" + "\n"
+          end
+          enum_string << '            ' + "return #{enum_type}.#{attribute.enum_values[attribute.default.to_i].delete_objc_prefix}" + "\n"
+          enum_string << '        ' + '}' + "\n"
+          enum_string << '        ' + "set { #{attribute.name} = newValue.rawValue }" + "\n"
+          enum_string << '    ' + '}' + "\n\n"
         end
 
         def generate_primary_key(entity)
@@ -210,34 +222,6 @@ module DBGenerator
             indexed_properties << '}' + "\n\n"
           end
           indexed_properties
-        end
-
-        def generate_func_enums(entity)
-          enum_string = String.new
-          entity.attributes.each do |_, attribute|
-            if attribute.enum?
-              enum_type = attribute.enum_type.delete_objc_prefix
-              enum_name = attribute.name + 'Enum'
-              if attribute.optional?
-                enum_string << '    ' + FUNC_ENUM_TEMPLATE%[enum_name, enum_type] + "? {\n"
-                enum_string << '        ' + "if let #{attribute.name} = #{attribute.name} {\n"
-                enum_string << '            ' + "guard let enumValue = #{enum_type}(rawValue: #{attribute.name}) else {\n"
-                enum_string << '                ' + "throw NSError(domain: NSRangeException, code: 0, userInfo: [NSLocalizedDescriptionKey: \"\\(#{attribute.name}) is not a a valid #{enum_type}.\"])\n"
-                enum_string << '            ' + "}\n"
-                enum_string << '            ' + "return enumValue\n"
-                enum_string << '        ' + "}\n"
-                enum_string << '        ' + "return nil\n"
-              else
-                enum_string << '    ' + FUNC_ENUM_TEMPLATE%[enum_name, enum_type] + " {\n"
-                enum_string << '        ' + "guard let enumValue = #{enum_type}(rawValue: #{attribute.name}) else {\n"
-                enum_string << '            ' + "throw NSError(domain: NSRangeException, code: 0, userInfo: [NSLocalizedDescriptionKey: \"\\(#{attribute.name}) is not a a valid #{enum_type}.\"])\n"
-                enum_string << '        ' + "}\n"
-                enum_string << '        ' + "return enumValue\n"
-              end
-              enum_string << '    ' + "}\n\n"
-            end
-          end
-          enum_string
         end
 
       end
