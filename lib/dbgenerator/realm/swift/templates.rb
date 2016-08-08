@@ -37,7 +37,7 @@ module DBGenerator
         SOURCE_TEMPLATE = '%s.swift'
 
         # COMMENTS
-        CLASS_COMMENT_TEMPLATE = '/**\n * %s\n */'
+        CLASS_COMMENT_TEMPLATE = "/**\n * %s\n */"
         ATTRIBUTE_COMMENT_TEMPLATE = '/** %s */'
 
       end
