@@ -5,6 +5,7 @@
 #pragma mark - Imports
 
 #import "RLMShop+JSON.h"
+#import "CustomDateTransformer.h"
 #import "MPDecimalTransformer.h"
 #import "MPIntegerTransformer.h"
 
@@ -17,6 +18,8 @@
 + (NSDictionary *)JSONInboundMappingDictionary
 {
     return @{
+        @"attrDate" : @"attrDate",
+        @"attrDateCustom" : @"attrDateCustom",
         @"attrDecimal" : @"attrDecimal",
         @"attrDouble" : @"attrDouble",
         @"attrFloat" : @"attrFloat",
@@ -29,6 +32,8 @@
 + (NSDictionary *)JSONOutboundMappingDictionary
 {
     return @{
+        @"attrDate" : @"attrDate",
+        @"attrDateCustom" : @"attrDateCustom",
         @"attrDecimal" : @"attrDecimal",
         @"attrDouble" : @"attrDouble",
         @"attrFloat" : @"attrFloat",
@@ -36,6 +41,16 @@
         @"attrInteger32" : @"attrInteger32",
         @"attrInteger64" : @"attrInteger64"
     };
+}
+
++ (NSValueTransformer *)attrDateJSONTransformer
+{
+    return [[ISO8601DateTransform alloc] init];
+}
+
++ (NSValueTransformer *)attrDateCustomJSONTransformer
+{
+    return [[CustomDateTransformer alloc] init];
 }
 
 + (NSValueTransformer *)attrDecimalJSONTransformer

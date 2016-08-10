@@ -1,30 +1,36 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7701" systemVersion="14E46" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11147.23" systemVersion="15G31" minimumToolsVersion="Xcode 4.3" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
     <entity name="RLMShop" syncable="YES">
+        <attribute name="attrDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="attrDateCustom" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES">
+            <userInfo>
+                <entry key="transformer" value="CustomDateTransformer"/>
+            </userInfo>
+        </attribute>
         <attribute name="attrDecimal" attributeType="Decimal" defaultValueString="0.0" syncable="YES">
             <userInfo>
                 <entry key="transformer" value="MPDecimalTransformer"/>
             </userInfo>
         </attribute>
-        <attribute name="attrDouble" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="attrFloat" attributeType="Float" defaultValueString="0.0" syncable="YES">
+        <attribute name="attrDouble" attributeType="Double" defaultValueString="0.0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="attrFloat" attributeType="Float" defaultValueString="0.0" usesScalarValueType="NO" syncable="YES">
             <userInfo>
                 <entry key="transformer" value="MPDecimalTransformer"/>
             </userInfo>
         </attribute>
-        <attribute name="attrInteger16" attributeType="Integer 16" defaultValueString="0" syncable="YES">
+        <attribute name="attrInteger16" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES">
             <userInfo>
                 <entry key="transformer" value="MPIntegerTransformer"/>
             </userInfo>
         </attribute>
-        <attribute name="attrInteger32" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="attrInteger64" attributeType="Integer 64" defaultValueString="0" syncable="YES">
+        <attribute name="attrInteger32" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="attrInteger64" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO" syncable="YES">
             <userInfo>
                 <entry key="transformer" value="MPIntegerTransformer"/>
             </userInfo>
         </attribute>
     </entity>
     <elements>
-        <element name="RLMShop" positionX="160" positionY="192" width="128" height="135"/>
+        <element name="RLMShop" positionX="160" positionY="192" width="128" height="165"/>
     </elements>
 </model>

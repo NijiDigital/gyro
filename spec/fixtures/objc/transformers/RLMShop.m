@@ -9,6 +9,8 @@
 #pragma mark - Defines & Constants
 
 const struct RLMShopAttributes RLMShopAttributes = {
+    .attrDate = @"attrDate",
+    .attrDateCustom = @"attrDateCustom",
     .attrDecimal = @"attrDecimal",
     .attrDouble = @"attrDouble",
     .attrFloat = @"attrFloat",
