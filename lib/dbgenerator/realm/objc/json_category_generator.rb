@@ -129,8 +129,10 @@ module DBGenerator
                 # delete last coma
                 json_transformer_string = json_transformer_string[0..json_transformer_string.length - 3] + "\n"
                 json_transformer_string << '    ' + '}];' + "\n"
-              elsif !attribute.transformer.empty? # transformer custom
-                json_transformer_string << '    ' + TRANSFORMER%[attribute.transformer] + "\n"
+              else # custom transformer, or a default one
+                transformer = attribute.transformer
+                transformer = 'ISO8601DateTransform' if transformer.empty? && attribute.type == :date # default one for dates if none provided
+                json_transformer_string << '    ' + TRANSFORMER%[transformer] + "\n" unless transformer.empty?
               end
               json_transformer_string << '}' + "\n"
             end

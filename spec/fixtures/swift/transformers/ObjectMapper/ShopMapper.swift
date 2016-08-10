@@ -15,7 +15,8 @@ extension Shop: Mappable {
   func mapping(map: Map) {
 
     // MARK: Attributes
-    self.attrDate <- (map["attrDate"], CustomDateTransformer())
+    self.attrDate <- (map["attrDate"], ISO8601DateTransform())
+    self.attrDateCustom <- (map["attrDateCustom"], CustomDateTransformer())
     self.attrDecimal <- map["attrDecimal"]
     self.attrDouble <- map["attrDouble"]
     self.attrFloat <- map["attrFloat"]

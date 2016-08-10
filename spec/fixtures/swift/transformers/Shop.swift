@@ -6,6 +6,7 @@ final class Shop: Object {
 
     enum Attributes: String {
         case AttrDate = "attrDate"
+        case AttrDateCustom = "attrDateCustom"
         case AttrDecimal = "attrDecimal"
         case AttrDouble = "attrDouble"
         case AttrFloat = "attrFloat"
@@ -15,6 +16,7 @@ final class Shop: Object {
     }
 
     dynamic var attrDate: NSDate? = nil
+    dynamic var attrDateCustom: NSDate? = nil
     dynamic var attrDecimal: Double = 0.0
     dynamic var attrDouble: Double = 0.0
     dynamic var attrFloat: Float = 0.0

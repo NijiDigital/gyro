@@ -10,6 +10,7 @@
 
 const struct RLMShopAttributes RLMShopAttributes = {
     .attrDate = @"attrDate",
+    .attrDateCustom = @"attrDateCustom",
     .attrDecimal = @"attrDecimal",
     .attrDouble = @"attrDouble",
     .attrFloat = @"attrFloat",

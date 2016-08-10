@@ -19,6 +19,7 @@
 {
     return @{
         @"attrDate" : @"attrDate",
+        @"attrDateCustom" : @"attrDateCustom",
         @"attrDecimal" : @"attrDecimal",
         @"attrDouble" : @"attrDouble",
         @"attrFloat" : @"attrFloat",
@@ -32,6 +33,7 @@
 {
     return @{
         @"attrDate" : @"attrDate",
+        @"attrDateCustom" : @"attrDateCustom",
         @"attrDecimal" : @"attrDecimal",
         @"attrDouble" : @"attrDouble",
         @"attrFloat" : @"attrFloat",
@@ -42,6 +44,11 @@
 }
 
 + (NSValueTransformer *)attrDateJSONTransformer
+{
+    return [[ISO8601DateTransform alloc] init];
+}
+
++ (NSValueTransformer *)attrDateCustomJSONTransformer
 {
     return [[CustomDateTransformer alloc] init];
 }
