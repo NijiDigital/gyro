@@ -40,7 +40,7 @@ module DBGenerator
         CONSTANT_TEMPLATE = 'String %s = "%s";'
 
         # COMMENTS
-        CLASS_COMMENT_TEMPLATE = '/**\n * %s\n */'
+        CLASS_COMMENT_TEMPLATE = "/**\n * %s\n */"
         ATTRIBUTE_COMMENT_TEMPLATE = '/** %s */'
 
       end

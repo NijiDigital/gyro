@@ -130,7 +130,7 @@ module DBGenerator
         end
 
         def need_transformer?
-          has_enum_attributes? || has_bool_attributes? || has_custom_transformers?
+          has_enum_attributes? || has_bool_attributes? || has_custom_transformers? || has_date_attribute?
         end
 
         def has_bool_attributes?

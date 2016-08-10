@@ -63,5 +63,15 @@ module DBGenerator
       end
     end
 
+    it 'Realm Swift tranformers for ObjectMapper' do
+      xcdatamodel_dir = File.expand_path('../fixtures/xcdatamodel/transformers.xcdatamodel', File.dirname(__FILE__))
+      xcdatamodel = DBGenerator::XCDataModel::Parser::XCDataModel.new(xcdatamodel_dir)
+      Dir.mktmpdir(TMP_DIR_NAME) do |tmp_dir|
+        DBGenerator::Realm::Swift::Generator.new(tmp_dir, xcdatamodel, true)
+        fixtures_files_dir = File.expand_path('../fixtures/swift/transformers', File.dirname(__FILE__))
+        compare_dirs(tmp_dir, fixtures_files_dir)
+      end
+    end
+
   end
 end

@@ -63,7 +63,7 @@ module DBGenerator
         end
 
         def need_transformer?
-          !@enum_type.empty? or @type == :boolean or !@transformer.empty?
+          !@enum_type.empty? or @type == :boolean or @type == :date or !@transformer.empty?
         end
 
         private ################################################################

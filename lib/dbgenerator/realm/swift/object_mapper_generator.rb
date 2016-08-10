@@ -68,7 +68,8 @@ module DBGenerator
             attrKey = attribute.json_key_path.empty? ? attribute.name : attribute.json_key_path
             case 
               when attribute.type == :date
-                attributes << "    self." + attribute.name + " <- (map[" + attrKey.add_quotes + "], ISO8601DateTransform())\n"
+                transformer = attribute.transformer.empty? ? "ISO8601DateTransform" : attribute.transformer
+                attributes << "    self." + attribute.name + " <- (map[" + attrKey.add_quotes + "], " + transformer + "())\n"
               when attribute.type == :integer_16 && attribute.optional && attribute.enum_type == ""
                 attributes << "    self." + attribute.name + " <- (map[" + attrKey.add_quotes + "], RealmOptionalInt16Transform())\n"
               when attribute.type == :integer_32 && attribute.optional
