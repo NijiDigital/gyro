@@ -9,6 +9,7 @@
 #pragma mark - Defines & Constants
 
 extern const struct RLMShopAttributes {
+    __unsafe_unretained NSString *attrDate;
     __unsafe_unretained NSString *attrDecimal;
     __unsafe_unretained NSString *attrDouble;
     __unsafe_unretained NSString *attrFloat;
@@ -25,6 +26,7 @@ extern const struct RLMShopAttributes {
 
 #pragma mark - Properties
 
+@property NSDate *attrDate;
 @property double attrDecimal;
 @property double attrDouble;
 @property float attrFloat;
