@@ -202,15 +202,15 @@ module DBGenerator
                   relationship.inverse_name
                 ]
               else
-                inverse_properties << 'private ' + PROPERTY_INVERSE_MANY_TEMPLATE%[
-                  relationship.name.delete_inverse_suffix + 'LinkingObjects',
+                inverse_properties << PROPERTY_INVERSE_MANY_TEMPLATE%[
+                  relationship.name.delete_inverse_suffix + 's', # 's' for plural form
                   relationship.inverse_type.delete_objc_prefix,
                   relationship.inverse_name
                 ]
                 inverse_properties << PROPERTY_INVERSE_ONE_TEMPLATE%[
                   relationship.name.delete_inverse_suffix,
                   relationship.inverse_type.delete_objc_prefix,
-                  relationship.name.delete_inverse_suffix + 'LinkingObjects'
+                  relationship.name.delete_inverse_suffix + 's' # 's' for plural form
                 ]
               end
             end
