@@ -25,6 +25,7 @@ module DBGenerator
         PROPERTY_PRIVATE_ENUM_TEMPLATE = 'private dynamic var %s: String?'
         PROPERTY_ENUM_TEMPLATE = 'dynamic var %s: String?'
         PROPERTY_COMPUTED_TEMPLATE = 'var %s: %s {'
+        PROPERTY_OPTIONAL_COMPUTED_TEMPLATE = 'var %s: %s? {'
         PROPERTY_INVERSE_ONE_TEMPLATE = 'var %s: %s? { return %s.first }'
         PROPERTY_INVERSE_MANY_TEMPLATE = 'let %s = LinkingObjects(fromType: %s.self, property: "%s")'
         PROPERTY_OPTIONAL_NON_NUMBER_TEMPLATE = 'dynamic var %s: %s? = nil'

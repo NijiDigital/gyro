@@ -149,16 +149,32 @@ module DBGenerator
           end
           enum_type = attribute.enum_type.delete_objc_prefix
           enum_name = attribute.name + 'Enum'
-          enum_string << '    ' + PROPERTY_COMPUTED_TEMPLATE%[enum_name, enum_type] + "\n"
+
+          if attribute.optional?
+            enum_string << '    ' + PROPERTY_OPTIONAL_COMPUTED_TEMPLATE%[enum_name, enum_type] + "\n"
+          else
+            enum_string << '    ' + PROPERTY_COMPUTED_TEMPLATE%[enum_name, enum_type] + "\n" 
+          end
           enum_string << '        ' + 'get {' + "\n"
+
           if attribute.optional?
             enum_string << '            ' + "if let #{attribute.name} = #{attribute.name}, enumValue = #{enum_type}(rawValue: #{attribute.name}) { return enumValue }" + "\n"
           else
             enum_string << '            ' + "if let enumValue = #{enum_type}(rawValue: #{attribute.name}) { return enumValue }" + "\n"
           end
+
+          if attribute.optional?
+          enum_string << '            ' + "return nil" + "\n"
+        else 
           enum_string << '            ' + "return #{enum_type}.#{attribute.enum_values[attribute.default.to_i].delete_objc_prefix}" + "\n"
+        end
           enum_string << '        ' + '}' + "\n"
+
+          if attribute.optional?
+          enum_string << '        ' + "set { #{attribute.name} = (newValue?.rawValue ?? nil) }" + "\n"
+          else 
           enum_string << '        ' + "set { #{attribute.name} = newValue.rawValue }" + "\n"
+          end
           enum_string << '    ' + '}' + "\n\n"
         end
 
