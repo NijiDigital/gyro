@@ -157,11 +157,7 @@ module DBGenerator
           end
           enum_string << '        ' + 'get {' + "\n"
 
-          if attribute.optional?
-            enum_string << '            ' + "if let #{attribute.name} = #{attribute.name}, enumValue = #{enum_type}(rawValue: #{attribute.name}) { return enumValue }" + "\n"
-          else
-            enum_string << '            ' + "if let enumValue = #{enum_type}(rawValue: #{attribute.name}) { return enumValue }" + "\n"
-          end
+          enum_string << '            ' + "if let #{attribute.name} = #{attribute.name}, enumValue = #{enum_type}(rawValue: #{attribute.name}) { return enumValue }" + "\n"
 
           if attribute.optional?
           enum_string << '            ' + "return nil" + "\n"
