@@ -10,6 +10,7 @@
 
 const struct RLMShopAttributes RLMShopAttributes = {
     .name = @"name",
+    .optionalValue = @"optionalValue",
     .type = @"type"
 };
 

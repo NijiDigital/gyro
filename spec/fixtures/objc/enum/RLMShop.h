@@ -11,6 +11,7 @@
 
 extern const struct RLMShopAttributes {
     __unsafe_unretained NSString *name;
+    __unsafe_unretained NSString *optionalValue;
     __unsafe_unretained NSString *type;
 } RLMShopAttributes;
 
@@ -23,6 +24,7 @@ extern const struct RLMShopAttributes {
 #pragma mark - Properties
 
 @property NSString *name;
+@property OptValue optionalValue;
 @property RLMType type;
 
 @end
