@@ -4,6 +4,13 @@
 
 #pragma mark - Types
 
+typedef NS_ENUM(int, OptValue) {
+    OptValueNone = 0,
+    OptValueOne,
+    OptValueTwo,
+    OptValueThree
+};
+
 typedef NS_ENUM(int, RLMType) {
     RLMTypeOne = 0,
     RLMTypeTwo,

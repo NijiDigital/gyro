@@ -44,9 +44,8 @@ module DBGenerator
 
         def raw_values(enum_values, raw_values)
           if raw_values.empty?
-            enum_values.each_with_index { |value, idx|
-              value = value.delete_objc_prefix.underscore
-              raw_values << (idx != enum_values.size - 1 ? value + ',' : value)
+            raw_values = enum_values.map { |value|
+              value.delete_objc_prefix.underscore
             }
           end
           raw_values
