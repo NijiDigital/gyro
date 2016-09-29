@@ -12,7 +12,7 @@ final class Dog: Object {
     dynamic var age: Int16 = 0
     dynamic var name: String = ""
 
-    private let ownerLinkingObjects = LinkingObjects(fromType: Person.self, property: "dogs")
-    var owner: Person? { return ownerLinkingObjects.first }
+    let owners = LinkingObjects(fromType: Person.self, property: "dogs")
+    var owner: Person? { return owners.first }
 
 }

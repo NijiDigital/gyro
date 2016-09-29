@@ -197,11 +197,18 @@ __iOS__
 
 #### Relationships Inverses
 
-En realm, quand on a une RelationShip A -> B et une B -> A, il faut en choisir une qui est la principale (par exemple A -> B) et la relation inverse sera alors calculée. [Pour plus d'infos, voir la doc Realm Swift sur les Inverse Relationships](https://realm.io/docs/swift/latest/#inverse-relationships).
+En realm, quand on a une RelationShip A -> B et une B -> A, il faut en choisir une qui est la principale (par exemple A -> B) et la relation inverse sera alors **calculée**. [Pour plus d'infos, voir la doc Realm Swift sur les Inverse Relationships](https://realm.io/docs/swift/latest/#inverse-relationships).
 
 Pour marquer une relationship comme étant la relation inverse (la relation B -> A et non pas la relation principale A -> B), il suffit de suffixer le nom de la relationship par un underscore `_`.
 
 > Cela génèrera alors en Swift le code utilisant `LinkingObjects(fromType: A.self, property: "b")` pour la relation inverse en question.
+> 
+> Si votre relation inverse est vers un unique objet (inverse d'une relation `1-*` par exemple, et non d'une relation `*-*`), le code généré contiendra à la fois une version au pluriel et une computed variable au singulier, par exemple:
+> 
+> ```swift
+> let owners = LinkingObjects(fromType: Person.self, property: "dogs")`
+> var owner: Person? { return owners.first }
+> ```
 
 ---
 
