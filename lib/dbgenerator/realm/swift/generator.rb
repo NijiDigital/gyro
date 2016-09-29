@@ -142,34 +142,30 @@ module DBGenerator
 
         def write_enum_attribute(attribute, json)
           enum_string = String.new
-          if json
-            enum_string << '    ' + PROPERTY_ENUM_TEMPLATE%[attribute.name] + "\n\n"
+          if attribute.optional?
+            enum_string << '    ' + PROPERTY_OPTIONAL_ENUM_TEMPLATE%[attribute.name] + "\n"
           else
-            enum_string << '    ' + PROPERTY_PRIVATE_ENUM_TEMPLATE%[attribute.name] + "\n\n"
+            enum_string << '    ' + PROPERTY_ENUM_TEMPLATE%[attribute.name] + "\n"
           end
           enum_type = attribute.enum_type.delete_objc_prefix
           enum_name = attribute.name + 'Enum'
 
-          if attribute.optional?
-            enum_string << '    ' + PROPERTY_OPTIONAL_COMPUTED_TEMPLATE%[enum_name, enum_type] + "\n"
-          else
-            enum_string << '    ' + PROPERTY_COMPUTED_TEMPLATE%[enum_name, enum_type] + "\n" 
-          end
+          enum_string << '    ' + PROPERTY_OPTIONAL_COMPUTED_TEMPLATE%[enum_name, enum_type] + "\n"
           enum_string << '        ' + 'get {' + "\n"
-
-          enum_string << '            ' + "if let #{attribute.name} = #{attribute.name}, enumValue = #{enum_type}(rawValue: #{attribute.name}) { return enumValue }" + "\n"
-
           if attribute.optional?
-          enum_string << '            ' + "return nil" + "\n"
-        else 
-          enum_string << '            ' + "return #{enum_type}.#{attribute.enum_values[attribute.default.to_i].delete_objc_prefix}" + "\n"
-        end
+            enum_string << '            ' + "guard let #{attribute.name} = #{attribute.name},\n"
+            enum_string << '            ' + "  let enumValue = #{enum_type}(rawValue: #{attribute.name})\n"
+            enum_string << '            ' + "  else { return nil }" + "\n"
+          else
+            enum_string << '            ' + "guard let enumValue = #{enum_type}(rawValue: #{attribute.name}) else { return nil }" + "\n"
+          end
+          enum_string << '            ' + "return enumValue" + "\n"
           enum_string << '        ' + '}' + "\n"
 
           if attribute.optional?
-          enum_string << '        ' + "set { #{attribute.name} = (newValue?.rawValue ?? nil) }" + "\n"
+            enum_string << '        ' + "set { #{attribute.name} = newValue?.rawValue ?? nil }" + "\n"
           else 
-          enum_string << '        ' + "set { #{attribute.name} = newValue.rawValue }" + "\n"
+            enum_string << '        ' + "set { #{attribute.name} = newValue.rawValue }" + "\n"
           end
           enum_string << '    ' + '}' + "\n\n"
         end

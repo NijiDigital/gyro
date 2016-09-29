@@ -9,10 +9,14 @@ public class Shop extends RealmObject {
 
     public interface Attributes {
         String NAME = "name";
+        String OPTIONAL_VALUE = "optionalValue";
         String TYPE = "type";
     }
 
     private String name;
+    @Ignore
+    private OptValue optionalValueEnum;
+    private String optionalValue;
     @Ignore
     private Type typeEnum;
     private String type;
@@ -23,6 +27,22 @@ public class Shop extends RealmObject {
 
     public void setName(final String name) {
         this.name = name;
+    }
+
+    public String getOptionalValue() {
+        return optionalValue;
+    }
+
+    public void setOptionalValue(final String optionalValue) {
+        this.optionalValue = optionalValue;
+    }
+
+    public OptValue getOptionalValueEnum() {
+        return OptValue.get(getOptionalValue());
+    }
+
+    public void setOptionalValueEnum(OptValue optionalValue) {
+        this.optionalValue = optionalValue.getJsonValue();
     }
 
     public String getType() {
