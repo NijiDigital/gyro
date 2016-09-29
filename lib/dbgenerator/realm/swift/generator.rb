@@ -165,7 +165,7 @@ module DBGenerator
           if attribute.optional?
             enum_string << '        ' + "set { #{attribute.name} = newValue?.rawValue ?? nil }" + "\n"
           else 
-            enum_string << '        ' + "set { #{attribute.name} = newValue.rawValue }" + "\n"
+            enum_string << '        ' + "set { #{attribute.name} = newValue?.rawValue ?? \"\" }" + "\n"
           end
           enum_string << '    ' + '}' + "\n\n"
         end

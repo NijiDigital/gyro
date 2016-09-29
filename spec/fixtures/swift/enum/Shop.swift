@@ -28,7 +28,7 @@ final class Shop: Object {
             guard let enumValue = Type(rawValue: type) else { return nil }
             return enumValue
         }
-        set { type = newValue.rawValue }
+        set { type = newValue?.rawValue ?? "" }
     }
 
 
