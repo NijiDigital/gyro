@@ -62,7 +62,7 @@ public class Product extends RealmObject {
         return TypeA.get(getType());
     }
 
-    public void setTypeEnum(TypeA type) {
+    public void setTypeEnum(final TypeA type) {
         this.type = type.getJsonValue();
     }
 

@@ -54,7 +54,7 @@ public class User extends RealmObject {
         return TypeB.get(getType());
     }
 
-    public void setTypeEnum(TypeB type) {
+    public void setTypeEnum(final TypeB type) {
         this.type = type.getJsonValue();
     }
 
