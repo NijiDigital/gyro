@@ -16,6 +16,7 @@ public class FidelityCard extends RealmObject {
     }
 
     private short identifier;
+    @android.support.annotation.IntRange(from=0,to=255)
     private Integer points;
     private User user;
 
@@ -28,11 +29,12 @@ public class FidelityCard extends RealmObject {
     }
 
     @android.support.annotation.Nullable
+    @android.support.annotation.IntRange(from=0,to=255)
     public Integer getPoints() {
         return points;
     }
 
-    public void setPoints(@android.support.annotation.Nullable final Integer points) {
+    public void setPoints(@android.support.annotation.Nullable @android.support.annotation.IntRange(from=0,to=255) final Integer points) {
         this.points = points;
     }
 
