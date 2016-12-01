@@ -6,7 +6,7 @@ require File.expand_path('dbgenerator/utils/log', File.dirname(__FILE__))
 require File.expand_path('dbgenerator/utils/file_dbgenerator', File.dirname(__FILE__))
 
 module DBGenerator
-  VERSION = '0.2.0'
+  VERSION = '0.3.0'
 
   def self.exit_with_error(message)
     Log::error message
