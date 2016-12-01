@@ -8,14 +8,14 @@ public enum TypeA {
     TYPE_TWO("type_a_two"),
     TYPE_THREE("type_a_three");
 
-    private String jsonValue;
+    private final String jsonValue;
 
-    TypeA(String jsonValue) {
+    TypeA(final String jsonValue) {
         this.jsonValue = jsonValue;
     }
 
-    public static TypeA get(String jsonValue) {
-        for (TypeA type : TypeA.values()) {
+    public static TypeA get(final String jsonValue) {
+        for (final TypeA type : TypeA.values()) {
             if (type.getJsonValue().equals(jsonValue)) {
                 return type;
             }

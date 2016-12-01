@@ -75,6 +75,39 @@ module DBGenerator
       end
     end
 
+    it 'Realm Java with wrapper types' do
+      xcdatamodel_dir = File.expand_path('../fixtures/xcdatamodel/optional.xcdatamodel', File.dirname(__FILE__))
+      xcdatamodel = DBGenerator::XCDataModel::Parser::XCDataModel.new(xcdatamodel_dir)
+      Dir.mktmpdir(TMP_DIR_NAME) do |tmp_dir|
+        Realm::Java::Generator.new(tmp_dir, PACKAGE_NAME, xcdatamodel)
+        Realm::Java::Generator.new(tmp_dir, PACKAGE_NAME, xcdatamodel, true)
+        fixtures_files_dir = File.expand_path('../fixtures/java/wrappers', File.dirname(__FILE__))
+        compare_dirs(tmp_dir, fixtures_files_dir)
+      end
+    end
+
+    it 'Realm Java with annotations' do
+      xcdatamodel_dir = File.expand_path('../fixtures/xcdatamodel/optional.xcdatamodel', File.dirname(__FILE__))
+      xcdatamodel = DBGenerator::XCDataModel::Parser::XCDataModel.new(xcdatamodel_dir)
+      Dir.mktmpdir(TMP_DIR_NAME) do |tmp_dir|
+        Realm::Java::Generator.new(tmp_dir, PACKAGE_NAME, xcdatamodel)
+        Realm::Java::Generator.new(tmp_dir, PACKAGE_NAME, xcdatamodel, false, true)
+        fixtures_files_dir = File.expand_path('../fixtures/java/annotations', File.dirname(__FILE__))
+        compare_dirs(tmp_dir, fixtures_files_dir)
+      end
+    end
+
+    it 'Realm Java with wrapper types and annotations' do
+      xcdatamodel_dir = File.expand_path('../fixtures/xcdatamodel/optional.xcdatamodel', File.dirname(__FILE__))
+      xcdatamodel = DBGenerator::XCDataModel::Parser::XCDataModel.new(xcdatamodel_dir)
+      Dir.mktmpdir(TMP_DIR_NAME) do |tmp_dir|
+        Realm::Java::Generator.new(tmp_dir, PACKAGE_NAME, xcdatamodel)
+        Realm::Java::Generator.new(tmp_dir, PACKAGE_NAME, xcdatamodel, true, true)
+        fixtures_files_dir = File.expand_path('../fixtures/java/wrappers_annotations', File.dirname(__FILE__))
+        compare_dirs(tmp_dir, fixtures_files_dir)
+      end
+    end
+
     it 'Realm Java inverse' do
       xcdatamodel_dir = File.expand_path('../fixtures/xcdatamodel/inverse.xcdatamodel', File.dirname(__FILE__))
       xcdatamodel = DBGenerator::XCDataModel::Parser::XCDataModel.new(xcdatamodel_dir)

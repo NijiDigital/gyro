@@ -6,7 +6,7 @@ module DBGenerator
 
       class Relationship
 
-        attr_accessor :entity_name, :name, :type, :optional, :deletion_rule, :inverse_name, :inverse_type, :json_key_path
+        attr_accessor :entity_name, :name, :type, :optional, :deletion_rule, :inverse_name, :inverse_type, :json_key_path, :support_annotation
         attr_accessor :realm_ignored
         attr_accessor :destination
 
@@ -21,6 +21,7 @@ module DBGenerator
           @inverse_type = relationship_xml.xpath('@destinationEntity').to_s
           @json_key_path = relationship_xml.xpath(USERINFO_VALUE%['JSONKeyPath']).to_s
           @realm_ignored = relationship_xml.xpath(USERINFO_VALUE%['realmIgnored']).to_s.empty? ? false : true
+          @support_annotation = relationship_xml.xpath(USERINFO_VALUE%['supportAnnotation']).to_s
           load_type(relationship_xml)
           @destination = relationship_xml.xpath(USERINFO_VALUE%['destination']).to_s
           search_for_error

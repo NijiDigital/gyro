@@ -45,7 +45,13 @@ OptionParser.new do |opts|
     options[:ios_swift] = true
   end
   opts.on('-n', '--nsnumber', %q(To generate NSNumbers instead of Int/BOOL/Float types)) do
-    options[:ios_nsnumber] = true
+    options[:wrappers] = true
+  end
+  opts.on('-w', '--wrappers', %q(To generate Java primitive wrappers for optional fields instead of primitive types)) do
+    options[:wrappers] = true
+  end
+  opts.on('-x', '--annotations', %q(To tag code with Android support annotations according to optional/non optional fields)) do
+    options[:annotations] = true
   end
   opts.on_tail('-h', '--help', %q(Show this message)) { puts opts; exit 1 }
   opts.on_tail('-v', '--version', 'Show version') { puts DBGenerator::VERSION; exit }
@@ -75,7 +81,7 @@ else
       Log::info('You need to specify an Android package name using --package option (see --help for more info)')
     else
       xcdatamodel = DBGenerator::XCDataModel::Parser::XCDataModel.new(options[:model])
-      DBGenerator::Realm::Java::Generator.new(options[:android_dir], options[:package], xcdatamodel)
+      DBGenerator::Realm::Java::Generator.new(options[:android_dir], options[:package], xcdatamodel, options[:wrappers], options[:annotations])
     end
   else
     Log::info('You need to specify a valid Android Realm model classes dir')
@@ -91,7 +97,7 @@ else
     if options[:ios_swift]
       DBGenerator::Realm::Swift::Generator.new(options[:ios_dir], xcdatamodel, options[:ios_json])
     else
-      DBGenerator::Realm::ObjC::Generator.new(options[:ios_dir], xcdatamodel, options[:ios_json], options[:ios_framework], options[:ios_nsnumber])
+      DBGenerator::Realm::ObjC::Generator.new(options[:ios_dir], xcdatamodel, options[:ios_json], options[:ios_framework], options[:wrappers])
     end
   else
     Log::info('You need to specify a valid iOS Realm model classes dir')
