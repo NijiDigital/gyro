@@ -8,6 +8,7 @@ module DBGenerator
         INDEXED_ANNOTATION = '@Index'
         IGNORED_ANNOTATION = '@Ignore'
         GSON_ANNOTATION = "@SerializedName(\"%s\")"
+        SUPPORT_ANNOTATION = "@android.support.annotation.%s"
 
         # COMMONS
         PACKAGE_TEMPLATE = 'package %s;'
@@ -31,6 +32,7 @@ module DBGenerator
         # CLASS
         CLASS_TEMPLATE = 'public class %s extends RealmObject {'
         ATTRIBUTE_TEMPLATE = 'private %s %s;'
+        FINAL_ATTRIBUTE_TEMPLATE = 'private final %s %s;'
         REALM_LIST_TEMPLATE = 'RealmList<%s>'
         LIST_TEMPLATE = 'List<%s>'
 

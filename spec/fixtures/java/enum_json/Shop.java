@@ -45,7 +45,7 @@ public class Shop extends RealmObject {
         return Type.get(getType());
     }
 
-    public void setTypeEnum(Type type) {
+    public void setTypeEnum(final Type type) {
         this.type = type.getJsonValue();
     }
 
@@ -61,7 +61,7 @@ public class Shop extends RealmObject {
         return Type2.get(getTypeOptional());
     }
 
-    public void setTypeOptionalEnum(Type2 typeOptional) {
+    public void setTypeOptionalEnum(final Type2 typeOptional) {
         this.typeOptional = typeOptional.getJsonValue();
     }
 }

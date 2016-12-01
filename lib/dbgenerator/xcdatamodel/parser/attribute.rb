@@ -6,7 +6,7 @@ module DBGenerator
 
         attr_accessor :entity_name, :name, :type, :optional, :indexed, :default
         attr_accessor :realm_ignored, :realm_read_only, :enum_type, :enum_values
-        attr_accessor :json_key_path, :json_values, :transformer, :comment
+        attr_accessor :json_key_path, :json_values, :transformer, :comment, :support_annotation
 
         alias_method :optional?, :optional
         alias_method :indexed?, :indexed
@@ -27,6 +27,7 @@ module DBGenerator
           @json_values = attribute_xml.xpath(USERINFO_VALUE%['JSONValues']).to_s.split(',')
           @transformer = attribute_xml.xpath(USERINFO_VALUE%['transformer']).to_s.strip
           @comment = attribute_xml.xpath(USERINFO_VALUE%['comment']).to_s
+          @support_annotation = attribute_xml.xpath(USERINFO_VALUE%['supportAnnotation']).to_s
           search_for_error
         end
 
