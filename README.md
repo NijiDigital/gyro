@@ -34,18 +34,18 @@ DBGenerator is a command line tool. The parameters are:
 
 | Short flag | Long flag | Description |
 | ---------- | --------- | ----------- |
-| `-m` | `--model` | path to the  `.xcdatamodel` file. If this parameter is not given, DBGenerator looks for a `.xcdatamodel` |
-| `-a` | `--android` | path to the directory where the generated files for Android will be created (eg : home/documents/dev/android/realm_project/com/niji/data) |
-| `-p` | `--package` | full name of the Android "data" package (eg : com.niji.data) |
-| `-i` | `--ios` | path to the directory where the generated files for iOS/macOS will be created |
-| `-j` | `--json` | creates the Realm-JSON categories (https://github.com/matthewcheok/Realm-JSON) |
-| `-f` | `--framework` | tells whether the project uses the CocoaPods Frameworks  |
-| `-s` | `--swift` | if you use Swift as iOS/macOS language |
-| `-n` | `--nsnumber` | to generate `NSNumber`s instead of Int/BOOL/Float types |
-| `-w` | `--wrappers` | to use type wrappers for Java (Integer, Double,...) for optional attributes instead of primitive types (int, double...) |
-| `-x` | `--annotations` | to annotate the getters/setters of the generates classes with `@Nullable` if the attribute/relationship is optional, or `@NonNull` if the attribute/relationship is non-optional |
-| `-h` | `--help` | prints help |
-| `-v` | `--version` | prints the current version number of DBGenerator |
+| `-m` | `--model` | Path to the  `.xcdatamodel` file. If this parameter is not given, DBGenerator will look for a `.xcdatamodel` |
+| `-a` | `--android` | Path to the directory where the generated files for Android will be created (eg : home/documents/dev/android/realm_project/com/niji/data) |
+| `-p` | `--package` | Full name of the Android "data" package (eg : com.niji.data) |
+| `-i` | `--ios` | Path to the directory where the generated files for iOS/macOS will be created |
+| `-j` | `--json` | Creates the Realm-JSON categories (https://github.com/matthewcheok/Realm-JSON) |
+| `-f` | `--framework` | Tells whether the project uses the CocoaPods Frameworks  |
+| `-s` | `--swift` | If you use Swift as iOS/macOS language |
+| `-n` | `--nsnumber` | To generate `NSNumber`s instead of Int/BOOL/Float types |
+| `-w` | `--wrappers` | To use type wrappers for Java (Integer, Double,...) for optional attributes instead of primitive types (int, double...) |
+| `-x` | `--annotations` | To annotate the getters/setters of the generated classes with `@Nullable` for any optional attribute/relationship, and with `@NonNull` for any non-optional attribute/relationship |
+| `-h` | `--help` | Prints help |
+| `-v` | `--version` | Prints the current version number of DBGenerator |
 
 <!--
 
