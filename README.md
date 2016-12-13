@@ -27,7 +27,7 @@ Le script est à utiliser en ligne de commande, il accepte actuellement les para
 | `-i` | `--ios` | chemin vers le répertoire de destination des entités générées iOS |
 | `-j` | `--json` | permet de générer les catégories Realm-JSON (https://github.com/matthewcheok/Realm-JSON) |
 | `-f` | `--framework` | indique si le projet utilise les Frameworks de CocoaPods |
-| `-s` | `--swift` | If you use Swift as iOS language |
+| `-s` | `--swift` | If you use Swift as iOS/macOS language |
 | `-n` | `--nsnumber` | To generate NSNumbers instead of Int/BOOL/Float types |
 | `-w` | `--wrappers` | Permet d'utiliser des wrappers types Java (Integer, Double) sur les attributs optionnels en lieu et place des types primitifs (int, double...) |
 | `-x` | `--annotations` | Permet de marquer les getters/setters des champs de classe avec l'annotation @Nullable si l'attribut ou la relation est optionnel, ou @NonNull si l'attribut ou la relation est obligatoire |
