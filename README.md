@@ -1,6 +1,6 @@
 # DBGenerator
 
-DBGenerator is a tool which generates [Realm.io](https://realm.io) classes, for both Android and iOS/macOS, from an `.xcdatamodel` file.
+DBGenerator is a tool which generates [Realm](https://realm.io) classes, for both Android and iOS/macOS, from an `.xcdatamodel` file.
 
 ---
 
@@ -9,12 +9,18 @@ DBGenerator is a tool which generates [Realm.io](https://realm.io) classes, for 
 
 The `.xcdatamodel` is a a file used to represent Core Data entities in Xcode in a graphical way. It can be created or edited with a graphical user interface in Xcode.
 
-But even though the initial aim of the `.xcdatamodel` file is to create a Core Data model, with DBGenerator you will now be able to **use an `xcdatamodel` to create a [Realm.io](https://realm.io) model files as well!**
+But even though the initial aim of the `.xcdatamodel` file is to create a Core Data model, with DBGenerator you will now be able to **use an `xcdatamodel` to create a [Realm](https://realm.io) model files as well!**
 
 ![Simple Entity](documentation/simple_entity.png)
 
 This `.xcdatamodel` file is the input of the script.
 
+
+## License
+
+This tool is under [the Apache 2 License](LICENSE).
+
+It has been initially developed by [Niji](http://www.niji.fr) and is in no way affiliated to the [Realm](https://realm.io) company.
 
 
 ## Installation
