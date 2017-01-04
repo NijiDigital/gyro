@@ -394,7 +394,7 @@ public class FidelityCard extends RealmObject {
 
     public void setPoints(@android.support.annotation.IntRange(from=0,to=255) final int points) {
         this.points = points;
-    }
+    
 }
 ```
 </details>
@@ -403,17 +403,17 @@ public class FidelityCard extends RealmObject {
 ---
 
 
-### Gérer les enum
+### Managing enums
 
-Certains attributs de type Int peuvent représenter des enum. Pour gérer ce cas, il faut ajouter les deux paires clé-valeur suivantes à **l'attribut** :
+It can happen that an `Int` attribute represents an enum member. To deal with this case, you will have to add the following two key/value pairs to the **attribute**:
 
 | Key | Value |
 |-----|-------|
-| `enumType` | `mon_type` |
-| `enumValues` | `ma_valeur_1,ma_valeur_2,ma_valeur_3` |
+| `enumType` | `my_type` |
+| `enumValues` | `my_value_1, my_value_2, my_value_3` |
 
 
-__Exemple__: Sur l'attribut 'type' de l'entité 'shop':
+__Example__: On the attribute `type` of the `Shop` entity.
 
 ![enum](documentation/enum.png)
 
@@ -566,7 +566,7 @@ enum OptValue: String {
 ```
 </details>
 
-> **Remarque** : Sur Android et Swift, chaque enum est créée dans un fichier qui lui est propre. Sur ObjC toutes les enums sont créées dans le fichier RLMTypes.h
+> **Remark**: For Android and Swift, each enum is created in a separate file. For ObjC, all the enums are created in the file RLMTypes.h
 
 
 ---
