@@ -406,9 +406,10 @@ public class FidelityCard extends RealmObject {
 
 ### Managing enums
 
-It can happen that an `Int` attribute represents an enum member. To deal with this case, you will have to add the following two key/value pairs to the **attribute**:
+Sometimes, an `Int` attribute represents an enum member. To deal with this case, you will have to add the following two key/value pairs to the **attribute**:
 
 | Key | Value |
+|-----|-------|
 | `enumType` | `my_type` |
 | `enumValues` | `my_value_1, my_value_2, my_value_3` |
 
@@ -565,7 +566,7 @@ enum OptValue: String {
 ```
 </details>
 
-> **Remark**: For Android and Swift, each enum is created in a separate file. For ObjC, all the enums are created in the file RLMTypes.h
+> **Note**: For Android and Swift, each enum is created in a separate file. For ObjC, all the enums are created in the file RLMTypes.h
 
 
 ---
