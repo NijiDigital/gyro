@@ -53,7 +53,7 @@ DBGenerator is a command line tool. The available parameters are:
 | `-h` | `--help` | Prints help | ☑️ | ☑️ |
 | `-v` | `--version` | Prints the current version number of DBGenerator | ☑️ | ☑️ |
 
-_Legend: ✅ Mandatory flag for this platform / ☑️ Optional flag usable for this platform / ➖ Not applicable for ths platform_
+_Meaning of the symbols: ✅ Mandatory flag for this platform / ☑️ Optional flag usable for this platform / ➖ Not applicable for ths platform_
 
 
 ## Annotating your `xcdatamodel`
