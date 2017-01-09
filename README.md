@@ -1,19 +1,21 @@
 # DBGenerator
 
-DBGenerator is a tool which generates [Realm](https://realm.io) classes, for both Android and iOS/macOS, from an `.xcdatamodel` file.
+DBGenerator is a tool to generate [Realm](https://realm.io) model classes, for both Android (Java) and iOS/macOS (ObjC & Swift), from an `.xcdatamodel` file.
 
 ---
 
 
 ## Introduction
 
-The `.xcdatamodel` is a a file used to represent Core Data entities in Xcode in a graphical way. It can be created or edited with a graphical user interface in Xcode.
+The `.xcdatamodel` file is usually used to represent Core Data entities in Xcode in a graphical way. It can be created or edited with a graphical user interface in Xcode.
 
-But even though the initial aim of the `.xcdatamodel` file is to create a Core Data model, with DBGenerator you will now be able to **use an `xcdatamodel` to create a [Realm](https://realm.io) model files as well!**
+But with DBGenerator, you will now be able to **use an `xcdatamodel` to create a [Realm](https://realm.io) model files as well!**
+
+This will allow you to design your model in a visual way (rather than by code), only once (rather than once for Android and once for iOS), and have the code generated for you.
 
 ![Simple Entity](documentation/simple_entity.png)
 
-This `.xcdatamodel` file is the input of the script.
+The `.xcdatamodel` file is the input of the script.
 
 
 ## License
@@ -25,7 +27,7 @@ It has been initially developed by [Niji](http://www.niji.fr) and is in no way a
 
 ## Installation
 
-Simply clone the current repository anywhere you want on your machine, then run the `bin/dbgenerator` ruby script with the appropriate options (see below). For example:
+Simply clone this repository anywhere you want on your machine, then run the `bin/dbgenerator` ruby script with the appropriate options (see below). For example:
 
 ```
 ~/Dev/DBGenerator/bin/dbgenerator -m <model> --ios ~/Dev/MyProject/RealmModel --swift
@@ -36,7 +38,7 @@ Simply clone the current repository anywhere you want on your machine, then run 
 
 ## Command line arguments
 
-DBGenerator is a command line tool. The available parameters are:
+DBGenerator is a command line tool. The available parameters are as follows. You can also use `-h` do display the usage and available parameters/flags in the Terminal of course.
 
 | Short flag | Long flag | Description | Android | iOS |
 | ---------- | --------- | ----------- |:-------:|:---:|
@@ -59,7 +61,9 @@ _Caption: ✅ Mandatory flag for this platform / ☑️ Optional flag usable for
 
 ## Annotating your `xcdatamodel`
 
-The `.xcdatamodel` Xcode editor allows you to add "user infos" to your entities, attributes or relationships. Each "user info" is a key/value pair.
+The `.xcdatamodel` Xcode editor allows you to add "user infos" to your entities, attributes or relationships. Each "user info" entry is an arbitrary key/value pair.
+
+_To define a User Info key in Xcode's xcdatamodel editor, select the entity or attribute you want to add a User Info to, then select the 3rd tab in the inspector on the right ("Data Model Inspector", or Cmd-Alt-3), and fill the information you want in the "User Info" section there._
 
 With the help of these "user infos", you will be able to give DBGenerator extra information about your model classes. For example, you can tell which attribute is the primary key, the attributes to ignore, the JSON mappings, ...
 
@@ -257,19 +261,19 @@ __Example__: On the `readOnly`  attribute of the `Shop`  entity:
 ---
 
 
-### Relationships Inverses
+### Inverse Relationships
 
-En realm, quand on a une RelationShip A -> B et une B -> A, il faut en choisir une qui est la principale (par exemple A -> B) et la relation inverse sera alors **calculée**. [Pour plus d'infos, voir la doc Realm Swift sur les Inverse Relationships](https://realm.io/docs/swift/latest/#inverse-relationships).
+In realm, when you have both A -> B and B -> A relationships, you have to choose one of those relationships to be the primary one (e.g. A -> B) — that will be stored in Realm — and the other inverse relationship will then be **computed** by code. [For more information, see the related RealmSwift documentation on Inverse Relationships](https://realm.io/docs/swift/latest/#inverse-relationships).
 
-Pour marquer une relationship comme étant la relation inverse (la relation B -> A et non pas la relation principale A -> B), il suffit de **suffixer le nom de la relationship par un underscore `_`** .
+To mark a relationship as being an inverse relationship (the B -> A relationship and not the primary A -> B one), the convention in `dbgenerator` is to **suffix the name of the relationship with an underscore `_`** .
 
-Cela génèrera alors en Swift le code suivant pour la relation inverse en question:
+This will then generate the following code in Swift for that inverse relationship:
 
 ```swift
 LinkingObjects(fromType: A.self, property: "b")`
 ```
 
-Si votre relation inverse est vers un unique objet (inverse d'une relation `1-*` par exemple, et non d'une relation `*-*`), le code généré contiendra à la fois une version au pluriel et une _computed variable_ au singulier, par exemple:
+If your inverse relationship is defined to point to a unique object (inverse of a `1-*` relationship for exemple, and not a `*-*` one), the generated code will contain both the plural form of the computed variable and a singular form returning its first element, for convenience:
 
 ```swift
 let owners = LinkingObjects(fromType: Person.self, property: "dogs")`
