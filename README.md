@@ -1,58 +1,96 @@
 # DBGenerator
 
-Cet outil permet la génération de modèle de base de données pour les plateformes Android et iOS à partir d'un fichier xcdatamodel. Les SGBD supportés pour le moment sont les suivants :
-
-* Realm
+DBGenerator is a tool to generate [Realm](https://realm.io) model classes, for both Android (Java) and iOS/macOS (ObjC & Swift), from an `.xcdatamodel` file.
 
 ---
 
 
-## Présentation du xcdatamodel
+## Introduction
 
-Le fichier `xcdatamodel` est un fichier xml généré à partir de l'IDE XCode. Il est normalement utilisé pour modéliser les entités CodeData de manière graphique. 
+The `.xcdatamodel` file is usually used to represent Core Data entities in Xcode in a graphical way. It can be created or edited with a graphical user interface in Xcode.
+
+But with DBGenerator, you will now be able to **use an `xcdatamodel` to create a [Realm](https://realm.io) model files as well!**
+
+This will allow you to design your model in a visual way (rather than by code), only once (rather than once for Android and once for iOS), and have the code generated for you.
 
 ![Simple Entity](documentation/simple_entity.png)
 
-C'est ce fichier `xcdatamodel` qui est utilisé en entrée du script. 
-
-## Utilisation
-	
-Le script est à utiliser en ligne de commande, il accepte actuellement les paramètres suivants :
-
-| Flag court | Flag long | Description |
-| ---------- | --------- | ----------- |
-| `-m` | `--model` | chemin vers le fichier xcdatamodel - si ce paramètre n'est pas fourni, le script va chercher un fichier xcdatamodel présent dans son répertoire |
-| `-a` | `--android` | chemin vers le répertoire de destination des entités générées Android (eg : home/documents/dev/android/realm_project/com/niji/data) |
-| `-p` | `--package` | le nom complet du package "data" pour Android (eg : com.niji.data) |
-| `-i` | `--ios` | chemin vers le répertoire de destination des entités générées iOS |
-| `-j` | `--json` | permet de générer les catégories Realm-JSON (https://github.com/matthewcheok/Realm-JSON) |
-| `-f` | `--framework` | indique si le projet utilise les Frameworks de CocoaPods |
-| `-s` | `--swift` | If you use Swift as iOS/macOS language |
-| `-n` | `--nsnumber` | To generate NSNumbers instead of Int/BOOL/Float types |
-| `-w` | `--wrappers` | Permet d'utiliser des wrappers types Java (Integer, Double) sur les attributs optionnels en lieu et place des types primitifs (int, double...) |
-| `-x` | `--annotations` | Permet de marquer les getters/setters des champs de classe avec l'annotation @Nullable si l'attribut ou la relation est optionnel, ou @NonNull si l'attribut ou la relation est obligatoire |
-| `-h` | `--help` | affiche l'aide |
-| `-v` | `--version` | affiche le numéro de version du script |
+The `.xcdatamodel` file is the input of the script.
 
 
-### Génération 
+## License
 
-L'éditeur de `xcdatamodel` permet d'ajouter des 'user info' aux entités, attributs et relations, sous forme de clé-valeur. Vous pouvez les utiliser afin d'ajouter des informations supplémentaires à vos entités tels que les primary key, les valeurs à ignorer, les correspondances json ...
+This tool is under [the Apache 2 License](LICENSE).
 
-#### Primary key
-
-Pour indiquer quel attribut sera utilisé comme primary key, vous avez la possibilité d'ajouter la paire clé-valeur suivante à **l'entité** :
-**`identityAttribute` : `nom_de_l'attribut`**
+It has been initially developed by [Niji](http://www.niji.fr) and is in no way affiliated to the [Realm](https://realm.io) company.
 
 
-__Exemple :__
+## Installation
 
-Sur l'entité 'FidelityCard'  
-![Primary Key](documentation/primary_key.png)
-
-__Android__  
+Simply clone this repository anywhere you want on your machine, then run the `bin/dbgenerator` ruby script with the appropriate options (see below). For example:
 
 ```
+~/Dev/DBGenerator/bin/dbgenerator -m <model> --ios ~/Dev/MyProject/RealmModel --swift
+```
+
+
+
+
+## Command line arguments
+
+DBGenerator is a command line tool. The available parameters are as follows. You can also use `-h` do display the usage and available parameters/flags in the Terminal of course.
+
+| Short flag | Long flag | Description | Android | iOS |
+| ---------- | --------- | ----------- |:-------:|:---:|
+| `-m` | `--model` | Path to the  `.xcdatamodel` file. If this parameter is not given, DBGenerator will look for a `.xcdatamodel` | ✅ | ✅ |
+| `-a` | `--android` | Path to the directory where the generated files for Android will be created (e.g.: home/documents/dev/android/realm_project/com/niji/data) | ✅ | ➖ |
+| `-p` | `--package` | Full name of the Android "data" package (e.g.: com.niji.data) | ✅ | ➖ |
+| `-i` | `--ios` | Path to the directory where the generated files for iOS/macOS will be created | ➖ | ✅ |
+| `-j` | `--json` | Create the Realm-JSON categories (https://github.com/matthewcheok/Realm-JSON) | ➖ | ☑️ |
+| `-f` | `--framework` | Tells whether the project uses CocoaPods Frameworks  | ➖ | ☑️ |
+| `-s` | `--swift` | Use Swift for the iOS/macOS generation | ➖ | ☑️ |
+| `-n` | `--nsnumber` | Generate `NSNumber`s instead of Int/BOOL/Float types | ➖ | ☑️ |
+| `-w` | `--wrappers` | Use type wrappers for Java (Integer, Double, …) for optional attributes instead of primitive types (int, double, …) | ☑️ | ➖ |
+| `-x` | `--annotations` | Annotate the getters/setters of the generated classes with `@Nullable` for any optional attribute/relationship, and with `@NonNull` for any non-optional attribute/relationship | ☑️ | ➖ |
+| `-h` | `--help` | Show help | ☑️ | ☑️ |
+| `-v` | `--version` | Show the current version number of DBGenerator | ☑️ | ☑️ |
+
+_Caption: ✅ Mandatory flag for this platform / ☑️ Optional flag usable for this platform / ➖ Not applicable for this platform_
+
+
+
+## Annotating your `xcdatamodel`
+
+The `.xcdatamodel` Xcode editor allows you to add "user infos" to your entities, attributes or relationships. Each "user info" entry is an arbitrary key/value pair.
+
+_To define a User Info key in Xcode's xcdatamodel editor, select the entity or attribute you want to add a User Info to, then select the 3rd tab in the inspector on the right ("Data Model Inspector", or Cmd-Alt-3), and fill the information you want in the "User Info" section there._
+
+With the help of these "user infos", you will be able to give DBGenerator extra information about your model classes. For example, you can tell which attribute is the primary key, the attributes to ignore, the JSON mappings, …
+
+Below are details about how to annotate your `.xcdatamodel` entities and attributes to be able to leverage each Realm features when generating your Realm models with DBGenerator.
+
+
+---
+
+
+### Primary key
+
+To tell which attribute will be used as a primary key, add the following 'user info' to **the entity**:
+
+| Key | Value |
+|-----|-------|
+| `identityAttribute` | `name_of_the_attribute` |
+
+
+__Example__: On the "FidelityCard" entity:
+
+![Primary Key](documentation/primary_key.png)
+
+
+<details>
+<summary>📑 Sample of the generated code in Java (Android)</summary>
+
+```java
 package com.niji.data;
 
 import io.realm.RealmObject;
@@ -69,10 +107,12 @@ public class FidelityCard extends RealmObject {
 	[...]
 }
 ```
-__iOS__
+</details>
 
+<details>
+<summary>📑 Sample of the generated code in Objective-C (iOS)</summary>
 
-```
+```objc
 // DO NOT EDIT | Generated by dbgenerator
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -96,23 +136,30 @@ __iOS__
 
 @end
 ```
+</details>
+
 
 ---
 
-#### Ignore attribute
 
-Vous pouvez choisir d'ajouter des attributs qui ne seront pas persistés dans Realm en ajoutant la paire clé-valeur suivante à **l'attribut** : 
-**realmIgnored : value**
+### Ignore attribute
+
+You can decide to ignore some attributes of the `.xcdatamodel` file. They will not be persisted to Realm. To do so, add the following 'user info' to **the attribute**:
+
+| Key | Value |
+|-----|-------|
+| `realmIgnored` | `value` |
 
 
-__Exemple :__
+__Example__: on the attribute `ignored` of the entity `Shop`:
 
-Sur l'attribut 'ignored' de l'entité 'Shop'  
 ![Ignored Attribute](documentation/ignored.png)
 
-__Android__
 
-```
+<details>
+<summary>📑 Sample of the generated code in Java (Android)</summary>
+
+```java
 package com.niji.data;
 
 import io.realm.RealmList;
@@ -131,10 +178,12 @@ public class Shop extends RealmObject {
     [...]
 }
 ```
-__iOS__
+</details>
 
+<details>
+<summary>📑 Sample of the generated code in Objective-C (iOS)</summary>
 
-```
+```objc
 // DO NOT EDIT | Generated by dbgenerator
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -158,24 +207,31 @@ __iOS__
 }
 @end
 ```
+</details>
+
 
 ---
 
-#### Read only
 
-Sur iOS vous avez la possibilité d'ajouter des attributs qui ne sont pas persistés et dont la valeur est determinée dynamiquement. Pour ce faire, ajouter la paire clé-valeur suivante à **l'attribut** :
-**realmReadOnly : le_code_source_a_generer**
+### Read only
+
+On iOS/macOS, you can define attributes which are not persisted and whose value is computed dynamically.
+To do so, add the following 'user info' to **the attribute**
+
+| Key | Value |
+|-----|-------|
+| `realmReadOnly` | `the_code_source_to_generate` |
 
 
-__Exemple :__
+__Example__: On the `readOnly`  attribute of the `Shop`  entity:
 
-Sur l'attribut 'readOnly' de l'entité 'Shop'  
 ![Read Only](documentation/read_only.png)
 
-__iOS__
 
+<details>
+<summary>📑 Sample of the generated code in Objective-C (iOS)</summary>
 
-```
+```objc
 // DO NOT EDIT | Generated by dbgenerator
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -199,37 +255,43 @@ __iOS__
 
 @end
 ```
+</details>
+
 
 ---
 
-#### Relationships Inverses
 
-En realm, quand on a une RelationShip A -> B et une B -> A, il faut en choisir une qui est la principale (par exemple A -> B) et la relation inverse sera alors **calculée**. [Pour plus d'infos, voir la doc Realm Swift sur les Inverse Relationships](https://realm.io/docs/swift/latest/#inverse-relationships).
+### Inverse Relationships
 
-Pour marquer une relationship comme étant la relation inverse (la relation B -> A et non pas la relation principale A -> B), il suffit de suffixer le nom de la relationship par un underscore `_`.
+In realm, when you have both A -> B and B -> A relationships, you have to choose one of those relationships to be the primary one (e.g. A -> B) — that will be stored in Realm — and the other inverse relationship will then be **computed** by code. [For more information, see the related RealmSwift documentation on Inverse Relationships](https://realm.io/docs/swift/latest/#inverse-relationships).
 
-> Cela génèrera alors en Swift le code utilisant `LinkingObjects(fromType: A.self, property: "b")` pour la relation inverse en question.
-> 
-> Si votre relation inverse est vers un unique objet (inverse d'une relation `1-*` par exemple, et non d'une relation `*-*`), le code généré contiendra à la fois une version au pluriel et une computed variable au singulier, par exemple:
-> 
-> ```swift
-> let owners = LinkingObjects(fromType: Person.self, property: "dogs")`
-> var owner: Person? { return owners.first }
-> ```
+To mark a relationship as being an inverse relationship (the B -> A relationship and not the primary A -> B one), the convention in `dbgenerator` is to **suffix the name of the relationship with an underscore `_`** .
 
----
+This will then generate the following code in Swift for that inverse relationship:
 
-#### Champs optionnels et wrapper types
-
-Sur Android, le flag de génération `-w` ou `--wrappers` permet de générer les champs marqué comme optionnels avec des wrapper-types en lieu et place des types primitifs.
-
-__Android__
-
-Shop.java
-
-__Android__
-
+```swift
+LinkingObjects(fromType: A.self, property: "b")`
 ```
+
+If your inverse relationship is defined to point to a unique object (inverse of a `1-*` relationship for exemple, and not a `*-*` one), the generated code will contain both the plural form of the computed variable and a singular form returning its first element, for convenience:
+
+```swift
+let owners = LinkingObjects(fromType: Person.self, property: "dogs")`
+var owner: Person? { return owners.first }
+```
+
+
+---
+
+
+### Optionnals fields and wrapper types
+
+On Android, the `-w`/`--wrappers` flag allows you to use wrapper types (`Double`, `Short`, …) for optional fields instead of primitive types (`double`, `short`, …).
+
+<details>
+<summary>📑 Sample of the generated code in Java (Android)</summary>
+
+```java
 package com.niji.data;
 
 import io.realm.RealmObject;
@@ -240,25 +302,27 @@ import io.realm.annotations.PrimaryKey;
 public class FidelityCard extends RealmObject {
 
     @PrimaryKey
-    private short identifier;   // case "optional" non cochée dans le xcdatamodel
-    private Integer points;     // case "optional" cochée dans le xcdatamodel
+    private short identifier;   // "optional" checkbox not checked in the xcdatamodel
+    private Integer points;     // "optional" checkbox checked in the xcdatamodel
     private User user;
 	[...]
 }
 ```
+</details>
 
-#### Annotations de support
 
-Sur Android, le flag `-x` ou `--annotations` permet de marquer les getters et setters des attributs de classe avec les annotations `@Nullable` si l'attribut est optionnel, ou `@NonNull` s'il ne l'est pas.
-Cette option peut être combinée avec celle des wrappers pour obtenir un code qui soit le plus sécurisé à l'utilisation dans Android Studio.
+---
 
-__Android__
 
-Shop.java
+### Support Annotations
 
-__Android__
+On Android, the flag `-x`/`--annotations` allows you to annotate class attributes' getters & setters with `@Nullable` (if the attribute is optional) or `@NonNull` (if it isn't) attributes.  
+This option can be combined with the `-w` wrapper flag to generate a safer and more secure code in Android Studio, generating proper warnings if misused.
 
-```
+<details>
+<summary>📑 Sample of the generated code in Java (Android)</summary>
+
+```java
 package com.niji.data;
 
 import io.realm.RealmObject;
@@ -269,8 +333,8 @@ import io.realm.annotations.PrimaryKey;
 public class FidelityCard extends RealmObject {
 
     @PrimaryKey
-    private short identifier;   // case "optional" non cochée dans le xcdatamodel
-    private Integer points;     // case "optional" cochée dans le xcdatamodel
+    private short identifier;   // "optional" checkbox not checked in the xcdatamodel
+    private Integer points;     // "optional" checkbox checked in the xcdatamodel
     private User user;
 	[...]
 
@@ -285,19 +349,23 @@ public class FidelityCard extends RealmObject {
 
 }
 ```
+</details>
 
-De plus, il est possible d'ajouter des annotations personnalisées à vos champs. Pour cela, il faut ajouter la paire clévaleur suivante à l'attribut à annoter:
+Furthermore, it's possible to add custom annotations to your fields.
+To do that, simply add the key/value pair to the UserInfos of the attribute to annotate:
 
-**supportAnnotation : AnnotationAAjouter**
+| Key | Value |
+|-----|-------|
+| `supportAnnotation` | `AnnotationToAdd` |
 
-__Exemple :__
 
-Si l'on veut rajouter l'annotation `IntRange(from=0,to=255)`:
+__Example__: If you wish to add the `IntRange(from=0,to=255)` annotation to an attribute, use the following:
+
 ![Support Annotation](documentation/support_annotation.png)
 
-__Android__
 
-FidelityCard.java
+<details>
+<summary>📑 Sample of the generated code in Java (Android)</summary>
 
 ```java
 package fr.ganfra.realm;
@@ -335,24 +403,30 @@ public class FidelityCard extends RealmObject {
     }
 }
 ```
+</details>
 
 
-#### Gérer les enum
-
-Certains attributs de type Int peuvent représenter des enum. Pour gérer ce cas, il faut ajouter les deux paires clé-valeur suivantes à **l'attribut** :
-
-**enumType : mon_type**  
-**enumValues : ma_valeur_1,ma_valeur_2,ma_valeur_3** 
+---
 
 
-__Exemple :__
+### Handling enums
 
-Sur l'attribut 'type' de l'entité 'shop'  
+Sometimes, an `Int` attribute in the model actually represents an `enum` member in your model. To deal with this case, you can add the following two key/value pairs to this **attribute**:
+
+| Key | Value |
+|-----|-------|
+| `enumType` | `my_type` |
+| `enumValues` | `my_value_1, my_value_2, my_value_3` |
+
+__Example__: On the attribute `type` of the `Shop` entity.
+
 ![enum](documentation/enum.png)
 
-__Android__
 
-Shop.java  
+<details>
+<summary>📑 Sample of the generated code in Java (Android)</summary>
+
+`Shop.java`:
 
 ```java
 package com.niji.data;
@@ -362,14 +436,13 @@ import io.realm.RealmObject;
 /* DO NOT EDIT | Generated by dbgenerator */
 
 public class Shop extends RealmObject {
-
     private String name;
     private Type type;
 	[...]
 }
 ```
 
-Type.java
+`Type.java`:
 
 ```java
 package com.niji.data;
@@ -377,16 +450,17 @@ package com.niji.data;
 /* DO NOT EDIT | Generated by dbgenerator */
 
 public enum Type {
-
     TYPE_ONE,
     TYPE_TWO,
     TYPE_THREE
 }
 ```
+</details>
 
-__ObjC__
+<details>
+<summary>📑 Sample of the generated code in Objective-C (iOS)</summary>
 
-RLMShop.h
+`RLMShop.h`:
 
 ```objc
 // DO NOT EDIT | Generated by dbgenerator
@@ -412,7 +486,7 @@ RLMShop.h
 @end
 ```
 
-RLMTypes.h
+`RLMTypes.h`:
 
 ```objc
 // DO NOT EDIT | Generated by dbgenerator
@@ -427,10 +501,12 @@ typedef NS_ENUM(int, RLMType) {
     RLMTypeThree
 };
 ```
+</details>
 
-__Swift__
+<details>
+<summary>📑 Sample of the generated code in Swift (iOS)</summary>
 
-Shop.swift
+`Shop.swift`:
 
 ```swift
 /* DO NOT EDIT | Generated by dbgenerator */
@@ -468,7 +544,7 @@ final class Shop: Object {
 }
 ```
 
-Type.swift
+`Type.swift`:
 
 ```swift
 /* DO NOT EDIT | Generated by dbgenerator */
@@ -480,7 +556,7 @@ enum Type: String {
 }
 ```
 
-OptValue.swift
+`OptValue.swift`
 
 ```swift
 /* DO NOT EDIT | Generated by dbgenerator */
@@ -491,33 +567,56 @@ enum OptValue: String {
     case OptValueThree = "opt_value_three"
 }
 ```
+</details>
 
-> **Remarque** : Sur Android et Swift, chaque enum est créée dans un fichier qui lui est propre. Sur ObjC toutes les enums sont créées dans le fichier RLMTypes.h
+> **Note**: For Android and Swift, each enum is created in a separate file. For ObjC, all the enums are created in the file RLMTypes.h
 
-#### Commenter les classes
-
-A des fins de clareté, il est possible de rajouter un commentaire sur une entité, pour permettre de fournir une petite description du rôle de cet entité par exemple.
-
-Pour cela, il suffit de rajouter la paire clé-valeur **`comment` : `texte_du_commentaire`** à votre **entité** du xcdatamodel.
-
-Un commentaire de code (`/** … */`) sera généré dans le `.h` (iOS) ou le `.java` (Android) juste avant la déclaration de la classe, pour aider le développeur à comprendre son but en relisant le doc (ou s'il générait la documentation Javadoc/Doxygen).
 
 ---
 
-#### Mapping json
 
-Vous pouvez également ajouter la correspondance json pour chaque **attribut** ou **relationship** avec la paire clé-valeur : **`JSONKeyPath` : `valeur_json`**
+### Add comments to the generated classes
 
-__Exemple :__
+To make the generated code more readable, it's possible to add comments on an entity — e.g. to provide a short description of what this entity is supposed to represent.
 
-Sur l'attribut 'name' de l'entité 'Shop'  
+To do so, simply add the following key/value pair to your **entity** in your `.xcdatamodel`:
+
+| Key | Value |
+|-----|-------|
+| `comment` | `the_comment_text_here` |
+
+A code commend (`/** … */`) will then be generated (in the `.h` (ObjC), `.swift` (Swift) or `.java` (Android)) just before the class declaration, e.g. to help the developer understand what this class is for.
+
+
+---
+
+
+### JSON Mapping
+
+You can also add the json mapping for each **attribute** or **relationship** with the following key/value pair:
+
+| Key | Value |
+|-----|-------|
+| `JSONKeyPath` | `json_field_name` |
+
+This key is only used when using the `--json` flag.
+
+Currently, this will then generate:
+
+ * Code for `ObjectMapper` on iOS (in the future we plan to generate `Sourcery` annotations instead so that people can choose whatever JSON library they prefer).
+ * `GSON` annotations (`@SerializedName(…)`) for Android
+
+__Example__: On the 'name' attribute of the 'Shop' entity:
+
 ![JSONKeyPath](documentation/json.png)
 
-__Android__
+
+<details>
+<summary>📑 Sample of the generated code in Java (Android)</summary>
 
 Sur Android, nous utilisons la librairie GSON
 
-```
+```java
 package com.niji.data;
 
 import com.google.gson.annotations.SerializedName;
@@ -535,14 +634,16 @@ public class Shop extends RealmObject {
 	[...]
 }
 ```
-__iOS__
+</details>
 
-Sur iOS nous utilisons la librairie Realm-JSON en génèrant les catégories MonEntité+JSON
+<details>
+<summary>📑 Sample of the generated code in Objective-C (iOS)</summary>
 
+On iOS, we use the Realm-JSON library and generate them in `MyEntity+JSON.m` category files.
 
-RLMShop+JSON.m
+`RLMShop+JSON.m`: 
 
-```
+```objc
 // DO NOT EDIT | Generated by dbgenerator
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -573,17 +674,24 @@ RLMShop+JSON.m
 
 @end
 ```
+</details>
 
-Cela fonctionne également avec les enum :  
-**JSONValues : `valeur_json_1`, `valeur_json_2`, `valeur_json_3`**
+Note that this feature also works with enums (see "Handling enums" above):
 
-Exemple :  
+| Key | Value |
+|-----|-------|
+| `JSONValues` | `valeur_json_1,valeur_json_2,valeur_json_3` |
+
+
+__Example__:
+
 ![enum_json](documentation/enum_json.png)
 
-__Android__
 
+<details>
+<summary>📑 Sample of the generated code in Java (Android)</summary>
 
-```
+```java
 package com.niji.data;
 
 import com.google.gson.annotations.SerializedName;
@@ -597,13 +705,14 @@ public enum Type {
     @SerializedName("json_type_three")TYPE_THREE
 }
 ```
+</details>
 
-__iOS__
+<details>
+<summary>📑 Sample of the generated code in Objective-C (iOS)</summary>
 
+`RLMShop+JSON.m`:
 
-RLMShop+JSON.m
-
-```
+```objc
 // DO NOT EDIT | Generated by dbgenerator
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -630,22 +739,36 @@ RLMShop+JSON.m
 
 @end
 ```
-
-#### ValueTransformers Custom
-
-Uniquement disponible sur iOS (Android utilise la libraire GSON), les ValueTransformers custom permettent par exemple de convertir un string en un int. Voici la procédure pour les utiliser : 
-
-- Créer votre ValueTransformers custom en créant une classe héritant de NSValueTransformer dans votre projet.
+</details>
 
 
-- Sélectionner maintenant l'attribut qui utilisera le valueTransformer. Dans le user info avec la clé **transformer** et fournissez-lui le nom de la classe du ValueTransformer
+--- 
 
-Exemple :  
+
+### Custom ValueTransformers
+
+Only available on iOS (as Android uses the GSON library), custom `ValueTransformers` allows you to e.g. convrt a `String` into an `Int` or a `Date` when parsing the JSON. They are only used when using the `--json` flag.
+
+To create a specific `ValueTransformer` for a field:
+
+* Create your `ValueTransformer` custom class inheriting `NSValueTransformer` and add it to your project
+* Select the attribute that will need this transformer, and in the UserInfo field, add a pair for the **transformer** key whose value should be the name of the `ValueTransformer` class to use:
+
+| Key | Value |
+|-----|-------|
+| `transformer` | `NameOfTheTransformerClass` |
+
+__Example__:
+
 ![transformer](documentation/transformer.png)
 
-Le générateur produira alors le code suivant. Dans l'exemple, les attributs attrDouble et attrInteger32 n'ont pas la clé **transformer** renseignée.
 
-```
+<details>
+<summary>📑 Sample of the generated code in Objective-C (iOS)</summary>
+
+`dbgenerator` will produce the following code. (In this example, attributes `attrDouble` and `attrInteger32` don't have a **transformer** key set in their UserInfo).
+
+```objc
 // DO NOT EDIT | Generated by dbgenerator
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -709,6 +832,4 @@ Le générateur produira alors le code suivant. Dans l'exemple, les attributs at
 @end
 
 ```
-
-
-
+</details>
