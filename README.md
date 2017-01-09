@@ -745,18 +745,20 @@ public enum Type {
 --- 
 
 
-### ValueTransformers Custom
+### Custom ValueTransformers
 
-Uniquement disponible sur iOS (Android utilise la libraire GSON), les ValueTransformers custom permettent par exemple de convertir un string en un int. Voici la procédure pour les utiliser : 
+Only available on iOS (as Android uses the GSON library), custom `ValueTransformers` allows you to e.g. convrt a `String` into an `Int` or a `Date` when parsing the JSON. They are only used when using the `--json` flag.
 
-- Créer votre ValueTransformers custom en créant une classe héritant de NSValueTransformer dans votre projet.
-- Sélectionner maintenant l'attribut qui utilisera le valueTransformer. Dans le user info avec la clé **transformer** et fournissez-lui le nom de la classe du ValueTransformer
+To create a specific `ValueTransformer` for a field:
+
+* Create your `ValueTransformer` custom classe inheriting `NSValueTransformer` and add it to your project
+* Select the attribute that will need this transformer, and in the UserInfo field, add a pair for the **transformer** key whose value should be the name of the `ValueTransformer` class to use:
 
 | Key | Value |
 |-----|-------|
 | `transformer` | `NameOfTheTransformerClass` |
 
-__Exemple__:
+__Example__:
 
 ![transformer](documentation/transformer.png)
 
