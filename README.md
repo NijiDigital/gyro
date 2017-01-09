@@ -409,7 +409,7 @@ public class FidelityCard extends RealmObject {
 ---
 
 
-### Managing enums
+### Handling enums
 
 Sometimes, an `Int` attribute in the model actually represents an `enum` member in your model. To deal with this case, you can add the following two key/value pairs to this **attribute**:
 
@@ -575,32 +575,38 @@ enum OptValue: String {
 ---
 
 
-### Commenter les classes
+### Add comments to the generated classes
 
-A des fins de clareté, il est possible de rajouter un commentaire sur une entité, pour permettre de fournir une petite description du rôle de cet entité par exemple.
+To make the generated code more readable, it's possible to add comments on an entity — e.g. to provide a short description of what this entity is supposed to represent.
 
-Pour cela, il suffit de rajouter la paire clé-valeur suivante à votre **entité** du xcdatamodel.:
+To do so, simply add the following key/value pair to your **entity** in your xcdatamodel:
 
 | Key | Value |
 |-----|-------|
-| `comment` | `texte_du_commentaire` |
+| `comment` | `the_comment_text_here` |
 
-Un commentaire de code (`/** … */`) sera généré dans le `.h` (iOS) ou le `.java` (Android) juste avant la déclaration de la classe, pour aider le développeur à comprendre son but en relisant le doc (ou s'il générait la documentation Javadoc/Doxygen).
+A code commend (`/** … */`) will then be generated (in the `.h` (ObjC), `.swift` (Swift) or `.java` (Android)) just before the class declaration, to help the developer understanrd what this class is for for example.
 
 
 ---
 
 
-### Mapping json
+### JSON Mapping
 
-Vous pouvez également ajouter la correspondance json pour chaque **attribut** ou **relationship** avec la paire clé-valeur suivante :
+You can also add the json mapping for each **attribute** or **relationship** with the following key/value pair:
 
 | Key | Value |
 |-----|-------|
-| `JSONKeyPath` | `valeur_json` |
+| `JSONKeyPath` | `json_field_name` |
 
+This key is only used when using the `--json` flag.
 
-__Exemple__: Sur l'attribut 'name' de l'entité 'Shop'
+Currently, this will then generate:
+
+ * Code for `ObjectMapper` on iOS (in the future we plan to generate `Sourcery` annotations instead so that people can choose whatever JSON library they prefer).
+ * `GSON` annotations (`@SerializedName(…)`) for Android
+
+__Example__: On the 'name' attribute of the 'Shop' entity:
 
 ![JSONKeyPath](documentation/json.png)
 
@@ -670,14 +676,14 @@ Sur iOS nous utilisons la librairie Realm-JSON en génèrant les catégories Mon
 ```
 </details>
 
-Cela fonctionne également avec les enum (voir "Gérer les eums" plus haut):
+Note that this feature also works with enums (see "Handling enums" above):
 
 | Key | Value |
 |-----|-------|
 | `JSONValues` | `valeur_json_1,valeur_json_2,valeur_json_3` |
 
 
-__Exemple__:
+__Example__:
 
 ![enum_json](documentation/enum_json.png)
 
