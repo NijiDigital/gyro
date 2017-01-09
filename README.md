@@ -43,17 +43,17 @@ DBGenerator is a command line tool. The available parameters are as follows. You
 | Short flag | Long flag | Description | Android | iOS |
 | ---------- | --------- | ----------- |:-------:|:---:|
 | `-m` | `--model` | Path to the  `.xcdatamodel` file. If this parameter is not given, DBGenerator will look for a `.xcdatamodel` | ✅ | ✅ |
-| `-a` | `--android` | Path to the directory where the generated files for Android will be created (eg : home/documents/dev/android/realm_project/com/niji/data) | ✅ | ➖ |
-| `-p` | `--package` | Full name of the Android "data" package (eg : com.niji.data) | ✅ | ➖ |
+| `-a` | `--android` | Path to the directory where the generated files for Android will be created (e.g.: home/documents/dev/android/realm_project/com/niji/data) | ✅ | ➖ |
+| `-p` | `--package` | Full name of the Android "data" package (e.g.: com.niji.data) | ✅ | ➖ |
 | `-i` | `--ios` | Path to the directory where the generated files for iOS/macOS will be created | ➖ | ✅ |
-| `-j` | `--json` | Creates the Realm-JSON categories (https://github.com/matthewcheok/Realm-JSON) | ➖ | ☑️ |
+| `-j` | `--json` | Create the Realm-JSON categories (https://github.com/matthewcheok/Realm-JSON) | ➖ | ☑️ |
 | `-f` | `--framework` | Tells whether the project uses CocoaPods Frameworks  | ➖ | ☑️ |
 | `-s` | `--swift` | Use Swift for the iOS/macOS generation | ➖ | ☑️ |
 | `-n` | `--nsnumber` | Generate `NSNumber`s instead of Int/BOOL/Float types | ➖ | ☑️ |
-| `-w` | `--wrappers` | Use type wrappers for Java (Integer, Double,...) for optional attributes instead of primitive types (int, double...) | ☑️ | ➖ |
+| `-w` | `--wrappers` | Use type wrappers for Java (Integer, Double, …) for optional attributes instead of primitive types (int, double, …) | ☑️ | ➖ |
 | `-x` | `--annotations` | Annotate the getters/setters of the generated classes with `@Nullable` for any optional attribute/relationship, and with `@NonNull` for any non-optional attribute/relationship | ☑️ | ➖ |
-| `-h` | `--help` | Prints help | ☑️ | ☑️ |
-| `-v` | `--version` | Prints the current version number of DBGenerator | ☑️ | ☑️ |
+| `-h` | `--help` | Show help | ☑️ | ☑️ |
+| `-v` | `--version` | Show the current version number of DBGenerator | ☑️ | ☑️ |
 
 _Caption: ✅ Mandatory flag for this platform / ☑️ Optional flag usable for this platform / ➖ Not applicable for this platform_
 
@@ -65,9 +65,9 @@ The `.xcdatamodel` Xcode editor allows you to add "user infos" to your entities,
 
 _To define a User Info key in Xcode's xcdatamodel editor, select the entity or attribute you want to add a User Info to, then select the 3rd tab in the inspector on the right ("Data Model Inspector", or Cmd-Alt-3), and fill the information you want in the "User Info" section there._
 
-With the help of these "user infos", you will be able to give DBGenerator extra information about your model classes. For example, you can tell which attribute is the primary key, the attributes to ignore, the JSON mappings, ...
+With the help of these "user infos", you will be able to give DBGenerator extra information about your model classes. For example, you can tell which attribute is the primary key, the attributes to ignore, the JSON mappings, …
 
-Below are details about how to annotate your `xcdatamodel` entities and attributes to be able to leverage each Realm features when generating your Realm models with DBGenerator.
+Below are details about how to annotate your `.xcdatamodel` entities and attributes to be able to leverage each Realm features when generating your Realm models with DBGenerator.
 
 
 ---
@@ -351,7 +351,7 @@ public class FidelityCard extends RealmObject {
 ```
 </details>
 
-Furthermore, it's possible to add custom annoatations to your fields.
+Furthermore, it's possible to add custom annotations to your fields.
 To do that, simply add the key/value pair to the UserInfos of the attribute to annotate:
 
 | Key | Value |
@@ -579,13 +579,13 @@ enum OptValue: String {
 
 To make the generated code more readable, it's possible to add comments on an entity — e.g. to provide a short description of what this entity is supposed to represent.
 
-To do so, simply add the following key/value pair to your **entity** in your xcdatamodel:
+To do so, simply add the following key/value pair to your **entity** in your `.xcdatamodel`:
 
 | Key | Value |
 |-----|-------|
 | `comment` | `the_comment_text_here` |
 
-A code commend (`/** … */`) will then be generated (in the `.h` (ObjC), `.swift` (Swift) or `.java` (Android)) just before the class declaration, to help the developer understanrd what this class is for for example.
+A code commend (`/** … */`) will then be generated (in the `.h` (ObjC), `.swift` (Swift) or `.java` (Android)) just before the class declaration, e.g. to help the developer understand what this class is for.
 
 
 ---
@@ -639,7 +639,7 @@ public class Shop extends RealmObject {
 <details>
 <summary>📑 Sample of the generated code in Objective-C (iOS)</summary>
 
-Sur iOS nous utilisons la librairie Realm-JSON en génèrant les catégories MonEntité+JSON
+On iOS, we use the Realm-JSON library and generate them in `MyEntity+JSON.m` category files.
 
 `RLMShop+JSON.m`: 
 
@@ -751,7 +751,7 @@ Only available on iOS (as Android uses the GSON library), custom `ValueTransform
 
 To create a specific `ValueTransformer` for a field:
 
-* Create your `ValueTransformer` custom classe inheriting `NSValueTransformer` and add it to your project
+* Create your `ValueTransformer` custom class inheriting `NSValueTransformer` and add it to your project
 * Select the attribute that will need this transformer, and in the UserInfo field, add a pair for the **transformer** key whose value should be the name of the `ValueTransformer` class to use:
 
 | Key | Value |
@@ -766,7 +766,7 @@ __Example__:
 <details>
 <summary>📑 Sample of the generated code in Objective-C (iOS)</summary>
 
-Le générateur produira alors le code suivant. Dans l'exemple, les attributs attrDouble et attrInteger32 n'ont pas la clé **transformer** renseignée.
+`dbgenerator` will produce the following code. (In this example, attributes `attrDouble` and `attrInteger32` don't have a **transformer** key set in their UserInfo).
 
 ```objc
 // DO NOT EDIT | Generated by dbgenerator
