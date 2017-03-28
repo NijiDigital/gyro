@@ -53,9 +53,9 @@ module DBGenerator
         LIST_TEMPLATE = 'List<%s>'
 
         # CONSTANTS
-        ATTRIBUTE_CONSTANTS = 'public interface Attributes {'
-        RELATIONSHIP_CONSTANTS = 'public interface Relationships {'
-        CONSTANT_TEMPLATE = 'String %s = "%s";'
+        ATTRIBUTE_CONSTANTS = 'public static class Attributes {'
+        RELATIONSHIP_CONSTANTS = 'public static class Relationships {'
+        CONSTANT_TEMPLATE = 'public static final String %s = "%s";'
 
         # COMMENTS
         CLASS_COMMENT_TEMPLATE = "/**\n * %s\n */"
