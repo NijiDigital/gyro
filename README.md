@@ -418,6 +418,8 @@ Sometimes, an `Int` attribute in the model actually represents an `enum` member 
 | `enumType` | `my_type` |
 | `enumValues` | `my_value_1, my_value_2, my_value_3` |
 
+> _Note: If you also add the `JSONKeyPath` User Info key to your attribute in addition to enums, you'll have to add the `JSONValues` to also tell the mapping between the `enumValues` and the matching possible values found in the JSON. See the [JSON Mapping](#json-mapping) below for more details._
+
 __Example__: On the attribute `type` of the `Shop` entity.
 
 ![enum](documentation/enum.png)
@@ -676,12 +678,15 @@ On iOS, we use the Realm-JSON library and generate them in `MyEntity+JSON.m` cat
 ```
 </details>
 
-Note that this feature also works with enums (see "Handling enums" above):
+#### Combine JSONKeyPath and enums
+
+Note that you can **combine that `JSONKeyPath` key with enums** (see [Handling enums](#handling-enums) above). If you declared the User Info keys to make your attribute an enum (`enumType` + `enumValues`) in addition to `JSONKeyPath`, you'll have to also add the `JSONValues` key to list the corresponding values in the JSON for those `enumValues`. 
 
 | Key | Value |
 |-----|-------|
 | `JSONValues` | `valeur_json_1,valeur_json_2,valeur_json_3` |
 
+The number of items listed for that `JSONValues` key must be the same as the number of items listed for the `enumValues` keys, obviously.
 
 __Example__:
 
