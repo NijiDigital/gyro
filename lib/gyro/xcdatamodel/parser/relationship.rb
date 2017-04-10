@@ -14,8 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 =end
 
-require File.expand_path('../../xcdatamodel/parser/relationship', File.dirname(__FILE__))
-
 module Gyro
   module XCDataModel
     module Parser

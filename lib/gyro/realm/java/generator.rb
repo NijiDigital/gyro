@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 =end
 
-require File.expand_path('../../utils/log', File.dirname(__FILE__))
-require File.expand_path('../../utils/string_xcdatamodel', File.dirname(__FILE__))
-require File.expand_path('../../utils/file_utils', File.dirname(__FILE__))
-require File.expand_path('../../xcdatamodel/parser/relationship', File.dirname(__FILE__))
+require 'gyro/utils/log'
+require 'gyro/utils/string_xcdatamodel'
+require 'gyro/utils/file_utils'
+require 'gyro/xcdatamodel/parser/relationship'
 require File.expand_path('converter', File.dirname(__FILE__))
 require File.expand_path('enum_generator', File.dirname(__FILE__))
 require File.expand_path('templates', File.dirname(__FILE__))

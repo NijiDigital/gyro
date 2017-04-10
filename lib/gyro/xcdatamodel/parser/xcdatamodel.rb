@@ -15,8 +15,8 @@ limitations under the License.
 =end
 
 require 'nokogiri'
-require File.expand_path('../../utils/raise', File.dirname(__FILE__))
-require File.expand_path('entity', File.dirname(__FILE__))
+require 'gyro/utils/error'
+require 'gyro/entity'
 
 module Gyro
   module XCDataModel

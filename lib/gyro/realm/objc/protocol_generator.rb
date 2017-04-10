@@ -16,8 +16,8 @@ limitations under the License.
 
 require File.expand_path('templates', File.dirname(__FILE__))
 require File.expand_path('converter', File.dirname(__FILE__))
-require File.expand_path('../../utils/string_xcdatamodel', File.dirname(__FILE__))
-require File.expand_path('../../utils/file_utils', File.dirname(__FILE__))
+require 'gyro/utils/string_xcdatamodel'
+require 'gyro/utils/file_utils'
 
 module Gyro
   module Realm
