@@ -14,14 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 =end
 
-require 'gyro/utils/log'
-require 'gyro/utils/string_xcdatamodel'
-require 'gyro/utils/file_utils'
 require 'gyro/xcdatamodel/parser/relationship'
-require File.expand_path('converter', File.dirname(__FILE__))
-require File.expand_path('enum_generator', File.dirname(__FILE__))
-require File.expand_path('templates', File.dirname(__FILE__))
-require File.expand_path('object_mapper_generator', File.dirname(__FILE__))
+require 'gyro/realm/swift/converter'
+require 'gyro/realm/swift/enum_generator'
+require 'gyro/realm/swift/templates'
+require 'gyro/realm/swift/object_mapper_generator'
 
 module Gyro
   module Realm

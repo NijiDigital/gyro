@@ -14,10 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 =end
 
-require File.expand_path('templates', File.dirname(__FILE__))
-require 'gyro/utils/file_utils'
-require 'gyro/utils/string_xcdatamodel'
-
 module Gyro
   module Realm
     module ObjC

@@ -16,9 +16,12 @@ limitations under the License.
 
 require 'gyro/version'
 
-require 'gyro/xcdatamodel/parser/xcdatamodel'
+require 'gyro/xcdatamodel/parser'
 require 'gyro/realm/java/generator'
 require 'gyro/realm/objc/generator'
 require 'gyro/realm/swift/generator'
+
 require 'gyro/utils/log'
 require 'gyro/utils/file_utils'
+require 'gyro/utils/string_xcdatamodel'
+require 'gyro/utils/error'

@@ -14,16 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 =end
 
-require 'gyro/utils/log'
-require 'gyro/utils/string_xcdatamodel'
-require 'gyro/utils/file_utils'
-require 'gyro/xcdatamodel/parser/relationship'
-
-require File.expand_path('converter', File.dirname(__FILE__))
-require File.expand_path('templates', File.dirname(__FILE__))
-require File.expand_path('protocol_generator', File.dirname(__FILE__))
-require File.expand_path('enum_generator', File.dirname(__FILE__))
-require File.expand_path('json_category_generator', File.dirname(__FILE__))
+require 'gyro/xcdatamodel/parser'
+require 'gyro/realm/objc/converter'
+require 'gyro/realm/objc/templates'
+require 'gyro/realm/objc/protocol_generator'
+require 'gyro/realm/objc/enum_generator'
+require 'gyro/realm/objc/json_category_generator'
 
 module Gyro
   module Realm

@@ -14,11 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 =end
 
-require 'nokogiri'
-require 'set'
-require File.expand_path('relationship', File.dirname(__FILE__))
-require File.expand_path('attribute', File.dirname(__FILE__))
-
 module Gyro
   module XCDataModel
     module Parser

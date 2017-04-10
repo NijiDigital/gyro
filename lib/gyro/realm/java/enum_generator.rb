@@ -14,10 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 =end
 
-require File.expand_path('templates', File.dirname(__FILE__))
-require 'gyro/utils/string_xcdatamodel'
-require 'gyro/utils/file_utils'
-
 module Gyro
   module Realm
     module Java

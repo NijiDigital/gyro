@@ -14,13 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 =end
 
-require 'gyro/utils/log'
-require 'gyro/utils/string_xcdatamodel'
-require 'gyro/utils/file_utils'
-require 'gyro/xcdatamodel/parser/relationship'
-require File.expand_path('converter', File.dirname(__FILE__))
-require File.expand_path('enum_generator', File.dirname(__FILE__))
-require File.expand_path('templates', File.dirname(__FILE__))
+require 'gyro/xcdatamodel/parser'
+require 'gyro/realm/java/converter'
+require 'gyro/realm/java/enum_generator'
+require 'gyro/realm/java/templates'
 
 module Gyro
   module Realm
