@@ -15,8 +15,8 @@ limitations under the License.
 =end
 
 require 'gyro/xcdatamodel/parser'
-require 'gyro/realm/objc/converter'
 require 'gyro/realm/objc/templates'
+require 'gyro/realm/objc/converter'
 require 'gyro/realm/objc/protocol_generator'
 require 'gyro/realm/objc/enum_generator'
 require 'gyro/realm/objc/json_category_generator'

@@ -2,7 +2,7 @@ require File.expand_path('lib/gyro/version', File.dirname(__FILE__))
 
 Gem::Specification.new do |s|
   s.name        = 'gyro'
-  s.version     = '0.4.0'
+  s.version     = Gyro::VERSION
   s.date        = '2017-04-10'
   s.summary     = "Generate Realm.io models for Swift, Java & ObjC from xcdatamodel"
   s.description = <<-DESC

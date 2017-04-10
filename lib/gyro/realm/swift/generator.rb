@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 =end
 
-require 'gyro/xcdatamodel/parser/relationship'
+require 'gyro/xcdatamodel/parser'
+require 'gyro/realm/swift/templates'
 require 'gyro/realm/swift/converter'
 require 'gyro/realm/swift/enum_generator'
-require 'gyro/realm/swift/templates'
 require 'gyro/realm/swift/object_mapper_generator'
 
 module Gyro

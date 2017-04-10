@@ -15,9 +15,9 @@ limitations under the License.
 =end
 
 require 'gyro/xcdatamodel/parser'
+require 'gyro/realm/java/templates'
 require 'gyro/realm/java/converter'
 require 'gyro/realm/java/enum_generator'
-require 'gyro/realm/java/templates'
 
 module Gyro
   module Realm
