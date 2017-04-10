@@ -18,9 +18,9 @@ if $0 == __FILE__
   $:.unshift File.expand_path('../lib', File.dirname(__FILE__))
 end
 
-require 'dbgenerator'
+require 'gyro'
 
-TMP_DIR_NAME = 'DBGenerator'
+TMP_DIR_NAME = 'Gyro'
 
 def find_file(dir, file_name)
   Dir.chdir(dir) do

@@ -1,6 +1,6 @@
-# DBGenerator
+# Gyro
 
-DBGenerator is a tool to generate [Realm](https://realm.io) model classes, for both Android (Java) and iOS/macOS (ObjC & Swift), from an `.xcdatamodel` file.
+Gyro is a tool to generate [Realm](https://realm.io) model classes, for both Android (Java) and iOS/macOS (ObjC & Swift), from an `.xcdatamodel` file.
 
 ---
 
@@ -9,7 +9,7 @@ DBGenerator is a tool to generate [Realm](https://realm.io) model classes, for b
 
 The `.xcdatamodel` file is usually used to represent Core Data entities in Xcode in a graphical way. It can be created or edited with a graphical user interface in Xcode.
 
-But with DBGenerator, you will now be able to **use an `xcdatamodel` to create a [Realm](https://realm.io) model files as well!**
+But with Gyro, you will now be able to **use an `xcdatamodel` to create a [Realm](https://realm.io) model files as well!**
 
 This will allow you to design your model in a visual way (rather than by code), only once (rather than once for Android and once for iOS), and have the code generated for you.
 
@@ -27,10 +27,10 @@ It has been initially developed by [Niji](http://www.niji.fr) and is in no way a
 
 ## Installation
 
-Simply clone this repository anywhere you want on your machine, then run the `bin/dbgenerator` ruby script with the appropriate options (see below). For example:
+Simply clone this repository anywhere you want on your machine, then run the `bin/gyro` ruby script with the appropriate options (see below). For example:
 
 ```
-~/Dev/DBGenerator/bin/dbgenerator -m <model> --ios ~/Dev/MyProject/RealmModel --swift
+~/Dev/Gyro/bin/gyro -m <model> --ios ~/Dev/MyProject/RealmModel --swift
 ```
 
 
@@ -38,11 +38,11 @@ Simply clone this repository anywhere you want on your machine, then run the `bi
 
 ## Command line arguments
 
-DBGenerator is a command line tool. The available parameters are as follows. You can also use `-h` do display the usage and available parameters/flags in the Terminal of course.
+Gyro is a command line tool. The available parameters are as follows. You can also use `-h` do display the usage and available parameters/flags in the Terminal of course.
 
 | Short flag | Long flag | Description | Android | iOS |
 | ---------- | --------- | ----------- |:-------:|:---:|
-| `-m` | `--model` | Path to the  `.xcdatamodel` file. If this parameter is not given, DBGenerator will look for a `.xcdatamodel` | ✅ | ✅ |
+| `-m` | `--model` | Path to the  `.xcdatamodel` file. If this parameter is not given, Gyro will look for a `.xcdatamodel` | ✅ | ✅ |
 | `-a` | `--android` | Path to the directory where the generated files for Android will be created (e.g.: home/documents/dev/android/realm_project/com/niji/data) | ✅ | ➖ |
 | `-p` | `--package` | Full name of the Android "data" package (e.g.: com.niji.data) | ✅ | ➖ |
 | `-i` | `--ios` | Path to the directory where the generated files for iOS/macOS will be created | ➖ | ✅ |
@@ -53,7 +53,7 @@ DBGenerator is a command line tool. The available parameters are as follows. You
 | `-w` | `--wrappers` | Use type wrappers for Java (Integer, Double, …) for optional attributes instead of primitive types (int, double, …) | ☑️ | ➖ |
 | `-x` | `--annotations` | Annotate the getters/setters of the generated classes with `@Nullable` for any optional attribute/relationship, and with `@NonNull` for any non-optional attribute/relationship | ☑️ | ➖ |
 | `-h` | `--help` | Show help | ☑️ | ☑️ |
-| `-v` | `--version` | Show the current version number of DBGenerator | ☑️ | ☑️ |
+| `-v` | `--version` | Show the current version number of Gyro | ☑️ | ☑️ |
 
 _Caption: ✅ Mandatory flag for this platform / ☑️ Optional flag usable for this platform / ➖ Not applicable for this platform_
 
@@ -65,9 +65,9 @@ The `.xcdatamodel` Xcode editor allows you to add "user infos" to your entities,
 
 _To define a User Info key in Xcode's xcdatamodel editor, select the entity or attribute you want to add a User Info to, then select the 3rd tab in the inspector on the right ("Data Model Inspector", or Cmd-Alt-3), and fill the information you want in the "User Info" section there._
 
-With the help of these "user infos", you will be able to give DBGenerator extra information about your model classes. For example, you can tell which attribute is the primary key, the attributes to ignore, the JSON mappings, …
+With the help of these "user infos", you will be able to give Gyro extra information about your model classes. For example, you can tell which attribute is the primary key, the attributes to ignore, the JSON mappings, …
 
-Below are details about how to annotate your `.xcdatamodel` entities and attributes to be able to leverage each Realm features when generating your Realm models with DBGenerator.
+Below are details about how to annotate your `.xcdatamodel` entities and attributes to be able to leverage each Realm features when generating your Realm models with Gyro.
 
 
 ---
@@ -96,7 +96,7 @@ package com.niji.data;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
-/* DO NOT EDIT | Generated by dbgenerator */
+/* DO NOT EDIT | Generated by gyro */
 
 public class FidelityCard extends RealmObject {
 
@@ -113,7 +113,7 @@ public class FidelityCard extends RealmObject {
 <summary>📑 Sample of the generated code in Objective-C (iOS)</summary>
 
 ```objc
-// DO NOT EDIT | Generated by dbgenerator
+// DO NOT EDIT | Generated by gyro
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -166,7 +166,7 @@ import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 
-/* DO NOT EDIT | Generated by dbgenerator */
+/* DO NOT EDIT | Generated by gyro */
 
 public class Shop extends RealmObject {
 
@@ -184,7 +184,7 @@ public class Shop extends RealmObject {
 <summary>📑 Sample of the generated code in Objective-C (iOS)</summary>
 
 ```objc
-// DO NOT EDIT | Generated by dbgenerator
+// DO NOT EDIT | Generated by gyro
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -232,7 +232,7 @@ __Example__: On the `readOnly`  attribute of the `Shop`  entity:
 <summary>📑 Sample of the generated code in Objective-C (iOS)</summary>
 
 ```objc
-// DO NOT EDIT | Generated by dbgenerator
+// DO NOT EDIT | Generated by gyro
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -265,7 +265,7 @@ __Example__: On the `readOnly`  attribute of the `Shop`  entity:
 
 In realm, when you have both A -> B and B -> A relationships, you have to choose one of those relationships to be the primary one (e.g. A -> B) — that will be stored in Realm — and the other inverse relationship will then be **computed** by code. [For more information, see the related RealmSwift documentation on Inverse Relationships](https://realm.io/docs/swift/latest/#inverse-relationships).
 
-To mark a relationship as being an inverse relationship (the B -> A relationship and not the primary A -> B one), the convention in `dbgenerator` is to **suffix the name of the relationship with an underscore `_`** .
+To mark a relationship as being an inverse relationship (the B -> A relationship and not the primary A -> B one), the convention in `gyro` is to **suffix the name of the relationship with an underscore `_`** .
 
 This will then generate the following code in Swift for that inverse relationship:
 
@@ -297,7 +297,7 @@ package com.niji.data;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
-/* DO NOT EDIT | Generated by dbgenerator */
+/* DO NOT EDIT | Generated by gyro */
 
 public class FidelityCard extends RealmObject {
 
@@ -328,7 +328,7 @@ package com.niji.data;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
-/* DO NOT EDIT | Generated by dbgenerator */
+/* DO NOT EDIT | Generated by gyro */
 
 public class FidelityCard extends RealmObject {
 
@@ -372,7 +372,7 @@ package fr.ganfra.realm;
 
 import io.realm.RealmObject;
 
-/* DO NOT EDIT | Generated by dbgenerator */
+/* DO NOT EDIT | Generated by gyro */
 
 public class FidelityCard extends RealmObject {
 
@@ -435,7 +435,7 @@ package com.niji.data;
 
 import io.realm.RealmObject;
 
-/* DO NOT EDIT | Generated by dbgenerator */
+/* DO NOT EDIT | Generated by gyro */
 
 public class Shop extends RealmObject {
     private String name;
@@ -449,7 +449,7 @@ public class Shop extends RealmObject {
 ```java
 package com.niji.data;
 
-/* DO NOT EDIT | Generated by dbgenerator */
+/* DO NOT EDIT | Generated by gyro */
 
 public enum Type {
     TYPE_ONE,
@@ -465,7 +465,7 @@ public enum Type {
 `RLMShop.h`:
 
 ```objc
-// DO NOT EDIT | Generated by dbgenerator
+// DO NOT EDIT | Generated by gyro
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -491,7 +491,7 @@ public enum Type {
 `RLMTypes.h`:
 
 ```objc
-// DO NOT EDIT | Generated by dbgenerator
+// DO NOT EDIT | Generated by gyro
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -511,7 +511,7 @@ typedef NS_ENUM(int, RLMType) {
 `Shop.swift`:
 
 ```swift
-/* DO NOT EDIT | Generated by dbgenerator */
+/* DO NOT EDIT | Generated by gyro */
 
 import RealmSwift
 
@@ -549,7 +549,7 @@ final class Shop: Object {
 `Type.swift`:
 
 ```swift
-/* DO NOT EDIT | Generated by dbgenerator */
+/* DO NOT EDIT | Generated by gyro */
 
 enum Type: String {
     case TypeOne = "type_one"
@@ -561,7 +561,7 @@ enum Type: String {
 `OptValue.swift`
 
 ```swift
-/* DO NOT EDIT | Generated by dbgenerator */
+/* DO NOT EDIT | Generated by gyro */
 
 enum OptValue: String {
     case OptValueOne = "opt_value_one"
@@ -626,7 +626,7 @@ import com.google.gson.annotations.SerializedName;
 import io.realm.RealmList;
 import io.realm.RealmObject;
 
-/* DO NOT EDIT | Generated by dbgenerator */
+/* DO NOT EDIT | Generated by gyro */
 
 public class Shop extends RealmObject {
 
@@ -646,7 +646,7 @@ On iOS, we use the Realm-JSON library and generate them in `MyEntity+JSON.m` cat
 `RLMShop+JSON.m`: 
 
 ```objc
-// DO NOT EDIT | Generated by dbgenerator
+// DO NOT EDIT | Generated by gyro
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -701,7 +701,7 @@ package com.niji.data;
 
 import com.google.gson.annotations.SerializedName;
 
-/* DO NOT EDIT | Generated by dbgenerator */
+/* DO NOT EDIT | Generated by gyro */
 
 public enum Type {
 
@@ -718,7 +718,7 @@ public enum Type {
 `RLMShop+JSON.m`:
 
 ```objc
-// DO NOT EDIT | Generated by dbgenerator
+// DO NOT EDIT | Generated by gyro
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -771,10 +771,10 @@ __Example__:
 <details>
 <summary>📑 Sample of the generated code in Objective-C (iOS)</summary>
 
-`dbgenerator` will produce the following code. (In this example, attributes `attrDouble` and `attrInteger32` don't have a **transformer** key set in their UserInfo).
+`gyro` will produce the following code. (In this example, attributes `attrDouble` and `attrInteger32` don't have a **transformer** key set in their UserInfo).
 
 ```objc
-// DO NOT EDIT | Generated by dbgenerator
+// DO NOT EDIT | Generated by gyro
 
 ////////////////////////////////////////////////////////////////////////////////
 
