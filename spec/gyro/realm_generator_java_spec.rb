@@ -16,7 +16,7 @@ limitations under the License.
 
 require 'tmpdir'
 
-PACKAGE_NAME = 'fr.ganfra.realm'
+PACKAGE_NAME = 'com.gyro.tests'
 
 module Gyro
   describe Realm do

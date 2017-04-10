@@ -368,7 +368,7 @@ __Example__: If you wish to add the `IntRange(from=0,to=255)` annotation to an a
 <summary>📑 Sample of the generated code in Java (Android)</summary>
 
 ```java
-package fr.ganfra.realm;
+package com.gyro.tests;
 
 import io.realm.RealmObject;
 

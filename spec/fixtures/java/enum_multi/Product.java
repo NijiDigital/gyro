@@ -1,4 +1,4 @@
-package fr.ganfra.realm;
+package com.gyro.tests;
 
 import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
