@@ -86,9 +86,9 @@ module Gyro
         private ################################################################
 
         def search_for_error
-          Raise::error("The attribute \"%s\" from \"%s\" has no type - please fix it"%[@name, @entity_name]) if @type == :undefined || @type.empty?
-          Raise::error("The attribute \"%s\" from \"%s\" is enum with incorrect type (not Integer) - please fix it"%[@name, @entity_name]) if !@enum_type.empty? and !@enum_values.empty? and !is_integer?
-          Raise::error("The attribute \"%s\" from \"%s\" is wrongly annotated: when declaring an type with enum and JSONKeyPath, you must have the same number of items in the 'enumValues' and 'JSONValues' annotations - please fix it"%[@name, @entity_name]) if !@json_key_path.empty? and !@enum_values.empty? and @enum_values.size != @json_values.size
+          Gyro::Error::raise("The attribute \"%s\" from \"%s\" has no type - please fix it"%[@name, @entity_name]) if @type == :undefined || @type.empty?
+          Gyro::Error::raise("The attribute \"%s\" from \"%s\" is enum with incorrect type (not Integer) - please fix it"%[@name, @entity_name]) if !@enum_type.empty? and !@enum_values.empty? and !is_integer?
+          Gyro::Error::raise("The attribute \"%s\" from \"%s\" is wrongly annotated: when declaring an type with enum and JSONKeyPath, you must have the same number of items in the 'enumValues' and 'JSONValues' annotations - please fix it"%[@name, @entity_name]) if !@json_key_path.empty? and !@enum_values.empty? and @enum_values.size != @json_values.size
         end
 
       end

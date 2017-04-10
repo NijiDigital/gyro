@@ -59,8 +59,8 @@ module Gyro
         end
 
         def search_for_error
-          Raise::error("The relationship \"%s\" from \"%s\" is wrong - please fix it"%[name, entity_name]) if inverse_type.empty? && destination.empty?
-          Raise::error("The relationship \"%s\" from \"%s\" is wrong - please set a 'No Value' relationship as 'To Many'"%[name, entity_name]) if !destination.empty? && type != :to_many
+          Gyro::Error::raise("The relationship \"%s\" from \"%s\" is wrong - please fix it"%[name, entity_name]) if inverse_type.empty? && destination.empty?
+          Gyro::Error::raise("The relationship \"%s\" from \"%s\" is wrong - please set a 'No Value' relationship as 'To Many'"%[name, entity_name]) if !destination.empty? && type != :to_many
         end
 
       end

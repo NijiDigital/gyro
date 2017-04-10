@@ -1,3 +1,5 @@
+require File.expand_path('lib/gyro/version', File.dirname(__FILE__))
+
 Gem::Specification.new do |s|
   s.name        = 'gyro'
   s.version     = '0.4.0'
@@ -13,7 +15,7 @@ Gem::Specification.new do |s|
   DESC
   s.authors     = ["NijiDigital", "Olivier Halligon", "François Ganard"]
   s.email       = 'contact@niji.fr'
-  s.homepage    = 'http://rubygems.org/gems/gyro'
+  s.homepage    = 'https://github.com/NijiDigital/gyro'
   s.license     = 'Apache-2.0'
 
   s.files       = Dir["lib/**/*"] + Dir["bin/gyro"] + %w(README.md LICENSE) + Dir["documentation/"]

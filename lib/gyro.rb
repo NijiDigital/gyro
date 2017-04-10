@@ -14,19 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 =end
 
-require File.expand_path('gyro/xcdatamodel/parser/xcdatamodel', File.dirname(__FILE__))
-require File.expand_path('gyro/realm/java/generator', File.dirname(__FILE__))
-require File.expand_path('gyro/realm/objc/generator', File.dirname(__FILE__))
-require File.expand_path('gyro/realm/swift/generator', File.dirname(__FILE__))
-require File.expand_path('gyro/utils/log', File.dirname(__FILE__))
-require File.expand_path('gyro/utils/file_utils', File.dirname(__FILE__))
+require 'gyro/version'
 
-module Gyro
-  VERSION = '0.4.0'
-
-  def self.exit_with_error(message)
-    Gyro::Log::error message
-    exit 1
-  end
-
-end
+require 'gyro/xcdatamodel/parser/xcdatamodel'
+require 'gyro/realm/java/generator'
+require 'gyro/realm/objc/generator'
+require 'gyro/realm/swift/generator'
+require 'gyro/utils/log'
+require 'gyro/utils/file_utils'

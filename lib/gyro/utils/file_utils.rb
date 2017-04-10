@@ -15,7 +15,6 @@ limitations under the License.
 =end
 
 module Gyro
-
   def self.find_xcdatamodel(dir)
     Dir.chdir(dir) do
       files = Dir.glob('*.xcdatamodel')
@@ -27,5 +26,4 @@ module Gyro
     file_path = File.expand_path(name_file, dir)
     File.write(file_path, content)
   end
-
 end

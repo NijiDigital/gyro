@@ -78,7 +78,7 @@ if options[:model].nil?
 end
 
 if options[:model].nil?
-  Gyro.exit_with_error('You need to specify .xcdatamodel path using --model option (see --help for more info)')
+  Gyro::Error::exit_with_error('You need to specify .xcdatamodel path using --model option (see --help for more info)')
 else
   basename = File.basename(options[:model])
   dirname = File.dirname(options[:model])

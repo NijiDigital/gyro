@@ -14,10 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 =end
 
-module Raise
-
-  def self.error(str)
-    raise "\e[1;31m! #{str}\e[0m"
+module Gyro
+  module Error
+    def self.raise(str)
+      raise "\e[1;31m! #{str}\e[0m"
+    end
+  
+    def self.exit_with_error(message)
+      Gyro::Log::error message
+      exit 1
+    end
   end
-
 end
