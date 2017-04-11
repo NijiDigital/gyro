@@ -35,13 +35,19 @@ It has been initially developed by [Niji](http://www.niji.fr) and is in no way a
 
 ## Installation
 
-Simply clone this repository anywhere you want on your machine, then run the `bin/gyro` ruby script with the appropriate options (see below). For example:
+Gyro is on RubyGems, so this means you can simply install it by using this command in your terminal:
 
+```bash
+gem install gyro
 ```
-~/Dev/Gyro/bin/gyro -m <model> --ios ~/Dev/MyProject/RealmModel --swift
+
+Then invoke it with the appropriate options (see next paragraph), like this:
+
+```bash
+gyro -m <model> --ios ~/Dev/MyProject/RealmModel --swift
 ```
 
-
+_Alternativly, you could also simply clone this repository anywhere you want on your machine, then run the `bin/gyro` executable directly from where you cloned it_
 
 
 ## Command line arguments
