@@ -3,7 +3,15 @@
 Gyro is a tool to generate [Realm](https://realm.io) model classes, for both Android (Java) and iOS/macOS (ObjC & Swift), from an `.xcdatamodel` file.
 
 ---
-
+<center><table><tr>
+  <td><img src='logo.png' width='200' height='200' /></td>
+  <td>
+    <strong>G</strong> enerate<br/>
+    <strong>Y</strong> our<br/>
+    <strong>R</strong> ealm<br/>
+    <strong>O</strong> bjects
+  </td>
+</tr></table></center>
 
 ## Introduction
 
