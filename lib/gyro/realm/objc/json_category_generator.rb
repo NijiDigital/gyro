@@ -124,7 +124,7 @@ module Gyro
                   model_values = TRANSFORMER_BOOL_MODEL
                 else
                   if attribute.json_values.empty?
-                    Gyro::Error::raise("The attribute \"%s\" from \"%s\" is enum without JSONValues - please fix it"%[attribute.name, attribute.entity_name])
+                    Gyro::Error::raise!("The attribute \"%s\" from \"%s\" is enum without JSONValues - please fix it"%[attribute.name, attribute.entity_name])
                   end
                   json_values = TRANSFORMER_ENUM_JSON + attribute.json_values.map { |enum| '@' + enum.add_quotes }
                   enums = attribute.enum_values

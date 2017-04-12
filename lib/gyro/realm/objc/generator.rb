@@ -48,7 +48,6 @@ module Gyro
         private ################################################################
 
         def generate_class_files(path, xcdatamodel, use_nsnumber)
-          puts "\n"
           Gyro::Log::title('Objc Realm')
           xcdatamodel.entities.each do |_, entity|
             unless entity.abstract?

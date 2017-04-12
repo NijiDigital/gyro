@@ -17,145 +17,149 @@ limitations under the License.
 require 'tmpdir'
 
 module Gyro
-  describe Realm do
+  module Realm
+    describe ObjC do
+      before do
+        Gyro::Log.quiet = true
+      end
+      
+      it 'realm' do
+        xcdatamodel_dir = File.expand_path('../fixtures/xcdatamodel/realm.xcdatamodel', File.dirname(__FILE__))
+        xcdatamodel = Gyro::XCDataModel::Parser::XCDataModel.new(xcdatamodel_dir)
+        Dir.mktmpdir(TMP_DIR_NAME) do |tmp_dir|
+          ObjC::Generator.new(tmp_dir, xcdatamodel)
+          fixtures_files_dir = File.expand_path('../fixtures/objc/realm', File.dirname(__FILE__))
+          compare_dirs(tmp_dir, fixtures_files_dir)
+        end
+      end
 
-    it 'Realm ObjC' do
-      xcdatamodel_dir = File.expand_path('../fixtures/xcdatamodel/realm.xcdatamodel', File.dirname(__FILE__))
-      xcdatamodel = Gyro::XCDataModel::Parser::XCDataModel.new(xcdatamodel_dir)
-      Dir.mktmpdir(TMP_DIR_NAME) do |tmp_dir|
-        Realm::ObjC::Generator.new(tmp_dir, xcdatamodel)
-        fixtures_files_dir = File.expand_path('../fixtures/objc/realm', File.dirname(__FILE__))
-        compare_dirs(tmp_dir, fixtures_files_dir)
+      it 'primary' do
+        xcdatamodel_dir = File.expand_path('../fixtures/xcdatamodel/primary.xcdatamodel', File.dirname(__FILE__))
+        xcdatamodel = Gyro::XCDataModel::Parser::XCDataModel.new(xcdatamodel_dir)
+        Dir.mktmpdir(TMP_DIR_NAME) do |tmp_dir|
+          ObjC::Generator.new(tmp_dir, xcdatamodel)
+          fixtures_files_dir = File.expand_path('../fixtures/objc/primary', File.dirname(__FILE__))
+          compare_dirs(tmp_dir, fixtures_files_dir)
+        end
+      end
+
+      it 'optional' do
+        xcdatamodel_dir = File.expand_path('../fixtures/xcdatamodel/optional.xcdatamodel', File.dirname(__FILE__))
+        xcdatamodel = Gyro::XCDataModel::Parser::XCDataModel.new(xcdatamodel_dir)
+        Dir.mktmpdir(TMP_DIR_NAME) do |tmp_dir|
+          ObjC::Generator.new(tmp_dir, xcdatamodel)
+          fixtures_files_dir = File.expand_path('../fixtures/objc/optional', File.dirname(__FILE__))
+          compare_dirs(tmp_dir, fixtures_files_dir)
+        end
+      end
+
+      it 'ignored' do
+        xcdatamodel_dir = File.expand_path('../fixtures/xcdatamodel/ignored.xcdatamodel', File.dirname(__FILE__))
+        xcdatamodel = Gyro::XCDataModel::Parser::XCDataModel.new(xcdatamodel_dir)
+        Dir.mktmpdir(TMP_DIR_NAME) do |tmp_dir|
+          ObjC::Generator.new(tmp_dir, xcdatamodel)
+          fixtures_files_dir = File.expand_path('../fixtures/objc/ignored', File.dirname(__FILE__))
+          compare_dirs(tmp_dir, fixtures_files_dir)
+        end
+      end
+
+      it 'enum simple' do
+        xcdatamodel_dir = File.expand_path('../fixtures/xcdatamodel/enum.xcdatamodel', File.dirname(__FILE__))
+        xcdatamodel = Gyro::XCDataModel::Parser::XCDataModel.new(xcdatamodel_dir)
+        Dir.mktmpdir(TMP_DIR_NAME) do |tmp_dir|
+          ObjC::Generator.new(tmp_dir, xcdatamodel)
+          fixtures_files_dir = File.expand_path('../fixtures/objc/enum', File.dirname(__FILE__))
+          compare_dirs(tmp_dir, fixtures_files_dir)
+        end
+      end
+
+      it 'enum multi' do
+        xcdatamodel_dir = File.expand_path('../fixtures/xcdatamodel/enum_multi.xcdatamodel', File.dirname(__FILE__))
+        xcdatamodel = Gyro::XCDataModel::Parser::XCDataModel.new(xcdatamodel_dir)
+        Dir.mktmpdir(TMP_DIR_NAME) do |tmp_dir|
+          ObjC::Generator.new(tmp_dir, xcdatamodel)
+          fixtures_files_dir = File.expand_path('../fixtures/objc/enum_multi', File.dirname(__FILE__))
+          compare_dirs(tmp_dir, fixtures_files_dir)
+        end
+      end
+
+      it 'json' do
+        xcdatamodel_dir = File.expand_path('../fixtures/xcdatamodel/json_key_path.xcdatamodel', File.dirname(__FILE__))
+        xcdatamodel = Gyro::XCDataModel::Parser::XCDataModel.new(xcdatamodel_dir)
+        Dir.mktmpdir(TMP_DIR_NAME) do |tmp_dir|
+          ObjC::Generator.new(tmp_dir, xcdatamodel, true)
+          fixtures_files_dir = File.expand_path('../fixtures/objc/json', File.dirname(__FILE__))
+          compare_dirs(tmp_dir, fixtures_files_dir)
+        end
+      end
+
+      it 'json with Framework' do
+        xcdatamodel_dir = File.expand_path('../fixtures/xcdatamodel/json_key_path.xcdatamodel', File.dirname(__FILE__))
+        xcdatamodel = Gyro::XCDataModel::Parser::XCDataModel.new(xcdatamodel_dir)
+        Dir.mktmpdir(TMP_DIR_NAME) do |tmp_dir|
+          ObjC::Generator.new(tmp_dir, xcdatamodel, true, true)
+          fixtures_files_dir = File.expand_path('../fixtures/objc/json_framework', File.dirname(__FILE__))
+          compare_dirs(tmp_dir, fixtures_files_dir)
+        end
+      end
+
+      it 'json with enum' do
+        xcdatamodel_dir = File.expand_path('../fixtures/xcdatamodel/enum_json.xcdatamodel', File.dirname(__FILE__))
+        xcdatamodel = Gyro::XCDataModel::Parser::XCDataModel.new(xcdatamodel_dir)
+        Dir.mktmpdir(TMP_DIR_NAME) do |tmp_dir|
+          ObjC::Generator.new(tmp_dir, xcdatamodel, true)
+          fixtures_files_dir = File.expand_path('../fixtures/objc/enum_json', File.dirname(__FILE__))
+          compare_dirs(tmp_dir, fixtures_files_dir)
+        end
+      end
+
+      it 'check raising enum json error' do
+        xcdatamodel_dir = File.expand_path('../fixtures/xcdatamodel/error_enum_json.xcdatamodel', File.dirname(__FILE__))
+        xcdatamodel = Gyro::XCDataModel::Parser::XCDataModel.new(xcdatamodel_dir)
+        Dir.mktmpdir(TMP_DIR_NAME) do |tmp_dir|
+          expect { ObjC::Generator.new(tmp_dir, xcdatamodel, true) }.to raise_error "\e[1;31m! The attribute \"type\" from \"RLMShop\" is enum without JSONValues - please fix it\e[0m"
+        end
+      end
+
+      it 'json with bool' do
+        xcdatamodel_dir = File.expand_path('../fixtures/xcdatamodel/bool.xcdatamodel', File.dirname(__FILE__))
+        xcdatamodel = Gyro::XCDataModel::Parser::XCDataModel.new(xcdatamodel_dir)
+        Dir.mktmpdir(TMP_DIR_NAME) do |tmp_dir|
+          ObjC::Generator.new(tmp_dir, xcdatamodel, true)
+          fixtures_files_dir = File.expand_path('../fixtures/objc/bool', File.dirname(__FILE__))
+          compare_dirs(tmp_dir, fixtures_files_dir)
+        end
+      end
+
+      it 'inverse' do
+        xcdatamodel_dir = File.expand_path('../fixtures/xcdatamodel/inverse.xcdatamodel', File.dirname(__FILE__))
+        xcdatamodel = Gyro::XCDataModel::Parser::XCDataModel.new(xcdatamodel_dir)
+        Dir.mktmpdir(TMP_DIR_NAME) do |tmp_dir|
+          ObjC::Generator.new(tmp_dir, xcdatamodel, false)
+          fixtures_files_dir = File.expand_path('../fixtures/objc/inverse', File.dirname(__FILE__))
+          compare_dirs(tmp_dir, fixtures_files_dir)
+        end
+      end
+
+      it 'json with number' do
+        xcdatamodel_dir = File.expand_path('../fixtures/xcdatamodel/transformers.xcdatamodel', File.dirname(__FILE__))
+        xcdatamodel = Gyro::XCDataModel::Parser::XCDataModel.new(xcdatamodel_dir)
+        Dir.mktmpdir(TMP_DIR_NAME) do |tmp_dir|
+          ObjC::Generator.new(tmp_dir, xcdatamodel, true)
+          fixtures_files_dir = File.expand_path('../fixtures/objc/transformers', File.dirname(__FILE__))
+          compare_dirs(tmp_dir, fixtures_files_dir)
+        end
+      end
+
+      it 'relationship without value' do
+        xcdatamodel_dir = File.expand_path('../fixtures/xcdatamodel/relationship_type.xcdatamodel', File.dirname(__FILE__))
+        xcdatamodel = Gyro::XCDataModel::Parser::XCDataModel.new(xcdatamodel_dir)
+        Dir.mktmpdir(TMP_DIR_NAME) do |tmp_dir|
+          ObjC::Generator.new(tmp_dir, xcdatamodel, true)
+          fixtures_files_dir = File.expand_path('../fixtures/objc/no_value', File.dirname(__FILE__))
+          compare_dirs(tmp_dir, fixtures_files_dir)
+        end
       end
     end
-
-    it 'Realm ObjC primary' do
-      xcdatamodel_dir = File.expand_path('../fixtures/xcdatamodel/primary.xcdatamodel', File.dirname(__FILE__))
-      xcdatamodel = Gyro::XCDataModel::Parser::XCDataModel.new(xcdatamodel_dir)
-      Dir.mktmpdir(TMP_DIR_NAME) do |tmp_dir|
-        Realm::ObjC::Generator.new(tmp_dir, xcdatamodel)
-        fixtures_files_dir = File.expand_path('../fixtures/objc/primary', File.dirname(__FILE__))
-        compare_dirs(tmp_dir, fixtures_files_dir)
-      end
-    end
-
-    it 'Realm ObjC optional' do
-      xcdatamodel_dir = File.expand_path('../fixtures/xcdatamodel/optional.xcdatamodel', File.dirname(__FILE__))
-      xcdatamodel = Gyro::XCDataModel::Parser::XCDataModel.new(xcdatamodel_dir)
-      Dir.mktmpdir(TMP_DIR_NAME) do |tmp_dir|
-        Realm::ObjC::Generator.new(tmp_dir, xcdatamodel)
-        fixtures_files_dir = File.expand_path('../fixtures/objc/optional', File.dirname(__FILE__))
-        compare_dirs(tmp_dir, fixtures_files_dir)
-      end
-    end
-
-    it 'Realm ObjC ignored' do
-      xcdatamodel_dir = File.expand_path('../fixtures/xcdatamodel/ignored.xcdatamodel', File.dirname(__FILE__))
-      xcdatamodel = Gyro::XCDataModel::Parser::XCDataModel.new(xcdatamodel_dir)
-      Dir.mktmpdir(TMP_DIR_NAME) do |tmp_dir|
-        Realm::ObjC::Generator.new(tmp_dir, xcdatamodel)
-        fixtures_files_dir = File.expand_path('../fixtures/objc/ignored', File.dirname(__FILE__))
-        compare_dirs(tmp_dir, fixtures_files_dir)
-      end
-    end
-
-    it 'Realm ObjC enum simple' do
-      xcdatamodel_dir = File.expand_path('../fixtures/xcdatamodel/enum.xcdatamodel', File.dirname(__FILE__))
-      xcdatamodel = Gyro::XCDataModel::Parser::XCDataModel.new(xcdatamodel_dir)
-      Dir.mktmpdir(TMP_DIR_NAME) do |tmp_dir|
-        Realm::ObjC::Generator.new(tmp_dir, xcdatamodel)
-        fixtures_files_dir = File.expand_path('../fixtures/objc/enum', File.dirname(__FILE__))
-        compare_dirs(tmp_dir, fixtures_files_dir)
-      end
-    end
-
-    it 'Realm ObjC enum multi' do
-      xcdatamodel_dir = File.expand_path('../fixtures/xcdatamodel/enum_multi.xcdatamodel', File.dirname(__FILE__))
-      xcdatamodel = Gyro::XCDataModel::Parser::XCDataModel.new(xcdatamodel_dir)
-      Dir.mktmpdir(TMP_DIR_NAME) do |tmp_dir|
-        Realm::ObjC::Generator.new(tmp_dir, xcdatamodel)
-        fixtures_files_dir = File.expand_path('../fixtures/objc/enum_multi', File.dirname(__FILE__))
-        compare_dirs(tmp_dir, fixtures_files_dir)
-      end
-    end
-
-    it 'Realm ObjC json' do
-      xcdatamodel_dir = File.expand_path('../fixtures/xcdatamodel/json_key_path.xcdatamodel', File.dirname(__FILE__))
-      xcdatamodel = Gyro::XCDataModel::Parser::XCDataModel.new(xcdatamodel_dir)
-      Dir.mktmpdir(TMP_DIR_NAME) do |tmp_dir|
-        Realm::ObjC::Generator.new(tmp_dir, xcdatamodel, true)
-        fixtures_files_dir = File.expand_path('../fixtures/objc/json', File.dirname(__FILE__))
-        compare_dirs(tmp_dir, fixtures_files_dir)
-      end
-    end
-
-    it 'Realm ObjC json with Framework' do
-      xcdatamodel_dir = File.expand_path('../fixtures/xcdatamodel/json_key_path.xcdatamodel', File.dirname(__FILE__))
-      xcdatamodel = Gyro::XCDataModel::Parser::XCDataModel.new(xcdatamodel_dir)
-      Dir.mktmpdir(TMP_DIR_NAME) do |tmp_dir|
-        Realm::ObjC::Generator.new(tmp_dir, xcdatamodel, true, true)
-        fixtures_files_dir = File.expand_path('../fixtures/objc/json_framework', File.dirname(__FILE__))
-        compare_dirs(tmp_dir, fixtures_files_dir)
-      end
-    end
-
-    it 'Realm ObjC json with enum' do
-      xcdatamodel_dir = File.expand_path('../fixtures/xcdatamodel/enum_json.xcdatamodel', File.dirname(__FILE__))
-      xcdatamodel = Gyro::XCDataModel::Parser::XCDataModel.new(xcdatamodel_dir)
-      Dir.mktmpdir(TMP_DIR_NAME) do |tmp_dir|
-        Realm::ObjC::Generator.new(tmp_dir, xcdatamodel, true)
-        fixtures_files_dir = File.expand_path('../fixtures/objc/enum_json', File.dirname(__FILE__))
-        compare_dirs(tmp_dir, fixtures_files_dir)
-      end
-    end
-
-    it 'Realm ObjC check raising enum json error' do
-      xcdatamodel_dir = File.expand_path('../fixtures/xcdatamodel/error_enum_json.xcdatamodel', File.dirname(__FILE__))
-      xcdatamodel = Gyro::XCDataModel::Parser::XCDataModel.new(xcdatamodel_dir)
-      Dir.mktmpdir(TMP_DIR_NAME) do |tmp_dir|
-        expect { Realm::ObjC::Generator.new(tmp_dir, xcdatamodel, true) }.to raise_error "\e[1;31m! The attribute \"type\" from \"RLMShop\" is enum without JSONValues - please fix it\e[0m"
-      end
-    end
-
-    it 'Realm ObjC json with bool' do
-      xcdatamodel_dir = File.expand_path('../fixtures/xcdatamodel/bool.xcdatamodel', File.dirname(__FILE__))
-      xcdatamodel = Gyro::XCDataModel::Parser::XCDataModel.new(xcdatamodel_dir)
-      Dir.mktmpdir(TMP_DIR_NAME) do |tmp_dir|
-        Realm::ObjC::Generator.new(tmp_dir, xcdatamodel, true)
-        fixtures_files_dir = File.expand_path('../fixtures/objc/bool', File.dirname(__FILE__))
-        compare_dirs(tmp_dir, fixtures_files_dir)
-      end
-    end
-
-    it 'Realm ObjC inverse' do
-      xcdatamodel_dir = File.expand_path('../fixtures/xcdatamodel/inverse.xcdatamodel', File.dirname(__FILE__))
-      xcdatamodel = Gyro::XCDataModel::Parser::XCDataModel.new(xcdatamodel_dir)
-      Dir.mktmpdir(TMP_DIR_NAME) do |tmp_dir|
-        Realm::ObjC::Generator.new(tmp_dir, xcdatamodel, false)
-        fixtures_files_dir = File.expand_path('../fixtures/objc/inverse', File.dirname(__FILE__))
-        compare_dirs(tmp_dir, fixtures_files_dir)
-      end
-    end
-
-    it 'Realm ObjC json with number' do
-      xcdatamodel_dir = File.expand_path('../fixtures/xcdatamodel/transformers.xcdatamodel', File.dirname(__FILE__))
-      xcdatamodel = Gyro::XCDataModel::Parser::XCDataModel.new(xcdatamodel_dir)
-      Dir.mktmpdir(TMP_DIR_NAME) do |tmp_dir|
-        Realm::ObjC::Generator.new(tmp_dir, xcdatamodel, true)
-        fixtures_files_dir = File.expand_path('../fixtures/objc/transformers', File.dirname(__FILE__))
-        compare_dirs(tmp_dir, fixtures_files_dir)
-      end
-    end
-
-    it 'Realm ObjC relationship without value' do
-      xcdatamodel_dir = File.expand_path('../fixtures/xcdatamodel/relationship_type.xcdatamodel', File.dirname(__FILE__))
-      xcdatamodel = Gyro::XCDataModel::Parser::XCDataModel.new(xcdatamodel_dir)
-      Dir.mktmpdir(TMP_DIR_NAME) do |tmp_dir|
-        Realm::ObjC::Generator.new(tmp_dir, xcdatamodel, true)
-        fixtures_files_dir = File.expand_path('../fixtures/objc/no_value', File.dirname(__FILE__))
-        compare_dirs(tmp_dir, fixtures_files_dir)
-      end
-    end
-
   end
 end
