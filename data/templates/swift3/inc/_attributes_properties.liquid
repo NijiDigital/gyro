@@ -1,0 +1,33 @@
+{%- for attribute in entity.attributes %}
+		{%- comment %} ******* DEFAULT VALUE CAPTURE ******* {% endcomment %}
+    {%- capture default_value -%}
+{%- include 'inc/default_value_converter' %}
+    {%- endcapture -%}
+
+		{%- comment %} ******* CONVERT TYPE CAPTURE ******* {% endcomment %}
+    {%- capture convert_type -%}
+{%- include 'inc/type_converter' %}
+    {%- endcapture -%}
+
+  {%- if attribute.realm_read_only.size == 0 %}
+    {%- if attribute.enum_values.size > 0 %}
+		{%- comment %} ******* GENERATE ENUM ATTRIBUTE PROPERTY ******* {% endcomment %}
+	{%- include 'inc/enum_attribute_property' %}
+
+		{%- else %}
+            {%- if attribute.optional == true %}
+            {% comment %} ******* GENERATE OPTIONAL ATTRIBUTE PROPERTY ******* {% endcomment %}
+	{%- include 'inc/optional_attribute_property' %}
+            {%- else %}
+                {%- comment %} ******* GENERATE DEFAULT ATTRIBUTE PROPERTY ******* {% endcomment %}     
+	{% include 'inc/default_attribute_property' %}
+            {%- endif %}
+        {%- endif %}
+    {%- endif %}
+{%- endfor %}
+
+	{%- comment %} ******* GENERATE RELATIONSHIP PROPERTIES ******* {% endcomment %}
+	{%- include 'inc/relationship_properties' %}
+
+{%- comment %} ******* GENERATE INVERSE PROPERTIES ******* {% endcomment %}
+	{%- include 'inc/inverse_properties' %}

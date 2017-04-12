@@ -31,15 +31,9 @@ Params     : #{params.inspect}
 ===================================
 INFO
 
-
 # Parse the input JSON
 json_string = File.read(json_path)
 json = JSON.parse(json_string)
-
-# p = Pathname.new('/usr/local')
-# p + 'toto'
-# p.is_directory?
-# p.children
 
 # Declare some custom Liquid Filters used by the template, then render it
 module CustomFilters
@@ -54,10 +48,13 @@ module CustomFilters
   end
 end
 
-
 # Render the template using the JSON as a context/input
 root_template_string = (template_dir + 'root.liquid').read
 root_template = Liquid::Template.parse(root_template_string)
+
+# Define Template path for Liquid file system to use Include Tag 
+template_path = Pathname.new(template_dir)
+Liquid::Template.file_system = Liquid::LocalFileSystem.new(template_path)
 
 filename_template_string = (template_dir + 'filename.liquid').readlines.first
 filename_template = Liquid::Template.parse(filename_template_string)
@@ -66,6 +63,7 @@ json['entities'].each do |e|
   entity_context = { 'params' => params, 'entity' => e }
   output = root_template.render(entity_context, :filters => [CustomFilters])
     .gsub(/^ +$/,'')
+  #next unless output.gsub("\n", '').empty?
 
   filename_context = { 'params' => params, 'name' => e['name'] }
   filename = filename_template.render(filename_context).chomp
