@@ -1,0 +1,25 @@
+  {%- if attribute.optional == true %}
+  dynamic var {{ attribute.name }}: String? = nil
+  {%- else %}
+  dynamic var {{ attribute.name }}: String = ""
+  {%- endif %}
+  {%- assign enum_type = attribute.enum_type %}
+  {%- assign enum_name = attribute.name + 'Enum' %}
+  var {{ enum_name }}: {{ enum_type | delete_objc_prefix }}? {
+    get {
+      {%- if attribute.optional == true %}
+      guard let {{ attribute.name }} = {{ attribute.name }},
+        let enumValue = {{ enum_type }}(rawValue: {{ attribute.name }})
+        else { return nil }
+      {%- else %}
+      guard let enumValue = {{ enum_type }}(rawValue: {{ attribute.name }}) else { return nil }
+      {%- endif %}
+      return enumValue
+    }
+    {%- if attribute.optional == true %}
+    set { {{ attribute.name }} = newValue?.rawValue ?? nil }
+    {%- else %}
+    set { {{ attribute.name }} = newValue?.rawValue ?? "" }
+    {%- endif %}
+  }
+  

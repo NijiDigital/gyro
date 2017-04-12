@@ -1,0 +1,10 @@
+{%- for relationship in entity.relationships %}
+	{%- if relationship.inverse == true %}
+		{%- if relationship.type == "to_many" %}
+	let {{ relationship.name }}s = LinkingObjects(fromType: {{ relationship.inverse_type }}.self, property: "{{ relationship.inverse_name }}")
+		{%- else %}
+	let {{ relationship.name }} = LinkingObjects(fromType: {{ relationship.inverse_type }}.self, property: "{{ relationship.inverse_name }}")
+	var {{ relationship.name }}: {{ relationship.inverse_type }}? { return {{ relationship.name }}s.first }
+		{%- endif %}
+	{%- endif %}
+{%- endfor %}

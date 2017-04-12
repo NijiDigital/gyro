@@ -1,0 +1,7 @@
+{%- for relationship in entity.relationships %}
+  {%- if relationship.type == "to_many" %}
+  let {{ relationship.name }} = List<{{ relationship.entity_name }}>()
+  {%- else %}
+  dynamic var {{ relationship.name }}: {{ relationship.entity_name }}?
+  {%- endif %}
+{%- endfor %}
