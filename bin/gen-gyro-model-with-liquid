@@ -1,0 +1,74 @@
+#!/usr/bin/env ruby
+
+# Load the Liquid and JSON gems
+begin
+  require 'liquid'
+rescue LoadError => e
+  stderr.puts %q(Failed to load the Liquid gem. Use `gem install liquid -v '~> 3.0'` to install it first.)
+end
+require 'json'
+require 'pathname'
+
+# Ensure we have enough argument given when invoking this script
+unless ARGV.count >= 2
+  puts "Usage: #{File.basename(__FILE__)} JSON_FILE LIQUID_TEMPLATE_DIR_PATH OUTPUT_DIR"
+  exit 1
+end
+
+# Parse the Command Line
+json_path = ARGV[0]
+template_dir = Pathname.new(ARGV[1])
+output_dir = Pathname.new(ARGV[2])
+# @todo Parse the params from the "--param x=y --param z=t"" command line
+params = { :prefix => 'DB', :nsnumber => true }
+
+puts <<-INFO
+===================================
+JSON       : #{json_path}
+Template   : #{template_dir}
+Output Dir : #{output_dir}
+Params     : #{params.inspect}
+===================================
+INFO
+
+
+# Parse the input JSON
+json_string = File.read(json_path)
+json = JSON.parse(json_string)
+
+# p = Pathname.new('/usr/local')
+# p + 'toto'
+# p.is_directory?
+# p.children
+
+# Declare some custom Liquid Filters used by the template, then render it
+module CustomFilters
+  def escape_quotes(input)
+    return input.gsub('"', '\"')
+  end
+  def snake_to_camel_case(input)
+    input.split('_').map { |s| s.capitalize }.join
+  end
+  def uncapitalize(input)
+    input[0, 1].downcase + input[1..-1]
+  end
+end
+
+
+# Render the template using the JSON as a context/input
+root_template_string = (template_dir + 'root.liquid').read
+root_template = Liquid::Template.parse(root_template_string)
+
+filename_template_string = (template_dir + 'filename.liquid').readlines.first
+filename_template = Liquid::Template.parse(filename_template_string)
+
+json['entities'].each do |e|
+  entity_context = { 'params' => params, 'entity' => e }
+  output = root_template.render(entity_context, :filters => [CustomFilters])
+    .gsub(/^ +$/,'')
+
+  filename_context = { 'params' => params, 'name' => e['name'] }
+  filename = filename_template.render(filename_context).chomp
+
+  File.write(output_dir + filename, output)
+end

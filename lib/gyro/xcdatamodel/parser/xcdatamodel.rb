@@ -33,6 +33,10 @@ module Gyro
           load_entities(document_xml)
         end
 
+        def to_h 
+          return { :entities => entities.values.map(&:to_h) }
+        end 
+
         def to_s
           str = String.new
           @entities.each do |_, value|

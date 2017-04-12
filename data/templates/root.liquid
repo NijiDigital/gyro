@@ -1,0 +1,184 @@
+/*******************************************************************************
+ *   DO NOT EDIT | generated 
+ * - by gyro : https://github.com/NijiDigital/gyro with
+ * - with Liquid : https://github.com/Shopify/liquid
+ *******************************************************************************/
+
+import RealmSwift
+
+final class {{ entity.name }}: Object {
+{{}}
+{%- comment %} ******* GENERATE ATTRIBUTES ENUM ******* {% endcomment %}
+    {%- if entity.attributes.size > 0 %}
+    enum Attributes: String {
+        {%- for attribute in entity.attributes %}
+        {%- if attribute.realm_ignored or attribute.realm_read_only.size == 0 %}
+        {%- if attribute.comment.size > 0 %}
+        /** {{ attribute.comment }} **/
+        {%- endif %}
+        case {{ attribute.name | snake_to_camel_case | uncapitalize }} = "{{ attribute.name | escape_quotes }}"
+        {%- endif %}
+        {%- endfor %}
+    }
+    {% endif %}
+
+{%- comment %} ******* GENERATE RELATIONSHIPS ENUM ******* {% endcomment %}
+    {%- if entity.relationships.size > 0 and entity.has_only_inverse == false %}
+    enum Relationships: String {
+        {%- for relationship in entity.relationships %}
+        case {{ relationship.name | snake_to_camel_case | uncapitalize }} = "{{ relationship.name | escape_quotes }}"
+        {%- endfor %}
+    }
+    {%- endif %}
+
+{%- comment %} ******* GENERATE ATTRIBUTES PROPERTIES ******* {% endcomment %}
+    {%- for attribute in entity.attributes %}
+    {%- comment %} ******* DEFAULT VALUE CAPTURE ******* {% endcomment %}
+    {%- capture default_value -%}
+    {%- case attribute.type -%}
+    {%- when 'integer_16' or 'integer_32' or 'integer_64' -%}
+    0
+    {%- when 'float' or 'double' or 'decimal' -%}
+    0.0
+    {%- when 'string' -%}
+    ""
+    {%- when 'boolean' -%}
+    false
+    {%- when 'date' -%}
+    NSDate()
+    {%- when 'binary' -%}
+    NSData()
+    {%- endcase -%}
+    {%- endcapture -%}
+
+    {%- comment %} ******* CONVERT TYPE CAPTURE ******* {% endcomment %}
+    {%- capture convert_type -%}
+    {%- case attribute.type -%}
+    {%- when 'integer_16' -%}
+    Int16
+    {%- when 'integer_32' -%}
+    Int32
+    {%- when 'integer_64' -%}
+    Int64
+    {%- when 'double' or 'decimal' -%}
+    Double
+    {%- when 'float' -%}
+    Float
+    {%- when 'string' -%}
+    String
+    {%- when 'boolean' -%}
+    Bool
+    {%- when 'date' -%}
+    NSDate
+    {%- when 'binary' -%}
+    NSData
+    {%- endcase -%}
+    {%- endcapture -%}
+
+    {%- if attribute.realm_read_only.size == 0 %}
+    {%- if attribute.enum_values.size > 0 %}
+    {%- comment %} ******* GENERATE ENUM ATTRIBUTE PROPERTIE ******* {% endcomment %}
+    {%- if attribute.optional == true %}
+    dynamic var {{ attribute.name }}: String? = nil
+    {%- else %}
+    dynamic var {{ attribute.name }}: String = ""
+    {%- endif %}
+    {%- assign enum_type = attribute.enum_type %}
+    {%- assign enum_name = attribute.name + 'Enum' %}
+    var {{ enum_name }}: {{ enum_type | delete_objc_prefix }}? {
+        get {
+            {%- if attribute.optional == true %}
+            guard let {{ attribute.name }} = {{ attribute.name }},
+                let enumValue = {{ enum_type }}(rawValue: {{ attribute.name }})
+                else { return nil }
+            {%- else %}
+            guard let enumValue = {{ enum_type }}(rawValue: {{ attribute.name }}) else { return nil }
+            {%- endif %}
+            return enumValue
+        }
+        {%- if attribute.optional == true %}
+        set { {{ attribute.name }} = newValue?.rawValue ?? nil }
+        {%- else %}
+        set { {{ attribute.name }} = newValue?.rawValue ?? "" }
+        {%- endif %}
+    }
+    {%- else %}
+    {%- if attribute.optional == true %}
+    {% comment %} ******* GENERATE OPTIONAL ATTRIBUTE PROPERTIE ******* {% endcomment %}
+    {%- if attribute.is_number == true or attribute.is_bool == true %}
+    let {{ attribute.name }} = RealmOptional<{{ convert_type }}>()
+    {%- else %}
+    dynamic var {{ attribute.name }}: {{ convert_type }}? = nil
+    {%- endif %}
+    {%- else %}
+
+{%- comment %} ******* GENERATE DEFAULT ATTRIBUTE PROPERTIE ******* {% endcomment %}
+    dynamic var {{ attribute.name }}: {{ convert_type }} = {{ default_value }}
+    {%- endif %}
+    {%- endif %}
+    {%- endif %}
+    {%- endfor %}
+
+{%- comment %} ******* GENERATE RELATIONSHIP PROPERTIES ******* {% endcomment %}
+    {%- for relationship in entity.relationships %}
+    {%- if relationship.type == "to_many" %}
+    let {{ relationship.name }} = List<{{ relationship.entity_name }}>()
+    {%- else %}
+    dynamic var {{ relationship.name }}: {{ relationship.entity_name }}?
+    {%- endif %}
+    {%- endfor %}
+
+{%- comment %} ******* GENERATE INVERSE PROPERTIES ******* {% endcomment %}
+    {%- for relationship in entity.relationships %}
+    {%- if relationship.inverse == true %}
+    {%- if relationship.type == "to_many" %}
+    let {{ relationship.name }}s = LinkingObjects(fromType: {{ relationship.inverse_type }}.self, property: "{{ relationship.inverse_name }}")
+    {%- else %}
+    let {{ relationship.name }} = LinkingObjects(fromType: {{ relationship.inverse_type }}.self, property: "{{ relationship.inverse_name }}")
+    var {{ relationship.name }}: {{ relationship.inverse_type }}? { return {{ relationship.name }}s.first }
+    {%- endif %}
+    {%- endif %}
+    {%- endfor %}
+{%- comment %} ******* GENERATE PRIMARY KEY ******* {% endcomment %}
+    {%- if entity.has_primary_key == true %}
+    override static func primaryKey() -> String? {
+        return "{{ entity.identity_attribute }}"
+    }
+    {%- endif %}
+{%- comment %} ******* GENERATE INDEXED PROPERTIES ******* {% endcomment %}
+    {%- if entity.has_indexed_attributes == true %}
+    // Specify properties to index
+    override static func indexedProperties() -> [String] {
+        return [
+            {%- for attribute in entity.attributes %}
+            {%- if attribute.is_indexed == true %}
+            {%- if forloop.last == false %}
+            "{{attribute.name}}",
+            {%- else %}
+            "{{attribute.name}}"
+            {%- endif %}
+            {%- endif %}
+            {%- endfor %}
+        ]
+    }
+    {%- endif %}
+{%- comment %} ******* GENERATE IGNORED PROPERTIES ******* {% endcomment %}
+    {%- if entity.has_ignored == true %}
+    // Specify properties to ignore (Realm won't persist these)
+    override static func ignoredProperties() -> [String] {
+        return [
+            {%- for attribute in entity.attributes %}
+            "{{ attribute.name }}",
+            {%- endfor %}
+
+            {%- for relationship in entity.relationships %}
+            {%- if forloop.last == false %}
+            "{{ relationship.name }}",
+            {%- else %}
+            "{{ relationship.name }}"
+            {%- endif %}
+            {%- endfor %}
+        ]
+    }
+    {%- endif %}
+}

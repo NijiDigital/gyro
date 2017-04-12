@@ -86,33 +86,33 @@ else
 end
 
 # Android
-if options[:android_dir].nil?
-  Gyro::Log::info('You need to specify a dir using --android option to generate Android Realm model classes (see --help for more info)')
-else
-  if Dir.exist?(options[:android_dir])
-    if options[:package].nil?
-      Gyro::Log::info('You need to specify an Android package name using --package option (see --help for more info)')
-    else
-      xcdatamodel = Gyro::XCDataModel::Parser::XCDataModel.new(options[:model])
-      Gyro::Realm::Java::Generator.new(options[:android_dir], options[:package], xcdatamodel, options[:wrappers], options[:annotations])
-    end
-  else
-    Gyro::Log::info('You need to specify a valid Android Realm model classes dir')
-  end
-end
+# if options[:android_dir].nil?
+#   if Dir.exist?(options[:android_dir])
+#     if options[:package].nil?
+#       Gyro::Log::info('You need to specify an Android package name using --package option (see --help for more info)')
+#     else
+#       xcdatamodel = Gyro::XCDataModel::Parser::XCDataModel.new(options[:model])
+#       Gyro::Realm::Java::Generator.new(options[:android_dir], options[:package], xcdatamodel, options[:wrappers], options[:annotations])
+#     end
+#   else
+#     Gyro::Log::info('You need to specify a valid Android Realm model classes dir')
+#   end
+# end
 
 # iOS
-if options[:ios_dir].nil?
-  Gyro::Log::info('You need to specify a dir using --ios option to generate iOS Realm model classes (see --help for more info)')
-else
-  if Dir.exist?(options[:ios_dir])
-    xcdatamodel = Gyro::XCDataModel::Parser::XCDataModel.new(options[:model])
-    if options[:ios_swift]
-      Gyro::Realm::Swift::Generator.new(options[:ios_dir], xcdatamodel, options[:ios_json])
-    else
-      Gyro::Realm::ObjC::Generator.new(options[:ios_dir], xcdatamodel, options[:ios_json], options[:ios_framework], options[:wrappers])
-    end
-  else
-    Gyro::Log::info('You need to specify a valid iOS Realm model classes dir')
-  end
-end
+# if options[:ios_dir].nil?
+#   if Dir.exist?(options[:ios_dir])
+#     xcdatamodel = Gyro::XCDataModel::Parser::XCDataModel.new(options[:model])
+#     if options[:ios_swift]
+#       Gyro::Realm::Swift::Generator.new(options[:ios_dir], xcdatamodel, options[:ios_json])
+#     else
+#       Gyro::Realm::ObjC::Generator.new(options[:ios_dir], xcdatamodel, options[:ios_json], options[:ios_framework], options[:wrappers])
+#     end
+#   else
+#     Gyro::Log::info('You need to specify a valid iOS Realm model classes dir')
+#   end
+# end
+
+# json
+xcdatamodel = Gyro::XCDataModel::Parser::XCDataModel.new(options[:model])
+Gyro::Json::Generator.new(options[:ios_dir], xcdatamodel, options[:ios_json])
