@@ -1,0 +1,19 @@
+/*******************************************************************************
+ *   DO NOT EDIT | generated 
+ * - by gyro : https://github.com/NijiDigital/gyro with
+ * - with Liquid : https://github.com/Shopify/liquid
+ *******************************************************************************/
+{%- for attribute in entity.attributes %}
+{%- if attribute.enum_type.size > 0 %}
+enum {{ attribute.enum_type }}: String {
+    {%- for attribute in entity.attributes %}
+        {%- if attribute.realm_ignored or attribute.realm_read_only.size == 0 %}
+        {%- if attribute.enum_values.size > 0 %}
+        /** {{ attribute.comment }} **/
+        {%- endif %}
+        case {{ attribute.name | snake_to_camel_case | uncapitalize }} = "{{ attribute.name | escape_quotes }}"
+        {%- endif %}
+        {%- endfor %}
+} 
+{%- endif %}
+{%- endfor %}
