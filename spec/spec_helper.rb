@@ -31,17 +31,11 @@ end
 
 def compare_dirs(generated_files_dir, fixtures_files_dir)
   generated_files = Dir[File.join(generated_files_dir, '**', '*')]
-  # puts generated_files
-  # generated_files.each { |generated_file|
-  #   File.open(generated_file) { |file|
-  #     puts file.read unless File.directory?(file)
-  #   }
-  # }
   nb_generated_files = generated_files.count { |file| File.file?(file) }
   fixtures_files = Dir[File.join(fixtures_files_dir, '**', '*')]
   nb_fixtures_files = fixtures_files.count { |file| File.file?(file) }
   expect(nb_generated_files).to eq nb_fixtures_files
-  fixtures_files.each { |fixtures_file|
+  fixtures_files.each do |fixtures_file|
     if File.file?(fixtures_file)
       file = File.open(fixtures_file, 'rb')
       fixture_file_content = file.read
@@ -51,7 +45,7 @@ def compare_dirs(generated_files_dir, fixtures_files_dir)
       file = File.open(generated_file, 'rb')
       generated_file_content = file.read
       file.close
-      expect(generated_file_content).to eq fixture_file_content
+      expect(generated_file_content).to eq(fixture_file_content), "File: '#{file_name}' differ from expectation."
     end
-  }
+  end
 end

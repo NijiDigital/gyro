@@ -35,7 +35,6 @@ module Gyro
         # PUBLIC METHODS #######################################################
 
         def initialize(path, package_name, xcdatamodel, use_wrappers = false, support_annotations = false)
-          puts "\n"
           Gyro::Log::title('Android Realm')
           xcdatamodel.entities.each do |_, entity|
             unless entity.abstract?

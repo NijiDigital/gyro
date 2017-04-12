@@ -37,7 +37,6 @@ module Gyro
         # PUBLIC METHODS #######################################################
 
         def initialize(path, xcdatamodel, json = false)
-          puts "\n"
           Gyro::Log::title('Swift Realm')
           xcdatamodel.entities.each do |_, entity|
             unless entity.abstract?
