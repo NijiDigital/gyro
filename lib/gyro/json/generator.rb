@@ -26,8 +26,7 @@ module Gyro
       include Gyro::XCDataModel::Parser
 
       # PUBLIC METHODS #######################################################
-
-      def initialize(path, xcdatamodel, json = false)
+      def initialize(xcdatamodel)
         Gyro::Log::title('Generating Json')
         puts JSON.pretty_generate(xcdatamodel.to_h)
       end
