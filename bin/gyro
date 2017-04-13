@@ -27,7 +27,8 @@ dir = Dir.pwd
 options = {
     :model => nil,
     :template => nil,
-    :output => nil
+    :output => nil,
+    :params => {}
 }
 
 OptionParser.new do |opts|
@@ -41,9 +42,10 @@ OptionParser.new do |opts|
   opts.on('-o OUTPUTDIR', '--output OUTPUTDIR', %q(Path to the output directory to generate model)) do |output_dir_path|
     options[:output] = output_dir_path
   end
-  # opts.on('-p PARAM=PARAMVALUE', '--param PARAM=PARAMVALUE', %q(Path to the output directory to generate model)) do |output_dir_path|
-  #   options[:output] = output_dir_path
-  # end
+  opts.on('-p PARAM:PARAMVALUE', '--param PARAM:PARAMVALUE', %q(Path to the output directory to generate model)) do | params |
+    split_params = params.split(":")
+    options[:params] = options[:params].merge("#{split_params[0]}" => "#{split_params[1]}")
+  end
   opts.on_tail('-h', '--help', %q(Show this message)) { puts opts; exit 1 }
   opts.on_tail('-v', '--version', 'Show version') { puts Gyro::VERSION; exit }
   opts.parse!
@@ -65,9 +67,9 @@ end
 
 # @todo : like this, find default template directory instead of custom directory if --template have no /
 # if options[:template].nil?
-#   # Gyro::Log::info('No model provided, trying to find one in the local directory…')
-#   # options[:model] = Gyro.find_xcdatamodel(dir)
-#   # Gyro::Log::info("Unable to find any .xcdatamodel in #{dir}") if options[:model].nil?
+  # Gyro::Log::info('No model provided, trying to find one in the local directory…')
+  # options[:model] = Gyro.find_xcdatamodel(dir)
+  # Gyro::Log::info("Unable to find any .xcdatamodel in #{dir}") if options[:model].nil?
 # end
 
 if options[:template].nil?
@@ -83,4 +85,4 @@ if options[:output].nil?
 end
 
 xcdatamodel = Gyro::XCDataModel::Parser::XCDataModel.new(options[:model])
-Gyro::LiquidGen::Generator.new(xcdatamodel, options[:template], options[:output])
+Gyro::LiquidGen::Generator.new(xcdatamodel, options[:template], options[:output], options[:params])
