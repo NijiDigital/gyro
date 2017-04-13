@@ -43,6 +43,7 @@ module Gyro
 
       def initialize(xcdatamodel, template_dir, output_dir)
 
+      Gyro::Log::title('Generating Model')
       template_dir = Pathname.new(template_dir)
       output_dir = Pathname.new(output_dir)
         # @todo Parse the params from the "--param x=y --param z=t"" command line
@@ -55,7 +56,6 @@ module Gyro
         ===================================
         INFO
 
-        # Render the template using the JSON as a context/input
         root_template_string = ( template_dir + 'root.liquid').read
         root_template = Liquid::Template.parse(root_template_string)
 
@@ -67,11 +67,13 @@ module Gyro
 
         xcdatamodel.to_h['entities'].each do |entity|
           entity_context = { 'params' => params, 'entity' => entity }
+          # Rendering template using entity and params context
           output = root_template.render(entity_context, :filters => [CustomFilters])
             .gsub(/^ +$/,'')
-          #next unless output.gsub("\n", '').empty? # TODO: try to delete empty 
+          #next unless output.gsub("\n", '').empty? # @todo: try to delete empty 
         
           filename_context = { 'params' => params, 'name' => entity['name'] }
+          # Rendering filename template using entity name and params context
           filename = filename_template.render(filename_context).chomp
 
           File.write(output_dir + filename, output)
@@ -82,7 +84,7 @@ module Gyro
       def generate_enums(template_dir, output_dir, attributes, params)
         enums = Array.new
         attributes.each do |attribute|
-          if !attribute['enum_type'].empty? and !enums.include?(attribute['enum_type']) # TODO : try to move this code into enum template instead of here
+          if !attribute['enum_type'].empty? and !enums.include?(attribute['enum_type']) # @todo : try to move this code into enum template instead of here
             enum_type = attribute['enum_type'].delete_objc_prefix
             enums.push(enum_type)
             generate_enum(template_dir, output_dir, enum_type, attribute, params)
@@ -93,12 +95,14 @@ module Gyro
       def generate_enum(template_dir, output_dir, enum_name, attribute, params)
         enum_template_string = ( template_dir + 'enum.liquid').read
         enum_template = Liquid::Template.parse(enum_template_string)
-        enum_context = { 'attribute' => attribute }
+        enum_context = { 'params' => params, 'attribute' => attribute }
+        # Rendering enum template using attribute and params context
         output = enum_template.render(enum_context, :filters => [CustomFilters])
             .gsub(/^ +$/,'')
 
         enum_filename_template_string = (template_dir + 'filename.liquid').readlines.first
         enum_filename_template = Liquid::Template.parse(enum_filename_template_string)
+        # Rendering enum filename template using enum name and params context
         enum_filename_context = { 'params' => params, 'name' => enum_name }
         enum_filename = enum_filename_template.render(enum_filename_context).chomp
 
