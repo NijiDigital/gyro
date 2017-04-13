@@ -41,13 +41,14 @@ module Gyro
         end
       end
 
-      def initialize(xcdatamodel, template_dir, output_dir)
+      def initialize(xcdatamodel, template_dir, output_dir, params)
 
-      Gyro::Log::title('Generating Model')
-      template_dir = Pathname.new(template_dir)
-      output_dir = Pathname.new(output_dir)
+        Gyro::Log::title('Generating Model')
+        template_dir = Pathname.new(template_dir)
+        output_dir = Pathname.new(output_dir)
+
         # @todo Parse the params from the "--param x=y --param z=t"" command line
-        params = { 'prefix' => 'DB', 'nsnumber' => true }
+        # params = { 'prefix' => 'DB', 'nsnumber' => true }
         puts <<-INFO
         ===================================
         Template    : #{template_dir}
