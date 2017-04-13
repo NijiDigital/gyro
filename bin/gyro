@@ -33,16 +33,16 @@ options = {
 
 OptionParser.new do |opts|
   opts.banner = 'Usage: gyro [options]'
-  opts.on('-m PATH', '--model PATH', %q(Specify Interface Builder .xcdatamodel file)) do |xcdatamodel_path|
+  opts.on('-m PATH', '--model PATH', %q(Specify Interface Builder .xcdatamodel file)) do | xcdatamodel_path |
     options[:model] = xcdatamodel_path
   end
-  opts.on('-t TEMPLATEPATH', '--template TEMPLATEPATH', %q(Path to the Liquid template directrory to use, if you prefer using default template type name of your needed template (like swift3, android) !)) do |tempate_path|
+  opts.on('-t DIR', '--template DIR', %q(Path to the Liquid template directrory to use, other solution is to specify default template name (like swift3, android) !)) do |tempate_path|
     options[:template] = tempate_path
   end
-  opts.on('-o OUTPUTDIR', '--output OUTPUTDIR', %q(Path to the output directory to generate model)) do |output_dir_path|
+  opts.on('-o DIR', '--output DIR', %q(Path to the output directory to generate model)) do | output_dir_path |
     options[:output] = output_dir_path
   end
-  opts.on('-p PARAM:PARAMVALUE', '--param PARAM:PARAMVALUE', %q(Path to the output directory to generate model)) do | params |
+  opts.on('-p KEY:VALUE', '--param KEY:VALUE', %q(Custom parameters that you can use inside custom templates)) do | params |
     split_params = params.split(":")
     options[:params] = options[:params].merge("#{split_params[0]}" => "#{split_params[1]}")
   end
@@ -65,13 +65,6 @@ else
   Gyro::Log::success("Using #{basename} in #{dirname}")
 end
 
-# @todo : like this, find default template directory instead of custom directory if --template have no /
-# if options[:template].nil?
-  # Gyro::Log::info('No model provided, trying to find one in the local directory…')
-  # options[:model] = Gyro.find_xcdatamodel(dir)
-  # Gyro::Log::info("Unable to find any .xcdatamodel in #{dir}") if options[:model].nil?
-# end
-
 if options[:template].nil?
   # Generate JSON if no -t is specified
   Gyro::Log::info('You can specify custom template directory or default template using --template option (see --help for more info)')
@@ -80,9 +73,20 @@ if options[:template].nil?
   exit
 end
 
+unless options[:template].include? '/'
+  options[:template] = "data/templates/" + options[:template]
+end 
+
 if options[:output].nil?
   Gyro::Error::exit_with_error('You need to specify output directory path using --output option (see --help for more info)')
 end
 
+puts <<-INFO
+===================================
+Template    : #{options[:template]}
+Output Dir  : #{options[:output]}
+Params      : #{options[:params].inspect}
+===================================
+INFO
 xcdatamodel = Gyro::XCDataModel::Parser::XCDataModel.new(options[:model])
 Gyro::LiquidGen::Generator.new(xcdatamodel, options[:template], options[:output], options[:params])
