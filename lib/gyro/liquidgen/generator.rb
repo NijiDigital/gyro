@@ -15,11 +15,10 @@ limitations under the License.
 =end
 
 require 'gyro/xcdatamodel/parser'
-require 'liquid'
 require 'pathname'
 
 module Gyro
-  module LiquidGen
+  module Liquidgen
     class Generator
 
       # INCLUDES #############################################################
