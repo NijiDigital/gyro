@@ -47,16 +47,6 @@ module Gyro
         template_dir = Pathname.new(template_dir)
         output_dir = Pathname.new(output_dir)
 
-        # @todo Parse the params from the "--param x=y --param z=t"" command line
-        # params = { 'prefix' => 'DB', 'nsnumber' => true }
-        puts <<-INFO
-        ===================================
-        Template    : #{template_dir}
-        Output Dir  : #{output_dir}
-        Params      : #{params.inspect}
-        ===================================
-        INFO
-
         root_template_string = ( template_dir + 'root.liquid').read
         root_template = Liquid::Template.parse(root_template_string)
 
@@ -82,6 +72,8 @@ module Gyro
           # Generate model object enums
           generate_enums(template_dir, output_dir, entity['attributes'], params)
         end
+
+        Gyro::Log::success("Model objects are generated !")
       end
 
       def generate_enums(template_dir, output_dir, attributes, params)
