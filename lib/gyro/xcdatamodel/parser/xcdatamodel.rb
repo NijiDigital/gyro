@@ -34,7 +34,7 @@ module Gyro
         end
 
         def to_h 
-          return { :entities => entities.values.map(&:to_h) }
+          return { 'entities' => entities.values.map(&:to_h) }
         end 
 
         def to_s

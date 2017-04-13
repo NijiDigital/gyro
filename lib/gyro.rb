@@ -21,6 +21,7 @@ require 'gyro/realm/java/generator'
 require 'gyro/realm/objc/generator'
 require 'gyro/realm/swift/generator'
 require 'gyro/json/generator'
+require 'gyro/liquidgen/generator'
 
 require 'gyro/utils/log'
 require 'gyro/utils/file_utils'
