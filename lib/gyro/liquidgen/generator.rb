@@ -61,7 +61,7 @@ module Gyro
 
         # Define Template path for Liquid file system to use Include Tag
         Liquid::Template.file_system = Liquid::LocalFileSystem.new(template_dir)
-
+        # Parse object template
         filename_template_string = (template_dir + 'filename.liquid').readlines.first
         filename_template = Liquid::Template.parse(filename_template_string)
 
@@ -70,13 +70,15 @@ module Gyro
           # Rendering template using entity and params context
           output = root_template.render(entity_context, :filters => [CustomFilters])
             .gsub(/^ +$/,'')
-          #next unless output.gsub("\n", '').empty? # @todo: try to delete empty 
+          # Don't generate empty output
+          next if output.gsub("\n", '').empty? # @todo: try to delete empty 
         
           filename_context = { 'params' => params, 'name' => entity['name'] }
           # Rendering filename template using entity name and params context
           filename = filename_template.render(filename_context).chomp
-
+          # Write model object
           File.write(output_dir + filename, output)
+          # Generate model object enums
           generate_enums(template_dir, output_dir, entity['attributes'], params)
         end
       end
@@ -84,22 +86,26 @@ module Gyro
       def generate_enums(template_dir, output_dir, attributes, params)
         enums = Array.new
         attributes.each do |attribute|
-          if !attribute['enum_type'].empty? and !enums.include?(attribute['enum_type']) # @todo : try to move this code into enum template instead of here
+          if !enums.include?(attribute['enum_type'])
             enum_type = attribute['enum_type'].delete_objc_prefix
             enums.push(enum_type)
-            generate_enum(template_dir, output_dir, enum_type, attribute, params)
+            # Parse enum template
+            enum_template_string = ( template_dir + 'enum.liquid').read
+            enum_template = Liquid::Template.parse(enum_template_string)
+
+            enum_context = { 'params' => params, 'attribute' => attribute }
+            # Rendering enum template using attribute and params context
+            output = enum_template.render(enum_context, :filters => [CustomFilters])
+              .gsub(/^ +$/,'')
+            # Don't generate empty output
+            next if output.gsub("\n", '').empty? 
+      
+            generate_enum(template_dir, output_dir, enum_type, output, params)
           end
         end
       end
 
-      def generate_enum(template_dir, output_dir, enum_name, attribute, params)
-        enum_template_string = ( template_dir + 'enum.liquid').read
-        enum_template = Liquid::Template.parse(enum_template_string)
-        enum_context = { 'params' => params, 'attribute' => attribute }
-        # Rendering enum template using attribute and params context
-        output = enum_template.render(enum_context, :filters => [CustomFilters])
-            .gsub(/^ +$/,'')
-
+      def generate_enum(template_dir, output_dir, enum_name, output, params)
         enum_filename_template_string = (template_dir + 'filename.liquid').readlines.first
         enum_filename_template = Liquid::Template.parse(enum_filename_template_string)
         # Rendering enum filename template using enum name and params context
