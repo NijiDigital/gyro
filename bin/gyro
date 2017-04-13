@@ -63,8 +63,7 @@ else
   Gyro::Log::success("Using #{basename} in #{dirname}")
 end
 
-# generate model from xcdatamodel
-# TODO : like this, find default template directory instead of local directory
+# @todo : like this, find default template directory instead of custom directory if --template have no /
 # if options[:template].nil?
 #   # Gyro::Log::info('No model provided, trying to find one in the local directory…')
 #   # options[:model] = Gyro.find_xcdatamodel(dir)
@@ -72,7 +71,7 @@ end
 # end
 
 if options[:template].nil?
-  # Generate JSON if no -t is typed
+  # Generate JSON if no -t is specified
   Gyro::Log::info('You can specify custom template directory or default template using --template option (see --help for more info)')
   xcdatamodel = Gyro::XCDataModel::Parser::XCDataModel.new(options[:model])
   Gyro::Json::Generator.new(xcdatamodel)
