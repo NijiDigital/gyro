@@ -22,6 +22,7 @@ end
 
 require 'gyro'
 require 'optparse'
+require 'liquid'
 
 dir = Dir.pwd
 options = {
@@ -89,4 +90,4 @@ Params      : #{options[:params].inspect}
 ===================================
 INFO
 xcdatamodel = Gyro::XCDataModel::Parser::XCDataModel.new(options[:model])
-Gyro::LiquidGen::Generator.new(xcdatamodel, options[:template], options[:output], options[:params])
+Gyro::Liquidgen::Generator.new(xcdatamodel, options[:template], options[:output], options[:params])

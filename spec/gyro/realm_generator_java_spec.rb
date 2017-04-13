@@ -25,53 +25,15 @@ module Gyro
         Gyro::Log.quiet = true
       end
 
-      it 'realm' do
-        xcdatamodel_dir = File.expand_path('../fixtures/xcdatamodel/realm.xcdatamodel', File.dirname(__FILE__))
-        xcdatamodel = Gyro::XCDataModel::Parser::XCDataModel.new(xcdatamodel_dir)
-        Dir.mktmpdir(TMP_DIR_NAME) do |tmp_dir|
-          Realm::Java::Generator.new(tmp_dir, PACKAGE_NAME, xcdatamodel)
-          fixtures_files_dir = File.expand_path('../fixtures/java/realm', File.dirname(__FILE__))
-          compare_dirs(tmp_dir, fixtures_files_dir)
-        end
-      end
-
-      it 'primary' do
-        xcdatamodel_dir = File.expand_path('../fixtures/xcdatamodel/primary.xcdatamodel', File.dirname(__FILE__))
-        xcdatamodel = Gyro::XCDataModel::Parser::XCDataModel.new(xcdatamodel_dir)
-        Dir.mktmpdir(TMP_DIR_NAME) do |tmp_dir|
-          Realm::Java::Generator.new(tmp_dir, PACKAGE_NAME, xcdatamodel)
-          fixtures_files_dir = File.expand_path('../fixtures/java/primary', File.dirname(__FILE__))
-          compare_dirs(tmp_dir, fixtures_files_dir)
-        end
-      end
-
-      it 'ignored' do
-        xcdatamodel_dir = File.expand_path('../fixtures/xcdatamodel/ignored.xcdatamodel', File.dirname(__FILE__))
-        xcdatamodel = Gyro::XCDataModel::Parser::XCDataModel.new(xcdatamodel_dir)
-        Dir.mktmpdir(TMP_DIR_NAME) do |tmp_dir|
-          Realm::Java::Generator.new(tmp_dir, PACKAGE_NAME, xcdatamodel)
-          fixtures_files_dir = File.expand_path('../fixtures/java/ignored', File.dirname(__FILE__))
-          compare_dirs(tmp_dir, fixtures_files_dir)
-        end
-      end
-
-      it 'enum simple' do
-        xcdatamodel_dir = File.expand_path('../fixtures/xcdatamodel/enum.xcdatamodel', File.dirname(__FILE__))
-        xcdatamodel = Gyro::XCDataModel::Parser::XCDataModel.new(xcdatamodel_dir)
-        Dir.mktmpdir(TMP_DIR_NAME) do |tmp_dir|
-          Realm::Java::Generator.new(tmp_dir, PACKAGE_NAME, xcdatamodel)
-          fixtures_files_dir = File.expand_path('../fixtures/java/enum', File.dirname(__FILE__))
-          compare_dirs(tmp_dir, fixtures_files_dir)
-        end
-      end
-
-      it 'enum multi' do
-        xcdatamodel_dir = File.expand_path('../fixtures/xcdatamodel/enum_multi.xcdatamodel', File.dirname(__FILE__))
-        xcdatamodel = Gyro::XCDataModel::Parser::XCDataModel.new(xcdatamodel_dir)
-        Dir.mktmpdir(TMP_DIR_NAME) do |tmp_dir|
-          Realm::Java::Generator.new(tmp_dir, PACKAGE_NAME, xcdatamodel)
-          fixtures_files_dir = File.expand_path('../fixtures/java/enum_multi', File.dirname(__FILE__))
-          compare_dirs(tmp_dir, fixtures_files_dir)
+      ['realm','primary','ignored', 'inverse', 'enum', 'enum_multi', 'enum_json'].each do |datamodel|
+        it datamodel do
+          xcdatamodel_dir = File.expand_path('../fixtures/xcdatamodel/realm.xcdatamodel', File.dirname(__FILE__))
+          xcdatamodel = Gyro::XCDataModel::Parser::XCDataModel.new(xcdatamodel_dir)
+          Dir.mktmpdir(TMP_DIR_NAME) do |tmp_dir|
+            Realm::Java::Generator.new(tmp_dir, PACKAGE_NAME, xcdatamodel)
+            fixtures_files_dir = File.expand_path('../fixtures/java/realm', File.dirname(__FILE__))
+            compare_dirs(tmp_dir, fixtures_files_dir)
+          end
         end
       end
 
@@ -85,12 +47,12 @@ module Gyro
         end
       end
 
-      it 'json with enum' do
-        xcdatamodel_dir = File.expand_path('../fixtures/xcdatamodel/enum_json.xcdatamodel', File.dirname(__FILE__))
+      it 'inverse' do
+        xcdatamodel_dir = File.expand_path('../fixtures/xcdatamodel/inverse.xcdatamodel', File.dirname(__FILE__))
         xcdatamodel = Gyro::XCDataModel::Parser::XCDataModel.new(xcdatamodel_dir)
         Dir.mktmpdir(TMP_DIR_NAME) do |tmp_dir|
           Realm::Java::Generator.new(tmp_dir, PACKAGE_NAME, xcdatamodel)
-          fixtures_files_dir = File.expand_path('../fixtures/java/enum_json', File.dirname(__FILE__))
+          fixtures_files_dir = File.expand_path('../fixtures/java/inverse', File.dirname(__FILE__))
           compare_dirs(tmp_dir, fixtures_files_dir)
         end
       end
@@ -124,16 +86,6 @@ module Gyro
           Realm::Java::Generator.new(tmp_dir, PACKAGE_NAME, xcdatamodel)
           Realm::Java::Generator.new(tmp_dir, PACKAGE_NAME, xcdatamodel, true, true)
           fixtures_files_dir = File.expand_path('../fixtures/java/wrappers_annotations', File.dirname(__FILE__))
-          compare_dirs(tmp_dir, fixtures_files_dir)
-        end
-      end
-
-      it 'inverse' do
-        xcdatamodel_dir = File.expand_path('../fixtures/xcdatamodel/inverse.xcdatamodel', File.dirname(__FILE__))
-        xcdatamodel = Gyro::XCDataModel::Parser::XCDataModel.new(xcdatamodel_dir)
-        Dir.mktmpdir(TMP_DIR_NAME) do |tmp_dir|
-          Realm::Java::Generator.new(tmp_dir, PACKAGE_NAME, xcdatamodel)
-          fixtures_files_dir = File.expand_path('../fixtures/java/inverse', File.dirname(__FILE__))
           compare_dirs(tmp_dir, fixtures_files_dir)
         end
       end
