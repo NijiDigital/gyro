@@ -11,5 +11,5 @@ enum {{ params.prefix }}{{ attribute.enum_type }}: String {
   case {{ value | uncapitalize }} = "{{ value | escape_quotes }}"
         {%- endif %}
     {%- endfor %}
-} 
+}
 {% endif %}

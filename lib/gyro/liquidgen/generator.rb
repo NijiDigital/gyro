@@ -16,6 +16,7 @@ limitations under the License.
 
 require 'gyro/xcdatamodel/parser'
 require 'pathname'
+require 'liquid'
 
 module Gyro
   module Liquidgen
@@ -61,13 +62,14 @@ module Gyro
           output = root_template.render(entity_context, :filters => [CustomFilters])
             .gsub(/^ +$/,'')
           # Don't generate empty output
-          next if output.gsub("\n", '').empty? # @todo: try to delete empty 
+          next if output.gsub("\n", '').empty?
         
           filename_context = { 'params' => params, 'name' => entity['name'] }
           # Rendering filename template using entity name and params context
           filename = filename_template.render(filename_context).chomp
+          Gyro::Log::info("output_dir + filename ::: #{output_dir + filename}")
           # Write model object
-          File.write(output_dir + filename, output)
+          Gyro.write_file_with_name(output_dir, filename, output)
           # Generate model object enums
           generate_enums(template_dir, output_dir, entity['attributes'], params)
         end
@@ -104,7 +106,7 @@ module Gyro
         enum_filename_context = { 'params' => params, 'name' => enum_name }
         enum_filename = enum_filename_template.render(enum_filename_context).chomp
 
-        File.write(output_dir + enum_filename, output)
+        Gyro.write_file_with_name(output_dir, enum_filename, output)
       end 
     end
   end

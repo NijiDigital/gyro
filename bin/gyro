@@ -22,7 +22,6 @@ end
 
 require 'gyro'
 require 'optparse'
-require 'liquid'
 
 dir = Dir.pwd
 options = {
@@ -76,7 +75,7 @@ end
 
 unless options[:template].include? '/'
   options[:template] = "data/templates/" + options[:template]
-end 
+end
 
 if options[:output].nil?
   Gyro::Error::exit_with_error('You need to specify output directory path using --output option (see --help for more info)')
