@@ -25,6 +25,7 @@ TMP_DIR_NAME = 'Gyro'
 def find_file(dir, file_name)
   Dir.chdir(dir) do
     files = Dir.glob("**/#{file_name}")
+    expect(files.count).to eq(1), "File #{file_name} not found in generated files"
     File.expand_path(files.first, dir)
   end
 end
