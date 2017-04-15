@@ -28,17 +28,17 @@ module Gyro
 
     it 'check raising relationship error' do
       xcdatamodel_dir = File.expand_path('../fixtures/xcdatamodel/error_relationship.xcdatamodel', File.dirname(__FILE__))
-      expect { XCDataModel::Parser::XCDataModel.new(xcdatamodel_dir) }.to raise_error "\e[1;31m! The relationship \"user\" from \"RLMFidelityCard\" is wrong - please fix it\e[0m"
+      expect { XCDataModel::Parser::XCDataModel.new(xcdatamodel_dir) }.to raise_error "\e[1;31m! The relationship \"user\" from \"FidelityCard\" is wrong - please fix it\e[0m"
     end
 
     it 'check raising undefined type error' do
       xcdatamodel_dir = File.expand_path('../fixtures/xcdatamodel/error_undefined_type.xcdatamodel', File.dirname(__FILE__))
-      expect { XCDataModel::Parser::XCDataModel.new(xcdatamodel_dir) }.to raise_error "\e[1;31m! The attribute \"name\" from \"RLMProduct\" has no type - please fix it\e[0m"
+      expect { XCDataModel::Parser::XCDataModel.new(xcdatamodel_dir) }.to raise_error "\e[1;31m! The attribute \"name\" from \"Product\" has no type - please fix it\e[0m"
     end
 
     it 'check raising enum type error' do
       xcdatamodel_dir = File.expand_path('../fixtures/xcdatamodel/error_enum_type.xcdatamodel', File.dirname(__FILE__))
-      expect { XCDataModel::Parser::XCDataModel.new(xcdatamodel_dir) }.to raise_error "\e[1;31m! The attribute \"type\" from \"RLMShop\" is enum with incorrect type (not Integer) - please fix it\e[0m"
+      expect { XCDataModel::Parser::XCDataModel.new(xcdatamodel_dir) }.to raise_error "\e[1;31m! The attribute \"type\" from \"Shop\" is enum with incorrect type (not Integer) - please fix it\e[0m"
     end
 
     it 'check abstract entity' do
@@ -46,7 +46,7 @@ module Gyro
       xcdatamodel = XCDataModel::Parser::XCDataModel.new(xcdatamodel_dir)
       expect(xcdatamodel.entities.length).to eq 1
       entity = xcdatamodel.entities.values.first
-      expect(entity.name).to eq 'DBAnimal'
+      expect(entity.name).to eq 'Animal'
       expect(entity.parent).to eq ''
       expect(entity.abstract?).to be true
     end

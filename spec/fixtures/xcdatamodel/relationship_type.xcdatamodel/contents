@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9525" systemVersion="15D21" minimumToolsVersion="Xcode 4.3">
-    <entity name="RLMAnimal" syncable="YES">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="12141" systemVersion="16E195" minimumToolsVersion="Xcode 4.3" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
+    <entity name="Animal" syncable="YES">
         <attribute name="attribute" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="relationshipNoValue" optional="YES" toMany="YES" deletionRule="Nullify" syncable="YES">
             <userInfo>
@@ -9,6 +9,6 @@
         </relationship>
     </entity>
     <elements>
-        <element name="RLMAnimal" positionX="-63" positionY="-18" width="128" height="75"/>
+        <element name="Animal" positionX="-63" positionY="-18" width="128" height="75"/>
     </elements>
 </model>

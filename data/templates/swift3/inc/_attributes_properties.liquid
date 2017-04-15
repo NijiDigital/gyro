@@ -20,8 +20,8 @@
 	{%- include 'inc/optional_attribute_property' %}
             {%- else %}
                 {%- comment %} ******* GENERATE DEFAULT ATTRIBUTE PROPERTY ******* {% endcomment %}     
-	{% include 'inc/default_attribute_property' %}
-            {%- endif %}
+  dynamic var {{ attribute.name }}: {{ convert_type }} = {{ default_value }}
+            {%- endif -%}
         {%- endif %}
     {%- endif %}
 {%- endfor %}
@@ -31,3 +31,4 @@
 
 {%- comment %} ******* GENERATE INVERSE PROPERTIES ******* {% endcomment %}
 	{%- include 'inc/inverse_properties' %}
+  
