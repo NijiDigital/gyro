@@ -67,7 +67,7 @@ module Gyro
           filename_context = { 'params' => params, 'name' => entity['name'] }
           # Rendering filename template using entity name and params context
           filename = filename_template.render(filename_context).chomp
-          Gyro::Log::info("output_dir + filename ::: #{output_dir + filename}")
+          Gyro::Log::success("#{filename} is created !")
           # Write model object
           Gyro.write_file_with_name(output_dir, filename, output)
           # Generate model object enums

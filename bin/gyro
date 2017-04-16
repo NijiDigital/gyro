@@ -89,7 +89,7 @@ Params      : #{options[:params].inspect}
 ===================================
 INFO
 
-# Pathname.new(template_dir) @todo : 
+# Pathname.new(template_dir) @todo : manage pathname here instead of on Generator
 
 xcdatamodel = Gyro::XCDataModel::Parser::XCDataModel.new(options[:model])
 Gyro::Liquidgen::Generator.new(xcdatamodel, options[:template], options[:output], options[:params])

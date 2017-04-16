@@ -10,8 +10,8 @@
         </attribute>
         <attribute name="type" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES">
             <userInfo>
-                <entry key="enumType" value="RLMType"/>
-                <entry key="enumValues" value="RLMTypeOne,RLMTypeTwo,RLMTypeThree"/>
+                <entry key="enumType" value="Type"/>
+                <entry key="enumValues" value="TypeOne,TypeTwo,TypeThree"/>
             </userInfo>
         </attribute>
     </entity>

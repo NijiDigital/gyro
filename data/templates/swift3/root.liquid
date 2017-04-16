@@ -3,16 +3,10 @@
 import RealmSwift
 
 final class {{ entity.name }}: Object {
-
     {%- include 'inc/attributes_enum' -%}
-
-    {%- include 'inc/relationships_enum' -%}
-
-    {%- include 'inc/attributes_properties' -%}
-
-    {%- include 'inc/primary_key' -%}
-
-    {%- include 'inc/indexed_properties' -%}
-
-    {%- include 'inc/ignored_properties' %}
+    {% include 'inc/relationships_enum' -%}
+    {% include 'inc/attributes_properties' %}
+    {% include 'inc/primary_key' -%}
+    {% include 'inc/indexed_properties' -%}
+    {% include 'inc/ignored_properties' %}
 }
