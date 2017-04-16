@@ -1,18 +1,26 @@
 {%- if entity.has_ignored == true %}
-	// Specify properties to ignore (Realm won't persist these)
-	override static func ignoredProperties() -> [String] {
-		return [
-			{%- for attribute in entity.attributes %}
-			"{{ attribute.name }}",
-			{%- endfor %}
+  // Specify properties to ignore (Realm won't persist these)
+  override static func ignoredProperties() -> [String] {
+    return [
+    {%- for attribute in entity.attributes %}
+      {%- if attribute.realm_ignored == true -%}
+        {%- if forloop.last == false -%}
+          "{{ attribute.name }}",
+        {%- else -%}
+          "{{ attribute.name }}"
+        {%- endif -%}
+      {%- endif -%}
+    {%- endfor -%}
 
-			{%- for relationship in entity.relationships %}
-				{%- if forloop.last == false %}
-			"{{ relationship.name }}",
-				{%- else %}
-			"{{ relationship.name }}"
-				{%- endif %}
-			{%- endfor %}
-		]
-	}
-{%- endif %}
+    {%- for relationship in entity.relationships -%}
+      {%- if relationship.realm_ignored == true -%}
+        {%- if forloop.last == false -%}
+          "{{ relationship.name }}",
+        {%- else -%}
+          "{{ relationship.name }}"
+        {%- endif -%}
+      {%- endif -%}
+    {%- endfor -%}
+    ]
+  }
+{% endif -%}

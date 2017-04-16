@@ -4,10 +4,10 @@ import RealmSwift
 
 final class Product: Object {
 
-    enum Relationships: String {
-        case Shop = "shop"
-    }
+  enum Relationships: String {
+    case shop = "shop"
+  }
 
-    dynamic var shop: Shop?
+  dynamic var shop: Shop?
 
 }
