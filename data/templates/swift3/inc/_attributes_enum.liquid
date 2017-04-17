@@ -6,11 +6,7 @@
             {%- if attribute.comment.size > 0 %}
     /** {{ attribute.comment }} **/
             {%- endif %}
-    case {{ attribute.name }} = {% if attribute.json_key_path.size > 0 -%}
-            "{{ attribute.json_key_path | escape_quotes }}"
-          {%- else -%}
-            "{{ attribute.name | escape_quotes }}"
-          {%- endif %}
+    case {{ attribute.name }} = "{{ attribute.name | escape_quotes }}"
         {%- endif %}
     {%- endfor %}
   }
