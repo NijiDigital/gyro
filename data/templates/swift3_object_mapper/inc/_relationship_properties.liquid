@@ -1,0 +1,9 @@
+{%- for relationship in entity.relationships -%}
+{%- if relationship.inverse == false %}
+  {%- if relationship.type == "to_many" %}
+  var {{ relationship.name }} = List<{{ relationship.inverse_type }}>()
+  {%- else %}
+  dynamic var {{ relationship.name }}: {{ relationship.inverse_type }}?
+  {%- endif %}
+{%- endif %}
+{%- endfor -%}

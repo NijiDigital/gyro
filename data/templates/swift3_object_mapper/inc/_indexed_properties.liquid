@@ -1,0 +1,16 @@
+{%- if entity.has_indexed_attributes == true %}
+	// Specify properties to index
+	override static func indexedProperties() -> [String] {
+		return [
+			{%- for attribute in entity.attributes %}
+				{%- if attribute.is_indexed == true %}
+					{%- if forloop.last == false %}
+			"{{attribute.name}}",
+					{%- else %}
+			"{{attribute.name}}"
+					{%- endif %}
+				{%- endif %}
+			{%- endfor %}
+		]
+	}
+{%- endif -%}
