@@ -22,6 +22,7 @@ end
 
 require 'gyro'
 require 'optparse'
+require 'pathname'
 
 dir = Dir.pwd
 options = {
@@ -73,23 +74,56 @@ if options[:template].nil?
   exit
 end
 
-unless options[:template].include? '/'
-  options[:template] = "data/templates/" + options[:template]
+template_dir_to_test = Pathname.new(options[:template])
+template_dir = Pathname.new("")
+##############################################
+# if template_dir contain "/"
+#   # check if exist?
+#     # if directory?
+#       # it is ok so use it 
+#     # else file? 
+#       # use dirname to use directory
+#     # end
+#   # end
+# else # this is a default template name so we need to find this template
+#   # concat data dir template with template_dir
+#   # check if template exist else exit with error
+# end
+##############################################
+if options[:template].include? '/'
+  if template_dir_to_test.exist?
+    if template_dir_to_test.directory?
+      template_dir = template_dir_to_test
+    elsif template_dir_to_test.file?
+      template_dir = template_dir_to_test.dirname
+    else
+      Gyro::Error::exit_with_error('You need to specify right template directory using --template option (see --help for more info)')
+    end
+  else
+    Gyro::Error::exit_with_error('You need to specify existing template directory using --template option (see --help for more info)')
+  end
+else
+  template_dir_to_test = Pathname.new("data/templates/") + options[:template]
+  unless template_dir_to_test.exist?
+    Gyro::Error::exit_with_error('You need to specify existing default template name using --template option (see --help for more info)')
+  end
+  template_dir = template_dir_to_test
 end
 
 if options[:output].nil?
   Gyro::Error::exit_with_error('You need to specify output directory path using --output option (see --help for more info)')
 end
 
+output_dir = Pathname.new(options[:output])
+
 puts <<-INFO
+\n
 ===================================
-Template    : #{options[:template]}
-Output Dir  : #{options[:output]}
+Template    : #{template_dir}
+Output Dir  : #{output_dir}
 Params      : #{options[:params].inspect}
 ===================================
 INFO
 
-# Pathname.new(template_dir) @todo : manage pathname here instead of on Generator
-
 xcdatamodel = Gyro::XCDataModel::Parser::XCDataModel.new(options[:model])
-Gyro::Liquidgen::Generator.new(xcdatamodel, options[:template], options[:output], options[:params])
+Gyro::Liquidgen::Generator.new(xcdatamodel, template_dir, output_dir, options[:params])

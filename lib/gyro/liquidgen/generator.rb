@@ -15,7 +15,6 @@ limitations under the License.
 =end
 
 require 'gyro/xcdatamodel/parser'
-require 'pathname'
 require 'liquid'
 
 module Gyro
@@ -44,16 +43,17 @@ module Gyro
       def initialize(xcdatamodel, template_dir, output_dir, params)
 
         Gyro::Log::title('Generating Model')
-        template_dir = Pathname.new(template_dir)
-        output_dir = Pathname.new(output_dir)
-
-        root_template_string = ( template_dir + 'root.liquid').read
+        root_template_path = (template_dir + 'root.liquid')
+        Gyro::Error::exit_with_error('Bad template directory content ! Your template need to include root.liquid file') unless root_template_path.exist?
+        root_template_string = root_template_path.read 
         root_template = Liquid::Template.parse(root_template_string)
 
         # Define Template path for Liquid file system to use Include Tag
         Liquid::Template.file_system = Liquid::LocalFileSystem.new(template_dir)
         # Parse object template
-        filename_template_string = (template_dir + 'filename.liquid').readlines.first
+        filename_template_path = (template_dir + 'filename.liquid')
+        Gyro::Error::exit_with_error('Bad template directory content ! Your template need to include filename.liquid file') unless filename_template_path.exist?
+        filename_template_string = filename_template_path.readlines.first
         filename_template = Liquid::Template.parse(filename_template_string)
 
         xcdatamodel.to_h['entities'].each do |entity|
@@ -80,11 +80,13 @@ module Gyro
       def generate_enums(template_dir, output_dir, attributes, params)
         enums = Array.new
         attributes.each do |attribute|
-          if !enums.include?(attribute['enum_type'])
-            enum_type = attribute['enum_type'].delete_objc_prefix
+          unless enums.include?(attribute['enum_type'])
+            enum_type = attribute['enum_type']
             enums.push(enum_type)
             # Parse enum template
-            enum_template_string = ( template_dir + 'enum.liquid').read
+            enum_template_path = ( template_dir + 'enum.liquid')
+            Gyro::Error::exit_with_error('Bad template directory content ! Your template need to have enum.liquid file !') unless enum_template_path.exist?
+            enum_template_string = enum_template_path.read
             enum_template = Liquid::Template.parse(enum_template_string)
 
             enum_context = { 'params' => params, 'attribute' => attribute }
@@ -100,7 +102,9 @@ module Gyro
       end
 
       def generate_enum(template_dir, output_dir, enum_name, output, params)
-        enum_filename_template_string = (template_dir + 'filename.liquid').readlines.first
+        enum_filename_template_path = (template_dir + 'enum_filename.liquid').exist? ? (template_dir + 'enum_filename.liquid') : (template_dir + 'filename.liquid')
+            Gyro::Error::exit_with_error('Bad template directory content ! Your template need to have enum_filename.liquid or filename.liquid file !') unless enum_filename_template_path.exist?
+        enum_filename_template_string = enum_filename_template_path.readlines.first
         enum_filename_template = Liquid::Template.parse(enum_filename_template_string)
         # Rendering enum filename template using enum name and params context
         enum_filename_context = { 'params' => params, 'name' => enum_name }
