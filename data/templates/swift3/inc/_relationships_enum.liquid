@@ -1,7 +1,11 @@
 {%- if entity.relationships.size > 0 and entity.has_only_inverse == false %}
   enum Relationships: String {
     {%- for relationship in entity.relationships %}
-    case {{ relationship.name | snake_to_camel_case | uncapitalize }} = "{{ relationship.name | escape_quotes }}"
+    case {{ relationship.name | snake_to_camel_case | uncapitalize }} = {% if attribute.json_key_path.size > 0 -%}
+            "{{ relationship.json_key_path | escape_quotes }}"
+          {%- else -%}
+            "{{ relationship.name | escape_quotes }}"
+          {%- endif %}
     {%- endfor %}
   }
 {% endif -%}
