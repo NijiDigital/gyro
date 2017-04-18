@@ -27,6 +27,8 @@ require 'pathname'
 dir = Dir.pwd
 options = {
     :model => nil,
+    :android_dir => nil, 
+    :package => nil, 
     :template => nil,
     :output => nil,
     :params => {}
@@ -37,12 +39,24 @@ OptionParser.new do |opts|
   opts.on('-m PATH', '--model PATH', %q(Specify Interface Builder .xcdatamodel file)) do | xcdatamodel_path |
     options[:model] = xcdatamodel_path
   end
+  opts.on('-a PATH', '--android PATH', %q(Specify Android Realm model classes dir)) do |path| 
+    options[:android_dir] = path 
+  end
   opts.on('-t DIR', '--template DIR', %q(Path to the Liquid template directrory to use, other solution is to specify default template name (like swift3, android) !)) do |tempate_path|
     options[:template] = tempate_path
   end
   opts.on('-o DIR', '--output DIR', %q(Path to the output directory to generate model)) do | output_dir_path |
     options[:output] = output_dir_path
   end
+  opts.on('-p PATH', '--package PATH', %q(Specify Android Realm model classes package name)) do |path| 
+    options[:package] = path 
+  end 
+  opts.on('-w', '--wrappers', %q(To generate Java primitive wrappers for optional fields instead of primitive types)) do 
+    options[:wrappers] = true 
+  end 
+  opts.on('-x', '--annotations', %q(To tag code with Android support annotations according to optional/non optional fields)) do 
+    options[:annotations] = true 
+  end 
   opts.on('-p KEY:VALUE', '--param KEY:VALUE', %q(Custom parameters that you can use inside custom templates)) do | params |
     split_params = params.split(":")
     options[:params] = options[:params].merge("#{split_params[0]}" => "#{split_params[1]}")
@@ -65,6 +79,20 @@ else
   dirname = File.dirname(options[:model])
   Gyro::Log::success("Using #{basename} in #{dirname}")
 end
+
+# Android 
+if options[:android_dir].nil? 
+  if Dir.exist?(options[:android_dir]) 
+    if options[:package].nil? 
+      Gyro::Log::info('You need to specify an Android package name using --package option (see --help for more info)') 
+    else 
+      xcdatamodel = Gyro::XCDataModel::Parser::XCDataModel.new(options[:model]) 
+      Gyro::Realm::Java::Generator.new(options[:android_dir], options[:package], xcdatamodel, options[:wrappers], options[:annotations]) 
+    end 
+  else 
+    Gyro::Log::info('You need to specify a valid Android Realm model classes dir') 
+  end 
+end 
 
 if options[:template].nil?
   # Generate JSON if no -t is specified
