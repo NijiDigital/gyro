@@ -102,7 +102,7 @@ if options[:template].include? '/'
     Gyro::Error::exit_with_error('You need to specify right template directory using --template option (see --help for more info)')
   end
 else
-  template_dir_to_test = Pathname.new("data/templates/") + options[:template]
+  template_dir_to_test = Pathname.new("data/templates/") + template_dir_to_test
   unless template_dir_to_test.exist?
     Gyro::Error::exit_with_error('You need to specify existing default template name using --template option (see --help for more info)')
   end

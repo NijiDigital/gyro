@@ -1,6 +1,6 @@
   {%- if attribute.optional == true %}
 
-  dynamic var {{ attribute.name }}: String? = nil
+  dynamic var {{ attribute.name }}: String?
   {%- else %}
 
   dynamic var {{ attribute.name }}: String = ""
@@ -24,3 +24,4 @@
     set { {{ attribute.name }} = newValue?.rawValue ?? "" }
     {%- endif %}
   }
+  
