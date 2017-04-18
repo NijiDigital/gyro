@@ -91,16 +91,15 @@ template_dir = Pathname.new("")
 # end
 ##############################################
 if options[:template].include? '/'
-  if template_dir_to_test.exist?
-    if template_dir_to_test.directory?
-      template_dir = template_dir_to_test
-    elsif template_dir_to_test.file?
-      template_dir = template_dir_to_test.dirname
-    else
-      Gyro::Error::exit_with_error('You need to specify right template directory using --template option (see --help for more info)')
-    end
-  else
+  unless template_dir_to_test.exist?
     Gyro::Error::exit_with_error('You need to specify existing template directory using --template option (see --help for more info)')
+  end
+  if template_dir_to_test.directory?
+    template_dir = template_dir_to_test
+  elsif template_dir_to_test.file?
+    template_dir = template_dir_to_test.dirname
+  else
+    Gyro::Error::exit_with_error('You need to specify right template directory using --template option (see --help for more info)')
   end
 else
   template_dir_to_test = Pathname.new("data/templates/") + options[:template]
