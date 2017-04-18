@@ -80,77 +80,46 @@ else
   Gyro::Log::success("Using #{basename} in #{dirname}")
 end
 
-# Android 
-if options[:android_dir].nil? 
-  if Dir.exist?(options[:android_dir]) 
-    if options[:package].nil? 
-      Gyro::Log::info('You need to specify an Android package name using --package option (see --help for more info)') 
-    else 
-      xcdatamodel = Gyro::XCDataModel::Parser::XCDataModel.new(options[:model]) 
-      Gyro::Realm::Java::Generator.new(options[:android_dir], options[:package], xcdatamodel, options[:wrappers], options[:annotations]) 
-    end 
-  else 
-    Gyro::Log::info('You need to specify a valid Android Realm model classes dir') 
-  end 
-end 
-
-if options[:template].nil?
-  # Generate JSON if no -t is specified
-  Gyro::Log::info('You can specify custom template directory or default template using --template option (see --help for more info)')
-  xcdatamodel = Gyro::XCDataModel::Parser::XCDataModel.new(options[:model])
-  Gyro::Json::Generator.new(xcdatamodel)
-  exit
-end
-
-template_dir_to_test = Pathname.new(options[:template])
-template_dir = Pathname.new("")
-##############################################
-# if template_dir contain "/"
-#   # check if exist?
-#     # if directory?
-#       # it is ok so use it 
-#     # else file? 
-#       # use dirname to use directory
-#     # end
-#   # end
-# else # this is a default template name so we need to find this template
-#   # concat data dir template with template_dir
-#   # check if template exist else exit with error
-# end
-##############################################
-if options[:template].include? '/'
-  unless template_dir_to_test.exist?
-    Gyro::Error::exit_with_error('You need to specify existing template directory using --template option (see --help for more info)')
-  end
-  if template_dir_to_test.directory?
-    template_dir = template_dir_to_test
-  elsif template_dir_to_test.file?
-    template_dir = template_dir_to_test.dirname
+# Android
+unless options[:android_dir].nil?
+  if Dir.exist?(options[:android_dir])
+    if options[:package].nil?
+      Gyro::Log::info('You need to specify an Android package name using --package option (see --help for more info)')
+    else
+      xcdatamodel = Gyro::XCDataModel::Parser::XCDataModel.new(options[:model])
+      Gyro::Realm::Java::Generator.new(options[:android_dir], options[:package], xcdatamodel, options[:wrappers], options[:annotations])
+    end
   else
-    Gyro::Error::exit_with_error('You need to specify right template directory using --template option (see --help for more info)')
+    Gyro::Log::info('You need to specify a valid Android Realm model classes dir')
   end
 else
-  template_dir_to_test = Pathname.new("data/templates/") + template_dir_to_test
-  unless template_dir_to_test.exist?
-    Gyro::Error::exit_with_error('You need to specify existing default template name using --template option (see --help for more info)')
+  if options[:template].nil?
+    # Generate JSON if no -t is specified
+    Gyro::Log::info('You can specify custom template directory or default template using --template option (see --help for more info)')
+    xcdatamodel = Gyro::XCDataModel::Parser::XCDataModel.new(options[:model])
+    Gyro::Json::Generator.new(xcdatamodel)
+    exit
+  else 
+
+    template_dir = Gyro::search_template_dir(options[:template])
+
+    if options[:output].nil?
+      Gyro::Error::exit_with_error('You need to specify output directory path using --output option (see --help for more info)')
+    end
+
+    output_dir = Pathname.new(options[:output])
+
+    puts <<-INFO
+    \n
+    ===================================
+    Template    : #{template_dir}
+    Output Dir  : #{output_dir}
+    Params      : #{options[:params].inspect}
+    ===================================
+    INFO
+
+    xcdatamodel = Gyro::XCDataModel::Parser::XCDataModel.new(options[:model])
+    Gyro::Liquidgen::Generator.new(xcdatamodel, template_dir, output_dir, options[:params])
   end
-  template_dir = template_dir_to_test
 end
 
-if options[:output].nil?
-  Gyro::Error::exit_with_error('You need to specify output directory path using --output option (see --help for more info)')
-end
-
-output_dir = Pathname.new(options[:output])
-
-puts <<-INFO
-\n
-===================================
-Template    : #{template_dir}
-Output Dir  : #{output_dir}
-Params      : #{options[:params].inspect}
-===================================
-INFO
-
-xcdatamodel = Gyro::XCDataModel::Parser::XCDataModel.new(options[:model])
-Gyro::Liquidgen::Generator.new(xcdatamodel, template_dir, output_dir, options[:params])
