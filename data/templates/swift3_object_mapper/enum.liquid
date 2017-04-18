@@ -4,7 +4,11 @@
 enum {{ params.prefix }}{{ attribute.enum_type }}: String {
 {%- for value in attribute.enum_values %}
   {%- if attribute.enum_values.size > 0 %}
-  case {{ value | uncapitalize }} = "{{ value | escape_quotes }}"
+  {% assign jsonKey = value -%}
+  {%- if attribute.json_values.size > 0 and attribute.json_values[forloop.index0] -%}
+    {%- assign jsonKey = attribute.json_values[forloop.index0] -%}
+  {%- endif -%}
+  case {{ value | uncapitalize }} = "{{ jsonKey | escape_quotes }}"
   {%- endif %}
 {%- endfor %}
 }

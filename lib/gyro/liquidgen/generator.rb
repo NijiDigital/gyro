@@ -16,6 +16,7 @@ limitations under the License.
 
 require 'gyro/xcdatamodel/parser'
 require 'liquid'
+require 'pathname'
 
 module Gyro
   module Liquidgen
@@ -36,14 +37,15 @@ module Gyro
           input.split('_').map { |s| s.capitalize }.join
         end
         def uncapitalize(input)
-          input[0, 1].downcase + input[1..-1]
+          input_strip = input.strip
+          input_strip[0, 1].downcase + input_strip[1..-1]
         end
       end
 
       def initialize(xcdatamodel, template_dir, output_dir, params)
-
         Gyro::Log::title('Generating Model')
-        root_template_path = (template_dir + 'root.liquid')
+
+        root_template_path = template_dir + 'root.liquid'
         Gyro::Error::exit_with_error('Bad template directory content ! Your template need to include root.liquid file') unless root_template_path.exist?
         root_template_string = root_template_path.read 
         root_template = Liquid::Template.parse(root_template_string)
