@@ -53,8 +53,8 @@ module DBGenerator
         LIST_TEMPLATE = 'List<%s>'
 
         # CONSTANTS
-        ATTRIBUTE_CONSTANTS = "public static class Attributes {\n        \n        private Attributes() {\n            // Hide constructor\n        }\n"
-        RELATIONSHIP_CONSTANTS = "public static class Relationships {\n        \n        private Relationships() {\n            // Hide constructor\n        }\n"
+        ATTRIBUTE_CONSTANTS = "public static class Attributes {\n\n        private Attributes() {\n            // Hide constructor\n        }\n"
+        RELATIONSHIP_CONSTANTS = "public static class Relationships {\n\n        private Relationships() {\n            // Hide constructor\n        }\n"
         CONSTANT_TEMPLATE = 'public static final String %s = "%s";'
 
         # COMMENTS
