@@ -9,7 +9,7 @@ extension {{ entity.name }}: Decodable {
     let {{ entityVariable }} = {{ entity.name }}()
     {%- for attribute in entity.attributes %}
       {% assign attributeKey = attribute.name -%}
-      {%- if attribute.transformer.empty == false -%}
+      {%- if attribute.json_key_path.size > 0 -%}
         {%- assign attributeKey = attribute.json_key_path -%}
       {%- endif -%}
 
