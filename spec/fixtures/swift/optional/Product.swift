@@ -10,7 +10,7 @@ final class Product: Object {
     case price = "price"
   }
 
-  dynamic var brand: String? = nil
+  dynamic var brand: String?
   dynamic var name: String = ""
   let price = RealmOptional<Int32>()
 

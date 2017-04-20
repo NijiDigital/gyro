@@ -10,10 +10,10 @@ final class User: Object {
   }
 
   enum Relationships: String {
-    case fidelityCard = "fidelityCard"
+    case fidelitycard = "fidelityCard"
   }
 
-  dynamic var birthday: NSDate = NSDate()
+  dynamic var birthday: Date = Date()
   dynamic var name: String = ""
   dynamic var fidelityCard: FidelityCard?
 

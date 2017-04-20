@@ -5,17 +5,13 @@
     {%- capture enum_ignored_properties -%}
       {%- for attribute in entity.attributes %}
         {%- if attribute.realm_ignored == true -%}
-          {%- if forloop.last == false -%}
             "{{ attribute.name }}",
-          {%- endif -%}
         {%- endif -%}
       {%- endfor -%}
-    
+
       {%- for relationship in entity.relationships -%}
         {%- if relationship.realm_ignored == true -%}
-          {%- if forloop.last == false -%}
             "{{ relationship.name }}",
-          {%- endif -%}
         {%- endif -%}
       {%- endfor -%}
     {%- endcapture -%}

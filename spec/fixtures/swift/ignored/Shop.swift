@@ -5,6 +5,7 @@ import RealmSwift
 final class Shop: Object {
 
   enum Attributes: String {
+    case ignored = "ignored"
     case name = "name"
   }
 
