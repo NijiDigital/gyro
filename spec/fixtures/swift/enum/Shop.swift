@@ -11,8 +11,8 @@ final class Shop: Object {
   }
 
   dynamic var name: String = ""
-  dynamic var optionalValue: String? = nil
-  
+
+  dynamic var optionalValue: String?
   var optionalValueEnum: OptValue? {
     get {
       guard let optionalValue = optionalValue,
@@ -22,6 +22,7 @@ final class Shop: Object {
     }
     set { optionalValue = newValue?.rawValue ?? nil }
   }
+
 
   dynamic var type: String = ""
   var typeEnum: Type? {

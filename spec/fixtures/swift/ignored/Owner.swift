@@ -12,7 +12,7 @@ final class Owner: Object {
     case shop = "shop"
   }
 
-  dynamic var name: String? = nil
+  dynamic var name: String?
   dynamic var shop: Shop?
 
   // Specify properties to ignore (Realm won't persist these)
