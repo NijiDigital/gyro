@@ -33,10 +33,5 @@ public class {{ entity.name }} extends RealmObject {
   {% include 'inc/attributes_enum' %}
   {% include 'inc/relationships_enum' %}
   {% include 'inc/attributes_properties' %}
-
-  {%- for relationship in entity.relationships -%}
-    {%- if relationship.inverse == false -%}
-      
-    {%- endif -%}
-  {%- endfor -%}
+  {% include 'inc/relationships_properties' %}
 }
