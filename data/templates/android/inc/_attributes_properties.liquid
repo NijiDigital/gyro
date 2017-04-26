@@ -1,0 +1,33 @@
+{% for attribute in entity.attributes %}
+  {% if attribute.realm_read_only.size == 0 -%}
+      {%- comment %} ******* CONVERT TYPE CAPTURE ******* {% endcomment -%}
+      {%- capture convert_type -%}
+        {%- if use_wrapper == true -%}
+          {%- include 'inc/wrapper_type_converter' -%}
+        {%- else -%}
+          {%- include 'inc/type_converter' -%}
+        {%- endif -%}
+      {%- endcapture -%}
+
+      {%- assign name = attribute.name -%}
+      {%- if name == primary_key -%}
+        @PrimaryKey
+      {%- endif %}
+      {%- if attribute.indexed == true -%}
+        @Index
+      {%- endif %}
+      {%- if attribute.realm_ignored == true or attribute.enum_type.size > 0 -%}
+        @Ignore
+      {%- endif -%}
+      {%- if attribute.enum_type.size > 0 -%}
+        private {{ attribute.enum_type }} {{ name }}Enum;
+      {%- endif -%}
+      {%- if attribute.json_key_path.size > 0 -%}
+        @SerializedName("{{ attribute.json_key_path }}")
+      {%- endif -%}
+      {%- if attribute.support_annotation.size > 0 -%}
+        @android.support.annotation.{{ attribute.support_annotation }}
+      {%- endif -%}
+        private {{ convert_type }} {{ name }};
+    {%- endif -%}
+  {%- endfor %}

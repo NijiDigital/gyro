@@ -1,0 +1,10 @@
+///////// TODO use PR from Benoit Marty to avoid sonar warnings
+{% if entity.relationships.size > 0 or entity.has_only_inverse == false %}
+  public interface Relationships {
+    {%- for relationship in entity.relationships -%}
+      {% if relationship.inverse == false %}
+    String {{ relationship.name }} = "{{ relationship.name }}";
+      {%- endif -%}
+    {% endfor  %}
+  }
+{%- endif %}
