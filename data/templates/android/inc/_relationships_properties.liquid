@@ -2,7 +2,7 @@
 
   {%- capture relationship_type -%}
     {%- if relationship.destination.size == 0 -%}
-      {%- if relationship.type == "to_many"  -%}
+      {%- if relationship.type != "to_many"  -%}
         {{ relationship.inverse_type }}
       {%- else -%}
         RealmList<{{ relationship.inverse_type }}>
@@ -15,10 +15,10 @@
   {%- if relationship.inverse == false -%}
     {%- if relationship.realm_ignored == true -%}
     @Ignore
-    {%- endif -%}
+    {% endif -%}
     {%- if relationship.json_key_path.size > 0 -%}
     @SerializedName("{{ relationship.json_key_path }}")
-    {%- endif -%}
+    {% endif -%}
     private {{ relationship_type }} {{ relationship.name }};
   {%- endif -%}
 {%- endfor -%}

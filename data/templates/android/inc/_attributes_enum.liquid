@@ -1,13 +1,13 @@
-///////// TODO use PR from Benoit Marty to avoid sonar warnings
 {% if entity.attributes.size > 0 %}
-  public interface Attributes {
-    {%- for attribute in entity.attributes -%}
+    public static class Attributes {
+        private Attributes() {}
+    {% for attribute in entity.attributes -%}
       {% if attribute.realm_ignored == false or attribute.read_only == false -%}
         {% if attribute.comment.size > 0 -%}
-    /** {{ attribute.comment }} */
+        /** {{ attribute.comment }} */
         {%- endif %} 
-    String {{ attribute.name }} = "{{ attribute.name }}";
+        public static final String {{ attribute.name | upcase }} = "{{ attribute.name }}";
       {%- endif -%}
     {% endfor  %}
-  }
-{%- endif %}
+    }
+{%- endif -%}
