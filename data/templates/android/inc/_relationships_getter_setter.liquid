@@ -1,0 +1,38 @@
+{%- for relationship in entity.relationships -%}
+    {%- if relationship.inverse == false -%}
+
+        {%- capture relationship_type -%}
+          {%- if relationship.destination.size == 0 -%}
+            {%- if relationship.type != "to_many"  -%}
+              {{ relationship.inverse_type }}
+            {%- else -%}
+              RealmList<{{ relationship.inverse_type }}>
+            {%- endif -%}
+          {%- else -%}
+            List<{{ relationship.destination }}>
+          {%- endif -%}
+        {% endcapture %}
+
+        {%- capture annotation -%}
+          {%- if support_annotations == true and relationship.optional == true -%}
+          @android.support.annotation.Nullable
+          {%- endif -%}
+          {%- if support_annotations == true and relationship.optional == false -%}
+          @android.support.annotation.NonNull
+          {%- endif -%}
+          {%- if relationship.support_annotation.size > 0 %}
+            @android.support.annotation.{{ relationship.support_annotation }}
+          {%- endif %}
+        {%- endcapture -%}
+
+        {%- assign name = relationship.name %}
+
+    public {{ relationship_type }} get{{ name | capitalize }}() {
+        return {{ name }};
+    }
+
+    public void set{{ name | capitalize }}({{ annotation }} final {{ relationship_type }} {{ name }}) {
+        this.{{ name }} = {{ name }};
+    }
+    {%- endif -%}
+{%- endfor -%}
