@@ -44,7 +44,7 @@ class String
   end
 
   def add_quotes
-    "\"" + self + "\""
+    '"' + self + '"'
   end
 
   def add_parentheses

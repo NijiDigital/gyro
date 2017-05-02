@@ -76,7 +76,7 @@ module Gyro
           generate_enums(template_dir, output_dir, entity['attributes'], params)
         end
 
-        Gyro::Log.success("Model objects are generated !")
+        Gyro::Log.success('Model objects are generated !')
       end
 
       def generate_enums(template_dir, output_dir, attributes, params)
