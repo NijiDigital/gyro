@@ -33,7 +33,7 @@ module Gyro
         end
 
         def snake_to_camel_case(input)
-          input.split('_').map { |s| s.capitalize }.join
+          input.split('_').map(&:capitalize).join
         end
 
         def uncapitalize(input)
