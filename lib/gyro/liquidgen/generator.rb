@@ -62,7 +62,7 @@ module Gyro
           entity_context = { 'params' => params, 'entity' => entity }
           # Rendering template using entity and params context
           output = root_template.render(entity_context, filters: [CustomFilters])
-                                .gsub(/^ +$/,'')
+                                .gsub(/^ +$/, '')
           # Don't generate empty output
           next if output.delete("\n").empty?
         
@@ -86,7 +86,7 @@ module Gyro
           if !enums.include?(enum_type) && !enum_type.empty?
             enums.push(enum_type)
             # Parse enum template
-            enum_template_path = ( template_dir + 'enum.liquid')
+            enum_template_path = (template_dir + 'enum.liquid')
             if enum_template_path.exist?
               enum_template_string = enum_template_path.read
               enum_template = Liquid::Template.parse(enum_template_string)
@@ -94,7 +94,7 @@ module Gyro
               enum_context = { 'params' => params, 'attribute' => attribute }
               # Rendering enum template using attribute and params context
               output = enum_template.render(enum_context, filters: [CustomFilters])
-                                    .gsub(/^ +$/,'')
+                                    .gsub(/^ +$/, '')
               # Don't generate empty output
               next if output.delete("\n").empty? 
         

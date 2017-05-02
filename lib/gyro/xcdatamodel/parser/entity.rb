@@ -24,8 +24,8 @@ module Gyro
           @parent = entity_xml.xpath('@parentEntity').to_s
           @abstract = entity_xml.xpath('@isAbstract').to_s == 'YES' ? true : false
           @clean = false
-          @identity_attribute = entity_xml.xpath(USERINFO_VALUE%['identityAttribute']).to_s
-          @comment = entity_xml.xpath(USERINFO_VALUE%['comment']).to_s
+          @identity_attribute = entity_xml.xpath(USERINFO_VALUE % ['identityAttribute']).to_s
+          @comment = entity_xml.xpath(USERINFO_VALUE % ['comment']).to_s
           @attributes = {}
           @relationships = {}
           load_entity(entity_xml)
@@ -203,9 +203,9 @@ module Gyro
         def has_only_inverse?
           nb_inverses = 0
           @relationships.each do |_, relationship|
-            nb_inverses+=1 if relationship.inverse?
+            nb_inverses += 1 if relationship.inverse?
           end
-          nb_inverses==@relationships.size
+          nb_inverses == @relationships.size
         end
 
         private ################################################################

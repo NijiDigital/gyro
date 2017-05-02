@@ -34,7 +34,7 @@ options = {
 
 OptionParser.new do |opts|
   opts.banner = 'Usage: gyro [options]'
-  opts.on('-m PATH', '--model PATH', %q(Specify Interface Builder .xcdatamodel file)) do | xcdatamodel_path |
+  opts.on('-m PATH', '--model PATH', %q(Specify Interface Builder .xcdatamodel file)) do |xcdatamodel_path|
     options[:model] = xcdatamodel_path
   end
   opts.on('-a PATH', '--android PATH', %q(Specify Android Realm model classes dir)) do |path| 
@@ -43,7 +43,7 @@ OptionParser.new do |opts|
   opts.on('-t DIR', '--template DIR', %q(Path to the Liquid template directrory to use, other solution is to specify default template name (like swift3, android) !)) do |tempate_path|
     options[:template] = tempate_path
   end
-  opts.on('-o DIR', '--output DIR', %q(Path to the output directory to generate model)) do | output_dir_path |
+  opts.on('-o DIR', '--output DIR', %q(Path to the output directory to generate model)) do |output_dir_path|
     options[:output] = output_dir_path
   end
   opts.on('-p PATH', '--package PATH', %q(Specify Android Realm model classes package name)) do |path| 
@@ -55,7 +55,7 @@ OptionParser.new do |opts|
   opts.on('-x', '--annotations', %q(To tag code with Android support annotations according to optional/non optional fields)) do 
     options[:annotations] = true 
   end 
-  opts.on('-p KEY:VALUE', '--param KEY:VALUE', %q(Custom parameters that you can use inside custom templates)) do | params |
+  opts.on('-p KEY:VALUE', '--param KEY:VALUE', %q(Custom parameters that you can use inside custom templates)) do |params|
     split_params = params.split(":")
     options[:params] = options[:params].merge("#{split_params[0]}" => "#{split_params[1]}")
   end
