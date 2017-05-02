@@ -15,6 +15,7 @@ limitations under the License.
 =end
 
 require 'gyro/xcdatamodel/parser'
+require 'gyro/liquidgen/whitespace_patch'
 require 'liquid'
 require 'pathname'
 
@@ -47,7 +48,7 @@ module Gyro
 
         root_template_path = template_dir + 'root.liquid'
         Gyro::Error::exit_with_error('Bad template directory content ! Your template need to include root.liquid file') unless root_template_path.exist?
-        root_template_string = root_template_path.read 
+        root_template_string = root_template_path.read
         root_template = Liquid::Template.parse(root_template_string)
 
         # Define Template path for Liquid file system to use Include Tag
