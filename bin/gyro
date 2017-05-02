@@ -14,9 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-if RUBY_VERSION < '2.0.0'
-  abort 'error: gyro requires Ruby 2 or higher.'
-end
+abort 'error: gyro requires Ruby 2 or higher.' if RUBY_VERSION < '2.0.0'
 
 require 'gyro'
 require 'optparse'

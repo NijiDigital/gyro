@@ -83,24 +83,22 @@ module Gyro
         enums = []
         attributes.each do |attribute|
           enum_type = attribute['enum_type']
-          if !enums.include?(enum_type) && !enum_type.empty?
-            enums.push(enum_type)
-            # Parse enum template
-            enum_template_path = (template_dir + 'enum.liquid')
-            if enum_template_path.exist?
-              enum_template_string = enum_template_path.read
-              enum_template = Liquid::Template.parse(enum_template_string)
+          next unless !enums.include?(enum_type) && !enum_type.empty?
+          enums.push(enum_type)
+          # Parse enum template
+          enum_template_path = (template_dir + 'enum.liquid')
+          next unless enum_template_path.exist?
+          enum_template_string = enum_template_path.read
+          enum_template = Liquid::Template.parse(enum_template_string)
 
-              enum_context = { 'params' => params, 'attribute' => attribute }
-              # Rendering enum template using attribute and params context
-              output = enum_template.render(enum_context, filters: [CustomFilters])
-                                    .gsub(/^ +$/, '')
-              # Don't generate empty output
-              next if output.delete("\n").empty?
+          enum_context = { 'params' => params, 'attribute' => attribute }
+          # Rendering enum template using attribute and params context
+          output = enum_template.render(enum_context, filters: [CustomFilters])
+                                .gsub(/^ +$/, '')
+          # Don't generate empty output
+          next if output.delete("\n").empty?
 
-              generate_enum(template_dir, output_dir, enum_type, output, params)
-            end
-          end
+          generate_enum(template_dir, output_dir, enum_type, output, params)
         end
       end
 
