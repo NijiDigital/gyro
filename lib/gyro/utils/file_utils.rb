@@ -36,8 +36,8 @@ module Gyro
     # if template_dir_param contain "/"
     #   # check if exist?
     #     # if directory?
-    #       # it is ok so use it 
-    #     # else file? 
+    #       # it is ok so use it
+    #     # else file?
     #       # use dirname to use directory
     #     # end
     #   # end

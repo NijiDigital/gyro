@@ -38,10 +38,10 @@ module Gyro
         end
 
         def to_h
-          return { 'entity_name' => entity_name, 'name' => name, 'type' => type.to_s, 
+          return { 'entity_name' => entity_name, 'name' => name, 'type' => type.to_s,
                    'optional' => optional, 'deletion_rule' => deletion_rule,
-                   'inverse_name' => inverse_name, 'inverse_type' => inverse_type, 
-                   'json_key_path' => json_key_path, 'support_annotation' => support_annotation, 
+                   'inverse_name' => inverse_name, 'inverse_type' => inverse_type,
+                   'json_key_path' => json_key_path, 'support_annotation' => support_annotation,
                    'realm_ignored' => realm_ignored, 'destination' => destination, 'inverse' => inverse? }
         end
 

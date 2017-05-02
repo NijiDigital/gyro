@@ -30,9 +30,9 @@ module Gyro
           load_entities(document_xml)
         end
 
-        def to_h 
+        def to_h
           return { 'entities' => entities.values.map(&:to_h) }
-        end 
+        end
 
         def to_s
           str = ''

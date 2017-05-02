@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.summary     = 'Generate Realm.io models for Swift, Java & ObjC from xcdatamodel'
   s.description = <<-DESC
     This tools allows you to use the visual Xcode editor to design your DataModels
-    using the xcdatamodel format (originally designed for CoreData) but then 
+    using the xcdatamodel format (originally designed for CoreData) but then
     generate the code for Realm.io models for Swift, Java & ObjC from that xcdatamodel.
 
     This way you can take advantage of the xcdatamodel visual editor and Xcode integration
