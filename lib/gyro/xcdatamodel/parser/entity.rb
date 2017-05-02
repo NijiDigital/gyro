@@ -26,8 +26,8 @@ module Gyro
           @clean = false
           @identity_attribute = entity_xml.xpath(USERINFO_VALUE%['identityAttribute']).to_s
           @comment = entity_xml.xpath(USERINFO_VALUE%['comment']).to_s
-          @attributes = Hash.new
-          @relationships = Hash.new
+          @attributes = {}
+          @relationships = {}
           load_entity(entity_xml)
         end
 

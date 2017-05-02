@@ -80,7 +80,7 @@ module Gyro
       end
 
       def generate_enums(template_dir, output_dir, attributes, params)
-        enums = Array.new
+        enums = []
         attributes.each do |attribute|
           enum_type = attribute['enum_type']
           if !enums.include?(enum_type) && !enum_type.empty?
