@@ -44,11 +44,11 @@ module Gyro
         end
 
         def to_h
-          return { 'entity_name' => entity_name, 'name' => name, 'type' => type.to_s, 'optional' => optional, 'indexed' => indexed,
-                   'default' => default, 'realm_ignored' => realm_ignored, 'realm_read_only' => realm_read_only, 'enum_type' => enum_type,
-                   'enum_values' => enum_values, 'json_key_path' => json_key_path, 'json_values' => json_values,
-                   'transformer' => transformer, 'comment' => comment, 'support_annotation' => support_annotation, 'is_decimal' => is_decimal?,
-                   'is_integer' => is_integer?, 'is_number' => is_number?, 'is_bool' => is_bool?, 'need_transformer' => need_transformer? }
+          { 'entity_name' => entity_name, 'name' => name, 'type' => type.to_s, 'optional' => optional, 'indexed' => indexed,
+            'default' => default, 'realm_ignored' => realm_ignored, 'realm_read_only' => realm_read_only, 'enum_type' => enum_type,
+            'enum_values' => enum_values, 'json_key_path' => json_key_path, 'json_values' => json_values,
+            'transformer' => transformer, 'comment' => comment, 'support_annotation' => support_annotation, 'is_decimal' => is_decimal?,
+            'is_integer' => is_integer?, 'is_number' => is_number?, 'is_bool' => is_bool?, 'need_transformer' => need_transformer? }
         end
 
         def enum?
