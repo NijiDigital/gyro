@@ -42,7 +42,7 @@ module Gyro
       print prompt
       print "#{url_info}\r#{prompt}" if url
 
-      answer = get_char do |c|
+      answer = read_char do |c|
         `open '#{url}'` if url && (c == '?')
         "yn\003".include?(c.downcase) # \003 = ctrl-C
       end
@@ -50,9 +50,9 @@ module Gyro
       answer.downcase == 'y'
     end
 
-    private ######################################################################
+    ######################################################################
 
-    def self.get_char
+    def self.read_char
       stop = false
       typed_char = ''
       begin
@@ -66,6 +66,7 @@ module Gyro
       end
       typed_char
     end
+    private_class_method :read_char
 
   end
 end
