@@ -14,6 +14,8 @@
 
 require 'pathname'
 
+# Utility functions to be used across Gyro internally
+#
 module Gyro
   def self.find_xcdatamodel(dir)
     Dir.chdir(dir) do

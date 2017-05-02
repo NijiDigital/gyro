@@ -17,6 +17,8 @@ require 'json'
 
 module Gyro
   module Json
+    # Generates the JSON representation of the input datamodel
+    #
     class Generator
       # INCLUDES #############################################################
 

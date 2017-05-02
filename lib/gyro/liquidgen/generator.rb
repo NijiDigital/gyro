@@ -19,6 +19,8 @@ require 'pathname'
 
 module Gyro
   module Liquidgen
+    # Generates arbitrary output from the input datamodel, using a Liquid template provided by the user
+    #
     class Generator
       # INCLUDES #############################################################
 

@@ -15,6 +15,8 @@
 module Gyro
   module XCDataModel
     module Parser
+      # One Entity in the xcdatamodel
+      #
       class Entity
         attr_accessor :name, :parent, :abstract, :attributes, :relationships, :identity_attribute, :comment
         alias abstract? abstract
