@@ -15,9 +15,7 @@
 module Gyro
   module XCDataModel
     module Parser
-
       class Attribute
-
         attr_accessor :entity_name, :name, :type, :optional, :indexed, :default
         attr_accessor :realm_ignored, :realm_read_only, :enum_type, :enum_values
         attr_accessor :json_key_path, :json_values, :transformer, :comment, :support_annotation
@@ -104,9 +102,7 @@ module Gyro
             Gyro::Error.raise!(message_format%[@name, @entity_name])
           end
         end
-
       end
-
     end
   end
 end

@@ -20,7 +20,6 @@ require 'pathname'
 module Gyro
   module Liquidgen
     class Generator
-
       # INCLUDES #############################################################
 
       include Gyro::XCDataModel::Parser

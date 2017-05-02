@@ -14,7 +14,6 @@
 
 module Gyro
   module Log
-
     @@quiet = false
     def self.quiet=(value)
       @@quiet = value
@@ -67,6 +66,5 @@ module Gyro
       typed_char
     end
     private_class_method :read_char
-
   end
 end

@@ -13,7 +13,6 @@
 # limitations under the License.
 
 class String
-
   def delete_objc_prefix
     i = 0
     while i < self.length - 1 && /[[:upper:]]/.match(self[i+1])
@@ -51,5 +50,4 @@ class String
   def add_parentheses
     '(' + self + ')'
   end
-
 end

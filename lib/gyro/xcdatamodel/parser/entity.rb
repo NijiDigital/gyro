@@ -16,7 +16,6 @@ module Gyro
   module XCDataModel
     module Parser
       class Entity
-
         attr_accessor :name, :parent, :abstract, :attributes, :relationships, :identity_attribute, :comment
         alias abstract? abstract
 
@@ -232,7 +231,6 @@ module Gyro
           end
         end
       end
-
     end
   end
 end

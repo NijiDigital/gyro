@@ -18,7 +18,6 @@ require 'json'
 module Gyro
   module Json
     class Generator
-
       # INCLUDES #############################################################
 
       include Gyro::XCDataModel::Parser

@@ -18,7 +18,6 @@ module Gyro
       USERINFO_VALUE = "userInfo/entry[@key='%s']/@value"
 
       class XCDataModel
-
         attr_accessor :entities
 
         def initialize(xcdatamodel_dir)
