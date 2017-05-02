@@ -32,7 +32,7 @@ module Gyro
           @optional = attribute_xml.xpath('@optional').to_s == 'YES' ? true : false
           @indexed = attribute_xml.xpath('@indexed').to_s == 'YES' ? true : false
           @default = attribute_xml.xpath('@defaultValueString').to_s
-          @type = attribute_xml.xpath('@attributeType').to_s.downcase.gsub(' ', '_').to_sym
+          @type = attribute_xml.xpath('@attributeType').to_s.downcase.tr(' ', '_').to_sym
           @realm_ignored = attribute_xml.xpath(USERINFO_VALUE%['realmIgnored']).to_s.empty? ? false : true
           @realm_read_only = attribute_xml.xpath(USERINFO_VALUE%['realmReadOnly']).to_s
           @enum_type = attribute_xml.xpath(USERINFO_VALUE%['enumType']).to_s
@@ -92,9 +92,17 @@ module Gyro
         private ################################################################
 
         def search_for_error
-          Gyro::Error::raise!("The attribute \"%s\" from \"%s\" has no type - please fix it"%[@name, @entity_name]) if @type == :undefined || @type.empty?
-          Gyro::Error::raise!("The attribute \"%s\" from \"%s\" is enum with incorrect type (not Integer) - please fix it"%[@name, @entity_name]) if !@enum_type.empty? and !@enum_values.empty? and !is_integer?
-          Gyro::Error::raise!("The attribute \"%s\" from \"%s\" is wrongly annotated: when declaring an type with enum and JSONKeyPath, you must have the same number of items in the 'enumValues' and 'JSONValues' annotations - please fix it"%[@name, @entity_name]) if !@json_key_path.empty? and !@enum_values.empty? and @enum_values.size != @json_values.size
+          if @type == :undefined || @type.empty?
+            Gyro::Error::raise!("The attribute \"%s\" from \"%s\" has no type - please fix it"%[@name, @entity_name])
+          end
+          if !@enum_type.empty? and !@enum_values.empty? and !is_integer?
+            Gyro::Error::raise!("The attribute \"%s\" from \"%s\" is enum with incorrect type (not Integer) - please fix it"%[@name, @entity_name])
+          end
+          if !@json_key_path.empty? and !@enum_values.empty? and @enum_values.size != @json_values.size
+            message_format = "The attribute \"%s\" from \"%s\" is wrongly annotated: when declaring an type with enum and JSONKeyPath, " \
+              "you must have the same number of items in the 'enumValues' and 'JSONValues' annotations - please fix it"
+            Gyro::Error::raise!(message_format%[@name, @entity_name])
+          end
         end
 
       end

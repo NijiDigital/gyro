@@ -23,7 +23,7 @@ class String
   end
 
   def delete_inverse_suffix
-    self.gsub('_', '')
+    self.gsub(/_$/,'')
   end
 
   def capitalize_first_letter

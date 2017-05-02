@@ -63,7 +63,7 @@ module Gyro
           output = root_template.render(entity_context, :filters => [CustomFilters])
             .gsub(/^ +$/,'')
           # Don't generate empty output
-          next if output.gsub("\n", '').empty?
+          next if output.delete("\n").empty?
         
           filename_context = { 'params' => params, 'name' => entity['name'] }
           # Rendering filename template using entity name and params context
@@ -95,7 +95,7 @@ module Gyro
               output = enum_template.render(enum_context, :filters => [CustomFilters])
                 .gsub(/^ +$/,'')
               # Don't generate empty output
-              next if output.gsub("\n", '').empty? 
+              next if output.delete("\n").empty? 
         
               generate_enum(template_dir, output_dir, enum_type, output, params)
             end
