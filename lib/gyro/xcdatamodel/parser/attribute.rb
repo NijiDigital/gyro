@@ -22,9 +22,9 @@ module Gyro
         attr_accessor :realm_ignored, :realm_read_only, :enum_type, :enum_values
         attr_accessor :json_key_path, :json_values, :transformer, :comment, :support_annotation
 
-        alias_method :optional?, :optional
-        alias_method :indexed?, :indexed
-        alias_method :realm_ignored?, :realm_ignored
+        alias optional? optional
+        alias indexed? indexed
+        alias realm_ignored? realm_ignored
 
         def initialize (attribute_xml, entity_name)
           @entity_name = entity_name
