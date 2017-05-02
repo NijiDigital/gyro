@@ -42,7 +42,7 @@ module Gyro
         xcdatamodel = Gyro::XCDataModel::Parser::XCDataModel.new(xcdatamodel_dir)
         Dir.mktmpdir(TMP_DIR_NAME) do |tmp_dir|
           template_dir = Pathname.new(ANDROID_TEMPLATE_DIR)
-          Gyro::Liquidgen::Generator.new(xcdatamodel, template_dir, tmp_dir, { 'package' => PACKAGE_NAME })
+          Gyro::Liquidgen::Generator.new(xcdatamodel, template_dir, tmp_dir, 'package' => PACKAGE_NAME)
           fixtures_files_dir = File.expand_path('../fixtures/java/json', File.dirname(__FILE__))
           compare_dirs(tmp_dir, fixtures_files_dir)
         end
