@@ -82,7 +82,7 @@ module Gyro
         enums = Array.new
         attributes.each do |attribute|
           enum_type = attribute['enum_type']
-          if !enums.include?(enum_type) and !enum_type.empty?
+          if !enums.include?(enum_type) && !enum_type.empty?
             enums.push(enum_type)
             # Parse enum template
             enum_template_path = ( template_dir + 'enum.liquid')

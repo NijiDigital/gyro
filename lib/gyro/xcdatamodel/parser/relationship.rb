@@ -59,7 +59,7 @@ module Gyro
 
         def load_type(relationship_xml)
           max_count = relationship_xml.xpath('@maxCount').to_s
-          @type = (!max_count.nil? and max_count == '1') ? :to_one : :to_many
+          @type = (!max_count.nil? && (max_count == '1')) ? :to_one : :to_many
         end
 
         def search_for_error
