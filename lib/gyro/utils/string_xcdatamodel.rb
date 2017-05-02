@@ -16,7 +16,7 @@ class String
 
   def delete_objc_prefix
     i = 0
-    while i < self.length - 1 and /[[:upper:]]/.match(self[i+1])
+    while i < self.length - 1 && /[[:upper:]]/.match(self[i+1])
       i += 1
     end
     self[i..self.length]

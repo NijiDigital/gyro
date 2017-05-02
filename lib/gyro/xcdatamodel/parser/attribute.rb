@@ -70,15 +70,15 @@ module Gyro
         end
 
         def is_decimal?
-          @type == :decimal or @type == :double or @type == :float
+          (@type == :decimal) || (@type == :double) || (@type == :float)
         end
 
         def is_integer?
-          @type == :integer_16 or @type == :integer_32 or @type == :integer_64
+          (@type == :integer_16) || (@type == :integer_32) || (@type == :integer_64)
         end
 
         def is_number?
-          is_decimal? or is_integer?
+          is_decimal? || is_integer?
         end
 
         def is_bool?
@@ -86,7 +86,7 @@ module Gyro
         end
 
         def need_transformer?
-          !@enum_type.empty? or @type == :boolean or @type == :date or !@transformer.empty?
+          !@enum_type.empty? || (@type == :boolean) || (@type == :date) || !@transformer.empty?
         end
 
         private ################################################################
@@ -95,10 +95,10 @@ module Gyro
           if @type == :undefined || @type.empty?
             Gyro::Error::raise!("The attribute \"%s\" from \"%s\" has no type - please fix it"%[@name, @entity_name])
           end
-          if !@enum_type.empty? and !@enum_values.empty? and !is_integer?
+          if !@enum_type.empty? && !@enum_values.empty? && !is_integer?
             Gyro::Error::raise!("The attribute \"%s\" from \"%s\" is enum with incorrect type (not Integer) - please fix it"%[@name, @entity_name])
           end
-          if !@json_key_path.empty? and !@enum_values.empty? and @enum_values.size != @json_values.size
+          if !@json_key_path.empty? && !@enum_values.empty? && (@enum_values.size != @json_values.size)
             message_format = "The attribute \"%s\" from \"%s\" is wrongly annotated: when declaring an type with enum and JSONKeyPath, " \
               "you must have the same number of items in the 'enumValues' and 'JSONValues' annotations - please fix it"
             Gyro::Error::raise!(message_format%[@name, @entity_name])

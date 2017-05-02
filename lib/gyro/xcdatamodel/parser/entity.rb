@@ -57,7 +57,7 @@ module Gyro
         def used_as_list_by_other?(entities)
           entities.each do |_, entity|
             entity.relationships.each do |_, relationship|
-              return true if relationship.inverse_type == @name and relationship.type == :to_many
+              return true if (relationship.inverse_type == @name) && (relationship.type == :to_many)
             end
           end
           false
@@ -65,7 +65,7 @@ module Gyro
 
         def has_list_attributes?(inverse = false)
           @relationships.each do |_, relationship|
-            return true if relationship.type == :to_many and (!inverse ? !relationship.inverse? : true)
+            return true if (relationship.type == :to_many) && (!inverse ? !relationship.inverse? : true)
           end
           false
         end
@@ -122,7 +122,7 @@ module Gyro
             return true unless attribute.json_key_path.empty?
           end
           @relationships.each do |_, relationship|
-            return true if !relationship.inverse? and !relationship.json_key_path.empty?
+            return true if !relationship.inverse? && !relationship.json_key_path.empty?
           end
           false
         end
