@@ -12,10 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-if $0 == __FILE__
-  $:.unshift File.expand_path('../lib', File.dirname(__FILE__))
-end
-
 require 'gyro'
 
 TMP_DIR_NAME = 'Gyro'.freeze
