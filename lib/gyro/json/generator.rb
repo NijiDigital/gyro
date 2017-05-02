@@ -25,7 +25,7 @@ module Gyro
 
       # PUBLIC METHODS #######################################################
       def initialize(xcdatamodel)
-        Gyro::Log::title('Generating Json')
+        Gyro::Log.title('Generating Json')
         puts JSON.pretty_generate(xcdatamodel.to_h)
       end
     end

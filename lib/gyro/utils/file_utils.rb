@@ -49,19 +49,19 @@ module Gyro
     if template_dir_param.include? '/'
       template_dir_to_test = Pathname.new(template_dir_param)
       unless template_dir_to_test.exist?
-        Gyro::Error::exit_with_error('You need to specify existing template directory using --template option (see --help for more info)')
+        Gyro::Error.exit_with_error('You need to specify existing template directory using --template option (see --help for more info)')
       end
       if template_dir_to_test.directory?
         return template_dir_to_test
       elsif template_dir_to_test.file?
         return template_dir_to_test.dirname
       else
-        Gyro::Error::exit_with_error('You need to specify right template directory using --template option (see --help for more info)')
+        Gyro::Error.exit_with_error('You need to specify right template directory using --template option (see --help for more info)')
       end
     else
       template_dir_to_test = Gyro.data_dir + 'templates' + template_dir_param
       unless template_dir_to_test.exist?
-        Gyro::Error::exit_with_error('You need to specify existing default template name using --template option (see --help for more info)')
+        Gyro::Error.exit_with_error('You need to specify existing default template name using --template option (see --help for more info)')
       end
       return template_dir_to_test
     end
