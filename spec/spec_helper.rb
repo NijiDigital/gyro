@@ -18,7 +18,7 @@ end
 
 require 'gyro'
 
-TMP_DIR_NAME = 'Gyro'
+TMP_DIR_NAME = 'Gyro'.freeze
 
 def find_file(dir, file_name)
   Dir.chdir(dir) do

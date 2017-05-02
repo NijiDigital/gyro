@@ -14,8 +14,8 @@
 
 require 'tmpdir'
 
-PACKAGE_NAME = 'com.gyro.tests'
-ANDROID_TEMPLATE_DIR = "data/templates/android"
+PACKAGE_NAME = 'com.gyro.tests'.freeze
+ANDROID_TEMPLATE_DIR = "data/templates/android".freeze
 
 module Gyro
   describe 'Liquid' do
