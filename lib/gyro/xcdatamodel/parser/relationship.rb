@@ -22,7 +22,7 @@ module Gyro
         attr_accessor :realm_ignored
         attr_accessor :destination
 
-        alias_method :realm_ignored?, :realm_ignored
+        alias realm_ignored? realm_ignored
 
         def initialize(relationship_xml, entity_name)
           @entity_name = entity_name

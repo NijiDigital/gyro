@@ -18,7 +18,7 @@ module Gyro
       class Entity
 
         attr_accessor :name, :parent, :abstract, :attributes, :relationships, :identity_attribute, :comment
-        alias_method :abstract?, :abstract
+        alias abstract? abstract
 
         def initialize(entity_xml)
           @name = entity_xml.xpath('@name').to_s
