@@ -34,32 +34,32 @@ options = {
 
 OptionParser.new do |opts|
   opts.banner = 'Usage: gyro [options]'
-  opts.on('-m PATH', '--model PATH', %q(Specify Interface Builder .xcdatamodel file)) do |xcdatamodel_path|
+  opts.on('-m PATH', '--model PATH', 'Specify Interface Builder .xcdatamodel file') do |xcdatamodel_path|
     options[:model] = xcdatamodel_path
   end
-  opts.on('-a PATH', '--android PATH', %q(Specify Android Realm model classes dir)) do |path|
+  opts.on('-a PATH', '--android PATH', 'Specify Android Realm model classes dir') do |path|
     options[:android_dir] = path
   end
-  opts.on('-t DIR', '--template DIR', %q(Path to the Liquid template directrory to use, other solution is to specify default template name (like swift3, android) !)) do |tempate_path|
+  opts.on('-t DIR', '--template DIR', 'Path to the Liquid template directrory to use, other solution is to specify default template name (like swift3, android) !') do |tempate_path|
     options[:template] = tempate_path
   end
-  opts.on('-o DIR', '--output DIR', %q(Path to the output directory to generate model)) do |output_dir_path|
+  opts.on('-o DIR', '--output DIR', 'Path to the output directory to generate model') do |output_dir_path|
     options[:output] = output_dir_path
   end
-  opts.on('-p PATH', '--package PATH', %q(Specify Android Realm model classes package name)) do |path|
+  opts.on('-p PATH', '--package PATH', 'Specify Android Realm model classes package name') do |path|
     options[:package] = path
   end
-  opts.on('-w', '--wrappers', %q(To generate Java primitive wrappers for optional fields instead of primitive types)) do
+  opts.on('-w', '--wrappers', 'To generate Java primitive wrappers for optional fields instead of primitive types') do
     options[:wrappers] = true
   end
-  opts.on('-x', '--annotations', %q(To tag code with Android support annotations according to optional/non optional fields)) do
+  opts.on('-x', '--annotations', 'To tag code with Android support annotations according to optional/non optional fields') do
     options[:annotations] = true
   end
-  opts.on('-p KEY:VALUE', '--param KEY:VALUE', %q(Custom parameters that you can use inside custom templates)) do |params|
+  opts.on('-p KEY:VALUE', '--param KEY:VALUE', 'Custom parameters that you can use inside custom templates') do |params|
     split_params = params.split(':')
-    options[:params] = options[:params].merge("#{split_params[0]}" => "#{split_params[1]}")
+    options[:params] = options[:params].merge((split_params[0]).to_s => (split_params[1]).to_s)
   end
-  opts.on_tail('-h', '--help', %q(Show this message)) do
+  opts.on_tail('-h', '--help', 'Show this message') do
     puts opts
     exit 1
   end
