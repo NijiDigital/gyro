@@ -29,7 +29,7 @@ module Gyro
       # Declare some custom Liquid Filters used by the template, then render it
       module CustomFilters
         def escape_quotes(input)
-          return input.gsub('"', '\"')
+          input.gsub('"', '\"')
         end
 
         def snake_to_camel_case(input)
