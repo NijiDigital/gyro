@@ -1,48 +1,47 @@
-=begin
-Copyright 2016 - Niji
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-=end
+# Copyright 2016 - Niji
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 
 module Gyro
   module XCDataModel
     module Parser
+      # One Entity in the xcdatamodel
+      #
       class Entity
-
         attr_accessor :name, :parent, :abstract, :attributes, :relationships, :identity_attribute, :comment
-        alias_method :abstract?, :abstract
+        alias abstract? abstract
 
         def initialize(entity_xml)
           @name = entity_xml.xpath('@name').to_s
           @parent = entity_xml.xpath('@parentEntity').to_s
           @abstract = entity_xml.xpath('@isAbstract').to_s == 'YES' ? true : false
           @clean = false
-          @identity_attribute = entity_xml.xpath(USERINFO_VALUE%['identityAttribute']).to_s
-          @comment = entity_xml.xpath(USERINFO_VALUE%['comment']).to_s
-          @attributes = Hash.new
-          @relationships = Hash.new
+          @identity_attribute = entity_xml.xpath(USERINFO_VALUE % ['identityAttribute']).to_s
+          @comment = entity_xml.xpath(USERINFO_VALUE % ['comment']).to_s
+          @attributes = {}
+          @relationships = {}
           load_entity(entity_xml)
         end
 
         def to_h
-          return { 'attributes' => attributes.values.map(&:to_h), 'relationships' => relationships.values.map(&:to_h),
-                'name' => name, 'parent' => parent, 'abstract' => abstract, 
-                'identity_attribute' => identity_attribute, 'comment' => comment, 'has_no_inverse_relationship' => has_no_inverse_relationship?,
-                'has_ignored' => has_ignored?, 'has_primary_key' => has_primary_key?, 'has_required' => has_required?, 'has_indexed_attributes' => has_indexed_attributes?,
-                'has_json_key_path' => has_json_key_path?, 'has_enum_attributes' => has_enum_attributes?, 'has_custom_transformers' => has_custom_transformers?,
-                'need_transformer' => need_transformer?, 'has_bool_attributes' => has_bool_attributes?, 'has_number_attributes' => has_number_attributes?,
-                'has_date_attribute' => has_date_attribute?, 'has_list_relationship' => has_list_relationship?, 
-                'has_only_inverse' => has_only_inverse? }
+          { 'attributes' => attributes.values.map(&:to_h), 'relationships' => relationships.values.map(&:to_h),
+            'name' => name, 'parent' => parent, 'abstract' => abstract,
+            'identity_attribute' => identity_attribute, 'comment' => comment, 'has_no_inverse_relationship' => has_no_inverse_relationship?,
+            'has_ignored' => has_ignored?, 'has_primary_key' => has_primary_key?, 'has_required' => has_required?, 'has_indexed_attributes' => has_indexed_attributes?,
+            'has_json_key_path' => has_json_key_path?, 'has_enum_attributes' => has_enum_attributes?, 'has_custom_transformers' => has_custom_transformers?,
+            'need_transformer' => need_transformer?, 'has_bool_attributes' => has_bool_attributes?, 'has_number_attributes' => has_number_attributes?,
+            'has_date_attribute' => has_date_attribute?, 'has_list_relationship' => has_list_relationship?,
+            'has_only_inverse' => has_only_inverse? }
         end
 
         def to_s
@@ -59,7 +58,7 @@ module Gyro
         def used_as_list_by_other?(entities)
           entities.each do |_, entity|
             entity.relationships.each do |_, relationship|
-              return true if relationship.inverse_type == @name and relationship.type == :to_many
+              return true if (relationship.inverse_type == @name) && (relationship.type == :to_many)
             end
           end
           false
@@ -67,7 +66,7 @@ module Gyro
 
         def has_list_attributes?(inverse = false)
           @relationships.each do |_, relationship|
-            return true if relationship.type == :to_many and (!inverse ? !relationship.inverse? : true)
+            return true if (relationship.type == :to_many) && (!inverse ? !relationship.inverse? : true)
           end
           false
         end
@@ -124,7 +123,7 @@ module Gyro
             return true unless attribute.json_key_path.empty?
           end
           @relationships.each do |_, relationship|
-            return true if !relationship.inverse? and !relationship.json_key_path.empty?
+            return true if !relationship.inverse? && !relationship.json_key_path.empty?
           end
           false
         end
@@ -167,22 +166,7 @@ module Gyro
           has_number_attributes = false
           @attributes.each do |_, attribute|
             if attribute.enum_type.empty?
-              case attribute.type
-                when :integer_16 then
-                  has_number_attributes = true
-                when :integer_32 then
-                  has_number_attributes = true
-                when :integer_64 then
-                  has_number_attributes = true
-                when :decimal then
-                  has_number_attributes = true
-                when :double then
-                  has_number_attributes = true
-                when :float then
-                  has_number_attributes = true
-                else
-                  has_number_attributes = false
-              end
+              has_number_attributes = [:integer_16, :integer_32, :integer_64, :decimal, :double, :float].include?(attribute.type)
               break if has_number_attributes
             end
           end
@@ -206,9 +190,9 @@ module Gyro
         def has_only_inverse?
           nb_inverses = 0
           @relationships.each do |_, relationship|
-            nb_inverses+=1 if relationship.inverse?
+            nb_inverses += 1 if relationship.inverse?
           end
-          nb_inverses==@relationships.size
+          nb_inverses == @relationships.size
         end
 
         private ################################################################
@@ -234,7 +218,6 @@ module Gyro
           end
         end
       end
-
     end
   end
 end
