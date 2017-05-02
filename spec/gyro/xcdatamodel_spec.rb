@@ -64,9 +64,9 @@ module Gyro
       xcdatamodel_dir = File.expand_path('../fixtures/xcdatamodel/relationship.xcdatamodel', File.dirname(__FILE__))
       xcdatamodel = XCDataModel::Parser::XCDataModel.new(xcdatamodel_dir)
       expect(xcdatamodel.entities.length).to eq 2
-      entity_1, entity_2 = xcdatamodel.entities.values
-      relationship = entity_1.relationships.values.first
-      relationship_inverse = entity_2.relationships.values.first
+      entity1, entity2 = xcdatamodel.entities.values
+      relationship = entity1.relationships.values.first
+      relationship_inverse = entity2.relationships.values.first
       expect(relationship.inverse_name).to eq(relationship_inverse.name)
       expect(relationship_inverse.inverse_name).to eq(relationship.name)
     end
