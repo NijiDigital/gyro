@@ -80,8 +80,8 @@ else
   Gyro::Log::success("Using #{basename} in #{dirname}")
 end
 
-# Android
 unless options[:android_dir].nil?
+  # Android
   if Dir.exist?(options[:android_dir])
     if options[:package].nil?
       Gyro::Log::info('You need to specify an Android package name using --package option (see --help for more info)')
@@ -93,33 +93,37 @@ unless options[:android_dir].nil?
     Gyro::Log::info('You need to specify a valid Android Realm model classes dir')
   end
 else
+  # Liquid Templates
   if options[:template].nil?
     # Generate JSON if no -t is specified
     Gyro::Log::info('You can specify custom template directory or default template using --template option (see --help for more info)')
     xcdatamodel = Gyro::XCDataModel::Parser::XCDataModel.new(options[:model])
     Gyro::Json::Generator.new(xcdatamodel)
     exit
-  else 
+  end 
 
-    template_dir = Gyro::search_template_dir(options[:template])
+  template_dir = Gyro::search_template_dir(options[:template])
 
-    if options[:output].nil?
-      Gyro::Error::exit_with_error('You need to specify output directory path using --output option (see --help for more info)')
-    end
-
-    output_dir = Pathname.new(options[:output])
-
-    puts <<-INFO
-    \n
-    ===================================
-    Template    : #{template_dir}
-    Output Dir  : #{output_dir}
-    Params      : #{options[:params].inspect}
-    ===================================
-    INFO
-
-    xcdatamodel = Gyro::XCDataModel::Parser::XCDataModel.new(options[:model])
-    Gyro::Liquidgen::Generator.new(xcdatamodel, template_dir, output_dir, options[:params])
+  if options[:output].nil?
+    Gyro::Error::exit_with_error('You need to specify output directory path using --output option (see --help for more info)')
   end
+
+  output_dir = Pathname.new(options[:output])
+
+  unless output_dir.exist?
+    Gyro::Error::exit_with_error("The output directory #{output_dir} does not exist. Please create it first.")
+  end
+
+  puts <<-INFO
+  \n
+  ===================================
+  Template    : #{template_dir}
+  Output Dir  : #{output_dir}
+  Params      : #{options[:params].inspect}
+  ===================================
+  INFO
+
+  xcdatamodel = Gyro::XCDataModel::Parser::XCDataModel.new(options[:model])
+  Gyro::Liquidgen::Generator.new(xcdatamodel, template_dir, output_dir, options[:params])
 end
 
