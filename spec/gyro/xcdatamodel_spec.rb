@@ -17,7 +17,7 @@ module Gyro
     before do
       Gyro::Log.quiet = true
     end
-    
+
     it 'check raise an error for file' do
       xcdatamodel_dir = File.expand_path('../fixtures/xcdatamodel/not_found.xcdatamodel', File.dirname(__FILE__))
       expect { XCDataModel::Parser::XCDataModel.new(xcdatamodel_dir) }.to raise_error "\e[1;31m! Unable to find contents of xcdatamodel dir\e[0m"

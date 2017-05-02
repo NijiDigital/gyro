@@ -32,7 +32,7 @@ def compare_dirs(generated_files_dir, fixtures_files_dir)
   expect(nb_generated_files).to eq nb_fixtures_files
   fixtures_files.each do |fixtures_file|
     if File.file?(fixtures_file)
-      # @todo: 
+      # @todo:
       fixture_file_content = Pathname.new(fixtures_file).read
       file_name = File.basename(fixtures_file)
       generated_file = find_file(generated_files_dir, file_name)

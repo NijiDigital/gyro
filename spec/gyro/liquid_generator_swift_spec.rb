@@ -23,7 +23,7 @@ module Gyro
       before do
         Gyro::Log.quiet = true
       end
-      
+
       ['realm', 'primary', 'ignored', 'inverse', 'enum', 'optional'].each do |datamodel|
         it datamodel do
           xcdatamodel_dir = File.expand_path("../fixtures/xcdatamodel/#{datamodel}.xcdatamodel", File.dirname(__FILE__))

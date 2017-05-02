@@ -17,7 +17,7 @@ module Gyro
     def self.raise(str)
       Kernel.raise "\e[1;31m! #{str}\e[0m"
     end
-  
+
     def self.exit_with_error(message)
       Gyro::Log.error message
       exit 1
