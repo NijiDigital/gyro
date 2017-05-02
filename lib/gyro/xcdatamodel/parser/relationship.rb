@@ -29,11 +29,11 @@ module Gyro
           @deletion_rule = relationship_xml.xpath('@deletionRule').to_s
           @inverse_name = relationship_xml.xpath('@inverseName').to_s
           @inverse_type = relationship_xml.xpath('@destinationEntity').to_s
-          @json_key_path = relationship_xml.xpath(USERINFO_VALUE%['JSONKeyPath']).to_s
-          @realm_ignored = relationship_xml.xpath(USERINFO_VALUE%['realmIgnored']).to_s.empty? ? false : true
-          @support_annotation = relationship_xml.xpath(USERINFO_VALUE%['supportAnnotation']).to_s
+          @json_key_path = relationship_xml.xpath(USERINFO_VALUE % ['JSONKeyPath']).to_s
+          @realm_ignored = relationship_xml.xpath(USERINFO_VALUE % ['realmIgnored']).to_s.empty? ? false : true
+          @support_annotation = relationship_xml.xpath(USERINFO_VALUE % ['supportAnnotation']).to_s
           load_type(relationship_xml)
-          @destination = relationship_xml.xpath(USERINFO_VALUE%['destination']).to_s
+          @destination = relationship_xml.xpath(USERINFO_VALUE % ['destination']).to_s
           search_for_error
         end
 
@@ -42,7 +42,7 @@ module Gyro
                    'optional' => optional, 'deletion_rule' => deletion_rule,
                    'inverse_name' => inverse_name, 'inverse_type' => inverse_type, 
                    'json_key_path' => json_key_path, 'support_annotation' => support_annotation, 
-                   'realm_ignored' => realm_ignored, 'destination' => destination, 'inverse' => inverse?}
+                   'realm_ignored' => realm_ignored, 'destination' => destination, 'inverse' => inverse? }
         end
 
         def to_s
@@ -61,8 +61,8 @@ module Gyro
         end
 
         def search_for_error
-          Gyro::Error.raise!("The relationship \"%s\" from \"%s\" is wrong - please fix it"%[name, entity_name]) if inverse_type.empty? && destination.empty?
-          Gyro::Error.raise!("The relationship \"%s\" from \"%s\" is wrong - please set a 'No Value' relationship as 'To Many'"%[name, entity_name]) if !destination.empty? && type != :to_many
+          Gyro::Error.raise!("The relationship \"%s\" from \"%s\" is wrong - please fix it" % [name, entity_name]) if inverse_type.empty? && destination.empty?
+          Gyro::Error.raise!("The relationship \"%s\" from \"%s\" is wrong - please set a 'No Value' relationship as 'To Many'" % [name, entity_name]) if !destination.empty? && type != :to_many
         end
       end
     end

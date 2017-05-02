@@ -37,7 +37,7 @@ module Gyro
 
     def self.prompt(str, url = nil)
       prompt = "\e[1;36m   ! #{str} [y/n]?\e[0m "
-      url_info = ' '*10 + "\e[0;37m (use '?' to show in browser)\e[0m"
+      url_info = ' ' * 10 + "\e[0;37m (use '?' to show in browser)\e[0m"
       print prompt
       print "#{url_info}\r#{prompt}" if url
 
@@ -45,7 +45,7 @@ module Gyro
         `open '#{url}'` if url && (c == '?')
         "yn\003".include?(c.downcase) # \003 = ctrl-C
       end
-      puts answer + (url ? ' '*url_info.length : '')
+      puts answer + (url ? ' ' * url_info.length : '')
       answer.downcase == 'y'
     end
 

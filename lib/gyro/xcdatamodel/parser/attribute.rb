@@ -24,22 +24,22 @@ module Gyro
         alias indexed? indexed
         alias realm_ignored? realm_ignored
 
-        def initialize (attribute_xml, entity_name)
+        def initialize(attribute_xml, entity_name)
           @entity_name = entity_name
           @name = attribute_xml.xpath('@name').to_s
           @optional = attribute_xml.xpath('@optional').to_s == 'YES' ? true : false
           @indexed = attribute_xml.xpath('@indexed').to_s == 'YES' ? true : false
           @default = attribute_xml.xpath('@defaultValueString').to_s
           @type = attribute_xml.xpath('@attributeType').to_s.downcase.tr(' ', '_').to_sym
-          @realm_ignored = attribute_xml.xpath(USERINFO_VALUE%['realmIgnored']).to_s.empty? ? false : true
-          @realm_read_only = attribute_xml.xpath(USERINFO_VALUE%['realmReadOnly']).to_s
-          @enum_type = attribute_xml.xpath(USERINFO_VALUE%['enumType']).to_s
-          @enum_values = attribute_xml.xpath(USERINFO_VALUE%['enumValues']).to_s.split(',')
-          @json_key_path = attribute_xml.xpath(USERINFO_VALUE%['JSONKeyPath']).to_s
-          @json_values = attribute_xml.xpath(USERINFO_VALUE%['JSONValues']).to_s.split(',')
-          @transformer = attribute_xml.xpath(USERINFO_VALUE%['transformer']).to_s.strip
-          @comment = attribute_xml.xpath(USERINFO_VALUE%['comment']).to_s
-          @support_annotation = attribute_xml.xpath(USERINFO_VALUE%['supportAnnotation']).to_s
+          @realm_ignored = attribute_xml.xpath(USERINFO_VALUE % ['realmIgnored']).to_s.empty? ? false : true
+          @realm_read_only = attribute_xml.xpath(USERINFO_VALUE % ['realmReadOnly']).to_s
+          @enum_type = attribute_xml.xpath(USERINFO_VALUE % ['enumType']).to_s
+          @enum_values = attribute_xml.xpath(USERINFO_VALUE % ['enumValues']).to_s.split(',')
+          @json_key_path = attribute_xml.xpath(USERINFO_VALUE % ['JSONKeyPath']).to_s
+          @json_values = attribute_xml.xpath(USERINFO_VALUE % ['JSONValues']).to_s.split(',')
+          @transformer = attribute_xml.xpath(USERINFO_VALUE % ['transformer']).to_s.strip
+          @comment = attribute_xml.xpath(USERINFO_VALUE % ['comment']).to_s
+          @support_annotation = attribute_xml.xpath(USERINFO_VALUE % ['supportAnnotation']).to_s
           search_for_error
         end
 
@@ -91,15 +91,15 @@ module Gyro
 
         def search_for_error
           if @type == :undefined || @type.empty?
-            Gyro::Error.raise!("The attribute \"%s\" from \"%s\" has no type - please fix it"%[@name, @entity_name])
+            Gyro::Error.raise!("The attribute \"%s\" from \"%s\" has no type - please fix it" % [@name, @entity_name])
           end
           if !@enum_type.empty? && !@enum_values.empty? && !is_integer?
-            Gyro::Error.raise!("The attribute \"%s\" from \"%s\" is enum with incorrect type (not Integer) - please fix it"%[@name, @entity_name])
+            Gyro::Error.raise!("The attribute \"%s\" from \"%s\" is enum with incorrect type (not Integer) - please fix it" % [@name, @entity_name])
           end
           if !@json_key_path.empty? && !@enum_values.empty? && (@enum_values.size != @json_values.size)
             message_format = "The attribute \"%s\" from \"%s\" is wrongly annotated: when declaring an type with enum and JSONKeyPath, " \
               "you must have the same number of items in the 'enumValues' and 'JSONValues' annotations - please fix it"
-            Gyro::Error.raise!(message_format%[@name, @entity_name])
+            Gyro::Error.raise!(message_format % [@name, @entity_name])
           end
         end
       end

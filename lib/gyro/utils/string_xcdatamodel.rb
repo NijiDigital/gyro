@@ -15,14 +15,14 @@
 class String
   def delete_objc_prefix
     i = 0
-    while i < self.length - 1 && /[[:upper:]]/.match(self[i+1])
+    while i < self.length - 1 && /[[:upper:]]/.match(self[i + 1])
       i += 1
     end
     self[i..self.length]
   end
 
   def delete_inverse_suffix
-    self.gsub(/_$/,'')
+    self.gsub(/_$/, '')
   end
 
   def capitalize_first_letter
