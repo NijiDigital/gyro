@@ -24,12 +24,12 @@ require 'pathname'
 
 dir = Dir.pwd
 options = {
-    :model => nil,
-    :android_dir => nil, 
-    :package => nil, 
-    :template => nil,
-    :output => nil,
-    :params => {}
+  model: nil,
+  android_dir: nil, 
+  package: nil, 
+  template: nil,
+  output: nil,
+  params: {}
 }
 
 OptionParser.new do |opts|
