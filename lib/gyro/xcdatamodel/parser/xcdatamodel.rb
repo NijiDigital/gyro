@@ -23,7 +23,7 @@ module Gyro
 
         def initialize(xcdatamodel_dir)
           contents_file = File.join(xcdatamodel_dir, 'contents')
-          Gyro::Error::raise!('Unable to find contents of xcdatamodel dir') unless File.exist?(contents_file)
+          Gyro::Error.raise!('Unable to find contents of xcdatamodel dir') unless File.exist?(contents_file)
           @entities = Hash.new
           file = File.open(contents_file)
           document_xml = Nokogiri::XML(file).remove_namespaces!

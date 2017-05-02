@@ -19,7 +19,7 @@ module Gyro
     end
   
     def self.exit_with_error(message)
-      Gyro::Log::error message
+      Gyro::Log.error message
       exit 1
     end
   end

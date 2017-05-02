@@ -42,10 +42,10 @@ module Gyro
       end
 
       def initialize(xcdatamodel, template_dir, output_dir, params)
-        Gyro::Log::title('Generating Model')
+        Gyro::Log.title('Generating Model')
 
         root_template_path = template_dir + 'root.liquid'
-        Gyro::Error::exit_with_error('Bad template directory content ! Your template need to include root.liquid file') unless root_template_path.exist?
+        Gyro::Error.exit_with_error('Bad template directory content ! Your template need to include root.liquid file') unless root_template_path.exist?
         root_template_string = root_template_path.read
         root_template = Liquid::Template.parse(root_template_string)
 
@@ -53,7 +53,7 @@ module Gyro
         Liquid::Template.file_system = Liquid::LocalFileSystem.new(template_dir)
         # Parse object template
         filename_template_path = (template_dir + 'filename.liquid')
-        Gyro::Error::exit_with_error('Bad template directory content ! Your template need to include filename.liquid file') unless filename_template_path.exist?
+        Gyro::Error.exit_with_error('Bad template directory content ! Your template need to include filename.liquid file') unless filename_template_path.exist?
         filename_template_string = filename_template_path.readlines.first
         filename_template = Liquid::Template.parse(filename_template_string)
 
@@ -68,14 +68,14 @@ module Gyro
           filename_context = { 'params' => params, 'name' => entity['name'] }
           # Rendering filename template using entity name and params context
           filename = filename_template.render(filename_context).chomp
-          Gyro::Log::success("#{filename} is created !")
+          Gyro::Log.success("#{filename} is created !")
           # Write model object
           Gyro.write_file_with_name(output_dir, filename, output)
           # Generate model object enums
           generate_enums(template_dir, output_dir, entity['attributes'], params)
         end
 
-        Gyro::Log::success("Model objects are generated !")
+        Gyro::Log.success("Model objects are generated !")
       end
 
       def generate_enums(template_dir, output_dir, attributes, params)
@@ -105,7 +105,7 @@ module Gyro
 
       def generate_enum(template_dir, output_dir, enum_name, output, params)
         enum_filename_template_path = (template_dir + 'enum_filename.liquid').exist? ? (template_dir + 'enum_filename.liquid') : (template_dir + 'filename.liquid')
-            Gyro::Error::exit_with_error('Bad template directory content ! Your template need to have enum_filename.liquid or filename.liquid file !') unless enum_filename_template_path.exist?
+            Gyro::Error.exit_with_error('Bad template directory content ! Your template need to have enum_filename.liquid or filename.liquid file !') unless enum_filename_template_path.exist?
         enum_filename_template_string = enum_filename_template_path.readlines.first
         enum_filename_template = Liquid::Template.parse(enum_filename_template_string)
         # Rendering enum filename template using enum name and params context
