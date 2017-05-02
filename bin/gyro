@@ -59,8 +59,14 @@ OptionParser.new do |opts|
     split_params = params.split(":")
     options[:params] = options[:params].merge("#{split_params[0]}" => "#{split_params[1]}")
   end
-  opts.on_tail('-h', '--help', %q(Show this message)) { puts opts; exit 1 }
-  opts.on_tail('-v', '--version', 'Show version') { puts Gyro::VERSION; exit }
+  opts.on_tail('-h', '--help', %q(Show this message)) do
+    puts opts
+    exit 1
+  end
+  opts.on_tail('-v', '--version', 'Show version') do
+    puts Gyro::VERSION
+    exit
+  end
   opts.parse!
 end
 
