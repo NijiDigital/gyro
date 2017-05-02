@@ -12,6 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# Extend the String class for specific operations used by Gyro
+# @todo: Once we only use Liquid templates, most of those will probably be removed,
+#        and the rest should be moved in utility functions instead of extensions on String
+#
 class String
   def delete_objc_prefix
     i = 0

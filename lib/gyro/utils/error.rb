@@ -13,6 +13,8 @@
 # limitations under the License.
 
 module Gyro
+  # Handle error reporting nicely
+  #
   module Error
     def self.raise!(str)
       raise "\e[1;31m! #{str}\e[0m"

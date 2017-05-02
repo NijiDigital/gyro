@@ -15,6 +15,8 @@
 module Gyro
   module XCDataModel
     module Parser
+      # One Relationship between attributes in the xcdatamodel
+      #
       class Relationship
         attr_accessor :entity_name, :name, :type, :optional, :deletion_rule, :inverse_name, :inverse_type, :json_key_path, :support_annotation
         attr_accessor :realm_ignored

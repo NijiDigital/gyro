@@ -13,6 +13,8 @@
 # limitations under the License.
 
 module Gyro
+  # Print nice and colored output for various error/success/title messages of Gyro
+  #
   module Log
     @@quiet = false
     def self.quiet=(value)
@@ -46,7 +48,7 @@ module Gyro
         "yn\003".include?(c.downcase) # \003 = ctrl-C
       end
       puts answer + (url ? ' ' * url_info.length : '')
-      answer.downcase == 'y'
+      answer.casecmp('y').zero?
     end
 
     ######################################################################

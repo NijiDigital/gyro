@@ -15,6 +15,8 @@
 module Gyro
   module XCDataModel
     module Parser
+      # One Attribute in an Entity of the xcdatamodel
+      #
       class Attribute
         attr_accessor :entity_name, :name, :type, :optional, :indexed, :default
         attr_accessor :realm_ignored, :realm_read_only, :enum_type, :enum_values

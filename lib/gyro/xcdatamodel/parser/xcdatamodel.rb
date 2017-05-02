@@ -17,6 +17,8 @@ module Gyro
     module Parser
       USERINFO_VALUE = "userInfo/entry[@key='%s']/@value".freeze
 
+      # Represents the whole xcdatamodel file struture, once parsed
+      #
       class XCDataModel
         attr_accessor :entities
 
