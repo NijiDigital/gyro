@@ -13,7 +13,6 @@
 # limitations under the License.
 
 module Gyro
-
   describe XCDataModel do
     before do
       Gyro::Log.quiet = true
@@ -89,6 +88,5 @@ module Gyro
       xcdatamodel = XCDataModel::Parser::XCDataModel.new(xcdatamodel_dir)
       expect(xcdatamodel.entities.length).to eq 6
     end
-
   end
 end

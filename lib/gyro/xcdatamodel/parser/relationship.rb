@@ -15,9 +15,7 @@
 module Gyro
   module XCDataModel
     module Parser
-
       class Relationship
-
         attr_accessor :entity_name, :name, :type, :optional, :deletion_rule, :inverse_name, :inverse_type, :json_key_path, :support_annotation
         attr_accessor :realm_ignored
         attr_accessor :destination
@@ -66,9 +64,7 @@ module Gyro
           Gyro::Error.raise!("The relationship \"%s\" from \"%s\" is wrong - please fix it"%[name, entity_name]) if inverse_type.empty? && destination.empty?
           Gyro::Error.raise!("The relationship \"%s\" from \"%s\" is wrong - please set a 'No Value' relationship as 'To Many'"%[name, entity_name]) if !destination.empty? && type != :to_many
         end
-
       end
-
     end
   end
 end
