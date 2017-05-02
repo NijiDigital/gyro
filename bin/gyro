@@ -84,19 +84,7 @@ else
   Gyro::Log.success("Using #{basename} in #{dirname}")
 end
 
-unless options[:android_dir].nil?
-  # Android
-  if Dir.exist?(options[:android_dir])
-    if options[:package].nil?
-      Gyro::Log.info('You need to specify an Android package name using --package option (see --help for more info)')
-    else
-      xcdatamodel = Gyro::XCDataModel::Parser::XCDataModel.new(options[:model])
-      Gyro::Realm::Java::Generator.new(options[:android_dir], options[:package], xcdatamodel, options[:wrappers], options[:annotations])
-    end
-  else
-    Gyro::Log.info('You need to specify a valid Android Realm model classes dir')
-  end
-else
+if options[:android_dir].nil?
   # Liquid Templates
   if options[:template].nil?
     # Generate JSON if no -t is specified
@@ -129,4 +117,16 @@ else
 
   xcdatamodel = Gyro::XCDataModel::Parser::XCDataModel.new(options[:model])
   Gyro::Liquidgen::Generator.new(xcdatamodel, template_dir, output_dir, options[:params])
+else
+  # Android
+  if Dir.exist?(options[:android_dir])
+    if options[:package].nil?
+      Gyro::Log.info('You need to specify an Android package name using --package option (see --help for more info)')
+    else
+      xcdatamodel = Gyro::XCDataModel::Parser::XCDataModel.new(options[:model])
+      Gyro::Realm::Java::Generator.new(options[:android_dir], options[:package], xcdatamodel, options[:wrappers], options[:annotations])
+    end
+  else
+    Gyro::Log.info('You need to specify a valid Android Realm model classes dir')
+  end
 end
