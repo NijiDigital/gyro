@@ -61,8 +61,8 @@ module Gyro
         xcdatamodel.to_h['entities'].each do |entity|
           entity_context = { 'params' => params, 'entity' => entity }
           # Rendering template using entity and params context
-          output = root_template.render(entity_context, :filters => [CustomFilters])
-            .gsub(/^ +$/,'')
+          output = root_template.render(entity_context, filters: [CustomFilters])
+                                .gsub(/^ +$/,'')
           # Don't generate empty output
           next if output.delete("\n").empty?
         
@@ -93,8 +93,8 @@ module Gyro
 
               enum_context = { 'params' => params, 'attribute' => attribute }
               # Rendering enum template using attribute and params context
-              output = enum_template.render(enum_context, :filters => [CustomFilters])
-                .gsub(/^ +$/,'')
+              output = enum_template.render(enum_context, filters: [CustomFilters])
+                                    .gsub(/^ +$/,'')
               # Don't generate empty output
               next if output.delete("\n").empty? 
         
@@ -106,7 +106,7 @@ module Gyro
 
       def generate_enum(template_dir, output_dir, enum_name, output, params)
         enum_filename_template_path = (template_dir + 'enum_filename.liquid').exist? ? (template_dir + 'enum_filename.liquid') : (template_dir + 'filename.liquid')
-            Gyro::Error.exit_with_error('Bad template directory content ! Your template need to have enum_filename.liquid or filename.liquid file !') unless enum_filename_template_path.exist?
+        Gyro::Error.exit_with_error('Bad template directory content ! Your template need to have enum_filename.liquid or filename.liquid file !') unless enum_filename_template_path.exist?
         enum_filename_template_string = enum_filename_template_path.readlines.first
         enum_filename_template = Liquid::Template.parse(enum_filename_template_string)
         # Rendering enum filename template using enum name and params context
