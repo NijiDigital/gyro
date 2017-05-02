@@ -52,5 +52,4 @@ class String
     '(' + self + ')'
   end
 
-
 end

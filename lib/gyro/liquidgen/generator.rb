@@ -32,9 +32,11 @@ module Gyro
         def escape_quotes(input)
           return input.gsub('"', '\"')
         end
+
         def snake_to_camel_case(input)
           input.split('_').map { |s| s.capitalize }.join
         end
+
         def uncapitalize(input)
           input_strip = input.strip
           input_strip[0, 1].downcase + input_strip[1..-1]

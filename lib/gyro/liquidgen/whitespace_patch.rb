@@ -24,6 +24,7 @@ if Gem::Version.new(Liquid::VERSION) < Gem::Version.new('4.0.0')
       def parse(source, options = {})
         super(source.gsub(/\s*{%-/, "\v{%").gsub(/-%}\s*/, "%}\v"), options)
       end
+
       def render(*params)
         super(*params).delete("\v")
       end
