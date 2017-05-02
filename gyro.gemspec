@@ -22,9 +22,9 @@ Gem::Specification.new do |s|
   s.executables << 'gyro'
   s.required_ruby_version = '>= 2.0.0'
 
-  spec.add_dependency 'liquid', '~> 3.0.5'
-  spec.add_dependency 'nokogiri'
+  s.add_dependency 'liquid', '~> 3.0.5'
+  s.add_dependency 'nokogiri'
 
-  spec.add_development_dependency 'rspec'
-  spec.add_development_dependency 'guard-rspec'
+  s.add_development_dependency 'rspec'
+  s.add_development_dependency 'guard-rspec'
 end
