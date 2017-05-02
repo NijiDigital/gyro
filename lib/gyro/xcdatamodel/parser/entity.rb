@@ -164,22 +164,7 @@ module Gyro
           has_number_attributes = false
           @attributes.each do |_, attribute|
             if attribute.enum_type.empty?
-              has_number_attributes = case attribute.type
-              when :integer_16 then
-                true
-              when :integer_32 then
-                true
-              when :integer_64 then
-                true
-              when :decimal then
-                true
-              when :double then
-                true
-              when :float then
-                true
-              else
-                false
-              end
+              has_number_attributes = [:integer_16, :integer_32, :integer_64, :decimal, :double, :float].include?(attribute.type)
               break if has_number_attributes
             end
           end
