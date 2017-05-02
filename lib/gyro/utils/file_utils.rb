@@ -28,7 +28,7 @@ module Gyro
   end
 
   def self.data_dir
-    Pathname.new(File.dirname(__FILE__)) + "../../../data"
+    Pathname.new(File.dirname(__FILE__)) + '../../../data'
   end
 
   def self.search_template_dir(template_dir_param)

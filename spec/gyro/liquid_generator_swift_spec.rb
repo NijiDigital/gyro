@@ -15,7 +15,7 @@
 require 'tmpdir'
 require 'pathname'
 
-SWIFT3_TEMPLATE_DIR = "data/templates/swift3".freeze
+SWIFT3_TEMPLATE_DIR = 'data/templates/swift3'.freeze
 
 module Gyro
   describe 'Liquid' do
