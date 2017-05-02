@@ -15,7 +15,7 @@
 module Gyro
   module XCDataModel
     module Parser
-      USERINFO_VALUE = "userInfo/entry[@key='%s']/@value"
+      USERINFO_VALUE = "userInfo/entry[@key='%s']/@value".freeze
 
       class XCDataModel
         attr_accessor :entities
