@@ -30,7 +30,8 @@ module Gyro
           xcdatamodel = Gyro::XCDataModel::Parser::XCDataModel.new(xcdatamodel_dir)
           Dir.mktmpdir(TMP_DIR_NAME) do |tmp_dir|
             template_dir = Pathname.new(ANDROID_TEMPLATE_DIR)
-            Gyro::Liquidgen::Generator.new(xcdatamodel, template_dir, tmp_dir, { 'package' => PACKAGE_NAME })
+            gen = Gyro::Liquidgen::Generator.new(template_dir, tmp_dir, { 'package' => PACKAGE_NAME })
+            gen.generate(xcdatamodel)
             fixtures_files_dir = File.expand_path("../fixtures/java/#{datamodel}", File.dirname(__FILE__))
             compare_dirs(tmp_dir, fixtures_files_dir)
           end
@@ -42,7 +43,8 @@ module Gyro
         xcdatamodel = Gyro::XCDataModel::Parser::XCDataModel.new(xcdatamodel_dir)
         Dir.mktmpdir(TMP_DIR_NAME) do |tmp_dir|
           template_dir = Pathname.new(ANDROID_TEMPLATE_DIR)
-          Gyro::Liquidgen::Generator.new(xcdatamodel, template_dir, tmp_dir, 'package' => PACKAGE_NAME)
+          gen = Gyro::Liquidgen::Generator.new(template_dir, tmp_dir, { 'package' => PACKAGE_NAME })
+          gen.generate(xcdatamodel)
           fixtures_files_dir = File.expand_path('../fixtures/java/json', File.dirname(__FILE__))
           compare_dirs(tmp_dir, fixtures_files_dir)
         end
@@ -53,7 +55,8 @@ module Gyro
         xcdatamodel = Gyro::XCDataModel::Parser::XCDataModel.new(xcdatamodel_dir)
         Dir.mktmpdir(TMP_DIR_NAME) do |tmp_dir|
           template_dir = Pathname.new(ANDROID_TEMPLATE_DIR)
-          Gyro::Liquidgen::Generator.new(xcdatamodel, template_dir, tmp_dir, { 'package' => PACKAGE_NAME, 'use_wrappers' => true })
+          gen = Gyro::Liquidgen::Generator.new(template_dir, tmp_dir, { 'package' => PACKAGE_NAME, 'use_wrappers' => true })
+          gen.generate(xcdatamodel)
           fixtures_files_dir = File.expand_path('../fixtures/java/wrappers', File.dirname(__FILE__))
           compare_dirs(tmp_dir, fixtures_files_dir)
         end
@@ -64,7 +67,8 @@ module Gyro
         xcdatamodel = Gyro::XCDataModel::Parser::XCDataModel.new(xcdatamodel_dir)
         Dir.mktmpdir(TMP_DIR_NAME) do |tmp_dir|
           template_dir = Pathname.new(ANDROID_TEMPLATE_DIR)
-          Gyro::Liquidgen::Generator.new(xcdatamodel, template_dir, tmp_dir, { 'package' => PACKAGE_NAME, 'use_wrappers' => false, 'support_annotations' => true })
+          gen = Gyro::Liquidgen::Generator.new(template_dir, tmp_dir, { 'package' => PACKAGE_NAME, 'use_wrappers' => false, 'support_annotations' => true })
+          gen.generate(xcdatamodel)
           fixtures_files_dir = File.expand_path('../fixtures/java/annotations', File.dirname(__FILE__))
           compare_dirs(tmp_dir, fixtures_files_dir)
         end
@@ -75,7 +79,8 @@ module Gyro
         xcdatamodel = Gyro::XCDataModel::Parser::XCDataModel.new(xcdatamodel_dir)
         Dir.mktmpdir(TMP_DIR_NAME) do |tmp_dir|
           template_dir = Pathname.new(ANDROID_TEMPLATE_DIR)
-          Gyro::Liquidgen::Generator.new(xcdatamodel, template_dir, tmp_dir, { 'package' => PACKAGE_NAME, 'use_wrappers' => true, 'support_annotations' => true })
+          gen = Gyro::Liquidgen::Generator.new(template_dir, tmp_dir, { 'package' => PACKAGE_NAME, 'use_wrappers' => true, 'support_annotations' => true })
+          gen.generate(xcdatamodel)
           fixtures_files_dir = File.expand_path('../fixtures/java/wrappers_annotations', File.dirname(__FILE__))
           compare_dirs(tmp_dir, fixtures_files_dir)
         end
@@ -86,7 +91,8 @@ module Gyro
         xcdatamodel = Gyro::XCDataModel::Parser::XCDataModel.new(xcdatamodel_dir)
         Dir.mktmpdir(TMP_DIR_NAME) do |tmp_dir|
           template_dir = Pathname.new(ANDROID_TEMPLATE_DIR)
-          Gyro::Liquidgen::Generator.new(xcdatamodel, template_dir, tmp_dir, { 'package' => PACKAGE_NAME })
+          gen = Gyro::Liquidgen::Generator.new(template_dir, tmp_dir, { 'package' => PACKAGE_NAME })
+          gen.generate(xcdatamodel)
           fixtures_files_dir = File.expand_path('../fixtures/java/no_value', File.dirname(__FILE__))
           compare_dirs(tmp_dir, fixtures_files_dir)
         end

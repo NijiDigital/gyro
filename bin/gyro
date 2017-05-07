@@ -114,7 +114,8 @@ if options[:android_dir].nil?
   INFO
 
   xcdatamodel = Gyro::XCDataModel::Parser::XCDataModel.new(options[:model])
-  Gyro::Liquidgen::Generator.new(xcdatamodel, template_dir, output_dir, options[:params])
+  gen = Gyro::Liquidgen::Generator.new(template_dir, output_dir, options[:params])
+  gen.generate(xcdatamodel)
 else
   # Android
   if Dir.exist?(options[:android_dir])

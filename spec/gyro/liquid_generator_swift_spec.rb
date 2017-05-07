@@ -30,7 +30,8 @@ module Gyro
           xcdatamodel = Gyro::XCDataModel::Parser::XCDataModel.new(xcdatamodel_dir)
           Dir.mktmpdir(TMP_DIR_NAME) do |tmp_dir|
             template_dir = Pathname.new(SWIFT3_TEMPLATE_DIR)
-            Gyro::Liquidgen::Generator.new(xcdatamodel, template_dir, tmp_dir, {})
+            gen = Gyro::Liquidgen::Generator.new(template_dir, tmp_dir, {})
+            gen.generate(xcdatamodel)
             fixtures_files_dir = File.expand_path("../fixtures/swift/#{datamodel}", File.dirname(__FILE__))
             compare_dirs(tmp_dir, fixtures_files_dir)
           end
