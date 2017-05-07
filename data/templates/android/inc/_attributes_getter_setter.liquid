@@ -2,10 +2,14 @@
     {%- if attribute.realm_read_only.size == 0 -%}
         {%- comment %} ******* CONVERT TYPE CAPTURE ******* {% endcomment -%}
         {%- capture convert_type -%}
-          {%- if use_wrapper == true -%}
-            {%- include 'inc/wrapper_type_converter' -%}
+          {%- if attribute.realm_read_only.size == 0 and attribute.enum_type.size > 0 -%}
+            String
           {%- else -%}
-            {%- include 'inc/type_converter' -%}
+            {%- if params.use_wrappers == true -%}
+              {%- include 'inc/wrapper_type_converter' -%}
+            {%- else -%}
+              {%- include 'inc/type_converter' -%}
+            {%- endif -%}
           {%- endif -%}
         {%- endcapture -%}
 
@@ -14,24 +18,21 @@
         {%- endcapture -%}
 
         {%- capture annotation -%}
-          {%- if support_annotations == true and ((params.use_wrappers == true and attribute.optional == true) or (attribute.enum_type.size > 0 and attribute.optional == true)) -%}
-          @android.support.annotation.Nullable
-          {%- endif -%}
-          {%- if support_annotations == true and ((attribute.enum_type != primitives and attribute.optional == false) or (attribute.enum_type.size > 0 and attribute.optional == false)) -%}
-          @android.support.annotation.NonNull
-          {%- endif -%}
-          {%- if attribute.support_annotation.size > 0 %}
-            @android.support.annotation.{{ attribute.support_annotation }}
-          {%- endif %}
+          {%- if params.support_annotations == true and ((params.use_wrappers == true and attribute.optional == true) or (attribute.enum_type.size > 0 and attribute.optional == true)) -%}
+          @android.support.annotation.Nullable {% endif -%}
+          {%- if params.support_annotations == true and ((attribute.enum_type != primitives and attribute.optional == false) or (attribute.enum_type.size > 0 and attribute.optional == false)) -%}
+          @android.support.annotation.NonNull {% endif -%}
+          {%- if attribute.support_annotation.size > 0 -%}
+            @android.support.annotation.{{ attribute.support_annotation }} {% endif -%}
         {%- endcapture -%}
 
         {%- assign name = attribute.name %}
-
-    public {{ convert_type }} get{{ name | capitalize }}() {
+    {{ annotation }}
+    public {{ convert_type }} get{{ name | titleize }}() {
         return {{ name }};
     }
 
-    public void set{{ name | capitalize }}({{ annotation }} final {{ convert_type }} {{ name }}) {
+    public void set{{ name | titleize }}({{ annotation }}final {{ convert_type }} {{ name }}) {
         this.{{ name }} = {{ name }};
     }
     {%- endif -%}

@@ -40,7 +40,7 @@ module Gyro
             'has_ignored' => has_ignored?, 'has_primary_key' => has_primary_key?, 'has_required' => has_required?, 'has_indexed_attributes' => has_indexed_attributes?,
             'has_json_key_path' => has_json_key_path?, 'has_enum_attributes' => has_enum_attributes?, 'has_custom_transformers' => has_custom_transformers?,
             'need_transformer' => need_transformer?, 'has_bool_attributes' => has_bool_attributes?, 'has_number_attributes' => has_number_attributes?,
-            'has_date_attribute' => has_date_attribute?, 'has_list_relationship' => has_list_relationship?,
+            'has_date_attribute' => has_date_attribute?, 'has_list_relationship' => has_list_relationship?, 'has_list_attributes' => has_list_attributes?,
             'has_only_inverse' => has_only_inverse? }
         end
 

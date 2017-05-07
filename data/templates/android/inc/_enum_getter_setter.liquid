@@ -1,32 +1,22 @@
 {%- for attribute in entity.attributes -%}
     {%- if attribute.realm_read_only.size == 0 and attribute.enum_type.size > 0 -%}
 
-        {%- comment %} ******* CONVERT TYPE CAPTURE ******* {% endcomment -%}
-        {%- capture convert_type -%}
-          {%- if use_wrappers == true -%}
-            {%- include 'inc/wrapper_type_converter' -%}
-          {%- else -%}
-            {%- include 'inc/type_converter' -%}
-          {%- endif -%}
-        {%- endcapture -%}
-
         {%- if params.support_annotations == true -%}
     @android.support.annotation.Nullable
         {%- endif -%}
 
         {%- capture annotation -%}
           {%- if params.support_annotations == true -%}
-    @android.support.annotation.NonNull
-          {%- endif -%}
+    @android.support.annotation.NonNull {% endif -%}
         {%- endcapture -%}
         {%- assign name = attribute.name %}
-
-    public {{ convert_type }} get{{ name | capitalize }}Enum() {
-      return {{ convert_type }}.get(get{{ name | capitalize }}());
+    {{ annotation }}
+    public {{ attribute.enum_type }} get{{ name | titleize }}Enum() {
+        return {{ attribute.enum_type }}.get(get{{ name | titleize }}());
     }
 
-    public void set{{ name | capitalize }}Enum({{ annotation }} final {{ convert_type }} {{ name }}) {
-      this.{{ name }} = {{ name }}.getJsonValue();
+    public void set{{ name | titleize }}Enum({{ annotation }}final {{ attribute.enum_type }} {{ name }}) {
+        this.{{ name }} = {{ name }}.getJsonValue();
     }
     {%- endif -%}
 {%- endfor -%}
