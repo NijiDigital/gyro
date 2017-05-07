@@ -3,14 +3,17 @@
 	override static func indexedProperties() -> [String] {
 		return [
 			{%- capture enum_indexed_properties -%}
-				{%- for attribute in entity.attributes %}
-					{%- if attribute.is_indexed == true %}
+				{%- for attribute in entity.attributes -%}
+					{%- if attribute.is_indexed == true -%}
 						"{{attribute.name}}",
 					{%- endif %}
 				{%- endfor %}
 			{%- endcapture -%}
 
-    	{%- assign enum_indexed_properties_size = enum_indexed_properties | size | minus: 1 -%}
-    	{{ enum_indexed_properties | truncate: enum_indexed_properties_size, '' }}]
+    	{%- assign enum_indexed_properties_array = enum_indexed_properties | split: "," -%}
+			{%- assign enum_indexed_properties_array_size = enum_indexed_properties_array | size | minus: 1 -%}
+			{%- for item in enum_indexed_properties_array limit:enum_indexed_properties_array_size -%}
+				{{ item }}{%- if forloop.last == false -%},{%- endif -%}
+			{%- endfor -%}]
 	}
 {%- endif -%}
