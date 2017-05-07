@@ -27,7 +27,7 @@ module Gyro
         def initialize(relationship_xml, entity_name)
           @entity_name = entity_name
           @name = relationship_xml.xpath('@name').to_s
-          @optional = relationship_xml.xpath('@optional').to_s
+          @optional = relationship_xml.xpath('@optional').to_s == 'YES' ? true : false
           @deletion_rule = relationship_xml.xpath('@deletionRule').to_s
           @inverse_name = relationship_xml.xpath('@inverseName').to_s
           @inverse_type = relationship_xml.xpath('@destinationEntity').to_s

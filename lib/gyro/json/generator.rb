@@ -20,10 +20,6 @@ module Gyro
     # Generates the JSON representation of the input datamodel
     #
     class Generator
-      # INCLUDES #############################################################
-
-      include Gyro::XCDataModel::Parser
-
       # PUBLIC METHODS #######################################################
       def initialize(xcdatamodel)
         Gyro::Log.title('Generating Json')

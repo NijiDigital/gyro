@@ -2,36 +2,37 @@
     {%- if relationship.inverse == false -%}
 
         {%- capture relationship_type -%}
-          {%- if relationship.destination.size == 0 -%}
-            {%- if relationship.type != "to_many"  -%}
-              {{ relationship.inverse_type }}
-            {%- else -%}
-              RealmList<{{ relationship.inverse_type }}>
-            {%- endif -%}
+          {%- if relationship.realm_read_only.size == 0 and relationship.enum_type.size > 0 -%}
+            String
           {%- else -%}
-            List<{{ relationship.destination }}>
+            {%- if relationship.destination.size == 0 -%}
+              {%- if relationship.type != "to_many"  -%}
+                {{ relationship.inverse_type }}
+              {%- else -%}
+                RealmList<{{ relationship.inverse_type }}>
+              {%- endif -%}
+            {%- else -%}
+              List<{{ relationship.destination }}>
+            {%- endif -%}
           {%- endif -%}
         {% endcapture %}
 
         {%- capture annotation -%}
-          {%- if support_annotations == true and relationship.optional == true -%}
-          @android.support.annotation.Nullable
-          {%- endif -%}
-          {%- if support_annotations == true and relationship.optional == false -%}
-          @android.support.annotation.NonNull
-          {%- endif -%}
+          {%- if params.support_annotations == true and relationship.optional == true -%}
+          @android.support.annotation.Nullable {% endif -%}
+          {%- if params.support_annotations == true and relationship.optional == false -%}
+          @android.support.annotation.NonNull {% endif -%}
           {%- if relationship.support_annotation.size > 0 %}
-            @android.support.annotation.{{ relationship.support_annotation }}
-          {%- endif %}
+            @android.support.annotation.{{ relationship.support_annotation }} {% endif -%}
         {%- endcapture -%}
 
         {%- assign name = relationship.name %}
-
-    public {{ relationship_type }} get{{ name | capitalize }}() {
+    {{ annotation }}
+    public {{ relationship_type }} get{{ name | titleize }}() {
         return {{ name }};
     }
 
-    public void set{{ name | capitalize }}({{ annotation }} final {{ relationship_type }} {{ name }}) {
+    public void set{{ name | titleize }}({{ annotation }}final {{ relationship_type }} {{ name }}) {
         this.{{ name }} = {{ name }};
     }
     {%- endif -%}
