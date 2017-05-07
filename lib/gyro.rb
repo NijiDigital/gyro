@@ -15,7 +15,6 @@
 require 'gyro/version'
 
 require 'gyro/xcdatamodel/parser'
-require 'gyro/realm/java/generator'
 require 'gyro/json/generator'
 require 'gyro/liquidgen/generator'
 
