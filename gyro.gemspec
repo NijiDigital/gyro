@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
   s.homepage    = 'https://github.com/NijiDigital/gyro'
   s.license     = 'Apache-2.0'
 
-  s.files       = Dir['lib/**/*'] + Dir['bin/gyro'] + %w(README.md LICENSE) + Dir['documentation/']
+  s.files       = Dir['lib/**/*'] + Dir['bin/gyro'] + %w(README.md LICENSE) + Dir['documentation/**/*']
   s.executables << 'gyro'
   s.required_ruby_version = '>= 2.0.0'
 
