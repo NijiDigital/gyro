@@ -25,9 +25,10 @@
           {%- if attribute.support_annotation.size > 0 -%}
             @android.support.annotation.{{ attribute.support_annotation }} {% endif -%}
         {%- endcapture -%}
-
         {%- assign name = attribute.name %}
+    {%- if annotation %}
     {{ annotation }}
+    {% endif -%}
     public {{ convert_type }} get{{ name | titleize }}() {
         return {{ name }};
     }

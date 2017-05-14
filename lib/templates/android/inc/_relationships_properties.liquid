@@ -1,5 +1,4 @@
 {%- for relationship in entity.relationships -%}
-
   {%- capture relationship_type -%}
     {%- if relationship.realm_read_only.size == 0 and relationship.enum_type.size > 0 -%}
       String
@@ -14,7 +13,7 @@
         List<{{ relationship.destination }}>
       {%- endif -%}
     {%- endif -%}
-  {% endcapture %}
+  {%- endcapture -%}
 
   {%- if relationship.inverse == false -%}
     {%- if relationship.realm_ignored == true -%}
@@ -24,5 +23,5 @@
     @SerializedName("{{ relationship.json_key_path }}")
     {% endif -%}
     private {{ relationship_type }} {{ relationship.name }};
-    {% endif -%}
-{%- endfor -%}
+    {%- endif -%}
+{%- endfor %}
