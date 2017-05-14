@@ -1,6 +1,5 @@
 {%- for relationship in entity.relationships -%}
     {%- if relationship.inverse == false -%}
-
         {%- capture relationship_type -%}
           {%- if relationship.realm_read_only.size == 0 and relationship.enum_type.size > 0 -%}
             String
@@ -15,7 +14,7 @@
               List<{{ relationship.destination }}>
             {%- endif -%}
           {%- endif -%}
-        {% endcapture %}
+        {%- endcapture -%}
 
         {%- capture annotation -%}
           {%- if params.support_annotations == true and relationship.optional == true -%}
@@ -27,7 +26,9 @@
         {%- endcapture -%}
 
         {%- assign name = relationship.name %}
+    {% if annotation %}
     {{ annotation }}
+    {% endif -%}
     public {{ relationship_type }} get{{ name | titleize }}() {
         return {{ name }};
     }

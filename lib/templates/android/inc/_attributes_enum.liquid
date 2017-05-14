@@ -1,6 +1,8 @@
 {% if entity.attributes.size > 0 %}
     public static class Attributes {
-        private Attributes() {}
+        private Attributes() {
+          // Hide constructor
+        }
     {% for attribute in entity.attributes -%}
       {% if attribute.realm_ignored == false or attribute.read_only == false -%}
         {% if attribute.comment.size > 0 -%}
@@ -10,4 +12,4 @@
       {%- endif -%}
     {% endfor  %}
     }
-{%- endif -%}
+{%- endif %}
