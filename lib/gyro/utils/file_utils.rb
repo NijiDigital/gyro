@@ -30,7 +30,7 @@ module Gyro
   end
 
   def self.templates_dir
-    Pathname.new(File.dirname(__FILE__)) + '../../'
+    Pathname.new(File.dirname(__FILE__)) + '../../templates'
   end
 
   def self.search_template_dir(template_dir_param)
@@ -61,7 +61,7 @@ module Gyro
         Gyro::Error.exit_with_error('You need to specify right template directory using --template option (see --help for more info)')
       end
     else
-      template_dir_to_test = Gyro.templates_dir + 'templates' + template_dir_param
+      template_dir_to_test = Gyro.templates_dir + template_dir_param
       unless template_dir_to_test.exist?
         Gyro::Error.exit_with_error('You need to specify existing default template name using --template option (see --help for more info)')
       end

@@ -39,23 +39,23 @@ module Gyro
       end
 
       def generate(xcdatamodel)
-        generate_root_template(xcdatamodel)
+        generate_entities(xcdatamodel)
         Gyro::Log.success('Model objects are generated !')
       end
 
       private ################################################################
 
-      def generate_root_template(xcdatamodel) 
+      def generate_entities(xcdatamodel) 
         xcdatamodel.to_h['entities'].each do |entity|
           entity_context = { 'params' => @params, 'entity' => entity }
           # Rendering template using entity and params context
-          output = root_template_rendering(entity_context)
+          output = render_entity(entity_context)
           # Don't generate empty output
           next if output.delete("\n").empty?
 
           filename_context = { 'params' => @params, 'name' => entity['name'] }
           # Rendering filename template using entity name and params context
-          filename = filename_rendering(filename_context)
+          filename = render_filename(filename_context)
           Gyro::Log.success("#{filename} is created !")
           # Write model object
           Gyro.write_file_with_name(@output_dir, filename, output)
@@ -73,7 +73,7 @@ module Gyro
           
           enum_context = { 'params' => @params, 'attribute' => attribute }
           # Rendering enum template using attribute and params context
-          output = enum_template_rendering(enum_context)
+          output = render_enum(enum_context)
           # Don't generate empty output
           next if output.delete("\n").empty?
 
@@ -84,21 +84,21 @@ module Gyro
       def generate_enum(enum_name, output)
         # Rendering enum filename template using enum name and params context
         enum_filename_context = { 'params' => @params, 'name' => enum_name }
-        enum_filename = enum_filename_template_rendering(enum_filename_context)
+        enum_filename = render_enum_filename(enum_filename_context)
         Gyro.write_file_with_name(@output_dir, enum_filename, output)
       end
 
-      def root_template_rendering(context)
+      def render_entity(context)
         # Parse object template
-        root_template_path = @template_dir + 'root.liquid'
-        Gyro::Error.exit_with_error('Bad template directory content ! Your template need to include root.liquid file') unless root_template_path.exist?
-        root_template_string = root_template_path.read
-        root_template = Liquid::Template.parse(root_template_string)
-        root_template.render(context, filters: [CustomFilters])
+        entity_template_path = @template_dir + 'root.liquid'
+        Gyro::Error.exit_with_error('Bad template directory content ! Your template need to include root.liquid file') unless entity_template_path.exist?
+        entity_template_string = entity_template_path.read
+        entity_template = Liquid::Template.parse(entity_template_string)
+        entity_template.render(context, filters: [CustomFilters])
                                 .gsub(/^ +$/, '')
       end
 
-      def filename_rendering(context)
+      def render_filename(context)
         # Parse object template name
         filename_template_path = (@template_dir + 'filename.liquid')
         Gyro::Error.exit_with_error('Bad template directory content ! Your template need to include filename.liquid file') unless filename_template_path.exist?
@@ -107,7 +107,7 @@ module Gyro
         filename_template.render(context).chomp
       end
 
-      def enum_template_rendering(context)
+      def render_enum(context)
         # Parse enum template
         enum_template_path = (@template_dir + 'enum.liquid')
         Gyro::Error.exit_with_error('Bad template directory content ! Your template need to have enum.liquid file !') unless enum_template_path.exist?
@@ -117,7 +117,7 @@ module Gyro
                                 .gsub(/^ +$/, '')
       end
 
-      def enum_filename_template_rendering(context)
+      def render_enum_filename(context)
         # Parse enum template name
         enum_filename_template_path = (@template_dir + 'enum_filename.liquid').exist? ? (@template_dir + 'enum_filename.liquid') : (@template_dir + 'filename.liquid')
         Gyro::Error.exit_with_error('Bad template directory content ! Your template need to have enum_filename.liquid or filename.liquid file !') unless enum_filename_template_path.exist?
