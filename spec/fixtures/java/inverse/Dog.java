@@ -6,9 +6,13 @@ import io.realm.RealmObject;
 
 public class Dog extends RealmObject {
 
-    public interface Attributes {
-        String AGE = "age";
-        String NAME = "name";
+    public static class Attributes {
+        private Attributes() {
+            // Hide constructor
+        }
+        
+        public static final String AGE = "age";
+        public static final String NAME = "name";
     }
 
     private short age;

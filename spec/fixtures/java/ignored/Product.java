@@ -6,8 +6,12 @@ import io.realm.RealmObject;
 
 public class Product extends RealmObject {
 
-    public interface Relationships {
-        String SHOP = "shop";
+    public static class Relationships {
+        private Relationships() {
+            // Hide constructor
+        }
+        
+        public static final String SHOP = "shop";
     }
 
     private Shop shop;
