@@ -4,9 +4,9 @@ package com.gyro.tests;
 
 public enum OptValue {
 
-    OPT_VALUE_ONE("opt_value_one"),
-    OPT_VALUE_TWO("opt_value_two"),
-    OPT_VALUE_THREE("opt_value_three");
+    OPT_VALUE_ONE("OptValueOne"),
+    OPT_VALUE_TWO("OptValueTwo"),
+    OPT_VALUE_THREE("OptValueThree");
 
     private final String jsonValue;
 

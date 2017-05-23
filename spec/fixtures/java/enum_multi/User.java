@@ -9,14 +9,22 @@ import io.realm.annotations.Ignore;
 
 public class User extends RealmObject {
 
-    public interface Attributes {
-        String BIRTHDAY = "birthday";
-        String NAME = "name";
-        String TYPE = "type";
+    public static class Attributes {
+        private Attributes() {
+            // Hide constructor
+        }
+
+        public static final String BIRTHDAY = "birthday";
+        public static final String NAME = "name";
+        public static final String TYPE = "type";
     }
 
-    public interface Relationships {
-        String FIDELITY_CARD = "fidelityCard";
+    public static class Relationships {
+        private Relationships() {
+            // Hide constructor
+        }
+
+        public static final String FIDELITY_CARD = "fidelityCard";
     }
 
     private Date birthday;

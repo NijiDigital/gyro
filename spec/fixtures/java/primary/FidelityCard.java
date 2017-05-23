@@ -7,13 +7,19 @@ import io.realm.annotations.PrimaryKey;
 
 public class FidelityCard extends RealmObject {
 
-    public interface Attributes {
-        String IDENTIFIER = "identifier";
-        String POINTS = "points";
+    public static class Attributes {
+        private Attributes() {
+            // Hide constructor
+        }
+        public static final String IDENTIFIER = "identifier";
+        public static final String POINTS = "points";
     }
 
-    public interface Relationships {
-        String USER = "user";
+    public static class Relationships {
+        private Relationships() {
+            // Hide constructor
+        }
+        public static final String USER = "user";
     }
 
     @PrimaryKey

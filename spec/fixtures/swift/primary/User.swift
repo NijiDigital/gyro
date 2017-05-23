@@ -10,7 +10,7 @@ final class User: Object {
   }
 
   enum Relationships: String {
-    case fidelitycard = "fidelityCard"
+    case fidelityCard = "fidelityCard"
   }
 
   dynamic var birthday: Date = Date()
