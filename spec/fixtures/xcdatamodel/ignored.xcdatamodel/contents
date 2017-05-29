@@ -17,6 +17,11 @@
                 <entry key="realmIgnored" value="true"/>
             </userInfo>
         </attribute>
+        <attribute name="ignored2" attributeType="String" syncable="YES">
+            <userInfo>
+                <entry key="realmIgnored" value="true"/>
+            </userInfo>
+        </attribute>
         <attribute name="name" attributeType="String" syncable="YES"/>
         <attribute name="readOnly" attributeType="String" syncable="YES">
             <userInfo>
@@ -29,6 +34,6 @@
     <elements>
         <element name="Owner" positionX="135" positionY="225" width="128" height="75"/>
         <element name="Product" positionX="216" positionY="279" width="128" height="60"/>
-        <element name="Shop" positionX="54" positionY="144" width="128" height="120"/>
+        <element name="Shop" positionX="54" positionY="144" width="128" height="135"/>
     </elements>
 </model>

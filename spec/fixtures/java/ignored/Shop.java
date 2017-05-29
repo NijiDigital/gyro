@@ -28,6 +28,8 @@ public class Shop extends RealmObject {
 
     @Ignore
     private String ignored;
+    @Ignore
+    private String ignored2;
     private String name;
     private Owner owner;
     private RealmList<Product> products;
@@ -38,6 +40,14 @@ public class Shop extends RealmObject {
 
     public void setIgnored(final String ignored) {
         this.ignored = ignored;
+    }
+
+    public String getIgnored2() {
+        return ignored2;
+    }
+
+    public void setIgnored2(final String ignored2) {
+        this.ignored2 = ignored2;
     }
 
     public String getName() {
