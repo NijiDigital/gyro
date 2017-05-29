@@ -1,15 +1,16 @@
-{% if entity.attributes.size > 0 %}
+{%- if entity.attributes.size > 0 %}
+
     public static class Attributes {
         private Attributes() {
-          // Hide constructor
+            // Hide constructor
         }
     {% for attribute in entity.attributes -%}
-      {% if attribute.realm_ignored == false or attribute.read_only == false -%}
-        {% if attribute.comment.size > 0 -%}
+      {%- if attribute.realm_ignored == false or attribute.read_only == false -%}
+        {%- if attribute.comment.size > 0 -%}
         /** {{ attribute.comment }} */
         {%- endif %}
         public static final String {{ attribute.name | up_snake_case }} = "{{ attribute.name }}";
       {%- endif -%}
-    {% endfor  %}
+    {%- endfor  %}
     }
-{%- endif %}
+{%- endif -%}

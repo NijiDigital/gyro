@@ -37,11 +37,13 @@ import io.realm.annotations.PrimaryKey;
 {%- endif %}
 {%- assign primary_key = entity.identity_attribute -%}
 public class {{ entity.name }} extends RealmObject {
-    {% include 'inc/attributes_enum' -%}
+
+    {%- include 'inc/attributes_enum' %}
     {%- include 'inc/relationships_enum' %}
     {%- include 'inc/attributes_properties' %}
-    {% include 'inc/relationships_properties' -%}
-    {%- include 'inc/attributes_getter_setter' -%}
-    {%- include 'inc/relationships_getter_setter' -%}
+    {%- include 'inc/relationships_properties' %}
+    {%- include 'inc/attributes_getter_setter' %}
+    {%- include 'inc/relationships_getter_setter' %}
     {%- include 'inc/enum_getter_setter' %}
+
 }

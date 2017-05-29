@@ -10,7 +10,7 @@ public class Product extends RealmObject {
         private Attributes() {
             // Hide constructor
         }
-        
+
         public static final String BRAND = "brand";
         public static final String NAME = "name";
         public static final String PRICE = "price";
@@ -46,4 +46,5 @@ public class Product extends RealmObject {
     public void setPrice(@android.support.annotation.Nullable final Integer price) {
         this.price = price;
     }
+
 }

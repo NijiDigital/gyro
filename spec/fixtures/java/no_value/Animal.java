@@ -1,7 +1,6 @@
 package com.gyro.tests;
 
 import java.util.List;
-
 import io.realm.RealmList;
 import io.realm.RealmObject;
 
@@ -43,4 +42,5 @@ public class Animal extends RealmObject {
     public void setRelationshipNoValue(final List<String> relationshipNoValue) {
         this.relationshipNoValue = relationshipNoValue;
     }
+
 }

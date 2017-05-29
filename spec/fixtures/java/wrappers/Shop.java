@@ -11,15 +11,15 @@ public class Shop extends RealmObject {
         private Attributes() {
             // Hide constructor
         }
-        
+
         public static final String NAME = "name";
     }
-    
+
     public static class Relationships {
         private Relationships() {
             // Hide constructor
         }
-        
+
         public static final String PRODUCTS = "products";
     }
 
@@ -41,4 +41,5 @@ public class Shop extends RealmObject {
     public void setProducts(final RealmList<Product> products) {
         this.products = products;
     }
+
 }

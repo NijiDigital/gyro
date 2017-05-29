@@ -22,7 +22,7 @@ if Gem::Version.new(Liquid::VERSION) < Gem::Version.new('4.0.0')
     #
     module WhitespacePatch
       def parse(source, options = {})
-        super(source.gsub(/\s*{%-/, "\v{%").gsub(/-%}\s*/, "%}\v"), options)
+        super(source.gsub(/\s*{%-/, "\v{%").gsub(/-%}\s*/, "%}"), options)
       end
 
       def render(*params)

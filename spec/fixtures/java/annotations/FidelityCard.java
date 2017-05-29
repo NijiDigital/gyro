@@ -14,7 +14,7 @@ public class FidelityCard extends RealmObject {
         public static final String IDENTIFIER = "identifier";
         public static final String POINTS = "points";
     }
-    
+
     public static class Relationships {
         private Relationships() {
             // Hide constructor
@@ -45,12 +45,13 @@ public class FidelityCard extends RealmObject {
         this.points = points;
     }
 
-    @android.support.annotation.Nullable
+    @android.support.annotation.NonNull
     public User getUser() {
         return user;
     }
 
-    public void setUser(@android.support.annotation.Nullable final User user) {
+    public void setUser(@android.support.annotation.NonNull final User user) {
         this.user = user;
     }
+
 }

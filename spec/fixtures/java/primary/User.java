@@ -1,7 +1,6 @@
 package com.gyro.tests;
 
 import java.util.Date;
-
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
@@ -13,16 +12,16 @@ public class User extends RealmObject {
         private Attributes() {
             // Hide constructor
         }
-        
+
         public static final String BIRTHDAY = "birthday";
         public static final String NAME = "name";
     }
-    
+
     public static class Relationships {
         private Relationships() {
             // Hide constructor
         }
-        
+
         public static final String FIDELITY_CARD = "fidelityCard";
     }
 
@@ -54,4 +53,5 @@ public class User extends RealmObject {
     public void setFidelityCard(final FidelityCard fidelityCard) {
         this.fidelityCard = fidelityCard;
     }
+
 }
