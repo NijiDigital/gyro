@@ -17,8 +17,7 @@
     {%- endcapture -%}
 
     {%- assign enum_ignored_properties_array = enum_ignored_properties | split: "," -%}
-    {%- assign enum_ignored_properties_array_size = enum_ignored_properties_array | size | minus: 1 -%}
-    {%- for item in enum_ignored_properties_array limit:enum_ignored_properties_array_size -%}
+    {%- for item in enum_ignored_properties_array -%}
       {{ item }}{%- if forloop.last == false -%},{%- endif -%}
     {%- endfor -%}]
   }

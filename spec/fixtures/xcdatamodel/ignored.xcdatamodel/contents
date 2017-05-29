@@ -14,7 +14,7 @@
     <entity name="Shop" syncable="YES">
         <attribute name="ignored" attributeType="String" syncable="YES">
             <userInfo>
-                <entry key="realmIgnored" value="value"/>
+                <entry key="realmIgnored" value="true"/>
             </userInfo>
         </attribute>
         <attribute name="name" attributeType="String" syncable="YES"/>
