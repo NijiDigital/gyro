@@ -6,6 +6,7 @@ final class Shop: Object {
 
   enum Attributes: String {
     case ignored = "ignored"
+    case ignored2 = "ignored2"
     case name = "name"
   }
 
@@ -15,13 +16,14 @@ final class Shop: Object {
   }
 
   dynamic var ignored: String = ""
+  dynamic var ignored2: String = ""
   dynamic var name: String = ""
   dynamic var owner: Owner?
   let products = List<Product>()
 
   // Specify properties to ignore (Realm won't persist these)
   override static func ignoredProperties() -> [String] {
-    return ["ignored"]
+    return ["ignored","ignored2"]
   }
 
 }
