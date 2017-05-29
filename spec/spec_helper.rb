@@ -46,6 +46,6 @@ def compare_dirs(generated_files_dir, fixtures_files_dir)
     # file = File.open(generated_file, 'rb')
     # generated_file_content = file.read
     # file.close
-    expect(generated_file_content).to eq(fixture_file_content), "File: '#{file_name}' differ from expectation."
+    expect(generated_file_content).to eq(fixture_file_content), "File: '#{fixtures_file}' differ from expectation."
   end
 end

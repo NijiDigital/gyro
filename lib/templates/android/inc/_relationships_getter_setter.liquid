@@ -1,5 +1,6 @@
-{%- for relationship in entity.relationships -%}
-    {%- if relationship.inverse == false -%}
+{%- for relationship in entity.relationships %}
+    
+    {% if relationship.inverse == false -%}
         {%- capture relationship_type -%}
           {%- if relationship.realm_read_only.size == 0 and relationship.enum_type.size > 0 -%}
             String
@@ -17,23 +18,24 @@
         {%- endcapture -%}
 
         {%- capture annotation -%}
-          {%- if params.support_annotations == true and relationship.optional == true -%}
-          @android.support.annotation.Nullable {% endif -%}
-          {%- if params.support_annotations == true and relationship.optional == false -%}
-          @android.support.annotation.NonNull {% endif -%}
-          {%- if relationship.support_annotation.size > 0 %}
-            @android.support.annotation.{{ relationship.support_annotation }} {% endif -%}
+          {%- if params.support_annotations == true -%}
+          {%- if relationship.optional == true -%}
+          @android.support.annotation.Nullable{% endif -%}
+          {%- if relationship.optional == false -%}
+          @android.support.annotation.NonNull{% endif -%}
+          {%- if relationship.support_annotation.size > 0 %}-@android.support.annotation.{{ relationship.support_annotation }}{% endif -%}
+          {% endif -%}
         {%- endcapture -%}
 
         {%- assign name = relationship.name %}
-    {% if annotation %}
-    {{ annotation }}
+    {%- if annotation.size > 0 %}{{ annotation | replace: "-","
+    " }}
     {% endif -%}
     public {{ relationship_type }} get{{ name | titleize }}() {
         return {{ name }};
     }
 
-    public void set{{ name | titleize }}({{ annotation }}final {{ relationship_type }} {{ name }}) {
+    public void set{{ name | titleize }}({%- if annotation.size > 0 %}{{ annotation | replace: "-"," " }} {% endif %}final {{ relationship_type }} {{ name }}) {
         this.{{ name }} = {{ name }};
     }
     {%- endif -%}

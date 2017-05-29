@@ -11,6 +11,7 @@ public class FidelityCard extends RealmObject {
         private Attributes() {
             // Hide constructor
         }
+
         public static final String IDENTIFIER = "identifier";
         public static final String POINTS = "points";
     }
@@ -19,6 +20,7 @@ public class FidelityCard extends RealmObject {
         private Relationships() {
             // Hide constructor
         }
+
         public static final String USER = "user";
     }
 
@@ -50,4 +52,5 @@ public class FidelityCard extends RealmObject {
     public void setUser(final User user) {
         this.user = user;
     }
+
 }

@@ -1,5 +1,6 @@
-{%- for attribute in entity.attributes -%}
-    {%- if attribute.realm_read_only.size == 0 -%}
+{%- for attribute in entity.attributes %}
+
+    {% if attribute.realm_read_only.size == 0 -%}
         {%- comment %} ******* CONVERT TYPE CAPTURE ******* {% endcomment -%}
         {%- capture convert_type -%}
           {%- if attribute.realm_read_only.size == 0 and attribute.enum_type.size > 0 -%}
@@ -12,28 +13,26 @@
             {%- endif -%}
           {%- endif -%}
         {%- endcapture -%}
-
         {%- capture primitives -%}
           {%- include 'inc/primitives' -%}
         {%- endcapture -%}
-
-        {%- capture annotation -%}
-          {%- if params.support_annotations == true and ((params.use_wrappers == true and attribute.optional == true) or (attribute.enum_type.size > 0 and attribute.optional == true)) -%}
-          @android.support.annotation.Nullable {% endif -%}
-          {%- if params.support_annotations == true and ((attribute.enum_type != primitives and attribute.optional == false) or (attribute.enum_type.size > 0 and attribute.optional == false)) -%}
-          @android.support.annotation.NonNull {% endif -%}
-          {%- if attribute.support_annotation.size > 0 -%}
-            @android.support.annotation.{{ attribute.support_annotation }} {% endif -%}
+        {%- capture annotation -%}{%- if params.support_annotations == true -%}
+        {%- if params.use_wrappers == true or attribute.enum_type.size > 0 or primitives == "false" -%}
+        @android.support.annotation.{% if attribute.optional == true %}Nullable{% else %}NonNull{% endif -%}
+          {%- if attribute.support_annotation.size > 0 %}-{% endif -%}
+        {%- endif -%}
+        {%- if attribute.support_annotation.size > 0 %}@android.support.annotation.{{ attribute.support_annotation }}{%- endif -%}
+        {%- endif -%}
         {%- endcapture -%}
-        {%- assign name = attribute.name %}
-    {%- if annotation %}
-    {{ annotation }}
+        {%- assign name = attribute.name -%}
+    {%- if annotation.size > 0 %}{{ annotation | replace: "-","
+    " }}
     {% endif -%}
     public {{ convert_type }} get{{ name | titleize }}() {
         return {{ name }};
     }
 
-    public void set{{ name | titleize }}({{ annotation }}final {{ convert_type }} {{ name }}) {
+    public void set{{ name | titleize }}({%- if annotation.size > 0 %}{{ annotation | replace: "-"," " }} {% endif %}final {{ convert_type }} {{ name }}) {
         this.{{ name }} = {{ name }};
     }
     {%- endif -%}

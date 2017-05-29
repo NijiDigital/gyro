@@ -16,12 +16,12 @@
   {%- endcapture -%}
 
   {%- if relationship.inverse == false -%}
-    {%- if relationship.realm_ignored == true -%}
+    {%- if relationship.realm_ignored == true %}
     @Ignore
-    {% endif -%}
-    {%- if relationship.json_key_path.size > 0 -%}
+    {%- endif -%}
+    {%- if relationship.json_key_path.size > 0 %}
     @SerializedName("{{ relationship.json_key_path }}")
-    {% endif -%}
+    {%- endif %}
     private {{ relationship_type }} {{ relationship.name }};
     {%- endif -%}
-{%- endfor %}
+{%- endfor -%}

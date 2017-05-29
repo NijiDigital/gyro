@@ -10,7 +10,7 @@ public class Dog extends RealmObject {
         private Attributes() {
             // Hide constructor
         }
-        
+
         public static final String AGE = "age";
         public static final String NAME = "name";
     }
@@ -33,4 +33,7 @@ public class Dog extends RealmObject {
     public void setName(final String name) {
         this.name = name;
     }
+
+
+
 }

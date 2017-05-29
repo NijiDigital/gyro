@@ -1,4 +1,5 @@
-{%- for attribute in entity.attributes -%}
+
+{% for attribute in entity.attributes -%}
   {%- if attribute.realm_read_only.size == 0 -%}
       {%- comment %} ******* CONVERT TYPE CAPTURE ******* {% endcomment -%}
       {%- capture convert_type -%}
@@ -29,9 +30,9 @@
       {%- if attribute.json_key_path.size > 0 %}
     @SerializedName("{{ attribute.json_key_path }}")
       {%- endif -%}
-      {%- if attribute.support_annotation.size > 0 %}
+      {%- if params.support_annotations == true and attribute.support_annotation.size > 0 %}
     @android.support.annotation.{{ attribute.support_annotation }}
       {%- endif %}
     private {{ convert_type }} {{ name }};
-    {%- endif -%}
-  {%- endfor -%}
+  {%- endif -%}
+{%- endfor -%}

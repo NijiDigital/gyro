@@ -11,7 +11,7 @@ public class Shop extends RealmObject {
         private Attributes() {
             // Hide constructor
         }
-        
+
         public static final String NAME = "name";
     }
 
@@ -19,7 +19,7 @@ public class Shop extends RealmObject {
         private Relationships() {
             // Hide constructor
         }
-        
+
         public static final String PRODUCTS = "products";
     }
 
@@ -35,12 +35,13 @@ public class Shop extends RealmObject {
         this.name = name;
     }
 
-    @android.support.annotation.Nullable
+    @android.support.annotation.NonNull
     public RealmList<Product> getProducts() {
         return products;
     }
 
-    public void setProducts(@android.support.annotation.Nullable final RealmList<Product> products) {
+    public void setProducts(@android.support.annotation.NonNull final RealmList<Product> products) {
         this.products = products;
     }
+
 }
