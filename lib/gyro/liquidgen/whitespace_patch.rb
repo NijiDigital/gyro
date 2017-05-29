@@ -15,14 +15,15 @@
 require 'liquid'
 
 if Gem::Version.new(Liquid::VERSION) < Gem::Version.new('4.0.0')
+  # This allows to support whitespace trimming (which is only supported in Liquid 4) when using Liquid 3.0
+  # It works by patching Liquid::Template using ruby's `Module#prepend` feature
+  # See http://stackoverflow.com/a/4471202/803787 for more info on Monkey-Patching in Ruby
+  #
   module Liquid
-    # This allows to support whitespace trimming (which is only supported in Liquid 4) when using Liquid 3.0
-    # It works by patching Liquid::Template using ruby's `Module#prepend` feature
-    # See http://stackoverflow.com/a/4471202/803787 for more info on Monkey-Patching in Ruby
-    #
-    module WhitespacePatch
+    # Monkey-Patch Liquid::Template class
+    module TemplateWhitespacePatch
       def parse(source, options = {})
-        super(source.gsub(/\s*{%-/, "\v{%").gsub(/-%}\s*/, "%}"), options)
+        super(source.gsub(/\s*{%-/, "\v{%").gsub(/-%}\s*/, "%}\v"), options)
       end
 
       def render(*params)
@@ -30,9 +31,19 @@ if Gem::Version.new(Liquid::VERSION) < Gem::Version.new('4.0.0')
       end
     end
 
-    # Monkey-Patch Liquid::Template class
     class Template
-      prepend WhitespacePatch
+      prepend TemplateWhitespacePatch
     end
+  end
+
+  # Monkey-Patch String Liquid extension
+  module StringWhitespacePatch
+    def to_liquid
+      super.delete("\v")
+    end
+  end
+
+  class String
+    prepend StringWhitespacePatch
   end
 end

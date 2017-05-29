@@ -21,7 +21,7 @@ module Gyro
   describe 'Liquid' do
     describe 'Java' do
       before do
-        Gyro::Log.quiet = false
+        Gyro::Log.quiet = true
       end
 
      ['realm','primary','ignored', 'inverse', 'enum', 'enum_multi', 'enum_json'].each do |datamodel|
