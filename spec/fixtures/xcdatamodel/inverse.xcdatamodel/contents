@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7701" systemVersion="14F27" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
-    <entity name="RLMDog" syncable="YES">
-        <attribute name="age" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="12141" systemVersion="16E195" minimumToolsVersion="Xcode 4.3" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
+    <entity name="Dog" syncable="YES">
+        <attribute name="age" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="name" attributeType="String" syncable="YES"/>
-        <relationship name="owner_" maxCount="1" deletionRule="Nullify" destinationEntity="RLMPerson" inverseName="dogs" inverseEntity="RLMPerson" syncable="YES"/>
+        <relationship name="owner_" maxCount="1" deletionRule="Nullify" destinationEntity="Person" inverseName="dogs" inverseEntity="Person" syncable="YES"/>
     </entity>
-    <entity name="RLMPerson" syncable="YES">
-        <relationship name="dogs" toMany="YES" deletionRule="Nullify" destinationEntity="RLMDog" inverseName="owner_" inverseEntity="RLMDog" syncable="YES"/>
+    <entity name="Person" syncable="YES">
+        <relationship name="dogs" toMany="YES" deletionRule="Nullify" destinationEntity="Dog" inverseName="owner_" inverseEntity="Dog" syncable="YES"/>
     </entity>
     <elements>
-        <element name="RLMDog" positionX="0" positionY="18" width="128" height="90"/>
-        <element name="RLMPerson" positionX="0" positionY="0" width="128" height="60"/>
+        <element name="Dog" positionX="0" positionY="18" width="128" height="90"/>
+        <element name="Person" positionX="0" positionY="0" width="128" height="60"/>
     </elements>
 </model>

@@ -8,12 +8,20 @@ import io.realm.annotations.PrimaryKey;
 
 public class Shop extends RealmObject {
 
-    public interface Attributes {
-        String NAME = "name";
+    public static class Attributes {
+        private Attributes() {
+            // Hide constructor
+        }
+
+        public static final String NAME = "name";
     }
 
-    public interface Relationships {
-        String PRODUCTS = "products";
+    public static class Relationships {
+        private Relationships() {
+            // Hide constructor
+        }
+
+        public static final String PRODUCTS = "products";
     }
 
     @PrimaryKey
@@ -35,4 +43,5 @@ public class Shop extends RealmObject {
     public void setProducts(final RealmList<Product> products) {
         this.products = products;
     }
+
 }

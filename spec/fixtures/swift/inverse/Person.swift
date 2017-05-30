@@ -4,10 +4,10 @@ import RealmSwift
 
 final class Person: Object {
 
-    enum Relationships: String {
-        case Dogs = "dogs"
-    }
+  enum Relationships: String {
+    case dogs = "dogs"
+  }
 
-    let dogs = List<Dog>()
+  let dogs = List<Dog>()
 
 }

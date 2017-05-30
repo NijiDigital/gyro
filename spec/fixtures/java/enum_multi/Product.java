@@ -7,15 +7,23 @@ import io.realm.annotations.Ignore;
 
 public class Product extends RealmObject {
 
-    public interface Attributes {
-        String BRAND = "brand";
-        String NAME = "name";
-        String PRICE = "price";
-        String TYPE = "type";
+    public static class Attributes {
+        private Attributes() {
+            // Hide constructor
+        }
+
+        public static final String BRAND = "brand";
+        public static final String NAME = "name";
+        public static final String PRICE = "price";
+        public static final String TYPE = "type";
     }
 
-    public interface Relationships {
-        String SHOP = "shop";
+    public static class Relationships {
+        private Relationships() {
+            // Hide constructor
+        }
+
+        public static final String SHOP = "shop";
     }
 
     private String brand;
@@ -58,6 +66,14 @@ public class Product extends RealmObject {
         this.type = type;
     }
 
+    public Shop getShop() {
+        return shop;
+    }
+
+    public void setShop(final Shop shop) {
+        this.shop = shop;
+    }
+
     public TypeA getTypeEnum() {
         return TypeA.get(getType());
     }
@@ -66,11 +82,4 @@ public class Product extends RealmObject {
         this.type = type.getJsonValue();
     }
 
-    public Shop getShop() {
-        return shop;
-    }
-
-    public void setShop(final Shop shop) {
-        this.shop = shop;
-    }
 }

@@ -6,25 +6,34 @@ import io.realm.RealmObject;
 
 public class FidelityCard extends RealmObject {
 
-    public interface Attributes {
-        String IDENTIFIER = "identifier";
-        String POINTS = "points";
+    public static class Attributes {
+        private Attributes() {
+            // Hide constructor
+        }
+
+        public static final String IDENTIFIER = "identifier";
+        public static final String POINTS = "points";
     }
 
-    public interface Relationships {
-        String USER = "user";
+    public static class Relationships {
+        private Relationships() {
+            // Hide constructor
+        }
+
+        public static final String USER = "user";
     }
 
-    private short identifier;
+    private Short identifier;
     @android.support.annotation.IntRange(from=0,to=255)
     private Integer points;
     private User user;
 
-    public short getIdentifier() {
+    @android.support.annotation.NonNull
+    public Short getIdentifier() {
         return identifier;
     }
 
-    public void setIdentifier(final short identifier) {
+    public void setIdentifier(@android.support.annotation.NonNull final Short identifier) {
         this.identifier = identifier;
     }
 
@@ -38,12 +47,13 @@ public class FidelityCard extends RealmObject {
         this.points = points;
     }
 
-    @android.support.annotation.Nullable
+    @android.support.annotation.NonNull
     public User getUser() {
         return user;
     }
 
-    public void setUser(@android.support.annotation.Nullable final User user) {
+    public void setUser(@android.support.annotation.NonNull final User user) {
         this.user = user;
     }
+
 }

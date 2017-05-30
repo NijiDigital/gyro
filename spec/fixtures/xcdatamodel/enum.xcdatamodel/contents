@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11232" systemVersion="15G1004" minimumToolsVersion="Xcode 4.3" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
-    <entity name="RLMShop" syncable="YES">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="12141" systemVersion="16E195" minimumToolsVersion="Xcode 4.3" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
+    <entity name="Shop" syncable="YES">
         <attribute name="name" attributeType="String" syncable="YES"/>
         <attribute name="optionalValue" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES">
             <userInfo>
@@ -10,12 +10,12 @@
         </attribute>
         <attribute name="type" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES">
             <userInfo>
-                <entry key="enumType" value="RLMType"/>
-                <entry key="enumValues" value="RLMTypeOne,RLMTypeTwo,RLMTypeThree"/>
+                <entry key="enumType" value="Type"/>
+                <entry key="enumValues" value="TypeOne,TypeTwo,TypeThree"/>
             </userInfo>
         </attribute>
     </entity>
     <elements>
-        <element name="RLMShop" positionX="160" positionY="192" width="128" height="90"/>
+        <element name="Shop" positionX="160" positionY="192" width="128" height="90"/>
     </elements>
 </model>

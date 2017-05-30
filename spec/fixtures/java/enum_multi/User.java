@@ -1,7 +1,6 @@
 package com.gyro.tests;
 
 import java.util.Date;
-
 import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 
@@ -9,14 +8,22 @@ import io.realm.annotations.Ignore;
 
 public class User extends RealmObject {
 
-    public interface Attributes {
-        String BIRTHDAY = "birthday";
-        String NAME = "name";
-        String TYPE = "type";
+    public static class Attributes {
+        private Attributes() {
+            // Hide constructor
+        }
+
+        public static final String BIRTHDAY = "birthday";
+        public static final String NAME = "name";
+        public static final String TYPE = "type";
     }
 
-    public interface Relationships {
-        String FIDELITY_CARD = "fidelityCard";
+    public static class Relationships {
+        private Relationships() {
+            // Hide constructor
+        }
+
+        public static final String FIDELITY_CARD = "fidelityCard";
     }
 
     private Date birthday;
@@ -50,6 +57,14 @@ public class User extends RealmObject {
         this.type = type;
     }
 
+    public FidelityCard getFidelityCard() {
+        return fidelityCard;
+    }
+
+    public void setFidelityCard(final FidelityCard fidelityCard) {
+        this.fidelityCard = fidelityCard;
+    }
+
     public TypeB getTypeEnum() {
         return TypeB.get(getType());
     }
@@ -58,11 +73,4 @@ public class User extends RealmObject {
         this.type = type.getJsonValue();
     }
 
-    public FidelityCard getFidelityCard() {
-        return fidelityCard;
-    }
-
-    public void setFidelityCard(final FidelityCard fidelityCard) {
-        this.fidelityCard = fidelityCard;
-    }
 }

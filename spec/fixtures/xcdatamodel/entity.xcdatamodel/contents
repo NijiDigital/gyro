@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7701" systemVersion="14E46" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
-    <entity name="DBAnimal" isAbstract="YES" syncable="YES">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="12141" systemVersion="16E195" minimumToolsVersion="Xcode 4.3" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
+    <entity name="Animal" isAbstract="YES" syncable="YES">
         <attribute name="animal" optional="YES" attributeType="String" defaultValueString="animalDefault" syncable="YES"/>
-        <relationship name="pedigree" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="DBPedigree" inverseName="animal" inverseEntity="DBPedigree" syncable="YES"/>
+        <relationship name="pedigree" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Pedigree" inverseName="animal" inverseEntity="Pedigree" syncable="YES"/>
     </entity>
     <elements>
-        <element name="DBAnimal" positionX="0" positionY="0" width="128" height="75"/>
+        <element name="Animal" positionX="0" positionY="0" width="128" height="75"/>
     </elements>
 </model>

@@ -4,20 +4,20 @@ import RealmSwift
 
 final class Owner: Object {
 
-    enum Attributes: String {
-        case Name = "name"
-    }
+  enum Attributes: String {
+    case name = "name"
+  }
 
-    enum Relationships: String {
-        case Shop = "shop"
-    }
+  enum Relationships: String {
+    case shop = "shop"
+  }
 
-    dynamic var name: String? = nil
-    dynamic var shop: Shop?
+  dynamic var name: String?
+  dynamic var shop: Shop?
 
-    // Specify properties to ignore (Realm won't persist these)
-    override static func ignoredProperties() -> [String] {
-        return ["shop"]
-    }
+  // Specify properties to ignore (Realm won't persist these)
+  override static func ignoredProperties() -> [String] {
+    return ["shop"]
+  }
 
 }

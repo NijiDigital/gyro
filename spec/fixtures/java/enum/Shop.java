@@ -7,10 +7,14 @@ import io.realm.annotations.Ignore;
 
 public class Shop extends RealmObject {
 
-    public interface Attributes {
-        String NAME = "name";
-        String OPTIONAL_VALUE = "optionalValue";
-        String TYPE = "type";
+    public static class Attributes {
+        private Attributes() {
+            // Hide constructor
+        }
+
+        public static final String NAME = "name";
+        public static final String OPTIONAL_VALUE = "optionalValue";
+        public static final String TYPE = "type";
     }
 
     private String name;
@@ -37,20 +41,20 @@ public class Shop extends RealmObject {
         this.optionalValue = optionalValue;
     }
 
-    public OptValue getOptionalValueEnum() {
-        return OptValue.get(getOptionalValue());
-    }
-
-    public void setOptionalValueEnum(final OptValue optionalValue) {
-        this.optionalValue = optionalValue.getJsonValue();
-    }
-
     public String getType() {
         return type;
     }
 
     public void setType(final String type) {
         this.type = type;
+    }
+
+    public OptValue getOptionalValueEnum() {
+        return OptValue.get(getOptionalValue());
+    }
+
+    public void setOptionalValueEnum(final OptValue optionalValue) {
+        this.optionalValue = optionalValue.getJsonValue();
     }
 
     public Type getTypeEnum() {
@@ -60,4 +64,5 @@ public class Shop extends RealmObject {
     public void setTypeEnum(final Type type) {
         this.type = type.getJsonValue();
     }
+
 }

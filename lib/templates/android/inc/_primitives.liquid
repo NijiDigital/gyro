@@ -1,0 +1,18 @@
+{%- case attribute.type -%}
+{%- when 'integer_16' -%}
+true
+{%- when 'integer_32' -%}
+true
+{%- when 'integer_64' -%}
+true
+{%- when 'double' or 'decimal' -%}
+true
+{%- when 'float' -%}
+true
+{%- when 'boolean' -%}
+true
+{%- when 'binary' -%}
+true
+{%- else -%}
+false
+{%- endcase -%}

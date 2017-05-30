@@ -1,7 +1,6 @@
 package com.gyro.tests;
 
 import com.google.gson.annotations.SerializedName;
-
 import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 
@@ -9,10 +8,14 @@ import io.realm.annotations.Ignore;
 
 public class Shop extends RealmObject {
 
-    public interface Attributes {
-        String NAME = "name";
-        String TYPE = "type";
-        String TYPE_OPTIONAL = "typeOptional";
+    public static class Attributes {
+        private Attributes() {
+            // Hide constructor
+        }
+
+        public static final String NAME = "name";
+        public static final String TYPE = "type";
+        public static final String TYPE_OPTIONAL = "typeOptional";
     }
 
     private String name;
@@ -41,20 +44,20 @@ public class Shop extends RealmObject {
         this.type = type;
     }
 
-    public Type getTypeEnum() {
-        return Type.get(getType());
-    }
-
-    public void setTypeEnum(final Type type) {
-        this.type = type.getJsonValue();
-    }
-
     public String getTypeOptional() {
         return typeOptional;
     }
 
     public void setTypeOptional(final String typeOptional) {
         this.typeOptional = typeOptional;
+    }
+
+    public Type getTypeEnum() {
+        return Type.get(getType());
+    }
+
+    public void setTypeEnum(final Type type) {
+        this.type = type.getJsonValue();
     }
 
     public Type2 getTypeOptionalEnum() {
@@ -64,4 +67,5 @@ public class Shop extends RealmObject {
     public void setTypeOptionalEnum(final Type2 typeOptional) {
         this.typeOptional = typeOptional.getJsonValue();
     }
+
 }

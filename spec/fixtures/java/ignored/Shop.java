@@ -8,17 +8,28 @@ import io.realm.annotations.Ignore;
 
 public class Shop extends RealmObject {
 
-    public interface Attributes {
-        String NAME = "name";
+    public static class Attributes {
+        private Attributes() {
+            // Hide constructor
+        }
+
+        public static final String NAME = "name";
+        public static final String READ_ONLY = "readOnly";
     }
 
-    public interface Relationships {
-        String OWNER = "owner";
-        String PRODUCTS = "products";
+    public static class Relationships {
+        private Relationships() {
+            // Hide constructor
+        }
+
+        public static final String OWNER = "owner";
+        public static final String PRODUCTS = "products";
     }
 
     @Ignore
     private String ignored;
+    @Ignore
+    private String ignored2;
     private String name;
     private Owner owner;
     private RealmList<Product> products;
@@ -31,6 +42,14 @@ public class Shop extends RealmObject {
         this.ignored = ignored;
     }
 
+    public String getIgnored2() {
+        return ignored2;
+    }
+
+    public void setIgnored2(final String ignored2) {
+        this.ignored2 = ignored2;
+    }
+
     public String getName() {
         return name;
     }
@@ -38,6 +57,7 @@ public class Shop extends RealmObject {
     public void setName(final String name) {
         this.name = name;
     }
+
 
 
     public Owner getOwner() {
@@ -55,4 +75,5 @@ public class Shop extends RealmObject {
     public void setProducts(final RealmList<Product> products) {
         this.products = products;
     }
+
 }

@@ -1,7 +1,6 @@
 package com.gyro.tests;
 
 import java.util.List;
-
 import io.realm.RealmList;
 import io.realm.RealmObject;
 
@@ -9,12 +8,20 @@ import io.realm.RealmObject;
 
 public class Animal extends RealmObject {
 
-    public interface Attributes {
-        String ATTRIBUTE = "attribute";
+    public static class Attributes {
+        private Attributes() {
+            // Hide constructor
+        }
+
+        public static final String ATTRIBUTE = "attribute";
     }
 
-    public interface Relationships {
-        String RELATIONSHIP_NO_VALUE = "relationshipNoValue";
+    public static class Relationships {
+        private Relationships() {
+            // Hide constructor
+        }
+
+        public static final String RELATIONSHIP_NO_VALUE = "relationshipNoValue";
     }
 
     private String attribute;
@@ -35,4 +42,5 @@ public class Animal extends RealmObject {
     public void setRelationshipNoValue(final List<String> relationshipNoValue) {
         this.relationshipNoValue = relationshipNoValue;
     }
+
 }

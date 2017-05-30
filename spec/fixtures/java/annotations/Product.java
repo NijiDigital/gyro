@@ -6,21 +6,26 @@ import io.realm.RealmObject;
 
 public class Product extends RealmObject {
 
-    public interface Attributes {
-        String BRAND = "brand";
-        String NAME = "name";
-        String PRICE = "price";
+    public static class Attributes {
+        private Attributes() {
+            // Hide constructor
+        }
+
+        public static final String BRAND = "brand";
+        public static final String NAME = "name";
+        public static final String PRICE = "price";
     }
 
     private String brand;
     private String name;
     private int price;
 
+    @android.support.annotation.Nullable
     public String getBrand() {
         return brand;
     }
 
-    public void setBrand(final String brand) {
+    public void setBrand(@android.support.annotation.Nullable final String brand) {
         this.brand = brand;
     }
 
@@ -40,4 +45,5 @@ public class Product extends RealmObject {
     public void setPrice(final int price) {
         this.price = price;
     }
+
 }

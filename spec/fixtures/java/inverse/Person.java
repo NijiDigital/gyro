@@ -7,8 +7,12 @@ import io.realm.RealmObject;
 
 public class Person extends RealmObject {
 
-    public interface Relationships {
-        String DOGS = "dogs";
+    public static class Relationships {
+        private Relationships() {
+            // Hide constructor
+        }
+
+        public static final String DOGS = "dogs";
     }
 
     private RealmList<Dog> dogs;
@@ -20,4 +24,5 @@ public class Person extends RealmObject {
     public void setDogs(final RealmList<Dog> dogs) {
         this.dogs = dogs;
     }
+
 }
