@@ -36,10 +36,10 @@ module Gyro
         # Define Template path for Liquid file system to use Include Tag
         Liquid::Template.file_system = Liquid::LocalFileSystem.new(template_dir)
 
-        @entity_template = load_template(template_dir + 'entity.liquid')
-        @entity_filename_template = load_template(template_dir + 'entity_filename.liquid')
-        @enum_template = load_template(template_dir + 'enum.liquid')
-        @enum_filename_template = load_template((template_dir + 'enum_filename.liquid').exist? ? (template_dir + 'enum_filename.liquid') : (template_dir + 'filename.liquid'))
+        @entity_template = Generator.load_template(template_dir + 'entity.liquid')
+        @entity_filename_template = Generator.load_template(template_dir + 'entity_filename.liquid')
+        @enum_template = Generator.load_template(template_dir + 'enum.liquid')
+        @enum_filename_template = Generator.load_template((template_dir + 'enum_filename.liquid').exist? ? (template_dir + 'enum_filename.liquid') : (template_dir + 'filename.liquid'))
       end
 
       def generate(xcdatamodel)
@@ -49,7 +49,7 @@ module Gyro
 
       private ################################################################
 
-      def load_template(template_path)
+      def self.load_template(template_path)
         Gyro::Error.exit_with_error('Bad template directory content ! Your template need to ' + template_path.to_s + ' file') unless template_path.exist?
         template_path_string = template_path.read
         #filename_template_string = filename_template_path.readlines.first - filename.liquid
