@@ -19,20 +19,20 @@
         {%- capture annotation -%}{%- if params.support_annotations == true -%}
         {%- if params.use_wrappers == true or attribute.enum_type.size > 0 or isPrimitives == "false" -%}
         @android.support.annotation.{% if attribute.optional == true %}Nullable{% else %}NonNull{% endif -%}
-          {%- if attribute.support_annotation.size > 0 %}-{% endif -%}
+          {%- if attribute.support_annotation.size > 0 %}|{% endif -%}
         {%- endif -%}
         {%- if attribute.support_annotation.size > 0 %}@android.support.annotation.{{ attribute.support_annotation }}{%- endif -%}
         {%- endif -%}
         {%- endcapture -%}
         {%- assign name = attribute.name -%}
-    {%- if annotation.size > 0 %}{{ annotation | replace: "-","
+    {%- if annotation.size > 0 %}{{ annotation | replace: "|","
     " }}
     {% endif -%}
     public {{ convert_type }} get{{ name | titleize }}() {
         return {{ name }};
     }
 
-    public void set{{ name | titleize }}({%- if annotation.size > 0 %}{{ annotation | replace: "-"," " }} {% endif %}final {{ convert_type }} {{ name }}) {
+    public void set{{ name | titleize }}({%- if annotation.size > 0 %}{{ annotation | replace: "|"," " }} {% endif %}final {{ convert_type }} {{ name }}) {
         this.{{ name }} = {{ name }};
     }
     {%- endif -%}

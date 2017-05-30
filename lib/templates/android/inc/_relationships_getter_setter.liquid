@@ -23,19 +23,19 @@
           @android.support.annotation.Nullable{% endif -%}
           {%- if relationship.optional == false -%}
           @android.support.annotation.NonNull{% endif -%}
-          {%- if relationship.support_annotation.size > 0 %}-@android.support.annotation.{{ relationship.support_annotation }}{% endif -%}
+          {%- if relationship.support_annotation.size > 0 %}|@android.support.annotation.{{ relationship.support_annotation }}{% endif -%}
           {% endif -%}
         {%- endcapture -%}
 
         {%- assign name = relationship.name %}
-    {%- if annotation.size > 0 %}{{ annotation | replace: "-","
+    {%- if annotation.size > 0 %}{{ annotation | replace: "|","
     " }}
     {% endif -%}
     public {{ relationship_type }} get{{ name | titleize }}() {
         return {{ name }};
     }
 
-    public void set{{ name | titleize }}({%- if annotation.size > 0 %}{{ annotation | replace: "-"," " }} {% endif %}final {{ relationship_type }} {{ name }}) {
+    public void set{{ name | titleize }}({%- if annotation.size > 0 %}{{ annotation | replace: "|"," " }} {% endif %}final {{ relationship_type }} {{ name }}) {
         this.{{ name }} = {{ name }};
     }
     {%- endif -%}
