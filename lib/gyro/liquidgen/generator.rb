@@ -24,7 +24,7 @@ module Gyro
     #
     class Generator
 
-      attr_accessor :params, :output_dir, :template_dir
+      attr_accessor :params, :output_dir
 
       # PUBLIC METHODS #######################################################
       def initialize(template_dir, output_dir, params)
@@ -32,10 +32,14 @@ module Gyro
 
         @params = params
         @output_dir = output_dir
-        @template_dir = template_dir
 
         # Define Template path for Liquid file system to use Include Tag
         Liquid::Template.file_system = Liquid::LocalFileSystem.new(template_dir)
+
+        @entity_template = Generator.load_template(template_dir + 'entity.liquid', false)
+        @entity_filename_template = Generator.load_template(template_dir + 'entity_filename.liquid', true)
+        @enum_template = Generator.load_template(template_dir + 'enum.liquid', false)
+        @enum_filename_template = Generator.load_template((template_dir + 'enum_filename.liquid').exist? ? (template_dir + 'enum_filename.liquid') : (template_dir + 'filename.liquid'), true)
       end
 
       def generate(xcdatamodel)
@@ -44,6 +48,15 @@ module Gyro
       end
 
       private ################################################################
+
+      def self.load_template(template_path, preventReturnLine)
+        Gyro::Error.exit_with_error('Bad template directory content ! Your template need to ' + template_path.to_s + ' file') unless template_path.exist?
+        template_path_string = template_path.read
+        if (preventReturnLine && template_path_string.include?("\n"))
+          Gyro::Log.error('The given template ' + template_path.to_s + ' contains return line(s). This can lead to side effets.')
+        end
+        Liquid::Template.parse(template_path_string)
+      end
 
       def generate_entities(xcdatamodel) 
         xcdatamodel.to_h['entities'].each do |entity|
@@ -89,41 +102,21 @@ module Gyro
       end
 
       def render_entity(context)
-        # Parse object template
-        entity_template_path = @template_dir + 'root.liquid'
-        Gyro::Error.exit_with_error('Bad template directory content ! Your template need to include root.liquid file') unless entity_template_path.exist?
-        entity_template_string = entity_template_path.read
-        entity_template = Liquid::Template.parse(entity_template_string)
-        entity_template.render(context, filters: [CustomFilters])
+        @entity_template.render(context, filters: [CustomFilters])
                                 .gsub(/^ +$/, '')
       end
 
       def render_filename(context)
-        # Parse object template name
-        filename_template_path = (@template_dir + 'filename.liquid')
-        Gyro::Error.exit_with_error('Bad template directory content ! Your template need to include filename.liquid file') unless filename_template_path.exist?
-        filename_template_string = filename_template_path.readlines.first
-        filename_template = Liquid::Template.parse(filename_template_string)
-        filename_template.render(context).chomp
+        @entity_filename_template.render(context).chomp
       end
 
       def render_enum(context)
-        # Parse enum template
-        enum_template_path = (@template_dir + 'enum.liquid')
-        Gyro::Error.exit_with_error('Bad template directory content ! Your template need to have enum.liquid file !') unless enum_template_path.exist?
-        enum_template_string = enum_template_path.read
-        enum_template = Liquid::Template.parse(enum_template_string)
-        enum_template.render(context, filters: [CustomFilters])
-                                .gsub(/^ +$/, '')
+        @enum_template.render(context, filters: [CustomFilters])
+                              .gsub(/^ +$/, '')
       end
 
       def render_enum_filename(context)
-        # Parse enum template name
-        enum_filename_template_path = (@template_dir + 'enum_filename.liquid').exist? ? (@template_dir + 'enum_filename.liquid') : (@template_dir + 'filename.liquid')
-        Gyro::Error.exit_with_error('Bad template directory content ! Your template need to have enum_filename.liquid or filename.liquid file !') unless enum_filename_template_path.exist?
-        enum_filename_template_string = enum_filename_template_path.readlines.first
-        enum_filename_template = Liquid::Template.parse(enum_filename_template_string)
-        enum_filename_template.render(context).chomp
+        @enum_filename_template.render(context).chomp
       end
     end
   end
