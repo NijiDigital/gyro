@@ -24,7 +24,7 @@ module Gyro
     #
     class Generator
 
-    attr_accessor :params, :output_dir
+      attr_accessor :params, :output_dir
 
       # PUBLIC METHODS #######################################################
       def initialize(template_dir, output_dir, params)
