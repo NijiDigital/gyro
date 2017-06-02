@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-require 'gyro/xcdatamodel/parser'
+require 'gyro/parsers/xcdatamodel'
 require 'gyro/liquidgen/whitespace_patch'
 require 'gyro/liquidgen/filters'
 require 'gyro/liquidgen/infos'

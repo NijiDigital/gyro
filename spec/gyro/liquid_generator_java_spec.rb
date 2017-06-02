@@ -27,11 +27,11 @@ module Gyro
      ['realm','primary','ignored', 'inverse', 'enum', 'enum_multi', 'enum_json'].each do |datamodel|
         it datamodel do
           xcdatamodel_dir = File.expand_path("../fixtures/xcdatamodel/#{datamodel}.xcdatamodel", File.dirname(__FILE__))
-          xcdatamodel = Gyro::XCDataModel::Parser::XCDataModel.new(xcdatamodel_dir)
+          xcdatamodel = Parsers::XCDataModel::XCDataModel.new(xcdatamodel_dir)
 
           Dir.mktmpdir(TMP_DIR_NAME) do |tmp_dir|
             template_dir = Pathname.new(ANDROID_TEMPLATE_DIR)
-            gen = Gyro::Liquidgen::Generator.new(template_dir, tmp_dir, { 'package' => PACKAGE_NAME })
+            gen = Liquidgen::Generator.new(template_dir, tmp_dir, { 'package' => PACKAGE_NAME })
             gen.generate(xcdatamodel)
             fixtures_files_dir = File.expand_path("../fixtures/java/#{datamodel}", File.dirname(__FILE__))
             compare_dirs(tmp_dir, fixtures_files_dir)
@@ -41,10 +41,10 @@ module Gyro
 
      it 'json' do
        xcdatamodel_dir = File.expand_path('../fixtures/xcdatamodel/json_key_path.xcdatamodel', File.dirname(__FILE__))
-       xcdatamodel = Gyro::XCDataModel::Parser::XCDataModel.new(xcdatamodel_dir)
+       xcdatamodel = Parsers::XCDataModel::XCDataModel.new(xcdatamodel_dir)
        Dir.mktmpdir(TMP_DIR_NAME) do |tmp_dir|
          template_dir = Pathname.new(ANDROID_TEMPLATE_DIR)
-         gen = Gyro::Liquidgen::Generator.new(template_dir, tmp_dir, { 'package' => PACKAGE_NAME })
+         gen = Liquidgen::Generator.new(template_dir, tmp_dir, { 'package' => PACKAGE_NAME })
          gen.generate(xcdatamodel)
          fixtures_files_dir = File.expand_path('../fixtures/java/json', File.dirname(__FILE__))
          compare_dirs(tmp_dir, fixtures_files_dir)
@@ -53,10 +53,10 @@ module Gyro
 
      it 'with wrapper types' do
        xcdatamodel_dir = File.expand_path('../fixtures/xcdatamodel/optional.xcdatamodel', File.dirname(__FILE__))
-       xcdatamodel = Gyro::XCDataModel::Parser::XCDataModel.new(xcdatamodel_dir)
+       xcdatamodel = Parsers::XCDataModel::XCDataModel.new(xcdatamodel_dir)
        Dir.mktmpdir(TMP_DIR_NAME) do |tmp_dir|
          template_dir = Pathname.new(ANDROID_TEMPLATE_DIR)
-         gen = Gyro::Liquidgen::Generator.new(template_dir, tmp_dir, { 'package' => PACKAGE_NAME, 'use_wrappers' => true })
+         gen = Liquidgen::Generator.new(template_dir, tmp_dir, { 'package' => PACKAGE_NAME, 'use_wrappers' => true })
          gen.generate(xcdatamodel)
          fixtures_files_dir = File.expand_path('../fixtures/java/wrappers', File.dirname(__FILE__))
          compare_dirs(tmp_dir, fixtures_files_dir)
@@ -65,10 +65,10 @@ module Gyro
 
      it 'with annotations' do
        xcdatamodel_dir = File.expand_path('../fixtures/xcdatamodel/optional.xcdatamodel', File.dirname(__FILE__))
-       xcdatamodel = Gyro::XCDataModel::Parser::XCDataModel.new(xcdatamodel_dir)
+       xcdatamodel = Parsers::XCDataModel::XCDataModel.new(xcdatamodel_dir)
        Dir.mktmpdir(TMP_DIR_NAME) do |tmp_dir|
          template_dir = Pathname.new(ANDROID_TEMPLATE_DIR)
-         gen = Gyro::Liquidgen::Generator.new(template_dir, tmp_dir, { 'package' => PACKAGE_NAME, 'support_annotations' => true })
+         gen = Liquidgen::Generator.new(template_dir, tmp_dir, { 'package' => PACKAGE_NAME, 'support_annotations' => true })
          gen.generate(xcdatamodel)
          fixtures_files_dir = File.expand_path('../fixtures/java/annotations', File.dirname(__FILE__))
          compare_dirs(tmp_dir, fixtures_files_dir)
@@ -77,10 +77,10 @@ module Gyro
 
      it 'with wrapper types and annotations' do
        xcdatamodel_dir = File.expand_path('../fixtures/xcdatamodel/optional.xcdatamodel', File.dirname(__FILE__))
-       xcdatamodel = Gyro::XCDataModel::Parser::XCDataModel.new(xcdatamodel_dir)
+       xcdatamodel = Parsers::XCDataModel::XCDataModel.new(xcdatamodel_dir)
        Dir.mktmpdir(TMP_DIR_NAME) do |tmp_dir|
          template_dir = Pathname.new(ANDROID_TEMPLATE_DIR)
-         gen = Gyro::Liquidgen::Generator.new(template_dir, tmp_dir, { 'package' => PACKAGE_NAME, 'use_wrappers' => true, 'support_annotations' => true })
+         gen = Liquidgen::Generator.new(template_dir, tmp_dir, { 'package' => PACKAGE_NAME, 'use_wrappers' => true, 'support_annotations' => true })
          gen.generate(xcdatamodel)
          fixtures_files_dir = File.expand_path('../fixtures/java/wrappers_annotations', File.dirname(__FILE__))
          compare_dirs(tmp_dir, fixtures_files_dir)
@@ -89,10 +89,10 @@ module Gyro
 
      it 'relationship without value' do
        xcdatamodel_dir = File.expand_path('../fixtures/xcdatamodel/relationship_type.xcdatamodel', File.dirname(__FILE__))
-       xcdatamodel = Gyro::XCDataModel::Parser::XCDataModel.new(xcdatamodel_dir)
+       xcdatamodel = Parsers::XCDataModel::XCDataModel.new(xcdatamodel_dir)
        Dir.mktmpdir(TMP_DIR_NAME) do |tmp_dir|
          template_dir = Pathname.new(ANDROID_TEMPLATE_DIR)
-         gen = Gyro::Liquidgen::Generator.new(template_dir, tmp_dir, { 'package' => PACKAGE_NAME })
+         gen = Liquidgen::Generator.new(template_dir, tmp_dir, { 'package' => PACKAGE_NAME })
          gen.generate(xcdatamodel)
          fixtures_files_dir = File.expand_path('../fixtures/java/no_value', File.dirname(__FILE__))
          compare_dirs(tmp_dir, fixtures_files_dir)
