@@ -44,11 +44,11 @@ OptionParser.new do |opts|
     options[:params] = options[:params].merge((split_params[0]).to_s => (split_params[1]).to_s)
   end
   opts.on('-l', '--list', 'List the names of all available templates provided by gyro') do
-    Gyro::Infos.listTemplates
+    Gyro::LiquidGen::Infos.listTemplates
     exit
   end
   opts.on('-i', '--info TEMPLATE', 'Show information about the given template (path to directory or name of an embedded template)') do |template|
-    Gyro::Infos.showInfos(template)
+    Gyro::LiquidGen::Infos.showInfos(template)
     exit
   end
   opts.on_tail('-h', '--help', 'Show this message') do
