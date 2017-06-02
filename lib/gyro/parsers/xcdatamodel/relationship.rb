@@ -13,8 +13,8 @@
 # limitations under the License.
 
 module Gyro
-  module XCDataModel
-    module Parser
+  module Parsers
+    module XCDataModel
       # One Relationship between attributes in the xcdatamodel
       #
       class Relationship
