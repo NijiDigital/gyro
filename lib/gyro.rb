@@ -14,8 +14,8 @@
 
 require 'gyro/version'
 
-require 'gyro/parsers/xcdatamodel'
 require 'gyro/json/generator'
+require 'gyro/parser/xcdatamodel'
 require 'gyro/liquidgen/generator'
 
 require 'gyro/utils/log'

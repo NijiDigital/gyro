@@ -13,12 +13,12 @@
 # limitations under the License.
 
 require 'nokogiri'
-require 'gyro/parsers/xcdatamodel/attribute'
-require 'gyro/parsers/xcdatamodel/relationship'
-require 'gyro/parsers/xcdatamodel/entity'
+require 'gyro/parser/xcdatamodel/attribute'
+require 'gyro/parser/xcdatamodel/relationship'
+require 'gyro/parser/xcdatamodel/entity'
 
 module Gyro
-  module Parsers
+  module Parser
     module XCDataModel
       USERINFO_VALUE = "userInfo/entry[@key='%s']/@value".freeze
 

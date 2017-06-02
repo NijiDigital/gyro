@@ -80,8 +80,8 @@ end
 if options[:template].nil?
   # Generate JSON if no -t is specified
   Gyro::Log.info('You can specify custom template directory or default template using --template option (see --help for more info)')
-  xcdatamodel = Gyro::Parsers::XCDataModel::XCDataModel.new(options[:model])
-  Gyro::Json::Generator.new(xcdatamodel)
+  xcdatamodel = Gyro::Parser::XCDataModel::XCDataModel.new(options[:model])
+  Gyro::Generator::Json.new(xcdatamodel)
   exit
 end
 
@@ -106,6 +106,6 @@ Params      : #{options[:params].inspect}
 ===================================
 INFO
 
-xcdatamodel = Gyro::Parsers::XCDataModel::XCDataModel.new(options[:model])
+xcdatamodel = Gyro::Parser::XCDataModel::XCDataModel.new(options[:model])
 gen = Gyro::Liquidgen::Generator.new(template_dir, output_dir, options[:params])
 gen.generate(xcdatamodel)
