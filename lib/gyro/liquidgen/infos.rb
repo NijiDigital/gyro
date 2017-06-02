@@ -11,7 +11,7 @@ module Gyro
 
       def self.showInfos(template)
         if template.include?('/')
-          readme = template + 'README.md' unless readme.exist?
+          readme = Pathname.new(template) + 'README.md'
         else
           readme = Gyro.templates_dir + template + 'README.md'
         end
