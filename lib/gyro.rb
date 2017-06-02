@@ -13,7 +13,6 @@
 # limitations under the License.
 
 require 'gyro/version'
-require 'gyro/infos'
 
 require 'gyro/xcdatamodel/parser'
 require 'gyro/json/generator'

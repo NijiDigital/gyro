@@ -15,6 +15,7 @@
 require 'gyro/xcdatamodel/parser'
 require 'gyro/liquidgen/whitespace_patch'
 require 'gyro/liquidgen/filters'
+require 'gyro/liquidgen/infos'
 require 'liquid'
 require 'pathname'
 
