@@ -20,22 +20,22 @@ module Gyro
 
     it 'check raise an error for file' do
       xcdatamodel_dir = File.expand_path('../fixtures/xcdatamodel/not_found.xcdatamodel', File.dirname(__FILE__))
-      expect { Parser::XCDataModel::XCDataModel.new(xcdatamodel_dir) }.to raise_error "\e[1;31m! Unable to find contents of xcdatamodel dir\e[0m"
+      expect { Parser::XCDataModel::XCDataModel.new(xcdatamodel_dir) }.to raise_error "Unable to find contents of xcdatamodel dir"
     end
 
     it 'check raising relationship error' do
       xcdatamodel_dir = File.expand_path('../fixtures/xcdatamodel/error_relationship.xcdatamodel', File.dirname(__FILE__))
-      expect { Parser::XCDataModel::XCDataModel.new(xcdatamodel_dir) }.to raise_error "\e[1;31m! The relationship \"user\" from \"FidelityCard\" is wrong - please fix it\e[0m"
+      expect { Parser::XCDataModel::XCDataModel.new(xcdatamodel_dir) }.to raise_error "The relationship \"user\" from \"FidelityCard\" is wrong - please fix it"
     end
 
     it 'check raising undefined type error' do
       xcdatamodel_dir = File.expand_path('../fixtures/xcdatamodel/error_undefined_type.xcdatamodel', File.dirname(__FILE__))
-      expect { Parser::XCDataModel::XCDataModel.new(xcdatamodel_dir) }.to raise_error "\e[1;31m! The attribute \"name\" from \"Product\" has no type - please fix it\e[0m"
+      expect { Parser::XCDataModel::XCDataModel.new(xcdatamodel_dir) }.to raise_error "The attribute \"name\" from \"Product\" has no type - please fix it"
     end
 
     it 'check raising enum type error' do
       xcdatamodel_dir = File.expand_path('../fixtures/xcdatamodel/error_enum_type.xcdatamodel', File.dirname(__FILE__))
-      expect { Parser::XCDataModel::XCDataModel.new(xcdatamodel_dir) }.to raise_error "\e[1;31m! The attribute \"type\" from \"Shop\" is enum with incorrect type (not Integer) - please fix it\e[0m"
+      expect { Parser::XCDataModel::XCDataModel.new(xcdatamodel_dir) }.to raise_error "The attribute \"type\" from \"Shop\" is enum with incorrect type (not Integer) - please fix it"
     end
 
     it 'check abstract entity' do

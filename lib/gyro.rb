@@ -18,5 +18,4 @@ require 'gyro/parser/xcdatamodel'
 require 'gyro/generator/json'
 require 'gyro/generator/liquid'
 
-require 'gyro/utils/log'
-require 'gyro/utils/error'
+require 'gyro/log'
