@@ -3,7 +3,7 @@ PATH
   specs:
     gyro (0.4.1)
       liquid (~> 3.0)
-      nokogiri (~> 1.6.8)
+      nokogiri (~> 1.6)
 
 GEM
   remote: https://rubygems.org/
