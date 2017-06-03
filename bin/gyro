@@ -69,7 +69,7 @@ if options[:model].nil?
 end
 
 if options[:model].nil?
-  Gyro::Error.exit_with_error('You need to specify .xcdatamodel path using --model option (see --help for more info)')
+  Gyro::Log.fail!('You need to specify .xcdatamodel path using --model option (see --help for more info)')
 else
   basename = File.basename(options[:model])
   dirname = File.dirname(options[:model])
@@ -88,13 +88,13 @@ end
 template_dir = Gyro::Template.find(options[:template])
 
 if options[:output].nil?
-  Gyro::Error.exit_with_error('You need to specify output directory path using --output option (see --help for more info)')
+  Gyro::Log.fail!('You need to specify output directory path using --output option (see --help for more info)')
 end
 
 output_dir = Pathname.new(options[:output])
 
 unless output_dir.exist?
-  Gyro::Error.exit_with_error("The output directory #{output_dir} does not exist. Please create it first.")
+  Gyro::Log.fail!("The output directory #{output_dir} does not exist. Please create it first.")
 end
 
 puts <<-INFO

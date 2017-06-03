@@ -12,9 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Gyro Template Helper
-#
-module Gyro 
+module Gyro
+  # Gyro Template Helper
+  #
   module Template
     def self.print_list
       Gyro::Template.directory.children.select(&:directory?).each do |entry|
@@ -29,7 +29,7 @@ module Gyro
         readme = Gyro::Template.directory + template + 'README.md'
       end
       
-      Gyro::Error.exit_with_error("No README.md found for template #{template}.") unless readme.exist?
+      Gyro::Log.fail!("No README.md found for template #{template}.") unless readme.exist?
       puts readme.read
     end
 
@@ -55,19 +55,19 @@ module Gyro
       if template_dir_param.include? '/'
         template_dir_to_test = Pathname.new(template_dir_param)
         unless template_dir_to_test.exist?
-          Gyro::Error.exit_with_error('You need to specify existing template directory using --template option (see --help for more info)')
+          Gyro::Log.fail!('You need to specify existing template directory using --template option (see --help for more info)')
         end
         if template_dir_to_test.directory?
           return template_dir_to_test
         elsif template_dir_to_test.file?
           return template_dir_to_test.dirname
         else
-          Gyro::Error.exit_with_error('You need to specify right template directory using --template option (see --help for more info)')
+          Gyro::Log.fail!('You need to specify right template directory using --template option (see --help for more info)')
         end
       else
         template_dir_to_test = Gyro::Template.directory + template_dir_param
         unless template_dir_to_test.exist?
-          Gyro::Error.exit_with_error('You need to specify existing default template name using --template option (see --help for more info)')
+          Gyro::Log.fail!('You need to specify existing default template name using --template option (see --help for more info)')
         end
         template_dir_to_test
       end

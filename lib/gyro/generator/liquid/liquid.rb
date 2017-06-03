@@ -44,7 +44,7 @@ module Gyro
       private ################################################################
 
       def self.load_template(template_path, preventReturnLine)
-        Gyro::Error.exit_with_error('Bad template directory content ! Your template need to ' + template_path.to_s + ' file') unless template_path.exist?
+        Gyro::Log.fail!('Bad template directory content ! Your template need to ' + template_path.to_s + ' file') unless template_path.exist?
         template_path_string = template_path.read
         if (preventReturnLine && template_path_string.include?("\n"))
           Gyro::Log.error('The given template ' + template_path.to_s + ' contains return line(s). This can lead to side effets.')
