@@ -44,11 +44,11 @@ OptionParser.new do |opts|
     options[:params] = options[:params].merge({ split_params[0].to_s => split_params[1].to_s })
   end
   opts.on('-l', '--list', 'List the names of all available templates provided by gyro') do
-    Gyro::LiquidGen::Infos.listTemplates
+    Gyro::Template.print_list
     exit
   end
   opts.on('-i', '--info TEMPLATE', 'Show information about the given template (path to directory or name of an embedded template)') do |template|
-    Gyro::LiquidGen::Infos.showInfos(template)
+    Gyro::Template.print_infos(template)
     exit
   end
   opts.on_tail('-h', '--help', 'Show this message') do
@@ -85,7 +85,7 @@ if options[:template].nil?
   exit
 end
 
-template_dir = Gyro.search_template_dir(options[:template])
+template_dir = Gyro::Template.find(options[:template])
 
 if options[:output].nil?
   Gyro::Error.exit_with_error('You need to specify output directory path using --output option (see --help for more info)')
@@ -107,5 +107,5 @@ Params      : #{options[:params].inspect}
 INFO
 
 xcdatamodel = Gyro::Parser::XCDataModel::XCDataModel.new(options[:model])
-gen = Gyro::Liquidgen::Generator.new(template_dir, output_dir, options[:params])
+gen = Gyro::Generator::Liquid.new(template_dir, output_dir, options[:params])
 gen.generate(xcdatamodel)

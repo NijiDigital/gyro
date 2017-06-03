@@ -16,7 +16,7 @@ require 'gyro/version'
 
 require 'gyro/parser/xcdatamodel'
 require 'gyro/generator/json'
-require 'gyro/liquidgen/generator'
+require 'gyro/generator/liquid'
 
 require 'gyro/utils/log'
 require 'gyro/utils/file_utils'
