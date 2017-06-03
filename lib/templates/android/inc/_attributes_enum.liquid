@@ -9,7 +9,7 @@
         {%- if attribute.comment.size > 0 -%}
         /** {{ attribute.comment }} */
         {%- endif %}
-        public static final String {{ attribute.name | up_snake_case }} = "{{ attribute.name }}";
+        public static final String {{ attribute.name | snake_case | upcase }} = "{{ attribute.name }}";
       {%- endif -%}
     {%- endfor  %}
     }

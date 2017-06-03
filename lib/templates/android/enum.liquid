@@ -12,7 +12,7 @@ public enum {{ attribute.enum_type }} {
         {%- if attribute.json_values.size > 0 and attribute.json_values[forloop.index0] -%}
           {%- assign jsonKey = attribute.json_values[forloop.index0] -%}
         {%- endif -%}
-    {{ value | up_snake_case | strip }}("{{ jsonKey }}")
+    {{ value | snake_case | upcase | strip }}("{{ jsonKey }}")
         {%- if forloop.last == true -%};{%- else -%},{%- endif -%}
       {%- endif -%}
     {%- endfor %}

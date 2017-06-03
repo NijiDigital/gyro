@@ -8,8 +8,12 @@ module CustomFilters
     input.split('_').map(&:capitalize).join
   end
 
-  def up_snake_case(input)
-    input.underscore.upcase
+  def snake_case(input)
+    input.gsub(/::/, '/')
+         .gsub(/([A-Z]+)([A-Z][a-z])/, '\1_\2')
+         .gsub(/([a-z\d])([A-Z])/, '\1_\2')
+         .tr('-', '_')
+         .downcase
   end
 
   def uncapitalize(input)
@@ -20,5 +24,11 @@ module CustomFilters
   def titleize(input)
     input_strip = input.strip
     input_strip[0, 1].upcase + input_strip[1..-1]
+  end
+
+  def delete_objc_prefix(input)
+    i = 0
+    i += 1 while i < input.length - 1 && /[[:upper:]]/.match(input[i + 1])
+    input[i..input.length]
   end
 end
