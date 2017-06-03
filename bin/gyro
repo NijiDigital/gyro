@@ -33,7 +33,7 @@ OptionParser.new do |opts|
   opts.on('-m PATH', '--model PATH', 'Specify Interface Builder .xcdatamodel file') do |xcdatamodel_path|
     options[:model] = xcdatamodel_path
   end
-  opts.on('-t DIR', '--template DIR', 'Path to the Liquid template directrory to use, other solution is to specify default template name (like swift3, android) !') do |tempate_path|
+  opts.on('-t DIR', '--template DIR', "Path to the Liquid template directory to use, or name of a template embedded in gyro (see --list for available names)") do |tempate_path|
     options[:template] = tempate_path
   end
   opts.on('-o DIR', '--output DIR', 'Path to the output directory to generate model') do |output_dir_path|
@@ -42,6 +42,14 @@ OptionParser.new do |opts|
   opts.on('-p KEY:VALUE', '--param KEY:VALUE', 'Custom parameters that you can use inside custom templates') do |params|
     split_params = params.split(':')
     options[:params] = options[:params].merge((split_params[0]).to_s => (split_params[1]).to_s)
+  end
+  opts.on('-l', '--list', 'List the names of all available templates provided by gyro') do
+    Gyro::LiquidGen::Infos.listTemplates
+    exit
+  end
+  opts.on('-i', '--info TEMPLATE', 'Show information about the given template (path to directory or name of an embedded template)') do |template|
+    Gyro::LiquidGen::Infos.showInfos(template)
+    exit
   end
   opts.on_tail('-h', '--help', 'Show this message') do
     puts opts
