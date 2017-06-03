@@ -27,10 +27,10 @@ module Gyro
       %w(realm primary ignored inverse enum optional).each do |datamodel|
         it datamodel do
           xcdatamodel_dir = File.expand_path("../fixtures/xcdatamodel/#{datamodel}.xcdatamodel", File.dirname(__FILE__))
-          xcdatamodel = Gyro::XCDataModel::Parser::XCDataModel.new(xcdatamodel_dir)
+          xcdatamodel = Gyro::Parser::XCDataModel::XCDataModel.new(xcdatamodel_dir)
           Dir.mktmpdir(TMP_DIR_NAME) do |tmp_dir|
             template_dir = Pathname.new(SWIFT3_TEMPLATE_DIR)
-            gen = Gyro::Liquidgen::Generator.new(template_dir, tmp_dir, {})
+            gen = Generator::Liquid.new(template_dir, tmp_dir, {})
             gen.generate(xcdatamodel)
             fixtures_files_dir = File.expand_path("../fixtures/swift/#{datamodel}", File.dirname(__FILE__))
             compare_dirs(tmp_dir, fixtures_files_dir)

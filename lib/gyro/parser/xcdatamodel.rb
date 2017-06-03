@@ -12,10 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-require 'gyro/version'
+require 'nokogiri'
 
-require 'gyro/parser/xcdatamodel'
-require 'gyro/generator/json'
-require 'gyro/generator/liquid'
-
-require 'gyro/log'
+require 'gyro/parser/xcdatamodel/xcdatamodel'
+require 'gyro/parser/xcdatamodel/attribute'
+require 'gyro/parser/xcdatamodel/relationship'
+require 'gyro/parser/xcdatamodel/entity'

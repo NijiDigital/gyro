@@ -13,8 +13,15 @@
 # limitations under the License.
 
 module Gyro
-  module XCDataModel
-    module Parser
+  module Parser
+    module XCDataModel
+      def self.find_in_dir(dir)
+        Dir.chdir(dir) do
+          files = Dir.glob('*.xcdatamodel')
+          files.first.nil? ? nil : File.expand_path(files.first, dir)
+        end
+      end
+
       USERINFO_VALUE = "userInfo/entry[@key='%s']/@value".freeze
 
       # Represents the whole xcdatamodel file struture, once parsed
@@ -24,7 +31,7 @@ module Gyro
 
         def initialize(xcdatamodel_dir)
           contents_file = File.join(xcdatamodel_dir, 'contents')
-          Gyro::Error.raise!('Unable to find contents of xcdatamodel dir') unless File.exist?(contents_file)
+          Gyro::Log.fail!('Unable to find contents of xcdatamodel dir', stacktrace: true) unless File.exist?(contents_file)
           @entities = {}
           file = File.open(contents_file)
           document_xml = Nokogiri::XML(file).remove_namespaces!

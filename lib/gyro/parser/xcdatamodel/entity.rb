@@ -13,8 +13,8 @@
 # limitations under the License.
 
 module Gyro
-  module XCDataModel
-    module Parser
+  module Parser
+    module XCDataModel
       # One Entity in the xcdatamodel
       #
       class Entity

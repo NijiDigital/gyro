@@ -12,18 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-require 'gyro/xcdatamodel/parser'
-require 'gyro/liquidgen/whitespace_patch'
-require 'gyro/liquidgen/filters'
-require 'gyro/liquidgen/infos'
-require 'liquid'
-require 'pathname'
-
 module Gyro
-  module Liquidgen
+  module Generator
     # Generates arbitrary output from the input datamodel, using a Liquid template provided by the user
     #
-    class Generator
+    class Liquid
 
       attr_accessor :params, :output_dir
 
@@ -32,15 +25,15 @@ module Gyro
         Gyro::Log.title('Generating Model')
 
         @params = params
-        @output_dir = output_dir
+        @output_dir = Pathname.new(output_dir)
 
         # Define Template path for Liquid file system to use Include Tag
-        Liquid::Template.file_system = Liquid::LocalFileSystem.new(template_dir)
+        ::Liquid::Template.file_system = ::Liquid::LocalFileSystem.new(template_dir)
 
-        @entity_template = Generator.load_template(template_dir + 'entity.liquid', false)
-        @entity_filename_template = Generator.load_template(template_dir + 'entity_filename.liquid', true)
-        @enum_template = Generator.load_template(template_dir + 'enum.liquid', false)
-        @enum_filename_template = Generator.load_template((template_dir + 'enum_filename.liquid').exist? ? (template_dir + 'enum_filename.liquid') : (template_dir + 'filename.liquid'), true)
+        @entity_template = Liquid.load_template(template_dir + 'entity.liquid', false)
+        @entity_filename_template = Liquid.load_template(template_dir + 'entity_filename.liquid', true)
+        @enum_template = Liquid.load_template(template_dir + 'enum.liquid', false)
+        @enum_filename_template = Liquid.load_template((template_dir + 'enum_filename.liquid').exist? ? (template_dir + 'enum_filename.liquid') : (template_dir + 'filename.liquid'), true)
       end
 
       def generate(xcdatamodel)
@@ -51,12 +44,12 @@ module Gyro
       private ################################################################
 
       def self.load_template(template_path, preventReturnLine)
-        Gyro::Error.exit_with_error('Bad template directory content ! Your template need to ' + template_path.to_s + ' file') unless template_path.exist?
+        Gyro::Log.fail!('Bad template directory content ! Your template need to ' + template_path.to_s + ' file') unless template_path.exist?
         template_path_string = template_path.read
         if (preventReturnLine && template_path_string.include?("\n"))
           Gyro::Log.error('The given template ' + template_path.to_s + ' contains return line(s). This can lead to side effets.')
         end
-        Liquid::Template.parse(template_path_string)
+        ::Liquid::Template.parse(template_path_string)
       end
 
       def generate_entities(xcdatamodel) 
@@ -72,7 +65,7 @@ module Gyro
           filename = render_filename(filename_context)
           Gyro::Log.success("#{filename} is created !")
           # Write model object
-          Gyro.write_file_with_name(@output_dir, filename, output)
+          File.write(@output_dir + filename, output)
           # Generate model object enums
           generate_enums(entity['attributes'])
         end
@@ -99,11 +92,11 @@ module Gyro
         # Rendering enum filename template using enum name and params context
         enum_filename_context = { 'params' => @params, 'name' => enum_name }
         enum_filename = render_enum_filename(enum_filename_context)
-        Gyro.write_file_with_name(@output_dir, enum_filename, output)
+        File.write(@output_dir + enum_filename, output)
       end
 
       def render_entity(context)
-        @entity_template.render(context, filters: [CustomFilters])
+        @entity_template.render(context, filters: [Gyro::Generator::LiquidFilters])
                                 .gsub(/^ +$/, '')
       end
 
@@ -112,7 +105,7 @@ module Gyro
       end
 
       def render_enum(context)
-        @enum_template.render(context, filters: [CustomFilters])
+        @enum_template.render(context, filters: [Gyro::Generator::LiquidFilters])
                               .gsub(/^ +$/, '')
       end
 

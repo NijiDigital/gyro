@@ -37,6 +37,15 @@ module Gyro
       puts "\e[1;32m√ #{str}\e[0m" unless @@quiet
     end
 
+    def self.fail!(message, stacktrace: false)
+      Gyro::Log.error message
+      if stacktrace
+        raise message
+      else  
+        exit 1
+      end
+    end
+
     def self.prompt(str, url = nil)
       prompt = "\e[1;36m   ! #{str} [y/n]?\e[0m "
       url_info = ' ' * 10 + "\e[0;37m (use '?' to show in browser)\e[0m"

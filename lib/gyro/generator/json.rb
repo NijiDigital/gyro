@@ -12,17 +12,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-module Gyro
-  # Handle error reporting nicely
-  #
-  module Error
-    def self.raise!(str)
-      raise "\e[1;31m! #{str}\e[0m"
-    end
+require 'json'
+require 'gyro/parser/xcdatamodel'
 
-    def self.exit_with_error(message)
-      Gyro::Log.error message
-      exit 1
+module Gyro
+  module Generator
+    # Generates the JSON representation of the input datamodel
+    #
+    class Json
+      # PUBLIC METHODS #######################################################
+      def initialize(xcdatamodel)
+        Gyro::Log.title('Generating JSON')
+        puts JSON.pretty_generate(xcdatamodel.to_h)
+      end
     end
   end
 end

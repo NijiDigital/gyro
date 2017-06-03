@@ -12,19 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-require 'gyro/xcdatamodel/parser'
-require 'json'
+require 'liquid'
+require 'pathname'
 
-module Gyro
-  module Json
-    # Generates the JSON representation of the input datamodel
-    #
-    class Generator
-      # PUBLIC METHODS #######################################################
-      def initialize(xcdatamodel)
-        Gyro::Log.title('Generating Json')
-        puts JSON.pretty_generate(xcdatamodel.to_h)
-      end
-    end
-  end
-end
+require 'gyro/parser/xcdatamodel'
+require 'gyro/template'
+require 'gyro/generator/liquid/liquid'
+require 'gyro/generator/liquid/whitespace_patch'
+require 'gyro/generator/liquid/filters'
