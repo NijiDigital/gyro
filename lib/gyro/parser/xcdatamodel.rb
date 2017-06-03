@@ -13,51 +13,8 @@
 # limitations under the License.
 
 require 'nokogiri'
+
+require 'gyro/parser/xcdatamodel/xcdatamodel'
 require 'gyro/parser/xcdatamodel/attribute'
 require 'gyro/parser/xcdatamodel/relationship'
 require 'gyro/parser/xcdatamodel/entity'
-
-module Gyro
-  module Parser
-    module XCDataModel
-      USERINFO_VALUE = "userInfo/entry[@key='%s']/@value".freeze
-
-      # Represents the whole xcdatamodel file struture, once parsed
-      #
-      class XCDataModel
-        attr_accessor :entities
-
-        def initialize(xcdatamodel_dir)
-          contents_file = File.join(xcdatamodel_dir, 'contents')
-          Gyro::Error.raise!('Unable to find contents of xcdatamodel dir') unless File.exist?(contents_file)
-          @entities = {}
-          file = File.open(contents_file)
-          document_xml = Nokogiri::XML(file).remove_namespaces!
-          file.close
-          load_entities(document_xml)
-        end
-
-        def to_h
-          { 'entities' => entities.values.map(&:to_h) }
-        end
-
-        def to_s
-          str = ''
-          @entities.each do |_, value|
-            str += value.to_s
-          end
-          str
-        end
-
-        private
-
-        def load_entities(document_xml)
-          document_xml.xpath('//entity').each do |node|
-            entity = Entity.new(node)
-            @entities[entity.name] = entity
-          end
-        end
-      end
-    end
-  end
-end
