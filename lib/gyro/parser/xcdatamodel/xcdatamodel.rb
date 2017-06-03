@@ -15,6 +15,13 @@
 module Gyro
   module Parser
     module XCDataModel
+      def self.find_in_dir(dir)
+        Dir.chdir(dir) do
+          files = Dir.glob('*.xcdatamodel')
+          files.first.nil? ? nil : File.expand_path(files.first, dir)
+        end
+      end
+
       USERINFO_VALUE = "userInfo/entry[@key='%s']/@value".freeze
 
       # Represents the whole xcdatamodel file struture, once parsed

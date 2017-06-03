@@ -25,7 +25,7 @@ module Gyro
         Gyro::Log.title('Generating Model')
 
         @params = params
-        @output_dir = output_dir
+        @output_dir = Pathname.new(output_dir)
 
         # Define Template path for Liquid file system to use Include Tag
         ::Liquid::Template.file_system = ::Liquid::LocalFileSystem.new(template_dir)
@@ -65,7 +65,7 @@ module Gyro
           filename = render_filename(filename_context)
           Gyro::Log.success("#{filename} is created !")
           # Write model object
-          Gyro.write_file_with_name(@output_dir, filename, output)
+          File.write(@output_dir + filename, output)
           # Generate model object enums
           generate_enums(entity['attributes'])
         end
@@ -92,7 +92,7 @@ module Gyro
         # Rendering enum filename template using enum name and params context
         enum_filename_context = { 'params' => @params, 'name' => enum_name }
         enum_filename = render_enum_filename(enum_filename_context)
-        Gyro.write_file_with_name(@output_dir, enum_filename, output)
+        File.write(@output_dir + enum_filename, output)
       end
 
       def render_entity(context)

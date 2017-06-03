@@ -64,7 +64,7 @@ end
 
 if options[:model].nil?
   Gyro::Log.info('No model provided, trying to find one in the local directory…')
-  options[:model] = Gyro.find_xcdatamodel(dir)
+  options[:model] = Gyro::Parser::XCDataModel.find_in_dir(dir)
   Gyro::Log.info("Unable to find any .xcdatamodel in #{dir}") if options[:model].nil?
 end
 
