@@ -6,7 +6,7 @@
         }
     {% for relationship in entity.relationships -%}
       {%- if relationship.inverse == false %}
-        public static final String {{ relationship.name | up_snake_case }} = "{{ relationship.name }}";
+        public static final String {{ relationship.name | snake_case | upcase }} = "{{ relationship.name }}";
       {%- endif -%}
     {%- endfor  %}
     }
