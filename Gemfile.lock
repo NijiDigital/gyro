@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    gyro (0.4.1)
+    gyro (1.0.0)
       liquid (~> 3.0)
       nokogiri (~> 1.6)
 
