@@ -33,15 +33,15 @@ opts = OptionParser.new do |opts|
   opts.on('-m PATH', '--model PATH', 'The .xcdatamodel file to use') do |xcdatamodel_path|
     options[:model] = xcdatamodel_path
   end
-  opts.on('-t DIR', '--template DIR', "Path to the template directory to use, or name of a template embedded in gyro (see --list for available names)") do |tempate_path|
-    options[:template] = tempate_path
+  opts.on('-t DIR', '--template DIR', 'Path to the template directory to use, or name of a template embedded in gyro (see --list for available names)') do |path|
+    options[:template] = path
   end
-  opts.on('-o DIR', '--output DIR', 'Path to the output directory where to generate the model files') do |output_dir_path|
-    options[:output] = output_dir_path
+  opts.on('-o DIR', '--output DIR', 'Path to the output directory where to generate the model files') do |path|
+    options[:output] = path
   end
   opts.on('-p KEY:VALUE', '--param KEY:VALUE', 'Specify a custom parameter that can be used by the template. Can be repeated to add more parameters') do |params|
-    (k,*v) = params.split(':')
-    options[:params] = options[:params].merge({ k.to_s => v.join(':').to_s })
+    (k, *v) = params.split(':')
+    options[:params] = options[:params].merge(k.to_s => v.join(':').to_s)
   end
   opts.on('-l', '--list', 'List the names of all available templates provided by gyro') do
     Gyro::Template.print_list

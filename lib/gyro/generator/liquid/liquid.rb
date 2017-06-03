@@ -17,7 +17,6 @@ module Gyro
     # Generates arbitrary output from the input datamodel, using a Liquid template provided by the user
     #
     class Liquid
-
       attr_accessor :params, :output_dir
 
       # PUBLIC METHODS #######################################################
@@ -33,7 +32,9 @@ module Gyro
         @entity_template = Liquid.load_template(template_dir + 'entity.liquid', false)
         @entity_filename_template = Liquid.load_template(template_dir + 'entity_filename.liquid', true)
         @enum_template = Liquid.load_template(template_dir + 'enum.liquid', false)
-        @enum_filename_template = Liquid.load_template((template_dir + 'enum_filename.liquid').exist? ? (template_dir + 'enum_filename.liquid') : (template_dir + 'filename.liquid'), true)
+        enum_fn_tpl = template_dir + 'enum_filename.liquid'
+        enum_fn_tpl = template_dir + 'filename.liquid' unless enum_fn_tpl.exist?
+        @enum_filename_template = Liquid.load_template(enum_fn_tpl, true)
       end
 
       def generate(xcdatamodel)
@@ -43,16 +44,19 @@ module Gyro
 
       private ################################################################
 
-      def self.load_template(template_path, preventReturnLine)
-        Gyro::Log.fail!('Bad template directory content ! Your template need to ' + template_path.to_s + ' file') unless template_path.exist?
+      def self.load_template(template_path, prevent_return_line)
+        unless template_path.exist?
+          Gyro::Log.fail!('Bad template directory content ! Your template needs a ' + template_path.to_s + ' file')
+        end
         template_path_string = template_path.read
-        if (preventReturnLine && template_path_string.include?("\n"))
-          Gyro::Log.error('The given template ' + template_path.to_s + ' contains return line(s). This can lead to side effets.')
+        if prevent_return_line && template_path_string.include?("\n")
+          msg = 'The given template ' + template_path.to_s + ' contains return line(s). This can lead to side effets.'
+          Gyro::Log.error(msg)
         end
         ::Liquid::Template.parse(template_path_string)
       end
 
-      def generate_entities(xcdatamodel) 
+      def generate_entities(xcdatamodel)
         xcdatamodel.to_h['entities'].each do |entity|
           entity_context = { 'params' => @params, 'entity' => entity }
           # Rendering template using entity and params context
@@ -70,14 +74,14 @@ module Gyro
           generate_enums(entity['attributes'])
         end
       end
-      
+
       def generate_enums(attributes)
         enums = []
         attributes.each do |attribute|
           enum_type = attribute['enum_type']
           next unless !enums.include?(enum_type) && !enum_type.empty?
           enums.push(enum_type)
-          
+
           enum_context = { 'params' => @params, 'attribute' => attribute }
           # Rendering enum template using attribute and params context
           output = render_enum(enum_context)
@@ -97,7 +101,7 @@ module Gyro
 
       def render_entity(context)
         @entity_template.render(context, filters: [Gyro::Generator::LiquidFilters])
-                                .gsub(/^ +$/, '')
+                        .gsub(/^ +$/, '')
       end
 
       def render_filename(context)
@@ -106,7 +110,7 @@ module Gyro
 
       def render_enum(context)
         @enum_template.render(context, filters: [Gyro::Generator::LiquidFilters])
-                              .gsub(/^ +$/, '')
+                      .gsub(/^ +$/, '')
       end
 
       def render_enum_filename(context)

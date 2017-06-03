@@ -18,7 +18,8 @@ module Gyro
       # One Relationship between attributes in the xcdatamodel
       #
       class Relationship
-        attr_accessor :entity_name, :name, :type, :optional, :deletion_rule, :inverse_name, :inverse_type, :json_key_path, :support_annotation
+        attr_accessor :entity_name, :name, :type, :optional, :deletion_rule
+        attr_accessor :inverse_name, :inverse_type, :json_key_path, :support_annotation
         attr_accessor :realm_ignored
         attr_accessor :destination
 
@@ -59,12 +60,19 @@ module Gyro
 
         def load_type(relationship_xml)
           max_count = relationship_xml.xpath('@maxCount').to_s
-          @type = (!max_count.nil? && (max_count == '1')) ? :to_one : :to_many
+          @type = !max_count.nil? && (max_count == '1') ? :to_one : :to_many
         end
 
         def search_for_error
-          Gyro::Log.fail!('The relationship "%s" from "%s" is wrong - please fix it' % [name, entity_name], stacktrace: true) if inverse_type.empty? && destination.empty?
-          Gyro::Log.fail!("The relationship \"%s\" from \"%s\" is wrong - please set a 'No Value' relationship as 'To Many'" % [name, entity_name], stacktrace: true) if !destination.empty? && type != :to_many
+          if inverse_type.empty? && destination.empty?
+            message = 'The relationship "%s" from "%s" is wrong - please fix it' % [name, entity_name]
+            Gyro::Log.fail!(message, stacktrace: true)
+          end
+          if !destination.empty? && type != :to_many
+            message = 'The relationship "%s" from "%s" is wrong - ' \
+              "please set a 'No Value' relationship as 'To Many'" % [name, entity_name]
+            Gyro::Log.fail!(message, stacktrace: true)
+          end
         end
       end
     end

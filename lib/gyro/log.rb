@@ -41,7 +41,7 @@ module Gyro
       Gyro::Log.error message
       if stacktrace
         raise message
-      else  
+      else
         exit 1
       end
     end
