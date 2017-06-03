@@ -52,7 +52,6 @@ module Gyro
         end
       else
         template_dir_to_test = Gyro::Template.directory + template_dir_param
-        puts template_dir_to_test
         unless template_dir_to_test.exist?
           Gyro::Error.exit_with_error('You need to specify existing default template name using --template option (see --help for more info)')
         end
