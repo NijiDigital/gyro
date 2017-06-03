@@ -96,7 +96,7 @@ module Gyro
       end
 
       def render_entity(context)
-        @entity_template.render(context, filters: [CustomFilters])
+        @entity_template.render(context, filters: [Gyro::Generator::LiquidFilters])
                                 .gsub(/^ +$/, '')
       end
 
@@ -105,7 +105,7 @@ module Gyro
       end
 
       def render_enum(context)
-        @enum_template.render(context, filters: [CustomFilters])
+        @enum_template.render(context, filters: [Gyro::Generator::LiquidFilters])
                               .gsub(/^ +$/, '')
       end
 
