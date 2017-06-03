@@ -12,18 +12,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-require 'gyro/parser/xcdatamodel'
-require 'gyro/liquidgen/whitespace_patch'
-require 'gyro/liquidgen/filters'
-require 'gyro/liquidgen/infos'
 require 'liquid'
 require 'pathname'
 
+require 'gyro/parser/xcdatamodel'
+require 'gyro/template'
+require 'gyro/generator/liquid/whitespace_patch'
+require 'gyro/generator/liquid/filters'
+
 module Gyro
-  module Liquidgen
+  module Generator
     # Generates arbitrary output from the input datamodel, using a Liquid template provided by the user
     #
-    class Generator
+    class Liquid
 
       attr_accessor :params, :output_dir
 
@@ -35,12 +36,12 @@ module Gyro
         @output_dir = output_dir
 
         # Define Template path for Liquid file system to use Include Tag
-        Liquid::Template.file_system = Liquid::LocalFileSystem.new(template_dir)
+        ::Liquid::Template.file_system = ::Liquid::LocalFileSystem.new(template_dir)
 
-        @entity_template = Generator.load_template(template_dir + 'entity.liquid', false)
-        @entity_filename_template = Generator.load_template(template_dir + 'entity_filename.liquid', true)
-        @enum_template = Generator.load_template(template_dir + 'enum.liquid', false)
-        @enum_filename_template = Generator.load_template((template_dir + 'enum_filename.liquid').exist? ? (template_dir + 'enum_filename.liquid') : (template_dir + 'filename.liquid'), true)
+        @entity_template = Liquid.load_template(template_dir + 'entity.liquid', false)
+        @entity_filename_template = Liquid.load_template(template_dir + 'entity_filename.liquid', true)
+        @enum_template = Liquid.load_template(template_dir + 'enum.liquid', false)
+        @enum_filename_template = Liquid.load_template((template_dir + 'enum_filename.liquid').exist? ? (template_dir + 'enum_filename.liquid') : (template_dir + 'filename.liquid'), true)
       end
 
       def generate(xcdatamodel)
@@ -56,7 +57,7 @@ module Gyro
         if (preventReturnLine && template_path_string.include?("\n"))
           Gyro::Log.error('The given template ' + template_path.to_s + ' contains return line(s). This can lead to side effets.')
         end
-        Liquid::Template.parse(template_path_string)
+        ::Liquid::Template.parse(template_path_string)
       end
 
       def generate_entities(xcdatamodel) 
