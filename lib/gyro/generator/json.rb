@@ -12,8 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-require 'gyro/parser/xcdatamodel'
 require 'json'
+require 'gyro/parser/xcdatamodel'
 
 module Gyro
   module Generator
