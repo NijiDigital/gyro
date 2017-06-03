@@ -34,14 +34,26 @@ module Gyro
         end
 
         def to_h
-          { 'attributes' => attributes.values.map(&:to_h), 'relationships' => relationships.values.map(&:to_h),
-            'name' => name, 'parent' => parent, 'abstract' => abstract,
-            'identity_attribute' => identity_attribute, 'comment' => comment, 'has_no_inverse_relationship' => has_no_inverse_relationship?,
-            'has_ignored' => has_ignored?, 'has_primary_key' => has_primary_key?, 'has_required' => has_required?, 'has_indexed_attributes' => has_indexed_attributes?,
-            'has_json_key_path' => has_json_key_path?, 'has_enum_attributes' => has_enum_attributes?, 'has_custom_transformers' => has_custom_transformers?,
-            'need_transformer' => need_transformer?, 'has_bool_attributes' => has_bool_attributes?, 'has_number_attributes' => has_number_attributes?,
-            'has_date_attribute' => has_date_attribute?, 'has_list_relationship' => has_list_relationship?, 'has_list_attributes' => has_list_attributes?,
-            'has_only_inverse' => has_only_inverse? }
+          {
+            'attributes' => attributes.values.map(&:to_h),
+            'relationships' => relationships.values.map(&:to_h),
+            'name' => name,
+            'parent' => parent,
+            'abstract' => abstract,
+            'identity_attribute' => identity_attribute,
+            'comment' => comment,
+            'has_no_inverse_relationship' => has_no_inverse_relationship?,
+            'has_ignored' => has_ignored?, 'has_primary_key' => has_primary_key?, 'has_required' => has_required?,
+            'has_indexed_attributes' => has_indexed_attributes?,
+            'has_json_key_path' => has_json_key_path?, 'has_enum_attributes' => has_enum_attributes?,
+            'has_custom_transformers' => has_custom_transformers?, 'need_transformer' => need_transformer?,
+            'has_bool_attributes' => has_bool_attributes?,
+            'has_number_attributes' => has_number_attributes?,
+            'has_date_attribute' => has_date_attribute?,
+            'has_list_relationship' => has_list_relationship?,
+            'has_list_attributes' => has_list_attributes?,
+            'has_only_inverse' => has_only_inverse?
+          }
         end
 
         def to_s
@@ -101,8 +113,8 @@ module Gyro
 
         def is_required?(attribute)
           unless attribute.optional?
-            return true unless self.has_primary_key?
-            return true if self.has_primary_key? && !attribute.name.eql?(identity_attribute)
+            return true unless has_primary_key?
+            return true if has_primary_key? && !attribute.name.eql?(identity_attribute)
           end
           false
         end
@@ -162,11 +174,12 @@ module Gyro
           has_bool_attributes
         end
 
+        NUMBER_TYPES = [:integer_16, :integer_32, :integer_64, :decimal, :double, :float].freeze
         def has_number_attributes?
           has_number_attributes = false
           @attributes.each do |_, attribute|
             if attribute.enum_type.empty?
-              has_number_attributes = [:integer_16, :integer_32, :integer_64, :decimal, :double, :float].include?(attribute.type)
+              has_number_attributes = NUMBER_TYPES.include?(attribute.type)
               break if has_number_attributes
             end
           end

@@ -23,12 +23,12 @@ module Gyro
     end
 
     def self.print_infos(template)
-      if template.include?('/')
-        readme = Pathname.new(template) + 'README.md'
-      else
-        readme = Gyro::Template.directory + template + 'README.md'
-      end
-      
+      readme = if template.include?('/')
+                 Pathname.new(template) + 'README.md'
+               else
+                 Gyro::Template.directory + template + 'README.md'
+               end
+
       Gyro::Log.fail!("No README.md found for template #{template}.") unless readme.exist?
       puts readme.read
     end

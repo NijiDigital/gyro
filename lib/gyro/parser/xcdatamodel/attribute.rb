@@ -46,11 +46,20 @@ module Gyro
         end
 
         def to_h
-          { 'entity_name' => entity_name, 'name' => name, 'type' => type.to_s, 'optional' => optional, 'indexed' => indexed,
-            'default' => default, 'realm_ignored' => realm_ignored, 'realm_read_only' => realm_read_only, 'enum_type' => enum_type,
-            'enum_values' => enum_values, 'json_key_path' => json_key_path, 'json_values' => json_values,
-            'transformer' => transformer, 'comment' => comment, 'support_annotation' => support_annotation, 'is_decimal' => is_decimal?,
-            'is_integer' => is_integer?, 'is_number' => is_number?, 'is_bool' => is_bool?, 'need_transformer' => need_transformer? }
+          {
+            'entity_name' => entity_name, 'name' => name,
+            'type' => type.to_s,
+            'optional' => optional,
+            'indexed' => indexed,
+            'default' => default,
+            'realm_ignored' => realm_ignored, 'realm_read_only' => realm_read_only,
+            'enum_type' => enum_type, 'enum_values' => enum_values,
+            'json_key_path' => json_key_path, 'json_values' => json_values,
+            'transformer' => transformer, 'need_transformer' => need_transformer?,
+            'comment' => comment,
+            'support_annotation' => support_annotation,
+            'is_decimal' => is_decimal?, 'is_integer' => is_integer?, 'is_number' => is_number?, 'is_bool' => is_bool?
+          }
         end
 
         def enum?
@@ -66,7 +75,14 @@ module Gyro
         end
 
         def to_s
-          "\tAttribute => name=#{@name} | type=#{@type} | optional=#{@optional} | default=#{@default} | indexed=#{@indexed}\n"
+          items = [
+            "name=#{@name}",
+            "type=#{@type}",
+            "optional=#{@optional}",
+            "default=#{@default}",
+            "indexed=#{@indexed}"
+          ]
+          "\tAttribute => " + items.join(' | ') + "\n"
         end
 
         def is_decimal?
@@ -93,10 +109,12 @@ module Gyro
 
         def search_for_error
           if @type == :undefined || @type.empty?
-            Gyro::Log.fail!('The attribute "%s" from "%s" has no type - please fix it' % [@name, @entity_name], stacktrace: true)
+            msg = 'The attribute "%s" from "%s" has no type - please fix it' % [@name, @entity_name]
+            Gyro::Log.fail!(msg, stacktrace: true)
           end
           if !@enum_type.empty? && !@enum_values.empty? && !is_integer?
-            Gyro::Log.fail!('The attribute "%s" from "%s" is enum with incorrect type (not Integer) - please fix it' % [@name, @entity_name], stacktrace: true)
+            msg = 'The attribute "%s" from "%s" is enum with incorrect type (not Integer) - please fix it' % [@name, @entity_name]
+            Gyro::Log.fail!(msg, stacktrace: true)
           end
           if !@json_key_path.empty? && !@enum_values.empty? && (@enum_values.size != @json_values.size)
             message_format = 'The attribute "%s" from "%s" is wrongly annotated: when declaring an type with enum and JSONKeyPath, ' \

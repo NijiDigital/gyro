@@ -1,0 +1,14 @@
+# If you use `rubocop --auto-gen-config, you might want to then uncomment the following line
+# inherit_from: .rubocop_todo.yml
+
+Metrics/ClassLength:
+  Max: 180
+
+Metrics/LineLength:
+  Max: 120
+
+Metrics/MethodLength:
+  Max: 20
+
+Metrics/BlockLength:
+  Max: 80

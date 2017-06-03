@@ -15,6 +15,7 @@
 require 'gyro'
 
 TMP_DIR_NAME = 'Gyro'.freeze
+DATAMODEL_FIXTURES = Pathname.new(File.expand_path('fixtures/xcdatamodel', File.dirname(__FILE__))).freeze
 
 def find_file(dir, file_name)
   Dir.chdir(dir) do
