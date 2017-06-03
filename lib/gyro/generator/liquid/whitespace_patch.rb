@@ -19,31 +19,37 @@ if Gem::Version.new(Liquid::VERSION) < Gem::Version.new('4.0.0')
   # It works by patching Liquid::Template using ruby's `Module#prepend` feature
   # See http://stackoverflow.com/a/4471202/803787 for more info on Monkey-Patching in Ruby
   #
-  module Liquid
-    # Monkey-Patch Liquid::Template class
-    module TemplateWhitespacePatch
-      def parse(source, options = {})
-        super(source.gsub(/\s*{%-/, "\v{%").gsub(/-%}\s*/, "%}\v"), options)
-      end
+  module Gyro
+    module Generator
+      module LiquidWhitespacePatch
+        # Monkey-Patch Liquid::Template class
+        module Template
+          def parse(source, options = {})
+            super(source.gsub(/\s*{%-/, "\v{%").gsub(/-%}\s*/, "%}\v"), options)
+          end
 
-      def render(*params)
-        super(*params).delete("\v")
-      end
-    end
+          def render(*params)
+            super(*params).delete("\v")
+          end
+        end
 
-    class Template
-      prepend TemplateWhitespacePatch
+        # Monkey-Patch String Liquid extension
+        module String
+          def to_liquid
+            super.delete("\v")
+          end
+        end
+      end
     end
   end
 
-  # Monkey-Patch String Liquid extension
-  module StringWhitespacePatch
-    def to_liquid
-      super.delete("\v")
+  module Liquid
+    class Template
+      prepend Gyro::Generator::LiquidWhitespacePatch::Template
     end
   end
 
   class String
-    prepend StringWhitespacePatch
+    prepend Gyro::Generator::LiquidWhitespacePatch::String
   end
 end
