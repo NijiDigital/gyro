@@ -33,13 +33,18 @@ opts = OptionParser.new do |opts|
   opts.on('-m PATH', '--model PATH', 'The .xcdatamodel file to use') do |xcdatamodel_path|
     options[:model] = xcdatamodel_path
   end
-  opts.on('-t DIR', '--template DIR', 'Path to the template directory to use, or name of a template embedded in gyro (see --list for available names)') do |path|
+  opts.on('-t DIR', '--template DIR',
+          'Path to the template directory to use, or name of a template embedded in gyro',
+          '(see --list for available names)') do |path|
     options[:template] = path
   end
-  opts.on('-o DIR', '--output DIR', 'Path to the output directory where to generate the model files') do |path|
+  opts.on('-o DIR', '--output DIR',
+          'Path to the output directory where to generate the model files') do |path|
     options[:output] = path
   end
-  opts.on('-p KEY:VALUE', '--param KEY:VALUE', 'Specify a custom parameter that can be used by the template. Can be repeated to add more parameters') do |params|
+  opts.on('-p KEY:VALUE', '--param KEY:VALUE',
+          'Specify a custom parameter that can be used by the template.',
+          'Can be repeated to add more parameters') do |params|
     (k, *v) = params.split(':')
     options[:params] = options[:params].merge(k.to_s => v.join(':').to_s)
   end
@@ -47,7 +52,9 @@ opts = OptionParser.new do |opts|
     Gyro::Template.print_list
     exit
   end
-  opts.on('-i', '--info TEMPLATE', 'Show information about the given template (path to directory or name of an embedded template)') do |template|
+  opts.on('-i', '--info TEMPLATE',
+          'Show information about the given template',
+          '(path to directory or name of an embedded template)') do |template|
     Gyro::Template.print_infos(template)
     exit
   end
@@ -86,7 +93,7 @@ end
 # Liquid Templates
 if options[:template].nil?
   # Generate JSON if no -t is specified
-  Gyro::Log.info('You can specify custom template directory or default template using --template option (see --help for more info)')
+  Gyro::Log.info('Note: You can specify a template using the --template option (see --help for more info)')
   xcdatamodel = Gyro::Parser::XCDataModel::XCDataModel.new(options[:model])
   Gyro::Generator::Json.new(xcdatamodel)
   exit

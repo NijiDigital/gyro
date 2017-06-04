@@ -112,14 +112,11 @@ module Gyro
             msg = 'The attribute "%s" from "%s" has no type - please fix it' % [@name, @entity_name]
             Gyro::Log.fail!(msg, stacktrace: true)
           end
-          if !@enum_type.empty? && !@enum_values.empty? && !is_integer?
-            msg = 'The attribute "%s" from "%s" is enum with incorrect type (not Integer) - please fix it' % [@name, @entity_name]
-            Gyro::Log.fail!(msg, stacktrace: true)
-          end
           if !@json_key_path.empty? && !@enum_values.empty? && (@enum_values.size != @json_values.size)
-            message_format = 'The attribute "%s" from "%s" is wrongly annotated: when declaring an type with enum and JSONKeyPath, ' \
-              "you must have the same number of items in the 'enumValues' and 'JSONValues' annotations - please fix it"
-            Gyro::Log.fail!(message_format % [@name, @entity_name], stacktrace: true)
+            message = %(The attribute "#{@name}" from "#{@entity_name}" is wrongly annotated:) +
+                      %(when declaring an type with enum and JSONKeyPath, you must have the same number of items) +
+                      %(in the 'enumValues' and 'JSONValues' annotations.)
+            Gyro::Log.fail!(message, stacktrace: true)
           end
         end
       end
