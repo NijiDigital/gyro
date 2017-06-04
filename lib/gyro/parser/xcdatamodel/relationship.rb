@@ -25,7 +25,7 @@ module Gyro
 
         alias realm_ignored? realm_ignored
 
-        # rubocop:disable Metrics/AbcSize
+        # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
         def initialize(relationship_xml, entity_name)
           @entity_name = entity_name
           @name = relationship_xml.xpath('@name').to_s
@@ -48,7 +48,7 @@ module Gyro
             'json_key_path' => json_key_path, 'support_annotation' => support_annotation,
             'realm_ignored' => realm_ignored, 'destination' => destination, 'inverse' => inverse? }
         end
-        # rubocop:enable Metrics/AbcSize
+        # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
         def to_s
           "\tRelationship => name=#{@name} | type=#{@type} | optional=#{@optional} | deletion_rule=#{@deletion_rule}\n"
