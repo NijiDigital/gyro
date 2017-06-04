@@ -22,7 +22,9 @@ module Gyro
         end
       end
 
-      USERINFO_VALUE = "userInfo/entry[@key='%s']/@value".freeze
+      def self.user_info(xml, key)
+        xml.xpath("userInfo/entry[@key='#{key}']/@value").to_s
+      end
 
       # Represents the whole xcdatamodel file struture, once parsed
       #

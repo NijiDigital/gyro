@@ -26,8 +26,8 @@ module Gyro
           @parent = entity_xml.xpath('@parentEntity').to_s
           @abstract = entity_xml.xpath('@isAbstract').to_s == 'YES' ? true : false
           @clean = false
-          @identity_attribute = entity_xml.xpath(USERINFO_VALUE % ['identityAttribute']).to_s
-          @comment = entity_xml.xpath(USERINFO_VALUE % ['comment']).to_s
+          @identity_attribute = Gyro::Parser::XCDataModel.user_info(entity_xml, 'identityAttribute')
+          @comment = Gyro::Parser::XCDataModel.user_info(entity_xml, 'comment')
           @attributes = {}
           @relationships = {}
           load_entity(entity_xml)
