@@ -33,15 +33,15 @@ module Gyro
           @indexed = attribute_xml.xpath('@indexed').to_s == 'YES' ? true : false
           @default = attribute_xml.xpath('@defaultValueString').to_s
           @type = attribute_xml.xpath('@attributeType').to_s.downcase.tr(' ', '_').to_sym
-          @realm_ignored = attribute_xml.xpath(USERINFO_VALUE % ['realmIgnored']).to_s.empty? ? false : true
-          @realm_read_only = attribute_xml.xpath(USERINFO_VALUE % ['realmReadOnly']).to_s
-          @enum_type = attribute_xml.xpath(USERINFO_VALUE % ['enumType']).to_s
-          @enum_values = attribute_xml.xpath(USERINFO_VALUE % ['enumValues']).to_s.split(',')
-          @json_key_path = attribute_xml.xpath(USERINFO_VALUE % ['JSONKeyPath']).to_s
-          @json_values = attribute_xml.xpath(USERINFO_VALUE % ['JSONValues']).to_s.split(',')
-          @transformer = attribute_xml.xpath(USERINFO_VALUE % ['transformer']).to_s.strip
-          @comment = attribute_xml.xpath(USERINFO_VALUE % ['comment']).to_s
-          @support_annotation = attribute_xml.xpath(USERINFO_VALUE % ['supportAnnotation']).to_s
+          @realm_ignored = Gyro::Parser::XCDataModel.user_info(attribute_xml, 'realmIgnored').empty? ? false : true
+          @realm_read_only = Gyro::Parser::XCDataModel.user_info(attribute_xml, 'realmReadOnly')
+          @enum_type = Gyro::Parser::XCDataModel.user_info(attribute_xml, 'enumType')
+          @enum_values = Gyro::Parser::XCDataModel.user_info(attribute_xml, 'enumValues').split(',')
+          @json_key_path = Gyro::Parser::XCDataModel.user_info(attribute_xml, 'JSONKeyPath')
+          @json_values = Gyro::Parser::XCDataModel.user_info(attribute_xml, 'JSONValues').split(',')
+          @transformer = Gyro::Parser::XCDataModel.user_info(attribute_xml, 'transformer').strip
+          @comment = Gyro::Parser::XCDataModel.user_info(attribute_xml, 'comment')
+          @support_annotation = Gyro::Parser::XCDataModel.user_info(attribute_xml, 'supportAnnotation').to_s
           search_for_error
         end
 
@@ -109,7 +109,7 @@ module Gyro
 
         def search_for_error
           if @type == :undefined || @type.empty?
-            msg = 'The attribute "%s" from "%s" has no type - please fix it' % [@name, @entity_name]
+            msg = %(The attribute "#{@name}" from "#{@entity_name}" has no type - please fix it)
             Gyro::Log.fail!(msg, stacktrace: true)
           end
           if !@json_key_path.empty? && !@enum_values.empty? && (@enum_values.size != @json_values.size)

@@ -32,11 +32,11 @@ module Gyro
           @deletion_rule = relationship_xml.xpath('@deletionRule').to_s
           @inverse_name = relationship_xml.xpath('@inverseName').to_s
           @inverse_type = relationship_xml.xpath('@destinationEntity').to_s
-          @json_key_path = relationship_xml.xpath(USERINFO_VALUE % ['JSONKeyPath']).to_s
-          @realm_ignored = relationship_xml.xpath(USERINFO_VALUE % ['realmIgnored']).to_s.empty? ? false : true
-          @support_annotation = relationship_xml.xpath(USERINFO_VALUE % ['supportAnnotation']).to_s
+          @json_key_path = Gyro::Parser::XCDataModel.user_info(relationship_xml, 'JSONKeyPath')
+          @realm_ignored = Gyro::Parser::XCDataModel.user_info(relationship_xml, 'realmIgnored').empty? ? false : true
+          @support_annotation = Gyro::Parser::XCDataModel.user_info(relationship_xml, 'supportAnnotation')
           load_type(relationship_xml)
-          @destination = relationship_xml.xpath(USERINFO_VALUE % ['destination']).to_s
+          @destination = Gyro::Parser::XCDataModel.user_info(relationship_xml, 'destination')
           search_for_error
         end
 
@@ -65,12 +65,12 @@ module Gyro
 
         def search_for_error
           if inverse_type.empty? && destination.empty?
-            message = 'The relationship "%s" from "%s" is wrong - please fix it' % [name, entity_name]
+            message = %(The relationship "#{@name}" from "#{@entity_name}" is wrong - please fix it)
             Gyro::Log.fail!(message, stacktrace: true)
           end
           if !destination.empty? && type != :to_many
-            message = 'The relationship "%s" from "%s" is wrong - ' \
-              "please set a 'No Value' relationship as 'To Many'" % [name, entity_name]
+            message = %(The relationship "#{@name}" from "#{@entity_name}" is wrong - ) +
+                      %(please set a 'No Value' relationship as 'To Many')
             Gyro::Log.fail!(message, stacktrace: true)
           end
         end
