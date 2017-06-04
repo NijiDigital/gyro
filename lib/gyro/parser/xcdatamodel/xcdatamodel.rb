@@ -14,6 +14,8 @@
 
 module Gyro
   module Parser
+    # Parser for CoreData's xcdatamodel files
+    #
     module XCDataModel
       def self.find_in_dir(dir)
         Dir.chdir(dir) do
@@ -22,7 +24,9 @@ module Gyro
         end
       end
 
-      USERINFO_VALUE = "userInfo/entry[@key='%s']/@value".freeze
+      def self.user_info(xml, key)
+        xml.xpath("userInfo/entry[@key='#{key}']/@value").to_s
+      end
 
       # Represents the whole xcdatamodel file struture, once parsed
       #
@@ -31,7 +35,7 @@ module Gyro
 
         def initialize(xcdatamodel_dir)
           contents_file = File.join(xcdatamodel_dir, 'contents')
-          Gyro::Log.fail!('Unable to find contents of xcdatamodel dir', stacktrace: true) unless File.exist?(contents_file)
+          Gyro::Log.fail!('Unable to find contents of xcdatamodel', stacktrace: true) unless File.exist?(contents_file)
           @entities = {}
           file = File.open(contents_file)
           document_xml = Nokogiri::XML(file).remove_namespaces!
@@ -44,11 +48,7 @@ module Gyro
         end
 
         def to_s
-          str = ''
-          @entities.each do |_, value|
-            str += value.to_s
-          end
-          str
+          @entities.values.map(&:to_s).join
         end
 
         private

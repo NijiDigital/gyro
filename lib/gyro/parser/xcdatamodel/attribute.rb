@@ -26,32 +26,43 @@ module Gyro
         alias indexed? indexed
         alias realm_ignored? realm_ignored
 
+        # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
         def initialize(attribute_xml, entity_name)
           @entity_name = entity_name
           @name = attribute_xml.xpath('@name').to_s
-          @optional = attribute_xml.xpath('@optional').to_s == 'YES' ? true : false
-          @indexed = attribute_xml.xpath('@indexed').to_s == 'YES' ? true : false
+          @optional = attribute_xml.xpath('@optional').to_s == 'YES'
+          @indexed = attribute_xml.xpath('@indexed').to_s == 'YES'
           @default = attribute_xml.xpath('@defaultValueString').to_s
           @type = attribute_xml.xpath('@attributeType').to_s.downcase.tr(' ', '_').to_sym
-          @realm_ignored = attribute_xml.xpath(USERINFO_VALUE % ['realmIgnored']).to_s.empty? ? false : true
-          @realm_read_only = attribute_xml.xpath(USERINFO_VALUE % ['realmReadOnly']).to_s
-          @enum_type = attribute_xml.xpath(USERINFO_VALUE % ['enumType']).to_s
-          @enum_values = attribute_xml.xpath(USERINFO_VALUE % ['enumValues']).to_s.split(',')
-          @json_key_path = attribute_xml.xpath(USERINFO_VALUE % ['JSONKeyPath']).to_s
-          @json_values = attribute_xml.xpath(USERINFO_VALUE % ['JSONValues']).to_s.split(',')
-          @transformer = attribute_xml.xpath(USERINFO_VALUE % ['transformer']).to_s.strip
-          @comment = attribute_xml.xpath(USERINFO_VALUE % ['comment']).to_s
-          @support_annotation = attribute_xml.xpath(USERINFO_VALUE % ['supportAnnotation']).to_s
+          @realm_ignored = !Gyro::Parser::XCDataModel.user_info(attribute_xml, 'realmIgnored').empty?
+          @realm_read_only = Gyro::Parser::XCDataModel.user_info(attribute_xml, 'realmReadOnly')
+          @enum_type = Gyro::Parser::XCDataModel.user_info(attribute_xml, 'enumType')
+          @enum_values = Gyro::Parser::XCDataModel.user_info(attribute_xml, 'enumValues').split(',')
+          @json_key_path = Gyro::Parser::XCDataModel.user_info(attribute_xml, 'JSONKeyPath')
+          @json_values = Gyro::Parser::XCDataModel.user_info(attribute_xml, 'JSONValues').split(',')
+          @transformer = Gyro::Parser::XCDataModel.user_info(attribute_xml, 'transformer').strip
+          @comment = Gyro::Parser::XCDataModel.user_info(attribute_xml, 'comment')
+          @support_annotation = Gyro::Parser::XCDataModel.user_info(attribute_xml, 'supportAnnotation')
           search_for_error
         end
 
         def to_h
-          { 'entity_name' => entity_name, 'name' => name, 'type' => type.to_s, 'optional' => optional, 'indexed' => indexed,
-            'default' => default, 'realm_ignored' => realm_ignored, 'realm_read_only' => realm_read_only, 'enum_type' => enum_type,
-            'enum_values' => enum_values, 'json_key_path' => json_key_path, 'json_values' => json_values,
-            'transformer' => transformer, 'comment' => comment, 'support_annotation' => support_annotation, 'is_decimal' => is_decimal?,
-            'is_integer' => is_integer?, 'is_number' => is_number?, 'is_bool' => is_bool?, 'need_transformer' => need_transformer? }
+          {
+            'entity_name' => entity_name, 'name' => name,
+            'type' => type.to_s,
+            'optional' => optional,
+            'indexed' => indexed,
+            'default' => default,
+            'realm_ignored' => realm_ignored, 'realm_read_only' => realm_read_only,
+            'enum_type' => enum_type, 'enum_values' => enum_values,
+            'json_key_path' => json_key_path, 'json_values' => json_values,
+            'transformer' => transformer, 'need_transformer' => need_transformer?,
+            'comment' => comment,
+            'support_annotation' => support_annotation,
+            'is_decimal' => decimal?, 'is_integer' => integer?, 'is_number' => number?, 'is_bool' => bool?
+          }
         end
+        # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
         def enum?
           !@enum_type.empty?
@@ -61,27 +72,34 @@ module Gyro
           !@realm_read_only.empty?
         end
 
-        def has_default?
+        def default?
           !@default.empty?
         end
 
         def to_s
-          "\tAttribute => name=#{@name} | type=#{@type} | optional=#{@optional} | default=#{@default} | indexed=#{@indexed}\n"
+          items = [
+            "name=#{@name}",
+            "type=#{@type}",
+            "optional=#{@optional}",
+            "default=#{@default}",
+            "indexed=#{@indexed}"
+          ]
+          "\tAttribute => " + items.join(' | ') + "\n"
         end
 
-        def is_decimal?
+        def decimal?
           (@type == :decimal) || (@type == :double) || (@type == :float)
         end
 
-        def is_integer?
+        def integer?
           (@type == :integer_16) || (@type == :integer_32) || (@type == :integer_64)
         end
 
-        def is_number?
-          is_decimal? || is_integer?
+        def number?
+          decimal? || integer?
         end
 
-        def is_bool?
+        def bool?
           @type == :boolean
         end
 
@@ -92,17 +110,18 @@ module Gyro
         private ################################################################
 
         def search_for_error
+          # rubocop:disable Style/GuardClause
           if @type == :undefined || @type.empty?
-            Gyro::Log.fail!('The attribute "%s" from "%s" has no type - please fix it' % [@name, @entity_name], stacktrace: true)
-          end
-          if !@enum_type.empty? && !@enum_values.empty? && !is_integer?
-            Gyro::Log.fail!('The attribute "%s" from "%s" is enum with incorrect type (not Integer) - please fix it' % [@name, @entity_name], stacktrace: true)
+            msg = %(The attribute "#{@name}" from "#{@entity_name}" has no type - please fix it)
+            Gyro::Log.fail!(msg, stacktrace: true)
           end
           if !@json_key_path.empty? && !@enum_values.empty? && (@enum_values.size != @json_values.size)
-            message_format = 'The attribute "%s" from "%s" is wrongly annotated: when declaring an type with enum and JSONKeyPath, ' \
-              "you must have the same number of items in the 'enumValues' and 'JSONValues' annotations - please fix it"
-            Gyro::Log.fail!(message_format % [@name, @entity_name], stacktrace: true)
+            message = %(The attribute "#{@name}" from "#{@entity_name}" is wrongly annotated:) +
+                      %(when declaring an type with enum and JSONKeyPath, you must have the same number of items) +
+                      %(in the 'enumValues' and 'JSONValues' annotations.)
+            Gyro::Log.fail!(message, stacktrace: true)
           end
+          # rubocop:enable Style/GuardClause
         end
       end
     end
