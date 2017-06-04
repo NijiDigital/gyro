@@ -24,7 +24,7 @@ module Gyro
 
       %w[realm primary ignored inverse enum enum_multi enum_json].each do |datamodel|
         it datamodel do
-          xcdatamodel_dir = fixture("xcdatamodel/#{datamodel}.xcdatamodel")
+          xcdatamodel_dir = fixture('xcdatamodel', "#{datamodel}.xcdatamodel")
           xcdatamodel = Parser::XCDataModel::XCDataModel.new(xcdatamodel_dir)
 
           Dir.mktmpdir(TMP_DIR_NAME) do |tmp_dir|

@@ -16,10 +16,10 @@ require 'gyro'
 require 'tmpdir'
 
 TMP_DIR_NAME = 'Gyro'.freeze
-FIXTURES = (Pathname.new(__FILE__).parent + 'fixtures').freeze
+FIXTURES_DIR = (Pathname.new(__FILE__).parent + 'fixtures').freeze
 
 def fixture(*paths)
-  FIXTURES.join(*paths)
+  FIXTURES_DIR.join(*paths)
 end
 
 def compare_dirs(generated_files_dir, fixtures_dir)
