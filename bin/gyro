@@ -28,7 +28,7 @@ options = {
   params: {}
 }
 
-opts = OptionParser.new do |opts|
+parser = OptionParser.new do |opts|
   opts.banner = 'Usage: gyro [options]'
   opts.on('-m PATH', '--model PATH', 'The .xcdatamodel file to use') do |xcdatamodel_path|
     options[:model] = xcdatamodel_path
@@ -69,10 +69,10 @@ opts = OptionParser.new do |opts|
 end
 
 begin
-  opts.parse!(ARGV)
+  parser.parse!(ARGV)
 rescue OptionParser::ParseError => e
   Gyro::Log.error(e)
-  puts opts
+  puts parser
   exit 1
 end
 
