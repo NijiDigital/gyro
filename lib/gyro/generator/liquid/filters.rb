@@ -12,10 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Declare some custom Liquid Filters used by the template, then render it
-#
 module Gyro
   module Generator
+    # Declare some custom Liquid Filters used by the template, then render it
+    #
     module LiquidFilters
       def escape_quotes(input)
         input.gsub('"', '\"')

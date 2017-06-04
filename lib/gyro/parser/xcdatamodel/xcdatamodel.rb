@@ -14,6 +14,8 @@
 
 module Gyro
   module Parser
+    # Parser for CoreData's xcdatamodel files
+    #
     module XCDataModel
       def self.find_in_dir(dir)
         Dir.chdir(dir) do
