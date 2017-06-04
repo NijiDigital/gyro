@@ -21,6 +21,7 @@ module Gyro
         attr_accessor :name, :parent, :abstract, :attributes, :relationships, :identity_attribute, :comment
         alias abstract? abstract
 
+        # rubocop:disable Metrics/AbcSize
         def initialize(entity_xml)
           @name = entity_xml.xpath('@name').to_s
           @parent = entity_xml.xpath('@parentEntity').to_s
@@ -55,6 +56,7 @@ module Gyro
             'has_only_inverse' => only_inverse_relationships?
           }
         end
+        # rubocop:enable Metrics/AbcSize
 
         def to_s
           str = "\nEntity => #{@name}\n"
