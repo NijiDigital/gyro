@@ -59,14 +59,9 @@ module Gyro
         # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
         def to_s
-          str = "\nEntity => #{@name}\n"
-          @attributes.each do |_, attribute|
-            str += attribute.to_s
-          end
-          @relationships.each do |_, relationship|
-            str += relationship.to_s
-          end
-          str
+          "\nEntity => #{@name}\n" +
+            @attributes.map { |_, attr| attr.to_s } +
+            @relationships.map { |_, rel| rel.to_s }
         end
 
         def used_as_list_by_other?(entities)
@@ -155,14 +150,9 @@ module Gyro
 
         NUMBER_TYPES = [:integer_16, :integer_32, :integer_64, :decimal, :double, :float].freeze
         def number_attributes?
-          has_number_attributes = false
-          @attributes.each do |_, attribute|
-            if attribute.enum_type.empty?
-              has_number_attributes = NUMBER_TYPES.include?(attribute.type)
-              break if has_number_attributes
-            end
+          @attributes.any? do |_, attribute|
+            attribute.enum_type.empty? && NUMBER_TYPES.include?(attribute.type)
           end
-          has_number_attributes
         end
 
         def date_attributes?
