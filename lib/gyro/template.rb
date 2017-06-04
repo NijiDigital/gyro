@@ -37,39 +37,25 @@ module Gyro
       Pathname.new(File.dirname(__FILE__)) + '../templates'
     end
 
-    def self.find(template_dir_param)
-      ##############################################
-      # if template_dir_param contain "/"
-      #   # check if exist?
-      #     # if directory?
-      #       # it is ok so use it
-      #     # else file?
-      #       # use dirname to use directory
-      #     # end
-      #   # end
-      # else # this is a default template name so we need to find this template
-      #   # concat data dir template with template_dir
-      #   # check if template exist else exit with error
-      # end
-      ##############################################
-      if template_dir_param.include? '/'
-        template_dir_to_test = Pathname.new(template_dir_param)
-        unless template_dir_to_test.exist?
-          Gyro::Log.fail!('You need to specify existing template directory using --template option (see --help for more info)')
+    def self.find(template_param)
+      if template_param.include? '/'
+        template_dir = Pathname.new(template_param)
+        unless template_dir.exist?
+          Gyro::Log.fail!('You need to specify existing template directory using --template option' \
+                          ' (see --help for more info)')
         end
-        if template_dir_to_test.directory?
-          return template_dir_to_test
-        elsif template_dir_to_test.file?
-          return template_dir_to_test.dirname
-        else
-          Gyro::Log.fail!('You need to specify right template directory using --template option (see --help for more info)')
-        end
+
+        return template_dir if template_dir.directory?
+        return template_dir.dirname if template_dir.file?
+        Gyro::Log.fail!('You need to specify right template directory using --template option' \
+                        ' (see --help for more info)')
       else
-        template_dir_to_test = Gyro::Template.directory + template_dir_param
-        unless template_dir_to_test.exist?
-          Gyro::Log.fail!('You need to specify existing default template name using --template option (see --help for more info)')
+        template_dir = Gyro::Template.directory + template_param
+        unless template_dir.exist?
+          Gyro::Log.fail!('You need to specify existing default template name using --template option' \
+                          ' (see --help for more info)')
         end
-        template_dir_to_test
+        template_dir
       end
     end
   end
