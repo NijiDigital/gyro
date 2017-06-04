@@ -26,14 +26,15 @@ module Gyro
         alias indexed? indexed
         alias realm_ignored? realm_ignored
 
+        # rubocop:disable Metrics/AbcSize
         def initialize(attribute_xml, entity_name)
           @entity_name = entity_name
           @name = attribute_xml.xpath('@name').to_s
-          @optional = attribute_xml.xpath('@optional').to_s == 'YES' ? true : false
-          @indexed = attribute_xml.xpath('@indexed').to_s == 'YES' ? true : false
+          @optional = attribute_xml.xpath('@optional').to_s == 'YES'
+          @indexed = attribute_xml.xpath('@indexed').to_s == 'YES'
           @default = attribute_xml.xpath('@defaultValueString').to_s
           @type = attribute_xml.xpath('@attributeType').to_s.downcase.tr(' ', '_').to_sym
-          @realm_ignored = Gyro::Parser::XCDataModel.user_info(attribute_xml, 'realmIgnored').empty? ? false : true
+          @realm_ignored = !Gyro::Parser::XCDataModel.user_info(attribute_xml, 'realmIgnored').empty?
           @realm_read_only = Gyro::Parser::XCDataModel.user_info(attribute_xml, 'realmReadOnly')
           @enum_type = Gyro::Parser::XCDataModel.user_info(attribute_xml, 'enumType')
           @enum_values = Gyro::Parser::XCDataModel.user_info(attribute_xml, 'enumValues').split(',')
@@ -41,7 +42,7 @@ module Gyro
           @json_values = Gyro::Parser::XCDataModel.user_info(attribute_xml, 'JSONValues').split(',')
           @transformer = Gyro::Parser::XCDataModel.user_info(attribute_xml, 'transformer').strip
           @comment = Gyro::Parser::XCDataModel.user_info(attribute_xml, 'comment')
-          @support_annotation = Gyro::Parser::XCDataModel.user_info(attribute_xml, 'supportAnnotation').to_s
+          @support_annotation = Gyro::Parser::XCDataModel.user_info(attribute_xml, 'supportAnnotation')
           search_for_error
         end
 
@@ -61,6 +62,7 @@ module Gyro
             'is_decimal' => decimal?, 'is_integer' => integer?, 'is_number' => number?, 'is_bool' => bool?
           }
         end
+        # rubocop:enable Metrics/AbcSize
 
         def enum?
           !@enum_type.empty?

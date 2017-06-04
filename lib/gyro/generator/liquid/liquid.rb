@@ -20,6 +20,8 @@ module Gyro
       attr_accessor :params, :output_dir
 
       # PUBLIC METHODS #######################################################
+
+      # rubocop:disable Metrics/AbcSize
       def initialize(template_dir, output_dir, params)
         Gyro::Log.title('Generating Model')
 
@@ -36,6 +38,7 @@ module Gyro
         enum_fn_tpl = template_dir + 'filename.liquid' unless enum_fn_tpl.exist?
         @enum_filename_template = load_template(enum_fn_tpl, true)
       end
+      # rubocop:enable Metrics/AbcSize
 
       def generate(xcdatamodel)
         generate_entities(xcdatamodel)
@@ -79,7 +82,7 @@ module Gyro
         enums = []
         attributes.each do |attribute|
           enum_type = attribute['enum_type']
-          next unless !enums.include?(enum_type) && !enum_type.empty?
+          next if enums.include?(enum_type) || enum_type.empty?
           enums.push(enum_type)
 
           enum_context = { 'params' => @params, 'attribute' => attribute }
