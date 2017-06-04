@@ -46,11 +46,7 @@ module Gyro
         end
 
         def to_s
-          str = ''
-          @entities.each do |_, value|
-            str += value.to_s
-          end
-          str
+          @entities.values.map(&:to_s).join
         end
 
         private

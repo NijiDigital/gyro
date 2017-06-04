@@ -58,7 +58,7 @@ module Gyro
             'transformer' => transformer, 'need_transformer' => need_transformer?,
             'comment' => comment,
             'support_annotation' => support_annotation,
-            'is_decimal' => is_decimal?, 'is_integer' => is_integer?, 'is_number' => is_number?, 'is_bool' => is_bool?
+            'is_decimal' => decimal?, 'is_integer' => integer?, 'is_number' => number?, 'is_bool' => bool?
           }
         end
 
@@ -70,7 +70,7 @@ module Gyro
           !@realm_read_only.empty?
         end
 
-        def has_default?
+        def default?
           !@default.empty?
         end
 
@@ -85,19 +85,19 @@ module Gyro
           "\tAttribute => " + items.join(' | ') + "\n"
         end
 
-        def is_decimal?
+        def decimal?
           (@type == :decimal) || (@type == :double) || (@type == :float)
         end
 
-        def is_integer?
+        def integer?
           (@type == :integer_16) || (@type == :integer_32) || (@type == :integer_64)
         end
 
-        def is_number?
-          is_decimal? || is_integer?
+        def number?
+          decimal? || integer?
         end
 
-        def is_bool?
+        def bool?
           @type == :boolean
         end
 

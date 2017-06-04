@@ -42,17 +42,17 @@ module Gyro
             'abstract' => abstract,
             'identity_attribute' => identity_attribute,
             'comment' => comment,
-            'has_no_inverse_relationship' => has_no_inverse_relationship?,
-            'has_ignored' => has_ignored?, 'has_primary_key' => has_primary_key?, 'has_required' => has_required?,
-            'has_indexed_attributes' => has_indexed_attributes?,
-            'has_json_key_path' => has_json_key_path?, 'has_enum_attributes' => has_enum_attributes?,
-            'has_custom_transformers' => has_custom_transformers?, 'need_transformer' => need_transformer?,
-            'has_bool_attributes' => has_bool_attributes?,
-            'has_number_attributes' => has_number_attributes?,
-            'has_date_attribute' => has_date_attribute?,
-            'has_list_relationship' => has_list_relationship?,
-            'has_list_attributes' => has_list_attributes?,
-            'has_only_inverse' => has_only_inverse?
+            'has_no_inverse_relationship' => no_inverse_relationship?,
+            'has_ignored' => ignored_attributes_relationships?, 'has_required' => required_attributes?,
+            'has_primary_key' => primary_key?, 'has_indexed_attributes' => indexed_attributes?,
+            'has_json_key_path' => json_key_paths?, 'has_enum_attributes' => enum_attributes?,
+            'has_custom_transformers' => custom_transformers?, 'need_transformer' => need_transformer?,
+            'has_bool_attributes' => bool_attributes?,
+            'has_number_attributes' => number_attributes?,
+            'has_date_attribute' => date_attributes?,
+            'has_list_relationship' => list_relationships?,
+            'has_list_attributes' => list_attributes?,
+            'has_only_inverse' => only_inverse_relationships?
           }
         end
 
@@ -68,83 +68,67 @@ module Gyro
         end
 
         def used_as_list_by_other?(entities)
-          entities.each do |_, entity|
-            entity.relationships.each do |_, relationship|
-              return true if (relationship.inverse_type == @name) && (relationship.type == :to_many)
+          entities.any? do |_, entity|
+            entity.relationships.any? do |_, relationship|
+              (relationship.inverse_type == @name) && (relationship.type == :to_many)
             end
           end
-          false
         end
 
-        def has_list_attributes?(inverse = false)
-          @relationships.each do |_, relationship|
-            return true if (relationship.type == :to_many) && (!inverse ? !relationship.inverse? : true)
+        def list_attributes?(include_inverse = false)
+          @relationships.any? do |_, relationship|
+            (relationship.type == :to_many) && (include_inverse ? true : !relationship.inverse?)
           end
-          false
         end
 
-        def has_no_inverse_relationship?
-          @relationships.each do |_, relationship|
-            return true unless relationship.inverse?
-          end
-          false
+        def no_inverse_relationship?
+          @relationships.none? { |_, relationship| relationship.inverse? }
         end
 
-        def has_ignored?
-          @attributes.each do |_, attribute|
-            return true if attribute.realm_ignored?
-          end
-          @relationships.each do |_, relationship|
-            return true if relationship.realm_ignored?
-          end
-          false
+        def ignored_attributes?
+          @attributes.any? { |_, attribute| attribute.realm_ignored? }
         end
 
-        def has_primary_key?
+        def ignored_relationships?
+          @relationships.any? { |_, relationship| relationship.realm_ignored? }
+        end
+
+        def ignored_attributes_relationships?
+          ignored_attributes? || ignored_relationships?
+        end
+
+        def primary_key?
           !@identity_attribute.empty?
         end
 
-        def has_required?
-          @attributes.each do |_, attribute|
-            return true if is_required?(attribute)
-          end
-          false
+        def required_attributes?
+          @attributes.any? { |_, attribute| required?(attribute) }
         end
 
-        def is_required?(attribute)
-          unless attribute.optional?
-            return true unless has_primary_key?
-            return true if has_primary_key? && !attribute.name.eql?(identity_attribute)
-          end
-          false
+        def required?(attribute)
+          return false if attribute.optional?
+          return true unless primary_key?
+          return true if primary_key? && !attribute.name.eql?(identity_attribute)
         end
 
-        def has_default_value?(attribute = @identity_attribute)
+        def default_value?(attribute)
           attribute.name != @identity_attribute
         end
 
-        def has_indexed_attributes?
-          @attributes.each do |_, attribute|
-            return true if attribute.indexed?
-          end
-          false
+        def indexed_attributes?
+          @attributes.any? { |_, attribute| attribute.indexed? }
         end
 
-        def has_json_key_path?
-          @attributes.each do |_, attribute|
-            return true unless attribute.json_key_path.empty?
+        def json_key_paths?
+          @attributes.any? do |_, attribute|
+            !attribute.json_key_path.empty?
+          end || @relationships.any? do |_, relationship|
+            !relationship.inverse? && !relationship.json_key_path.empty?
           end
-          @relationships.each do |_, relationship|
-            return true if !relationship.inverse? && !relationship.json_key_path.empty?
-          end
-          false
         end
 
-        def has_enum_attributes?
-          @attributes.each do |_, attribute|
-            return true unless attribute.enum_type.empty?
-          end
-          false
+        def enum_attributes?
+          @attributes.any? { |_, attribute| !attribute.enum_type.empty? }
         end
 
         def transformers
@@ -155,27 +139,20 @@ module Gyro
           transformers
         end
 
-        def has_custom_transformers?
-          @attributes.each do |_, attribute|
-            return true unless attribute.transformer.empty?
-          end
-          false
+        def custom_transformers?
+          @attributes.any? { |_, attribute| !attribute.transformer.empty? }
         end
 
         def need_transformer?
-          has_enum_attributes? || has_bool_attributes? || has_custom_transformers? || has_date_attribute?
+          enum_attributes? || bool_attributes? || custom_transformers? || date_attributes?
         end
 
-        def has_bool_attributes?
-          has_bool_attributes = false
-          @attributes.each do |_, attribute|
-            has_bool_attributes = true if attribute.type == :boolean
-          end
-          has_bool_attributes
+        def bool_attributes?
+          @attributes.any? { |_, attribute| attribute.type == :boolean }
         end
 
         NUMBER_TYPES = [:integer_16, :integer_32, :integer_64, :decimal, :double, :float].freeze
-        def has_number_attributes?
+        def number_attributes?
           has_number_attributes = false
           @attributes.each do |_, attribute|
             if attribute.enum_type.empty?
@@ -186,26 +163,16 @@ module Gyro
           has_number_attributes
         end
 
-        def has_date_attribute?
-          @attributes.each do |_, attribute|
-            return true if attribute.type == :date
-          end
-          false
+        def date_attributes?
+          @attributes.any? { |_, attribute| attribute.type == :date }
         end
 
-        def has_list_relationship?
-          @relationships.each do |_, relationship|
-            return true unless relationship.destination.empty?
-          end
-          false
+        def list_relationships?
+          @relationships.any? { |_, relationship| !relationship.destination.empty? }
         end
 
-        def has_only_inverse?
-          nb_inverses = 0
-          @relationships.each do |_, relationship|
-            nb_inverses += 1 if relationship.inverse?
-          end
-          nb_inverses == @relationships.size
+        def only_inverse_relationships?
+          @relationships.all? { |_, relationship| relationship.inverse? }
         end
 
         private ################################################################
