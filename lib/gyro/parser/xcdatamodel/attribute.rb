@@ -26,7 +26,7 @@ module Gyro
         alias indexed? indexed
         alias realm_ignored? realm_ignored
 
-        # rubocop:disable Metrics/AbcSize
+        # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
         def initialize(attribute_xml, entity_name)
           @entity_name = entity_name
           @name = attribute_xml.xpath('@name').to_s
@@ -62,7 +62,7 @@ module Gyro
             'is_decimal' => decimal?, 'is_integer' => integer?, 'is_number' => number?, 'is_bool' => bool?
           }
         end
-        # rubocop:enable Metrics/AbcSize
+        # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
         def enum?
           !@enum_type.empty?

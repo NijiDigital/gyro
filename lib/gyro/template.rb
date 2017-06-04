@@ -39,24 +39,30 @@ module Gyro
 
     def self.find(template_param)
       if template_param.include? '/'
-        template_dir = Pathname.new(template_param)
-        unless template_dir.exist?
-          Gyro::Log.fail!('You need to specify existing template directory using --template option' \
-                          ' (see --help for more info)')
-        end
-
-        return template_dir if template_dir.directory?
-        return template_dir.dirname if template_dir.file?
-        Gyro::Log.fail!('You need to specify right template directory using --template option' \
-                        ' (see --help for more info)')
+        find_by_path(template_param)
       else
-        template_dir = Gyro::Template.directory + template_param
-        unless template_dir.exist?
-          Gyro::Log.fail!('You need to specify existing default template name using --template option' \
-                          ' (see --help for more info)')
-        end
-        template_dir
+        find_by_name(template_param)
       end
+    end
+
+    def self.find_by_path(path)
+      template_dir = Pathname.new(path)
+      unless template_dir.exist?
+        Gyro::Log.fail!('You need to specify existing template directory using --template option' \
+                        ' (see --help for more info)')
+      end
+
+      return template_dir if template_dir.directory?
+      return template_dir.dirname if template_dir.file?
+      Gyro::Log.fail!('You need to specify right template directory using --template option' \
+                      ' (see --help for more info)')
+    end
+
+    def self.find_by_name(name)
+      template_dir = Gyro::Template.directory + name
+      return template_dir if template_dir.exist?
+      Gyro::Log.fail!('You need to specify existing default template name using --template option' \
+                      ' (see --help for more info)')
     end
   end
 end
