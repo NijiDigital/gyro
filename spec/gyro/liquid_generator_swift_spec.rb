@@ -12,9 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-require 'tmpdir'
-require 'pathname'
-
 SWIFT3_TEMPLATE_DIR = 'lib/templates/swift3'.freeze
 
 module Gyro
@@ -26,13 +23,13 @@ module Gyro
 
       %w(realm primary ignored inverse enum optional).each do |datamodel|
         it datamodel do
-          xcdatamodel_dir = DATAMODEL_FIXTURES + "#{datamodel}.xcdatamodel"
+          xcdatamodel_dir = fixture("xcdatamodel/#{datamodel}.xcdatamodel")
           xcdatamodel = Gyro::Parser::XCDataModel::XCDataModel.new(xcdatamodel_dir)
           Dir.mktmpdir(TMP_DIR_NAME) do |tmp_dir|
             template_dir = Pathname.new(SWIFT3_TEMPLATE_DIR)
             gen = Generator::Liquid.new(template_dir, tmp_dir, {})
             gen.generate(xcdatamodel)
-            fixtures_files_dir = File.expand_path("../fixtures/swift/#{datamodel}", File.dirname(__FILE__))
+            fixtures_files_dir = fixture('swift', datamodel)
             compare_dirs(tmp_dir, fixtures_files_dir)
           end
         end
