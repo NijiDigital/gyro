@@ -1,8 +1,8 @@
 source 'https://rubygems.org'
 
-gem 'nokogiri'
-gem 'liquid'
+gemspec
 
 group :test do
+  gem 'rubocop', '~> 0.47'
   gem 'rspec'
 end
