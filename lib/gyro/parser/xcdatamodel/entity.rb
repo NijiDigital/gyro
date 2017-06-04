@@ -148,7 +148,7 @@ module Gyro
           @attributes.any? { |_, attribute| attribute.type == :boolean }
         end
 
-        NUMBER_TYPES = [:integer_16, :integer_32, :integer_64, :decimal, :double, :float].freeze
+        NUMBER_TYPES = %i[integer_16 integer_32 integer_64 decimal double float].freeze
         def number_attributes?
           @attributes.any? do |_, attribute|
             attribute.enum_type.empty? && NUMBER_TYPES.include?(attribute.type)
