@@ -16,34 +16,31 @@ module Gyro
   # Print nice and colored output for various error/success/title messages of Gyro
   #
   module Log
-    @@quiet = false
+    @quiet = false
     def self.quiet=(value)
-      @@quiet = value
+      @quiet = value
     end
 
     def self.title(str) # bg yellow
-      puts "\n\e[44;37m#{str}\e[0m" unless @@quiet
+      puts "\n\e[44;37m#{str}\e[0m" unless @quiet
     end
 
     def self.error(str)
-      puts "\e[1;31m! #{str}\e[0m" unless @@quiet
+      puts "\e[1;31m! #{str}\e[0m" unless @quiet
     end
 
     def self.info(str)
-      puts "\e[1;33m> #{str}\e[0m" unless @@quiet
+      puts "\e[1;33m> #{str}\e[0m" unless @quiet
     end
 
     def self.success(str)
-      puts "\e[1;32m√ #{str}\e[0m" unless @@quiet
+      puts "\e[1;32m√ #{str}\e[0m" unless @quiet
     end
 
     def self.fail!(message, stacktrace: false)
       Gyro::Log.error message
-      if stacktrace
-        raise message
-      else
-        exit 1
-      end
+      raise message if stacktrace
+      exit 1
     end
 
     def self.prompt(str, url = nil)
