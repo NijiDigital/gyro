@@ -64,6 +64,7 @@ module Gyro
         end
 
         def search_for_error
+          # rubocop:disable Style/GuardClause
           if inverse_type.empty? && destination.empty?
             message = %(The relationship "#{@name}" from "#{@entity_name}" is wrong - please fix it)
             Gyro::Log.fail!(message, stacktrace: true)
@@ -73,6 +74,7 @@ module Gyro
                       %(please set a 'No Value' relationship as 'To Many')
             Gyro::Log.fail!(message, stacktrace: true)
           end
+          # rubocop:enable Style/GuardClause
         end
       end
     end

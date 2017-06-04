@@ -108,6 +108,7 @@ module Gyro
         private ################################################################
 
         def search_for_error
+          # rubocop:disable Style/GuardClause
           if @type == :undefined || @type.empty?
             msg = %(The attribute "#{@name}" from "#{@entity_name}" has no type - please fix it)
             Gyro::Log.fail!(msg, stacktrace: true)
@@ -118,6 +119,7 @@ module Gyro
                       %(in the 'enumValues' and 'JSONValues' annotations.)
             Gyro::Log.fail!(message, stacktrace: true)
           end
+          # rubocop:enable Style/GuardClause
         end
       end
     end
