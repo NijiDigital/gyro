@@ -23,7 +23,7 @@ module Gyro
 
       %w[realm primary ignored inverse enum optional].each do |datamodel|
         it datamodel do
-          xcdatamodel_dir = fixture("xcdatamodel/#{datamodel}.xcdatamodel")
+          xcdatamodel_dir = fixture('xcdatamodel', "#{datamodel}.xcdatamodel")
           xcdatamodel = Gyro::Parser::XCDataModel::XCDataModel.new(xcdatamodel_dir)
           Dir.mktmpdir(TMP_DIR_NAME) do |tmp_dir|
             template_dir = Pathname.new(SWIFT3_TEMPLATE_DIR)
