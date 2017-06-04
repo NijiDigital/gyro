@@ -13,40 +13,30 @@
 # limitations under the License.
 
 require 'gyro'
+require 'tmpdir'
 
 TMP_DIR_NAME = 'Gyro'.freeze
-DATAMODEL_FIXTURES = Pathname.new(File.expand_path('fixtures/xcdatamodel', File.dirname(__FILE__))).freeze
+FIXTURES = (Pathname.new(__FILE__).parent + 'fixtures').freeze
 
-def find_file(dir, file_name)
-  Dir.chdir(dir) do
-    files = Dir.glob("**/#{file_name}")
-    expect(files.count).to eq(1), "File #{file_name} not found in generated files"
-    File.expand_path(files.first, dir)
+def fixture(*paths)
+  FIXTURES.join(*paths)
+end
+
+def compare_dirs(generated_files_dir, fixtures_dir)
+  generated_dir = Pathname.new(generated_files_dir)
+
+  fixtures_files = fixtures_dir.find.select { |file| File.file?(file) }
+  # expect(files_count(generated_dir)).to eq fixtures_files.count
+  check_files_count(generated_dir, fixtures_files.count)
+
+  fixtures_files.each do |fixture|
+    generated_file = generated_dir + fixture.relative_path_from(fixtures_dir)
+    expect(generated_file.read).to eq(fixture.read), "File: '#{fixture}' differ from expectation."
   end
 end
 
-def compare_dirs(generated_files_dir, fixtures_files_dir)
-  generated_files = Dir[File.join(generated_files_dir, '**', '*')]
-  nb_generated_files = generated_files.count { |file| File.file?(file) }
-  fixtures_files = Dir[File.join(fixtures_files_dir, '**', '*')]
-  nb_fixtures_files = fixtures_files.count { |file| File.file?(file) }
-  expect(nb_generated_files).to eq nb_fixtures_files
-  fixtures_files.each do |fixtures_file|
-    next unless File.file?(fixtures_file)
-    # @todo:
-    fixture_file_content = Pathname.new(fixtures_file).read
-    file_name = File.basename(fixtures_file)
-    generated_file = find_file(generated_files_dir, file_name)
-    generated_file_content = Pathname.new(generated_file).read
-
-    # file = File.open(fixtures_file, 'rb')
-    # fixture_file_content = file.read
-    # file.close
-    # file_name = File.basename(fixtures_file)
-    # generated_file = find_file(generated_files_dir, file_name)
-    # file = File.open(generated_file, 'rb')
-    # generated_file_content = file.read
-    # file.close
-    expect(generated_file_content).to eq(fixture_file_content), "File: '#{fixtures_file}' differ from expectation."
-  end
+def check_files_count(dir, expected_count)
+  count = dir.find.select { |f| File.file?(f) }.count
+  expect(count).to eq expected_count
 end
+private :check_files_count
