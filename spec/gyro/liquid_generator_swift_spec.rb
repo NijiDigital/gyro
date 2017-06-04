@@ -21,7 +21,7 @@ module Gyro
         Gyro::Log.quiet = true
       end
 
-      %w(realm primary ignored inverse enum optional).each do |datamodel|
+      %w[realm primary ignored inverse enum optional].each do |datamodel|
         it datamodel do
           xcdatamodel_dir = fixture("xcdatamodel/#{datamodel}.xcdatamodel")
           xcdatamodel = Gyro::Parser::XCDataModel::XCDataModel.new(xcdatamodel_dir)

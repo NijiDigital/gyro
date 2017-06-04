@@ -111,13 +111,13 @@ unless output_dir.exist?
   Gyro::Log.fail!("The output directory #{output_dir} does not exist. Please create it first.")
 end
 
-puts <<-INFO
-\n
-===================================
-Template    : #{template_dir}
-Output Dir  : #{output_dir}
-Params      : #{options[:params].inspect}
-===================================
+puts <<-INFO.gsub(/  \|/, '')
+  |
+  |#===================================
+  |# Template    : #{template_dir}
+  |# Output Dir  : #{output_dir}
+  |# Params      : #{options[:params].inspect}
+  |#===================================
 INFO
 
 xcdatamodel = Gyro::Parser::XCDataModel::XCDataModel.new(options[:model])
