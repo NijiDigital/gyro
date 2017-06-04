@@ -17,7 +17,7 @@ limitations under the License.
 module Gyro
   module Error
     def self.raise(str)
-      raise "\e[1;31m! #{str}\e[0m"
+      Kernel.raise "\e[1;31m! #{str}\e[0m"
     end
   
     def self.exit_with_error(message)
