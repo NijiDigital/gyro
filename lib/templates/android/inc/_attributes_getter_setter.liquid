@@ -1,7 +1,7 @@
 {%- for attribute in entity.attributes %}
 
     {% capture visibility -%}
-      {%- if attribute.enum_type.size > 0 and params.hide_members_with_enum == true -%}
+      {%- if attribute.enum_type.size > 0 and params.hide_members_with_enum.size > 0 -%}
         protected
       {%- else -%}
         public
