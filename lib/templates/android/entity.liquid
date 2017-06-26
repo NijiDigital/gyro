@@ -17,7 +17,7 @@ import java.util.List;
 import io.realm.RealmList;
 {%- endif %}
 import io.realm.RealmObject;
-{%- if entity.has_ignored == true or entity.has_enum_attributes == true %}
+{%- if entity.has_ignored == true %}
 import io.realm.annotations.Ignore;
 {%- endif -%}
 {%- if entity.has_indexed_attributes == true %}
