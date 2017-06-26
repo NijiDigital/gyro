@@ -23,7 +23,7 @@ public enum {{ attribute.enum_type }} {
     {{ attribute.enum_type }}(final String jsonValue) {
         this.jsonValue = jsonValue;
     }
-    {% if params.support_annotations.size > 0 -%}
+    {% if params.support_annotations.size > 0 %}
     @android.support.annotation.Nullable
     {%- endif %}
     public static {{ attribute.enum_type }} get(final String jsonValue) {
@@ -34,7 +34,7 @@ public enum {{ attribute.enum_type }} {
         }
         return null;
     }
-    {% if params.support_annotations.size > 0 -%}
+    {% if params.support_annotations.size > 0 %}
     @android.support.annotation.NonNull
     {%- endif %}
     public String getJsonValue() {
