@@ -1,6 +1,14 @@
 {%- for attribute in entity.attributes %}
 
-    {% if attribute.realm_read_only.size == 0 -%}
+    {% capture visibility -%}
+      {%- if attribute.enum_type.size > 0 and params.hide_members_with_enum == true -%}
+        protected
+      {%- else -%}
+        public
+      {%- endif -%}
+    {%- endcapture -%}
+
+    {%- if attribute.realm_read_only.size == 0 -%}
         {%- comment %} ******* CONVERT TYPE CAPTURE ******* {% endcomment -%}
         {%- capture convert_type -%}
           {%- if attribute.realm_read_only.size == 0 and attribute.enum_type.size > 0 -%}
@@ -28,11 +36,11 @@
     {%- if annotation.size > 0 %}{{ annotation | replace: "|","
     " }}
     {% endif -%}
-    public {{ convert_type }} get{{ name | titleize }}() {
+    {{ visibility }} {{ convert_type }} get{{ name | titleize }}() {
         return {{ name }};
     }
 
-    public void set{{ name | titleize }}({%- if annotation.size > 0 %}{{ annotation | replace: "|"," " }} {% endif %}final {{ convert_type }} {{ name }}) {
+    {{ visibility }} void set{{ name | titleize }}({%- if annotation.size > 0 %}{{ annotation | replace: "|"," " }} {% endif %}final {{ convert_type }} {{ name }}) {
         this.{{ name }} = {{ name }};
     }
     {%- endif -%}
