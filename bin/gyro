@@ -16,6 +16,10 @@
 
 abort 'error: gyro requires Ruby 2 or higher.' if RUBY_VERSION < '2.0.0'
 
+if $0 == __FILE__
+  $:.unshift File.expand_path('../lib', File.dirname(__FILE__))
+end
+
 require 'gyro'
 require 'optparse'
 require 'pathname'
