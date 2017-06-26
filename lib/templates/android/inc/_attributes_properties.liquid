@@ -27,7 +27,7 @@
       {%- if attribute.json_key_path.size > 0 %}
     @SerializedName("{{ attribute.json_key_path }}")
       {%- endif -%}
-      {%- if params.support_annotations == true and attribute.support_annotation.size > 0 %}
+      {%- if params.support_annotations.size > 0 and attribute.support_annotation.size > 0 %}
     @android.support.annotation.{{ attribute.support_annotation }}
       {%- endif %}
     private {{ convert_type }} {{ name }};
