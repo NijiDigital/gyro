@@ -6,7 +6,7 @@ import io.realm.RealmObject;
 
 public class Product extends RealmObject {
 
-    public static class Attributes {
+    public static final class Attributes {
         private Attributes() {
             // Hide constructor
         }
@@ -45,5 +45,4 @@ public class Product extends RealmObject {
     public void setPrice(final int price) {
         this.price = price;
     }
-
 }

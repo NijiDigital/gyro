@@ -7,7 +7,7 @@ import io.realm.RealmObject;
 
 public class User extends RealmObject {
 
-    public static class Attributes {
+    public static final class Attributes {
         private Attributes() {
             // Hide constructor
         }
@@ -54,5 +54,4 @@ public class User extends RealmObject {
     public void setFidelityCard(@android.support.annotation.NonNull final FidelityCard fidelityCard) {
         this.fidelityCard = fidelityCard;
     }
-
 }

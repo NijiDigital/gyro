@@ -7,7 +7,7 @@ import io.realm.RealmObject;
 
 public class Shop extends RealmObject {
 
-    public static class Attributes {
+    public static final class Attributes {
         private Attributes() {
             // Hide constructor
         }
@@ -43,5 +43,4 @@ public class Shop extends RealmObject {
     public void setProducts(@android.support.annotation.NonNull final RealmList<Product> products) {
         this.products = products;
     }
-
 }
