@@ -39,8 +39,8 @@
       {%- endif %}
     {%- endcapture %}
     {%- assign name = attribute.name %}
-    {% comment %} *** Empty line *** {% endcomment %}
-    
+    {{ empty_line }}
+
     {%- if annotation.size > 0 %}
     {{ annotation | replace: "|","
     " }}

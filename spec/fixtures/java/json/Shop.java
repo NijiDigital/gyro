@@ -4,7 +4,6 @@ package com.gyro.tests;
 
 import com.google.gson.annotations.SerializedName;
 
-
 import io.realm.RealmList;
 import io.realm.RealmObject;
 
