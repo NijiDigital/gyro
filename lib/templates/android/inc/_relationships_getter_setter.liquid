@@ -27,14 +27,15 @@
             {%- if relationship.support_annotation.size > 0 -%}
               |@android.support.annotation.{{ relationship.support_annotation }}
             {%- endif %}
-          {% endif %}
+          {%- endif %}
         {%- endcapture %}
 
         {%- assign name = relationship.name %}
-    {%- if annotation.size > 0 %}{{ annotation | replace: "|","
+    {% comment %} *** Empty line *** {% endcomment %}    
+    {%- if annotation.size > 0 %}
+    {{ annotation | replace: "|","
     " }}
     {%- endif %}
-
     public {{ relationship_type }} get{{ name | titleize }}() {
         return {{ name }};
     }

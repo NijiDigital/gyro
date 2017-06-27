@@ -1,17 +1,17 @@
 {%- for attribute in entity.attributes %}
 
-    {%- if attribute.realm_read_only.size == 0 -%}
+    {%- if attribute.realm_read_only.size == 0 %}
         {%- comment %} ******* CONVERT TYPE CAPTURE ******* {% endcomment -%}
 
-        {% capture visibility -%}
+        {%- capture visibility %}
           {%- if attribute.enum_type.size > 0 and params.hide_members_with_enum.size > 0 -%}
             protected
           {%- else -%}
              public
-          {%- endif -%}
+          {%- endif %}
         {%- endcapture %}
 
-        {%- capture convert_type -%}
+        {%- capture convert_type %}
           {%- if attribute.realm_read_only.size == 0 and attribute.enum_type.size > 0 -%}
             String
           {%- else -%}
@@ -19,25 +19,32 @@
               {%- include 'inc/wrapper_type_converter' -%}
             {%- else -%}
               {%- include 'inc/type_converter' -%}
-            {%- endif -%}
-          {%- endif -%}
-        {%- endcapture -%}
-        {%- capture isPrimitives -%}
-          {%- include 'inc/primitives' -%}
-        {%- endcapture -%}
-        {%- capture annotation -%}{%- if params.support_annotations == true -%}
-        {%- if params.use_wrappers == true or attribute.enum_type.size > 0 or isPrimitives == "false" -%}
-        @android.support.annotation.{% if attribute.optional == true %}Nullable{% else %}NonNull{% endif -%}
-          {%- if attribute.support_annotation.size > 0 %}|{% endif -%}
-        {%- endif -%}
-        {%- if attribute.support_annotation.size > 0 %}@android.support.annotation.{{ attribute.support_annotation }}{%- endif -%}
-        {%- endif -%}
-        {%- endcapture -%}
-        {%- assign name = attribute.name -%}
-    {%- if annotation.size > 0 %}{{ annotation | replace: "|","
-    " }}
-    {% endif %}
+            {%- endif %}
+          {%- endif %}
+        {%- endcapture %}
 
+        {%- capture isPrimitives %}
+          {%- include 'inc/primitives' %}
+        {%- endcapture %}
+
+        {%- capture annotation %}
+          {%- if params.support_annotations == true %}
+            {%- if params.use_wrappers == true or attribute.enum_type.size > 0 or isPrimitives == "false" -%}
+    @android.support.annotation.{% if attribute.optional == true %}Nullable{% else %}NonNull{%- endif -%}
+            {%- if attribute.support_annotation.size > 0 %}|{%- endif -%}
+          {%- endif %}
+        {%- if attribute.support_annotation.size > 0 -%}
+    @android.support.annotation.{{ attribute.support_annotation }}
+        {%- endif %}
+      {%- endif %}
+    {%- endcapture %}
+    {%- assign name = attribute.name %}
+    {% comment %} *** Empty line *** {% endcomment %}
+    
+    {%- if annotation.size > 0 %}
+    {{ annotation | replace: "|","
+    " }}
+    {%- endif %}
     {{ visibility }} {{ convert_type }} get{{ name | titleize }}() {
         return {{ name }};
     }
@@ -45,5 +52,5 @@
     {{ visibility }} void set{{ name | titleize }}({%- if annotation.size > 0 %}{{ annotation | replace: "|"," " }} {% endif %}final {{ convert_type }} {{ name }}) {
         this.{{ name }} = {{ name }};
     }
-    {%- endif -%}
-{%- endfor -%}
+    {%- endif %}
+{%- endfor %}
