@@ -16,7 +16,6 @@
 
 abort 'error: gyro requires Ruby 2 or higher.' if RUBY_VERSION < '2.0.0'
 
-
 $LOAD_PATH.unshift File.expand_path('../lib', File.dirname(__FILE__)) if $PROGRAM_NAME == __FILE__
 
 require 'gyro'
