@@ -1,13 +1,14 @@
 {%- if entity.relationships.size > 0 and entity.has_only_inverse == false %}
    
     public static final class Relationships {
-        private Relationships() {
-            // Hide constructor
-        }
-    {% for relationship in entity.relationships -%}
+    {%- for relationship in entity.relationships -%}
       {%- if relationship.inverse == false %}
         public static final String {{ relationship.name | snake_case | upcase }} = "{{ relationship.name }}";
       {%- endif -%}
     {%- endfor  %}
+
+        private Relationships() {
+            // Hide constructor
+        }
     }
 {%- endif -%}

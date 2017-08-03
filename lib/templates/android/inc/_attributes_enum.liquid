@@ -1,10 +1,7 @@
 {%- if entity.attributes.size > 0 %}
 
     public static final class Attributes {
-        private Attributes() {
-            // Hide constructor
-        }
-    {% for attribute in entity.attributes -%}
+    {%- for attribute in entity.attributes -%}
       {%- if attribute.realm_ignored == false or attribute.read_only == false -%}
         {%- if attribute.comment.size > 0 %}
         // {{ attribute.comment }}
@@ -12,5 +9,9 @@
         public static final String {{ attribute.name | snake_case | upcase }} = "{{ attribute.name }}";
       {%- endif -%}
     {%- endfor  %}
+
+        private Attributes() {
+            // Hide constructor
+        }
     }
 {%- endif -%}
