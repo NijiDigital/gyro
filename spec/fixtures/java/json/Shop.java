@@ -10,19 +10,19 @@ import io.realm.RealmObject;
 public class Shop extends RealmObject {
 
     public static final class Attributes {
+        public static final String NAME = "name";
+
         private Attributes() {
             // Hide constructor
         }
-
-        public static final String NAME = "name";
     }
 
     public static final class Relationships {
+        public static final String PRODUCTS = "products";
+
         private Relationships() {
             // Hide constructor
         }
-
-        public static final String PRODUCTS = "products";
     }
 
     @SerializedName("json_name")

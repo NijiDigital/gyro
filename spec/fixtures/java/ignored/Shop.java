@@ -9,21 +9,21 @@ import io.realm.annotations.Ignore;
 public class Shop extends RealmObject {
 
     public static final class Attributes {
+        public static final String NAME = "name";
+        public static final String READ_ONLY = "readOnly";
+
         private Attributes() {
             // Hide constructor
         }
-
-        public static final String NAME = "name";
-        public static final String READ_ONLY = "readOnly";
     }
 
     public static final class Relationships {
+        public static final String OWNER = "owner";
+        public static final String PRODUCTS = "products";
+
         private Relationships() {
             // Hide constructor
         }
-
-        public static final String OWNER = "owner";
-        public static final String PRODUCTS = "products";
     }
 
     @Ignore

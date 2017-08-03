@@ -8,20 +8,20 @@ import io.realm.annotations.PrimaryKey;
 public class FidelityCard extends RealmObject {
 
     public static final class Attributes {
+        public static final String IDENTIFIER = "identifier";
+        public static final String POINTS = "points";
+
         private Attributes() {
             // Hide constructor
         }
-
-        public static final String IDENTIFIER = "identifier";
-        public static final String POINTS = "points";
     }
 
     public static final class Relationships {
+        public static final String USER = "user";
+
         private Relationships() {
             // Hide constructor
         }
-
-        public static final String USER = "user";
     }
 
     @PrimaryKey

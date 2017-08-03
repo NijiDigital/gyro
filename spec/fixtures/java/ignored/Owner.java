@@ -8,19 +8,19 @@ import io.realm.annotations.Ignore;
 public class Owner extends RealmObject {
 
     public static final class Attributes {
+        public static final String NAME = "name";
+
         private Attributes() {
             // Hide constructor
         }
-
-        public static final String NAME = "name";
     }
 
     public static final class Relationships {
+        public static final String SHOP = "shop";
+
         private Relationships() {
             // Hide constructor
         }
-
-        public static final String SHOP = "shop";
     }
 
     private String name;

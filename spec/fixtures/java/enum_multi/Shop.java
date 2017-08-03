@@ -8,20 +8,20 @@ import io.realm.RealmObject;
 public class Shop extends RealmObject {
 
     public static final class Attributes {
+        public static final String NAME = "name";
+        public static final String TYPE = "type";
+
         private Attributes() {
             // Hide constructor
         }
-
-        public static final String NAME = "name";
-        public static final String TYPE = "type";
     }
 
     public static final class Relationships {
+        public static final String PRODUCTS = "products";
+
         private Relationships() {
             // Hide constructor
         }
-
-        public static final String PRODUCTS = "products";
     }
 
     private String name;

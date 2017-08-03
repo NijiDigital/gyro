@@ -8,11 +8,11 @@ import io.realm.RealmObject;
 public class Person extends RealmObject {
 
     public static final class Relationships {
+        public static final String DOGS = "dogs";
+
         private Relationships() {
             // Hide constructor
         }
-
-        public static final String DOGS = "dogs";
     }
 
     private RealmList<Dog> dogs;

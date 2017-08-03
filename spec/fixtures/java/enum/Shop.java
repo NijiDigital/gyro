@@ -7,13 +7,13 @@ import io.realm.RealmObject;
 public class Shop extends RealmObject {
 
     public static final class Attributes {
-        private Attributes() {
-            // Hide constructor
-        }
-
         public static final String NAME = "name";
         public static final String OPTIONAL_VALUE = "optionalValue";
         public static final String TYPE = "type";
+
+        private Attributes() {
+            // Hide constructor
+        }
     }
 
     private String name;

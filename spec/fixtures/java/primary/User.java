@@ -10,20 +10,20 @@ import io.realm.annotations.PrimaryKey;
 public class User extends RealmObject {
 
     public static final class Attributes {
+        public static final String BIRTHDAY = "birthday";
+        public static final String NAME = "name";
+
         private Attributes() {
             // Hide constructor
         }
-
-        public static final String BIRTHDAY = "birthday";
-        public static final String NAME = "name";
     }
 
     public static final class Relationships {
+        public static final String FIDELITY_CARD = "fidelityCard";
+
         private Relationships() {
             // Hide constructor
         }
-
-        public static final String FIDELITY_CARD = "fidelityCard";
     }
 
     private Date birthday;

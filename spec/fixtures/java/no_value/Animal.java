@@ -10,19 +10,19 @@ import io.realm.RealmObject;
 public class Animal extends RealmObject {
 
     public static final class Attributes {
+        public static final String ATTRIBUTE = "attribute";
+
         private Attributes() {
             // Hide constructor
         }
-
-        public static final String ATTRIBUTE = "attribute";
     }
 
     public static final class Relationships {
+        public static final String RELATIONSHIP_NO_VALUE = "relationshipNoValue";
+
         private Relationships() {
             // Hide constructor
         }
-
-        public static final String RELATIONSHIP_NO_VALUE = "relationshipNoValue";
     }
 
     private String attribute;

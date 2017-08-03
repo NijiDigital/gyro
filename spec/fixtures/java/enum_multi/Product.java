@@ -7,22 +7,22 @@ import io.realm.RealmObject;
 public class Product extends RealmObject {
 
     public static final class Attributes {
-        private Attributes() {
-            // Hide constructor
-        }
-
         public static final String BRAND = "brand";
         public static final String NAME = "name";
         public static final String PRICE = "price";
         public static final String TYPE = "type";
+
+        private Attributes() {
+            // Hide constructor
+        }
     }
 
     public static final class Relationships {
+        public static final String SHOP = "shop";
+
         private Relationships() {
             // Hide constructor
         }
-
-        public static final String SHOP = "shop";
     }
 
     private String brand;

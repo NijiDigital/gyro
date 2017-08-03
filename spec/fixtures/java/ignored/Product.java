@@ -7,11 +7,11 @@ import io.realm.RealmObject;
 public class Product extends RealmObject {
 
     public static final class Relationships {
+        public static final String SHOP = "shop";
+
         private Relationships() {
             // Hide constructor
         }
-
-        public static final String SHOP = "shop";
     }
 
     private Shop shop;

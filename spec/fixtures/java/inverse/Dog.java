@@ -7,12 +7,12 @@ import io.realm.RealmObject;
 public class Dog extends RealmObject {
 
     public static final class Attributes {
+        public static final String AGE = "age";
+        public static final String NAME = "name";
+
         private Attributes() {
             // Hide constructor
         }
-
-        public static final String AGE = "age";
-        public static final String NAME = "name";
     }
 
     private short age;
