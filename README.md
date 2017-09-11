@@ -44,34 +44,43 @@ gem install gyro
 Then invoke it with the appropriate options (see next paragraph), like this:
 
 ```bash
-gyro -m <model> --ios ~/Dev/MyProject/RealmModel --swift
+gyro --model <model> --template <template-name> --output <directory>
 ```
 
-_Alternativly, you could also simply clone this repository anywhere you want on your machine, then run the `bin/gyro` executable directly from where you cloned it_
+An addition, the command line have `--param` offer you the ability to inject constants inside tempates :
 
+```bash
+gyro --model <model> --template <template-name> --output <directory> --param <key>:<value>
+```
+
+existing params for android template :
+
+- **package = 'package of your app'**
+- **use_wrappers = true/false**
+- **support_annotations = true/false**
+
+
+_Alternativly, you could also clone this repository anywhere you want on your machine, then build and install the local gem_
+
+```bash
+gem build gyro.gemspec
+gem install gyro-1.0.0.gem
+```
 
 ## Command line arguments
 
 Gyro is a command line tool. The available parameters are as follows. You can also use `-h` do display the usage and available parameters/flags in the Terminal of course.
 
-| Short flag | Long flag | Description | Android | iOS |
-| ---------- | --------- | ----------- |:-------:|:---:|
-| `-m` | `--model` | Path to the  `.xcdatamodel` file. If this parameter is not given, Gyro will look for a `.xcdatamodel` | ✅ | ✅ |
-| `-a` | `--android` | Path to the directory where the generated files for Android will be created (e.g.: home/documents/dev/android/realm_project/com/niji/data) | ✅ | ➖ |
-| `-p` | `--package` | Full name of the Android "data" package (e.g.: com.niji.data) | ✅ | ➖ |
-| `-i` | `--ios` | Path to the directory where the generated files for iOS/macOS will be created | ➖ | ✅ |
-| `-j` | `--json` | Create the Realm-JSON categories (https://github.com/matthewcheok/Realm-JSON) | ➖ | ☑️ |
-| `-f` | `--framework` | Tells whether the project uses CocoaPods Frameworks  | ➖ | ☑️ |
-| `-s` | `--swift` | Use Swift for the iOS/macOS generation | ➖ | ☑️ |
-| `-n` | `--nsnumber` | Generate `NSNumber`s instead of Int/BOOL/Float types | ➖ | ☑️ |
-| `-w` | `--wrappers` | Use type wrappers for Java (Integer, Double, …) for optional attributes instead of primitive types (int, double, …) | ☑️ | ➖ |
-| `-x` | `--annotations` | Annotate the getters/setters of the generated classes with `@Nullable` for any optional attribute/relationship, and with `@NonNull` for any non-optional attribute/relationship | ☑️ | ➖ |
-| `-h` | `--help` | Show help | ☑️ | ☑️ |
-| `-v` | `--version` | Show the current version number of Gyro | ☑️ | ☑️ |
-
-_Caption: ✅ Mandatory flag for this platform / ☑️ Optional flag usable for this platform / ➖ Not applicable for this platform_
-
-
+| Short flag | Long flag | Description |
+| ---------- | --------- | ----------- |
+| `-m` | `--model PATH` | Path to the  `.xcdatamodel` file. <br>If this parameter is not given, Gyro will look for a `.xcdatamodel` |
+| `-t` | `--template DIR` | Path to the template directory to use, or name of a template embedded in gyro |
+| `-o` | `--output DIR` | Path to the output directory where to generate the model files |
+| `-p` | `--param KEY:VALUE` | Specify a custom parameter that can be used by the template. <br>Can be repeated to add more parameters |
+| `-l` | `--list` | List the names of all available templates provided by gyro |
+| `-i` | `--info TEMPLATE` | Show information about the given template <br>(path to directory or name of an embedded template)  |
+| `-h` | `--help` | Show help |
+| `-v` | `--version` | Show the current version number of Gyro |
 
 ## Annotating your `xcdatamodel`
 
