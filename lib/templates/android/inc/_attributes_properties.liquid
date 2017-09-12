@@ -1,12 +1,12 @@
 
-{% for attribute in entity.attributes -%}
+{%- for attribute in entity.attributes -%}
   {%- if attribute.realm_read_only.size == 0 -%}
       {%- comment %} ******* CONVERT TYPE CAPTURE ******* {% endcomment -%}
       {%- capture convert_type -%}
         {%- if attribute.realm_read_only.size == 0 and attribute.enum_type.size > 0 -%}
           String
         {%- else -%}
-          {%- if params.use_wrappers == true -%}
+          {%- if params.use_wrappers == "true" and attribute.optional == true -%}
             {%- include 'inc/wrapper_type_converter' -%}
           {%- else -%}
             {%- include 'inc/type_converter' -%}
@@ -27,7 +27,7 @@
       {%- if attribute.json_key_path.size > 0 %}
     @SerializedName("{{ attribute.json_key_path }}")
       {%- endif -%}
-      {%- if params.support_annotations == true and attribute.support_annotation.size > 0 %}
+      {%- if params.support_annotations.size > 0 and attribute.support_annotation.size > 0 %}
     @android.support.annotation.{{ attribute.support_annotation }}
       {%- endif %}
     private {{ convert_type }} {{ name }};

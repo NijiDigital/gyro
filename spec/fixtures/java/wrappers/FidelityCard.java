@@ -23,15 +23,15 @@ public class FidelityCard extends RealmObject {
         }
     }
 
-    private Short identifier;
+    private short identifier;
     private Integer points;
     private User user;
 
-    public Short getIdentifier() {
+    public short getIdentifier() {
         return identifier;
     }
 
-    public void setIdentifier(final Short identifier) {
+    public void setIdentifier(final short identifier) {
         this.identifier = identifier;
     }
 

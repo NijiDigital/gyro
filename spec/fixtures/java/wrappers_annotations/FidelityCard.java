@@ -23,17 +23,16 @@ public class FidelityCard extends RealmObject {
         }
     }
 
-    private Short identifier;
+    private short identifier;
     @android.support.annotation.IntRange(from=0,to=255)
     private Integer points;
     private User user;
 
-    @android.support.annotation.NonNull
-    public Short getIdentifier() {
+    public short getIdentifier() {
         return identifier;
     }
 
-    public void setIdentifier(@android.support.annotation.NonNull final Short identifier) {
+    public void setIdentifier(final short identifier) {
         this.identifier = identifier;
     }
 
