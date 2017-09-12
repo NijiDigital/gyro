@@ -1,36 +1,41 @@
 {%- for relationship in entity.relationships %}
-    
-    {% if relationship.inverse == false -%}
-        {%- capture relationship_type -%}
+    {%- if relationship.inverse == false %}
+        {%- capture relationship_type %}
           {%- if relationship.realm_read_only.size == 0 and relationship.enum_type.size > 0 -%}
             String
-          {%- else -%}
-            {%- if relationship.destination.size == 0 -%}
+          {%- else %}
+            {%- if relationship.destination.size == 0 %}
               {%- if relationship.type != "to_many"  -%}
                 {{ relationship.inverse_type }}
               {%- else -%}
                 RealmList<{{ relationship.inverse_type }}>
-              {%- endif -%}
+              {%- endif %}
             {%- else -%}
               List<{{ relationship.destination }}>
-            {%- endif -%}
-          {%- endif -%}
-        {%- endcapture -%}
+            {%- endif %}
+          {%- endif %}
+        {%- endcapture %}
 
-        {%- capture annotation -%}
-          {%- if params.support_annotations == true -%}
-          {%- if relationship.optional == true -%}
-          @android.support.annotation.Nullable{% endif -%}
-          {%- if relationship.optional == false -%}
-          @android.support.annotation.NonNull{% endif -%}
-          {%- if relationship.support_annotation.size > 0 %}|@android.support.annotation.{{ relationship.support_annotation }}{% endif -%}
-          {% endif -%}
-        {%- endcapture -%}
+        {%- capture annotation %}
+          {%- if params.support_annotations.size > 0 %}
+            {%- if relationship.optional == true -%}
+              @android.support.annotation.Nullable
+            {%- endif %}
+            {%- if relationship.optional == false -%}
+              @android.support.annotation.NonNull
+            {%- endif %}
+            {%- if relationship.support_annotation.size > 0 -%}
+              |@android.support.annotation.{{ relationship.support_annotation }}
+            {%- endif %}
+          {%- endif %}
+        {%- endcapture %}
 
         {%- assign name = relationship.name %}
-    {%- if annotation.size > 0 %}{{ annotation | replace: "|","
+    {% comment %} *** Empty line *** {% endcomment %}    
+    {%- if annotation.size > 0 %}
+    {{ annotation | replace: "|","
     " }}
-    {% endif -%}
+    {%- endif %}
     public {{ relationship_type }} get{{ name | titleize }}() {
         return {{ name }};
     }
@@ -38,5 +43,5 @@
     public void set{{ name | titleize }}({%- if annotation.size > 0 %}{{ annotation | replace: "|"," " }} {% endif %}final {{ relationship_type }} {{ name }}) {
         this.{{ name }} = {{ name }};
     }
-    {%- endif -%}
-{%- endfor -%}
+    {%- endif %}
+{%- endfor %}

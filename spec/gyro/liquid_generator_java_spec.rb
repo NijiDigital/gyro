@@ -54,7 +54,7 @@ module Gyro
         xcdatamodel = Parser::XCDataModel::XCDataModel.new(xcdatamodel_dir)
         Dir.mktmpdir(TMP_DIR_NAME) do |tmp_dir|
           template_dir = Pathname.new(ANDROID_TEMPLATE_DIR)
-          gen = Generator::Liquid.new(template_dir, tmp_dir, 'package' => PACKAGE_NAME, 'use_wrappers' => true)
+          gen = Generator::Liquid.new(template_dir, tmp_dir, 'package' => PACKAGE_NAME, 'use_wrappers' => 'true')
           gen.generate(xcdatamodel)
           fixtures_files_dir = fixture('java', 'wrappers')
           compare_dirs(tmp_dir, fixtures_files_dir)
@@ -66,7 +66,7 @@ module Gyro
         xcdatamodel = Parser::XCDataModel::XCDataModel.new(xcdatamodel_dir)
         Dir.mktmpdir(TMP_DIR_NAME) do |tmp_dir|
           template_dir = Pathname.new(ANDROID_TEMPLATE_DIR)
-          gen = Generator::Liquid.new(template_dir, tmp_dir, 'package' => PACKAGE_NAME, 'support_annotations' => true)
+          gen = Generator::Liquid.new(template_dir, tmp_dir, 'package' => PACKAGE_NAME, 'support_annotations' => 'true')
           gen.generate(xcdatamodel)
           fixtures_files_dir = fixture('java', 'annotations')
           compare_dirs(tmp_dir, fixtures_files_dir)
@@ -78,7 +78,7 @@ module Gyro
         xcdatamodel = Parser::XCDataModel::XCDataModel.new(xcdatamodel_dir)
         Dir.mktmpdir(TMP_DIR_NAME) do |tmp_dir|
           template_dir = Pathname.new(ANDROID_TEMPLATE_DIR)
-          options = { 'package' => PACKAGE_NAME, 'use_wrappers' => true, 'support_annotations' => true }
+          options = { 'package' => PACKAGE_NAME, 'use_wrappers' => 'true', 'support_annotations' => 'true' }
           gen = Generator::Liquid.new(template_dir, tmp_dir, options)
           gen.generate(xcdatamodel)
           fixtures_files_dir = fixture('java', 'wrappers_annotations')
