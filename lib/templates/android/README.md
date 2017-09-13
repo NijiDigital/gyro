@@ -1,4 +1,4 @@
-# Android Template Informations
+# Android Template Information
 
 | Name      | Description       |
 | --------- | ----------------- |
