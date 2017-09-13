@@ -13,6 +13,7 @@
 # limitations under the License.
 
 SWIFT3_TEMPLATE_DIR = 'lib/templates/swift3'.freeze
+OBJMAPPER_TEMPLATE_DIR = 'lib/templates/object-mapper'.freeze
 
 module Gyro
   describe 'Liquid' do
@@ -32,6 +33,18 @@ module Gyro
             fixtures_files_dir = fixture('swift', datamodel)
             compare_dirs(tmp_dir, fixtures_files_dir)
           end
+        end
+      end
+
+      it 'transformer' do
+        xcdatamodel_dir = fixture('xcdatamodel', "transformers.xcdatamodel")
+        xcdatamodel = Gyro::Parser::XCDataModel::XCDataModel.new(xcdatamodel_dir)
+        Dir.mktmpdir(TMP_DIR_NAME) do |tmp_dir|
+          template_dir = Pathname.new(OBJMAPPER_TEMPLATE_DIR)
+          gen = Generator::Liquid.new(template_dir, tmp_dir, {})
+          gen.generate(xcdatamodel)
+          fixtures_files_dir = fixture('swift', 'transformers', 'ObjectMapper')
+          compare_dirs(tmp_dir, fixtures_files_dir)
         end
       end
     end
