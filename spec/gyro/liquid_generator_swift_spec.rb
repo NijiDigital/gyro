@@ -14,6 +14,7 @@
 
 SWIFT3_TEMPLATE_DIR = 'lib/templates/swift3'.freeze
 OBJMAPPER_TEMPLATE_DIR = 'lib/templates/object-mapper'.freeze
+DECODABLE_TEMPLATE_DIR = 'lib/templates/decodable'.freeze
 
 module Gyro
   describe 'Liquid' do
@@ -36,7 +37,7 @@ module Gyro
         end
       end
 
-      it 'transformer' do
+      it 'transformer object mapper' do
         xcdatamodel_dir = fixture('xcdatamodel', "transformers.xcdatamodel")
         xcdatamodel = Gyro::Parser::XCDataModel::XCDataModel.new(xcdatamodel_dir)
         Dir.mktmpdir(TMP_DIR_NAME) do |tmp_dir|
@@ -44,6 +45,18 @@ module Gyro
           gen = Generator::Liquid.new(template_dir, tmp_dir, {})
           gen.generate(xcdatamodel)
           fixtures_files_dir = fixture('swift', 'transformers', 'ObjectMapper')
+          compare_dirs(tmp_dir, fixtures_files_dir)
+        end
+      end
+
+      it 'transformer decodable' do
+        xcdatamodel_dir = fixture('xcdatamodel', "transformers-decodable.xcdatamodel")
+        xcdatamodel = Gyro::Parser::XCDataModel::XCDataModel.new(xcdatamodel_dir)
+        Dir.mktmpdir(TMP_DIR_NAME) do |tmp_dir|
+          template_dir = Pathname.new(DECODABLE_TEMPLATE_DIR)
+          gen = Generator::Liquid.new(template_dir, tmp_dir, {})
+          gen.generate(xcdatamodel)
+          fixtures_files_dir = fixture('swift', 'transformers', 'decodable')
           compare_dirs(tmp_dir, fixtures_files_dir)
         end
       end
