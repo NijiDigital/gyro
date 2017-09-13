@@ -13,7 +13,6 @@ extension {{ entity.name }}: Decodable {
       {%- if attribute.json_key_path.size > 0 -%}
         {%- assign attributeKey = attribute.json_key_path -%}
       {%- endif -%}
-
       {%- case attribute.type -%}
         {%- when "date" -%}
     {{ entityVariable }}.{{ attribute.name }} = try Date.decode(json => "{{ attributeKey }}")
@@ -42,5 +41,5 @@ extension {{ entity.name }}: Decodable {
     {%- endfor %}
     return {{ entityVariable }}
   }
-  
+
 }
