@@ -1,6 +1,5 @@
 
 # Gyro
-===========
 
 [![gem version](https://img.shields.io/gem/v/gyro.svg?style=flat-square)](https://rubygems.org/gems/gyro)
 [![build circle ci](https://img.shields.io/circleci/project/github/NijiDigital/gyro.svg?style=flat-square)](https://circleci.com/gh/NijiDigital/gyro)
