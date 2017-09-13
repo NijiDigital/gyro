@@ -38,7 +38,7 @@ module Gyro
       end
 
       it 'transformer object mapper' do
-        xcdatamodel_dir = fixture('xcdatamodel', "transformers.xcdatamodel")
+        xcdatamodel_dir = fixture('xcdatamodel', 'transformers.xcdatamodel')
         xcdatamodel = Gyro::Parser::XCDataModel::XCDataModel.new(xcdatamodel_dir)
         Dir.mktmpdir(TMP_DIR_NAME) do |tmp_dir|
           template_dir = Pathname.new(OBJMAPPER_TEMPLATE_DIR)
@@ -50,7 +50,7 @@ module Gyro
       end
 
       it 'transformer decodable' do
-        xcdatamodel_dir = fixture('xcdatamodel', "transformers-decodable.xcdatamodel")
+        xcdatamodel_dir = fixture('xcdatamodel', 'transformers-decodable.xcdatamodel')
         xcdatamodel = Gyro::Parser::XCDataModel::XCDataModel.new(xcdatamodel_dir)
         Dir.mktmpdir(TMP_DIR_NAME) do |tmp_dir|
           template_dir = Pathname.new(DECODABLE_TEMPLATE_DIR)
