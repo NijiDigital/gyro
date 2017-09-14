@@ -6,7 +6,9 @@
 | Invocation example | `gyro -m <model> -t decodable …` |
 | Language | Swift 3 |
 
-This template generate `Decodable` extension for each object of your data model.
+This template generate code to be used with [Anviking's Decodable Swift library](https://github.com/Anviking/Decodable) (not to be confused with Swift 4's Decodable)
+
+It generates a `Decodable` extension for each object of your data model.
 
 # Generated Code
 
