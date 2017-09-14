@@ -209,7 +209,7 @@ LinkingObjects(fromType: A.self, property: "b")`
 If your inverse relationship is defined to point to a unique object (inverse of a `1-*` relationship for exemple, and not a `*-*` one), the generated code will contain both the plural form of the computed variable and a singular form returning its first element, for convenience:
 
 ```swift
-let owners = LinkingObjects(fromType: Person.self, property: "dogs")`
+let owners = LinkingObjects(fromType: Person.self, property: "dogs")
 var owner: Person? { return owners.first }
 ```
 
