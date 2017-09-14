@@ -6,9 +6,9 @@
 | Invocation example | `gyro -m <model> -t object-mapper …` |
 | Language | Swift 3 |
 
-This template generate `ObjectMapper` extension for each object of your data model.
+This template is useful if you use [ObjectMapper](https://github.com/Hearst-DD/ObjectMapper) to handle the JSON parsing of your model objects. It generates an `ObjectMapper` extension for each object of your data model.
 
-Note: When using this template to handle your JSON parsing for Swift, you'll have to use the `swift3-variant` template (instead of using the `swift3` template) to generate your main code for Realm Object classes (as it generates `var` and optional properties which are needed by `ObjectMapper`)
+_Note: When using this template to handle your JSON parsing for Swift, you'll have to use the `swift3-variant` template (instead of using the `swift3` template) to generate your main code for Realm Object classes (as it generates `var` and optional properties which are needed by `ObjectMapper`)_
 
 # Generated Code
 
