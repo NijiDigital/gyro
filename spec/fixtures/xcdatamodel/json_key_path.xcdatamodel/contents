@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7701" systemVersion="14E46" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
-    <entity name="RLMProduct" syncable="YES">
-        <relationship name="shop" maxCount="1" deletionRule="Nullify" destinationEntity="RLMShop" inverseName="products" inverseEntity="RLMShop" syncable="YES"/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="12141" systemVersion="16E195" minimumToolsVersion="Xcode 4.3" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
+    <entity name="Product" syncable="YES">
+        <relationship name="shop" maxCount="1" deletionRule="Nullify" destinationEntity="Shop" inverseName="products" inverseEntity="Shop" syncable="YES"/>
     </entity>
-    <entity name="RLMShop" syncable="YES">
+    <entity name="Shop" syncable="YES">
         <attribute name="name" attributeType="String" syncable="YES">
             <userInfo>
                 <entry key="JSONKeyPath" value="json_name"/>
             </userInfo>
         </attribute>
-        <relationship name="products" toMany="YES" deletionRule="Nullify" destinationEntity="RLMProduct" inverseName="shop" inverseEntity="RLMProduct" syncable="YES">
+        <relationship name="products" toMany="YES" deletionRule="Nullify" destinationEntity="Product" inverseName="shop" inverseEntity="Product" syncable="YES">
             <userInfo>
                 <entry key="JSONKeyPath" value="products_key_json"/>
             </userInfo>
         </relationship>
     </entity>
     <elements>
-        <element name="RLMProduct" positionX="216" positionY="279" width="128" height="60"/>
-        <element name="RLMShop" positionX="54" positionY="144" width="128" height="75"/>
+        <element name="Product" positionX="216" positionY="279" width="128" height="60"/>
+        <element name="Shop" positionX="54" positionY="144" width="128" height="75"/>
     </elements>
 </model>

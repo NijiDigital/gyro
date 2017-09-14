@@ -4,17 +4,17 @@ import RealmSwift
 
 final class User: Object {
 
-    enum Attributes: String {
-        case Birthday = "birthday"
-        case Name = "name"
-    }
+  enum Attributes: String {
+    case birthday = "birthday"
+    case name = "name"
+  }
 
-    enum Relationships: String {
-        case FidelityCard = "fidelityCard"
-    }
+  enum Relationships: String {
+    case fidelityCard = "fidelityCard"
+  }
 
-    dynamic var birthday: NSDate = NSDate()
-    dynamic var name: String = ""
-    dynamic var fidelityCard: FidelityCard?
+  dynamic var birthday: Date = Date()
+  dynamic var name: String = ""
+  dynamic var fidelityCard: FidelityCard?
 
 }

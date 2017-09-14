@@ -4,23 +4,26 @@ import RealmSwift
 
 final class Shop: Object {
 
-    enum Attributes: String {
-        case Name = "name"
-    }
+  enum Attributes: String {
+    case ignored = "ignored"
+    case ignored2 = "ignored2"
+    case name = "name"
+  }
 
-    enum Relationships: String {
-        case Owner = "owner"
-        case Products = "products"
-    }
+  enum Relationships: String {
+    case owner = "owner"
+    case products = "products"
+  }
 
-    dynamic var ignored: String = ""
-    dynamic var name: String = ""
-    dynamic var owner: Owner?
-    let products = List<Product>()
+  dynamic var ignored: String = ""
+  dynamic var ignored2: String = ""
+  dynamic var name: String = ""
+  dynamic var owner: Owner?
+  let products = List<Product>()
 
-    // Specify properties to ignore (Realm won't persist these)
-    override static func ignoredProperties() -> [String] {
-        return ["ignored"]
-    }
+  // Specify properties to ignore (Realm won't persist these)
+  override static func ignoredProperties() -> [String] {
+    return ["ignored","ignored2"]
+  }
 
 }

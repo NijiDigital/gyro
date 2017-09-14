@@ -4,9 +4,9 @@ package com.gyro.tests;
 
 public enum TypeB {
 
-    TYPE_ONE("type_b_one"),
-    TYPE_TWO("type_b_two"),
-    TYPE_THREE("type_b_three");
+    TYPE_B_ONE("TypeBOne"),
+    TYPE_B_TWO("TypeBTwo"),
+    TYPE_B_THREE("TypeBThree");
 
     private final String jsonValue;
 

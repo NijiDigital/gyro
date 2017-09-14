@@ -4,19 +4,19 @@ import RealmSwift
 
 final class Shop: Object {
 
-    enum Attributes: String {
-        case Name = "name"
-    }
+  enum Attributes: String {
+    case name = "name"
+  }
 
-    enum Relationships: String {
-        case Products = "products"
-    }
+  enum Relationships: String {
+    case products = "products"
+  }
 
-    dynamic var name: String = ""
-    let products = List<Product>()
+  dynamic var name: String = ""
+  let products = List<Product>()
 
-    override static func primaryKey() -> String? {
-        return "name"
-    }
+  override static func primaryKey() -> String? {
+    return "name"
+  }
 
 }

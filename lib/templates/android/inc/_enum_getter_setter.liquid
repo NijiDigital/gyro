@@ -1,0 +1,19 @@
+{%- for attribute in entity.attributes %}
+ 
+    {%- if attribute.realm_read_only.size == 0 and attribute.enum_type.size > 0 %}
+        {% if params.support_annotations.size > 0 %}
+    @android.support.annotation.Nullable
+        {%- capture annotation -%}@android.support.annotation.NonNull {% endcapture -%}
+        {%- endif -%}
+
+        {%- assign name = attribute.name %}
+    public {{ attribute.enum_type }} get{{ name | titleize }}Enum() {
+        return {{ attribute.enum_type }}.get(get{{ name | titleize }}());
+    }
+
+    public void set{{ name | titleize }}Enum({{ annotation }}final {{ attribute.enum_type }} {{ name }}) {
+        this.{{ name }} = {{ name }}.getJsonValue();
+    }
+    {%- endif -%}
+
+{%- endfor -%}
