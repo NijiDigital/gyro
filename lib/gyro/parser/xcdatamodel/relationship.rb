@@ -28,11 +28,11 @@ module Gyro
         # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
         def initialize(relationship_xml, entity_name)
           @entity_name = entity_name
-          @name = relationship_xml.xpath('@name').to_s
-          @optional = relationship_xml.xpath('@optional').to_s == 'YES' ? true : false
-          @deletion_rule = relationship_xml.xpath('@deletionRule').to_s
-          @inverse_name = relationship_xml.xpath('@inverseName').to_s
-          @inverse_type = relationship_xml.xpath('@destinationEntity').to_s
+          @name = relationship_xml.attributes['name'].to_s
+          @optional = relationship_xml.attributes['optional'].to_s == 'YES' ? true : false
+          @deletion_rule = relationship_xml.attributes['deletionRule'].to_s
+          @inverse_name = relationship_xml.attributes['inverseName'].to_s
+          @inverse_type = relationship_xml.attributes['destinationEntity'].to_s
           @json_key_path = Gyro::Parser::XCDataModel.user_info(relationship_xml, 'JSONKeyPath')
           @realm_ignored = Gyro::Parser::XCDataModel.user_info(relationship_xml, 'realmIgnored').empty? ? false : true
           @support_annotation = Gyro::Parser::XCDataModel.user_info(relationship_xml, 'supportAnnotation')
@@ -61,7 +61,7 @@ module Gyro
         private ################################################################
 
         def load_type(relationship_xml)
-          max_count = relationship_xml.xpath('@maxCount').to_s
+          max_count = relationship_xml.attributes['maxCount'].to_s
           @type = !max_count.nil? && (max_count == '1') ? :to_one : :to_many
         end
 

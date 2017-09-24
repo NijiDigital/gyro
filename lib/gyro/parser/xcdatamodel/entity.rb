@@ -23,9 +23,9 @@ module Gyro
 
         # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
         def initialize(entity_xml)
-          @name = entity_xml.xpath('@name').to_s
-          @parent = entity_xml.xpath('@parentEntity').to_s
-          @abstract = entity_xml.xpath('@isAbstract').to_s == 'YES' ? true : false
+          @name = entity_xml.attributes['name'].to_s
+          @parent = entity_xml.attributes['parentEntity'].to_s
+          @abstract = entity_xml.attributes['isAbstract'].to_s == 'YES' ? true : false
           @clean = false
           @identity_attribute = Gyro::Parser::XCDataModel.user_info(entity_xml, 'identityAttribute')
           @comment = Gyro::Parser::XCDataModel.user_info(entity_xml, 'comment')
@@ -175,7 +175,7 @@ module Gyro
         end
 
         def load_attributes(entity_xml)
-          entity_xml.xpath('attribute').each do |node|
+          XPath.each(entity_xml, 'attribute') do |node|
             attribute = Attribute.new(node, @name)
             if attribute.type != 'Transformable'
               @attributes[attribute.name] = attribute
@@ -184,7 +184,7 @@ module Gyro
         end
 
         def load_relationships(entity_xml)
-          entity_xml.xpath('relationship').each do |node|
+          XPath.each(entity_xml, 'relationship') do |node|
             relationship = Relationship.new(node, @name)
             @relationships[relationship.name] = relationship
           end
