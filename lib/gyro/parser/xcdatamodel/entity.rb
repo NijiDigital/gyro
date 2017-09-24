@@ -25,7 +25,7 @@ module Gyro
         def initialize(entity_xml)
           @name = entity_xml.attributes['name'].to_s
           @parent = entity_xml.attributes['parentEntity'].to_s
-          @abstract = entity_xml.attributes['isAbstract'].to_s == 'YES' ? true : false
+          @abstract = entity_xml.attributes['isAbstract'].to_s == 'YES'
           @clean = false
           @identity_attribute = Gyro::Parser::XCDataModel.user_info(entity_xml, 'identityAttribute')
           @comment = Gyro::Parser::XCDataModel.user_info(entity_xml, 'comment')
@@ -130,7 +130,7 @@ module Gyro
 
         def transformers
           transformers = Set.new
-          @attributes.each do |_, attribute|
+          @attributes.each_value do |_, attribute|
             transformers.add attribute.transformer unless attribute.transformer.empty?
           end
           transformers

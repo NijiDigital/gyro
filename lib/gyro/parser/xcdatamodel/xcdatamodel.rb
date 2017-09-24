@@ -57,7 +57,7 @@ module Gyro
 
         def load_entities(document_xml)
           root_model_element = document_xml.root
-          XPath.each(root_model_element, "//entity") do |node|
+          XPath.each(root_model_element, '//entity') do |node|
             entity = Entity.new(node)
             @entities[entity.name] = entity
           end
