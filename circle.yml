@@ -1,3 +1,4 @@
 test:
   post:
     - bundle exec rubocop
+    - bundle exec rake pr:check
