@@ -175,7 +175,7 @@ module Gyro
         end
 
         def load_attributes(entity_xml)
-          XPath.each(entity_xml, 'attribute') do |node|
+          entity_xml.each_element('attribute') do |node|
             attribute = Attribute.new(node, @name)
             if attribute.type != 'Transformable'
               @attributes[attribute.name] = attribute
@@ -184,7 +184,7 @@ module Gyro
         end
 
         def load_relationships(entity_xml)
-          XPath.each(entity_xml, 'relationship') do |node|
+          entity_xml.each_element('relationship') do |node|
             relationship = Relationship.new(node, @name)
             @relationships[relationship.name] = relationship
           end
