@@ -5,7 +5,7 @@
 * Migrate from `nokogiri` to `REXML` to reduce installation issues.  
   [Steven Watremez](https://github.com/StevenWatremez)
   [#35](https://github.com/NijiDigital/gyro/pull/35)
-* Warn about missing CHANGELOG entries in PRs.
+* Warn about missing CHANGELOG entries in PRs.  
   [Olivier Halligon](https://github.com/AliSoftware)
   
 ## 1.0.0
