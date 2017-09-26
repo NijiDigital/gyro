@@ -7,6 +7,11 @@
   [#35](https://github.com/NijiDigital/gyro/pull/35)
 * Warn about missing CHANGELOG entries in PRs.  
   [Olivier Halligon](https://github.com/AliSoftware)
+  [#37](https://github.com/NijiDigital/gyro/pull/37)
+* Add `import Foundation` statement to the Swift templates.  
+  [Olivier Halligon](https://github.com/AliSoftware)
+  [#36](https://github.com/NijiDigital/gyro/pull/36)
+
   
 ## 1.0.0
 
