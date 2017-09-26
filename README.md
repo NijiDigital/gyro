@@ -76,7 +76,7 @@ _To define a User Info key in Xcode's xcdatamodel editor, select the entity or a
 
 With the help of these "user infos", you will be able to give Gyro extra information about your model classes. For example, you can tell which attribute is the primary key, the attributes to ignore, the JSON mappings, …
 
-**For more information about "user infos", you can see the dedicated documentation [here](USER-INFO.md).**
+**For more information about "user infos", you can see the dedicated documentation [here](UserInfoKeys.md).**
 
 ## License
 

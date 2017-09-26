@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-require 'nokogiri'
+require 'rexml/document'
 
 require 'gyro/parser/xcdatamodel/xcdatamodel'
 require 'gyro/parser/xcdatamodel/attribute'

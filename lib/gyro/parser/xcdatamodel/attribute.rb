@@ -29,11 +29,11 @@ module Gyro
         # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
         def initialize(attribute_xml, entity_name)
           @entity_name = entity_name
-          @name = attribute_xml.xpath('@name').to_s
-          @optional = attribute_xml.xpath('@optional').to_s == 'YES'
-          @indexed = attribute_xml.xpath('@indexed').to_s == 'YES'
-          @default = attribute_xml.xpath('@defaultValueString').to_s
-          @type = attribute_xml.xpath('@attributeType').to_s.downcase.tr(' ', '_').to_sym
+          @name = attribute_xml.attributes['name'].to_s
+          @optional = attribute_xml.attributes['optional'].to_s == 'YES'
+          @indexed = attribute_xml.attributes['indexed'].to_s == 'YES'
+          @default = attribute_xml.attributes['defaultValueString'].to_s
+          @type = attribute_xml.attributes['attributeType'].to_s.downcase.tr(' ', '_').to_sym
           @realm_ignored = !Gyro::Parser::XCDataModel.user_info(attribute_xml, 'realmIgnored').empty?
           @realm_read_only = Gyro::Parser::XCDataModel.user_info(attribute_xml, 'realmReadOnly')
           @enum_type = Gyro::Parser::XCDataModel.user_info(attribute_xml, 'enumType')
