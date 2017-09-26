@@ -1,6 +1,10 @@
 # CHANGELOG
 
-## master
+## Master
+
+* _No changes yet. Don't hesitate to contribute with Pull Requests!_
+
+## 1.0.1
 
 * Migrate from `nokogiri` to `REXML` to reduce installation issues.  
   [Steven Watremez](https://github.com/StevenWatremez)
@@ -11,7 +15,6 @@
 * Add `import Foundation` statement to the Swift templates.  
   [Olivier Halligon](https://github.com/AliSoftware)
   [#36](https://github.com/NijiDigital/gyro/pull/36)
-
   
 ## 1.0.0
 
