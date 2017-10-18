@@ -2,10 +2,10 @@
 
 ## Master
 
-* `Decodable` - Add `JSONIgnored` userinfo's attribute (decodable usage only).
+* `Decodable` - Add `JSONIgnored` userinfo's attribute (decodable usage only).  
   [Arnaud Bretagne](https://github.com/abretagne)
   [#38](https://github.com/NijiDigital/gyro/pull/38)
-* `Decodable` - Handle optional attributes/relationship parsing.
+* `Decodable` - Handle optional attributes/relationship parsing.  
   [Arnaud Bretagne](https://github.com/abretagne)
   [#38](https://github.com/NijiDigital/gyro/pull/38)
 
