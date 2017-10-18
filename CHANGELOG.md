@@ -2,7 +2,12 @@
 
 ## Master
 
-* _No changes yet. Don't hesitate to contribute with Pull Requests!_
+* `Decodable` - Add `JSONIgnored` userinfo's attribute (decodable usage only).
+  [Arnaud Bretagne](https://github.com/abretagne)
+  [#38](https://github.com/NijiDigital/gyro/pull/38)
+* `Decodable` - Handle optional attributes/relationship parsing.
+  [Arnaud Bretagne](https://github.com/abretagne)
+  [#38](https://github.com/NijiDigital/gyro/pull/38)
 
 ## 1.0.1
 
