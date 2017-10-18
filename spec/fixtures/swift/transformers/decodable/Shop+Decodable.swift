@@ -7,12 +7,8 @@ extension Shop: Decodable {
 
   static func decode(_ json: Any) throws -> Shop {
     let shop = Shop()
-    if let date = DateTransformer().transformedValue(try? json => "attrDate") as? Date {
-      shop.attrDate = date
-    }
-    if let date = DateTransformer().transformedValue(try? json => "attrDateCustom") as? Date {
-      shop.attrDateCustom = date
-    }
+    shop.attrDate = try? Date.decode(json => "attrDate")
+    shop.attrDateCustom = try? Date.decode(json => "attrDateCustom")
     shop.attrDouble = try json => "attrDouble"
     shop.attrInteger16 = try Int.decode(json => "attrInteger16")
     shop.attrInteger32 = try json => "attrInteger32"

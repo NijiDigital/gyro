@@ -21,9 +21,7 @@ extension {{ entity.name }}: Decodable {
       {%- endif -%}
       {%- case attribute.type -%}
         {%- when "date" %}
-    if let date = DateTransformer().transformedValue({{ trySyntax }} json => "{{ attributeKey }}") as? Date {
-      {{ entityVariable }}.{{ attribute.name }} = date
-    }
+    {{ entityVariable }}.{{ attribute.name }} = {{ trySyntax }} Date.decode(json => "{{ attributeKey }}")
         {%- when "integer_16" or "integer_32" or "integer_64" or "float" or "double" or "boolean" -%}
           {%- if attribute.optional == true -%}
             {%- if attribute.enum_values.size > 0 -%}
