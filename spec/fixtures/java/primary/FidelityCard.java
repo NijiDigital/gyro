@@ -26,7 +26,7 @@ public class FidelityCard extends RealmObject {
 
     @PrimaryKey
     private short identifier;
-    private int points;
+    private int points = 0;
     private User user;
 
     public short getIdentifier() {

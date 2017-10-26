@@ -18,7 +18,7 @@ public class Product extends RealmObject {
 
     private String brand;
     private String name;
-    private int price;
+    private int price = 0;
 
     public String getBrand() {
         return brand;
