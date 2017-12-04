@@ -17,7 +17,7 @@
         {%- endcapture %}
 
         {%- capture annotation %}
-          {%- if params.support_annotations == true %}
+          {%- if params.support_annotations.size > 0 %}
             {%- if relationship.optional == true -%}
               @android.support.annotation.Nullable
             {%- endif %}

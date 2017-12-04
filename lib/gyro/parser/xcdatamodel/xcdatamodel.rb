@@ -12,6 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+include REXML
+
 module Gyro
   module Parser
     # Parser for CoreData's xcdatamodel files
@@ -25,7 +27,7 @@ module Gyro
       end
 
       def self.user_info(xml, key)
-        xml.xpath("userInfo/entry[@key='#{key}']/@value").to_s
+        XPath.first(xml, "userInfo/entry[@key='#{key}']/@value").to_s
       end
 
       # Represents the whole xcdatamodel file struture, once parsed
@@ -38,7 +40,7 @@ module Gyro
           Gyro::Log.fail!('Unable to find contents of xcdatamodel', stacktrace: true) unless File.exist?(contents_file)
           @entities = {}
           file = File.open(contents_file)
-          document_xml = Nokogiri::XML(file).remove_namespaces!
+          document_xml = Document.new(file)
           file.close
           load_entities(document_xml)
         end
@@ -54,7 +56,7 @@ module Gyro
         private
 
         def load_entities(document_xml)
-          document_xml.xpath('//entity').each do |node|
+          document_xml.root.each_element('//entity') do |node|
             entity = Entity.new(node)
             @entities[entity.name] = entity
           end
