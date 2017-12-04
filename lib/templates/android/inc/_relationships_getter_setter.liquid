@@ -6,7 +6,7 @@
           {%- else %}
             {%- if relationship.destination.size == 0 %}
               {%- if relationship.type != "to_many"  -%}
-                {{ relationship.inverse_type }}
+                {{ relationship.inverse_type }}
               {%- else -%}
                 RealmList<{{ relationship.inverse_type }}>
               {%- endif %}
