@@ -8,10 +8,13 @@ public class Shop extends RealmObject {
 
     public static final class Attributes {
         public static final String ACTIVE = "active";
-        public static final String IS_OPENED = "isOpened";
-        public static final String IS_VALID = "isValid";
+        public static final String BUDGET = "budget";
+        public static final String IS_OPEN = "isOpen";
         public static final String NAME = "name";
+        public static final String NUMBER_OF_ARRIVALS = "numberOfArrivals";
+        public static final String NUMBER_OF_PRODUCTS = "numberOfProducts";
         public static final String PROMO = "promo";
+        public static final String SLOGAN = "slogan";
 
         private Attributes() {
             // Hide constructor
@@ -19,10 +22,13 @@ public class Shop extends RealmObject {
     }
 
     private boolean active;
-    private boolean isOpened;
-    private boolean isValid;
+    private double budget;
+    private boolean isOpen;
     private String name;
-    private int promo;
+    private int numberOfArrivals;
+    private int numberOfProducts;
+    private double promo;
+    private String slogan;
 
     public boolean getActive() {
         return active;
@@ -32,20 +38,20 @@ public class Shop extends RealmObject {
         this.active = active;
     }
 
-    public boolean getIsOpened() {
-        return isOpened;
+    public double getBudget() {
+        return budget;
     }
 
-    public void setIsOpened(final boolean isOpened) {
-        this.isOpened = isOpened;
+    public void setBudget(final double budget) {
+        this.budget = budget;
     }
 
-    public boolean getIsValid() {
-        return isValid;
+    public boolean getIsOpen() {
+        return isOpen;
     }
 
-    public void setIsValid(final boolean isValid) {
-        this.isValid = isValid;
+    public void setIsOpen(final boolean isOpen) {
+        this.isOpen = isOpen;
     }
 
     public String getName() {
@@ -56,11 +62,35 @@ public class Shop extends RealmObject {
         this.name = name;
     }
 
-    public int getPromo() {
+    public int getNumberOfArrivals() {
+        return numberOfArrivals;
+    }
+
+    public void setNumberOfArrivals(final int numberOfArrivals) {
+        this.numberOfArrivals = numberOfArrivals;
+    }
+
+    public int getNumberOfProducts() {
+        return numberOfProducts;
+    }
+
+    public void setNumberOfProducts(final int numberOfProducts) {
+        this.numberOfProducts = numberOfProducts;
+    }
+
+    public double getPromo() {
         return promo;
     }
 
-    public void setPromo(final int promo) {
+    public void setPromo(final double promo) {
         this.promo = promo;
+    }
+
+    public String getSlogan() {
+        return slogan;
+    }
+
+    public void setSlogan(final String slogan) {
+        this.slogan = slogan;
     }
 }

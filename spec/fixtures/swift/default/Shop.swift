@@ -7,16 +7,22 @@ final class Shop: Object {
 
   enum Attributes: String {
     case active = "active"
-    case isOpened = "isOpened"
-    case isValid = "isValid"
+    case budget = "budget"
+    case isOpen = "isOpen"
     case name = "name"
+    case numberOfArrivals = "numberOfArrivals"
+    case numberOfProducts = "numberOfProducts"
     case promo = "promo"
+    case slogan = "slogan"
   }
 
   dynamic var active: Bool = true
-  dynamic var isOpened: Bool = false
-  dynamic var isValid: Bool = false
+  dynamic var budget: Double = 26000.35
+  dynamic var isOpen: Bool = false
   dynamic var name: String = ""
-  dynamic var promo: Int32 = -1
+  dynamic var numberOfArrivals: Int32 = 0
+  dynamic var numberOfProducts: Int32 = 155
+  dynamic var promo: Double = 0.0
+  dynamic var slogan: String = "The best place to be"
 
 }
