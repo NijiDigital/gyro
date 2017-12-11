@@ -34,6 +34,9 @@ extension Shop: Decodable {
   }
 }
 ```
+
 # Specific JSON tasks
+
 ## Ignoring specific properties
-If you don't want to generate a decodable call for a specific property, just add the **JSONIgnored** attribute in the xcdatamodel property's userInfos.
+
+If you don't want to generate a decodable call for a specific property, just add the `JSONIgnored` attribute in the xcdatamodel property's userInfos.
