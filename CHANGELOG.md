@@ -9,6 +9,8 @@
   [Arnaud Bretagne](https://github.com/abretagne)
   [#38](https://github.com/NijiDigital/gyro/pull/38)
 * Fix swift default value for boolean, integer and string.  
+  [Steven Watremez](https://github.com/StevenWatremez)
+  [#39](https://github.com/NijiDigital/gyro/pull/39)
 
 ## 1.0.1
 
