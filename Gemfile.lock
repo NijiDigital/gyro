@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    gyro (1.0.0)
+    gyro (1.0.1)
       liquid (~> 3.0)
 
 GEM

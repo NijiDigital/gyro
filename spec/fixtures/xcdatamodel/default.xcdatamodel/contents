@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="13772" systemVersion="16G1036" minimumToolsVersion="Xcode 4.3" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
+    <entity name="Shop" syncable="YES">
+        <attribute name="active" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="budget" attributeType="Double" defaultValueString="26000.35" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="isOpen" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="name" attributeType="String" syncable="YES"/>
+        <attribute name="numberOfArrivals" attributeType="Integer 32" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="numberOfProducts" attributeType="Integer 32" defaultValueString="155" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="promo" attributeType="Double" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="slogan" attributeType="String" defaultValueString="The best place to be" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Shop" positionX="160" positionY="192" width="128" height="165"/>
+    </elements>
+</model>
