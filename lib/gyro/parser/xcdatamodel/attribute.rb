@@ -20,11 +20,12 @@ module Gyro
       class Attribute
         attr_accessor :entity_name, :name, :type, :optional, :indexed, :default
         attr_accessor :realm_ignored, :realm_read_only, :enum_type, :enum_values
-        attr_accessor :json_key_path, :json_values, :transformer, :comment, :support_annotation
+        attr_accessor :json_key_path, :json_values, :transformer, :comment, :support_annotation, :json_ignored
 
         alias optional? optional
         alias indexed? indexed
         alias realm_ignored? realm_ignored
+        alias json_ignored? json_ignored
 
         # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
         def initialize(attribute_xml, entity_name)
@@ -40,6 +41,7 @@ module Gyro
           @enum_values = Gyro::Parser::XCDataModel.user_info(attribute_xml, 'enumValues').split(',')
           @json_key_path = Gyro::Parser::XCDataModel.user_info(attribute_xml, 'JSONKeyPath')
           @json_values = Gyro::Parser::XCDataModel.user_info(attribute_xml, 'JSONValues').split(',')
+          @json_ignored = !Gyro::Parser::XCDataModel.user_info(attribute_xml, 'JSONIgnored').empty?
           @transformer = Gyro::Parser::XCDataModel.user_info(attribute_xml, 'transformer').strip
           @comment = Gyro::Parser::XCDataModel.user_info(attribute_xml, 'comment')
           @support_annotation = Gyro::Parser::XCDataModel.user_info(attribute_xml, 'supportAnnotation')
@@ -56,6 +58,7 @@ module Gyro
             'realm_ignored' => realm_ignored, 'realm_read_only' => realm_read_only,
             'enum_type' => enum_type, 'enum_values' => enum_values,
             'json_key_path' => json_key_path, 'json_values' => json_values,
+            'json_ignored' => json_ignored,
             'transformer' => transformer, 'need_transformer' => need_transformer?,
             'comment' => comment,
             'support_annotation' => support_annotation,

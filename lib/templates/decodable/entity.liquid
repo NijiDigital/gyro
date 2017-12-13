@@ -8,49 +8,77 @@ extension {{ entity.name }}: Decodable {
   static func decode(_ json: Any) throws -> {{ entity.name }} {
     {%- assign entityVariable = entity.name | uncapitalize  %}
     let {{ entityVariable }} = {{ entity.name }}()
+
     {%- for attribute in entity.attributes %}
-      {% assign attributeKey = attribute.name -%}
+    {%- if attribute.json_ignored == false %}
+      {%- assign trySyntax = "try" -%}
+      {%- if attribute.optional == true -%}
+        {%- assign trySyntax = "try?" -%}
+      {%- endif -%}
+      {%- assign attributeKey = attribute.name -%}
       {%- if attribute.json_key_path.size > 0 -%}
         {%- assign attributeKey = attribute.json_key_path -%}
       {%- endif -%}
       {%- case attribute.type -%}
-        {%- when "date" -%}
-    {{ entityVariable }}.{{ attribute.name }} = try Date.decode(json => "{{ attributeKey }}")
+        {%- when "date" %}
+    {{ entityVariable }}.{{ attribute.name }} = {{ trySyntax }} Date.decode(json => "{{ attributeKey }}")
         {%- when "integer_16" or "integer_32" or "integer_64" or "float" or "double" or "boolean" -%}
           {%- if attribute.optional == true -%}
-            {%- if attribute.transformer.size > 0 -%}
-    {{ entityVariable }}.{{ attribute.name }}.value = try {{ attribute.transformer }}.decode(json => "{{ attributeKey }}")
+            {%- if attribute.enum_values.size > 0 -%}
+              {%- if attribute.transformer.size > 0 %}
+    {{ entityVariable }}.{{ attribute.name }} = {{ trySyntax }} {{ attribute.transformer }}.decode(json => "{{ attributeKey }}")
+              {%- else %}
+    {{ entityVariable }}.{{ attribute.name }} = {{ trySyntax }} json => "{{ attributeKey }}"
+              {%- endif -%}
             {%- else -%}
-    {{ entityVariable }}.{{ attribute.name }}.value = try json => "{{ attributeKey }}"
+              {%- if attribute.transformer.size > 0 %}
+    {{ entityVariable }}.{{ attribute.name }}.value = {{ trySyntax }} {{ attribute.transformer }}.decode(json => "{{ attributeKey }}")
+              {%- else %}
+    {{ entityVariable }}.{{ attribute.name }}.value = {{ trySyntax }} json => "{{ attributeKey }}"
+              {%- endif -%}
             {%- endif -%}
           {%- else -%}
-            {%- if attribute.transformer.size > 0 -%}
-    {{ entityVariable }}.{{ attribute.name }} = try {{ attribute.transformer }}.decode(json => "{{ attributeKey }}")
-            {%- else -%}
-    {{ entityVariable }}.{{ attribute.name }} = try json => "{{ attributeKey }}"
+            {%- if attribute.transformer.size > 0 %}
+    {{ entityVariable }}.{{ attribute.name }} = {{ trySyntax }} {{ attribute.transformer }}.decode(json => "{{ attributeKey }}")
+            {%- else %}
+    {{ entityVariable }}.{{ attribute.name }} = {{ trySyntax }} json => "{{ attributeKey }}"
             {%- endif -%}
           {%- endif -%}
         {%- else -%}
-            {%- if attribute.transformer.size > 0 -%}
-    {{ entityVariable }}.{{ attribute.name }} = try {{ attribute.transformer }}.decode(json => "{{ attributeKey }}")
-            {%- else -%}
-    {{ entityVariable }}.{{ attribute.name }} = try json => "{{ attributeKey }}"
+            {%- if attribute.transformer.size > 0 %}
+    {{ entityVariable }}.{{ attribute.name }} = {{ trySyntax }} {{ attribute.transformer }}.decode(json => "{{ attributeKey }}")
+            {%- else %}
+    {{ entityVariable }}.{{ attribute.name }} = {{ trySyntax }} json => "{{ attributeKey }}"
             {%- endif -%}
       {%- endcase -%}
+    {%- endif -%}
     {%- endfor -%}
 
-    {%- for relationship in entity.relationships %}
-      {% assign relationKey = relationship.name -%}
+    {% for relationship in entity.relationships -%}
+    {%- if relationship.json_ignored == false %}
+      {%- assign relationKey = relationship.name -%}
+      {%- assign trySyntax = "try" -%}
+      {%- if relationship.optional == true -%}
+        {%- assign trySyntax = "try?" -%}
+      {%- endif -%}
       {%- if relationship.json_key_path.size > 0 -%}
         {%- assign relationKey = relationship.json_key_path -%}
       {%- endif -%}
       {%- if relationship.type == "to_many" -%}
-    let {{ relationship.name }}Sandbox: [{{ relationship.inverse_type }}] = try json => "{{ relationKey }}"
+        {%- if relationship.optional == true %}
+    if let {{ relationship.name }}Sandbox: [{{ relationship.inverse_type }}] = {{ trySyntax }} json => "{{ relationKey }}" {
+      {{ entityVariable }}.{{ relationship.name }}.append(objectsIn: {{ relationship.name }}Sandbox)
+    }
+      {%- else %}
+    let {{ relationship.name }}Sandbox: [{{ relationship.inverse_type }}] = {{ trySyntax }} json => "{{ relationKey }}"
     {{ entityVariable }}.{{ relationship.name }}.append(objectsIn: {{ relationship.name }}Sandbox)
-      {%- else -%}
-    {{ entityVariable }}.{{ relationship.name }} = try json => "{{ relationKey }}"
       {%- endif -%}
+      {%- else %}
+    {{ entityVariable }}.{{ relationship.name }} = {{ trySyntax }} json => "{{ relationKey }}"
+      {%- endif -%}
+    {%- endif -%}
     {%- endfor %}
+
     return {{ entityVariable }}
   }
 

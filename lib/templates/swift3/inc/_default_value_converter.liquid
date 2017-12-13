@@ -1,12 +1,32 @@
 {%- case attribute.type -%}
 {%- when 'integer_16' or 'integer_32' or 'integer_64' -%}
-0
+  {%- if attribute.default.size > 0 -%}
+    {{ attribute.default }}
+  {%- else -%}
+    0
+  {%- endif -%}
 {%- when 'float' or 'double' or 'decimal' -%}
-0.0
+  {%- if attribute.default.size > 0 -%}
+    {{ attribute.default }}
+  {%- else -%}
+    0.0
+  {%- endif -%}
 {%- when 'string' -%}
-""
+  {%- if attribute.default.size > 0 -%}
+    "{{ attribute.default }}"
+  {%- else -%}
+    ""
+  {%- endif -%}
 {%- when 'boolean' -%}
+{%- if attribute.default.size > 0 -%}
+  {%- if attribute.default == "YES" -%}
+    true
+  {%- else -%}
+    false
+  {%- endif -%}
+{%- else -%}
 false
+{%- endif -%}
 {%- when 'date' -%}
 Date()
 {%- when 'binary' -%}
