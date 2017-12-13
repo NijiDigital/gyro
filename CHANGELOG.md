@@ -2,6 +2,9 @@
 
 ## Master
 
+* Improve Android (Java) templates. Set default values for attributes.  
+  [Benoit Marty](https://github.com/bmarty)
+  [#40](https://github.com/NijiDigital/gyro/pull/40)
 * `Decodable` - Add `JSONIgnored` userinfo's attribute (decodable usage only).  
   [Arnaud Bretagne](https://github.com/abretagne)
   [#38](https://github.com/NijiDigital/gyro/pull/38)
