@@ -20,6 +20,7 @@
             {%- if attribute.default == "YES" %} true
             {%- else %} false
             {%- endif %}
+          {%- elsif convert_type == "String" %} "{{ attribute.default }}"
           {%- else %} {{ attribute.default }}
           {%- endif %}
         {%- endif %}
