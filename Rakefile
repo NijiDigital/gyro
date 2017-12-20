@@ -2,11 +2,17 @@
 namespace :pr do
   desc 'Check incoming PRs on CI'
   task :check do
+    if ENV['CI_PULL_REQUEST'].empty?
+      warn 'Not part of a Pull Request, so nothing to check in this task'
+      next
+    end
+
     if ENV['CI']
       sh 'git fetch origin +master:master 2>/dev/null'
     else
       sh 'git fetch origin master 2>/dev/null'
     end
+
     modified_files = `git diff --name-only HEAD master`.split("\n")
     puts '---'
 
