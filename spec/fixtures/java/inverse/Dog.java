@@ -15,7 +15,7 @@ public class Dog extends RealmObject {
         }
     }
 
-    private short age;
+    private short age = 0;
     private String name;
 
     public short getAge() {

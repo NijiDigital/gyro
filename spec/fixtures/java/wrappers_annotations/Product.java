@@ -18,7 +18,7 @@ public class Product extends RealmObject {
 
     private String brand;
     private String name;
-    private Integer price;
+    private Integer price = 0;
 
     @android.support.annotation.Nullable
     public String getBrand() {

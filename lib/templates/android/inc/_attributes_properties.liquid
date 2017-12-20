@@ -1,5 +1,4 @@
-
-{%- for attribute in entity.attributes -%}
+{% for attribute in entity.attributes -%}
   {%- if attribute.realm_read_only.size == 0 -%}
       {%- comment %} ******* CONVERT TYPE CAPTURE ******* {% endcomment -%}
       {%- capture convert_type -%}
@@ -13,6 +12,18 @@
           {%- endif -%}
         {%- endif -%}
       {%- endcapture -%}
+
+      {%- capture default_value %}
+        {%- if attribute.default.size > 0 %} =
+          {%- if convert_type == "boolean" %}
+            {%- if attribute.default == "YES" %} true
+            {%- else %} false
+            {%- endif %}
+          {%- elsif convert_type == "String" %} "{{ attribute.default }}"
+          {%- else %} {{ attribute.default }}
+          {%- endif %}
+        {%- endif %}
+      {%- endcapture %}
 
       {%- assign name = attribute.name -%}
       {%- if name == primary_key %}
@@ -30,6 +41,6 @@
       {%- if params.support_annotations.size > 0 and attribute.support_annotation.size > 0 %}
     @android.support.annotation.{{ attribute.support_annotation }}
       {%- endif %}
-    private {{ convert_type }} {{ name }};
+    private {{ convert_type }} {{ name }}{{ default_value }};
   {%- endif -%}
 {%- endfor -%}
