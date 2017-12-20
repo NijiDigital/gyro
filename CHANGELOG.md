@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Master
+## 1.1.0
 
 * Improve Android (Java) templates. Set default values for attributes.  
   [Benoit Marty](https://github.com/bmarty)

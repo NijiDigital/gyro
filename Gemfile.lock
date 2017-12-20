@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    gyro (1.0.1)
+    gyro (1.1.0)
       liquid (~> 3.0)
 
 GEM
@@ -49,4 +49,4 @@ DEPENDENCIES
   rubocop (~> 0.47)
 
 BUNDLED WITH
-   1.15.4
+   1.16.0
