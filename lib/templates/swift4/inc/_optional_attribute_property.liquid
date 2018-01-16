@@ -1,0 +1,5 @@
+{%- if attribute.is_number == true or attribute.is_bool == true %}
+  let {{ attribute.name }} = RealmOptional<{{ convert_type }}>()
+{%- else %}
+  @objc dynamic var {{ attribute.name }}: {{ convert_type }}?
+{%- endif -%}
