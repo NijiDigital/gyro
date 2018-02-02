@@ -1,0 +1,22 @@
+{%- case attribute.type -%}
+{%- when 'integer_16' -%}
+0
+{%- when 'integer_32' -%}
+0
+{%- when 'integer_64' -%}
+0l
+{%- when 'double' or 'decimal' -%}
+0.0
+{%- when 'float' -%}
+0.0f
+{%- when 'string' -%}
+""
+{%- when 'boolean' -%}
+false
+{%- when 'date' -%}
+Date()
+{%- when 'binary' -%}
+ByteArray()
+{%- else -%}
+""
+{%- endcase -%}

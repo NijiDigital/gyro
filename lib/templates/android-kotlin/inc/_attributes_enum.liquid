@@ -1,0 +1,13 @@
+{%- if entity.attributes.size > 0 %}
+
+    object Attributes {
+    {%- for attribute in entity.attributes -%}
+      {%- if attribute.realm_ignored == false or attribute.read_only == false -%}
+        {%- if attribute.comment.size > 0 %}
+        // {{ attribute.comment }}
+        {%- endif %}
+        const val {{ attribute.name | snake_case | upcase }}: String = "{{ attribute.name }}"
+      {%- endif -%}
+    {%- endfor  %}
+    }
+{%- endif -%}

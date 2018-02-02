@@ -1,0 +1,48 @@
+{% for attribute in entity.attributes -%}
+  {%- if attribute.realm_read_only.size == 0 -%}
+      {%- comment %} ******* CONVERT TYPE CAPTURE ******* {% endcomment -%}
+      {%- capture convert_type -%}
+        {%- if attribute.realm_read_only.size == 0 and attribute.enum_type.size > 0 -%}
+          String
+        {%- else -%}
+          {%- include 'inc/type_converter' -%} 
+        {%- endif -%}
+      {%- endcapture -%}
+
+      {%- capture default_value %}
+        {%- if attribute.default.size > 0 %} =
+          {%- if convert_type == "Boolean" %}
+            {%- if attribute.default == "YES" %} true {%- else %} false {%- endif %}
+          {%- elsif convert_type == "String" %} "{{ attribute.default }}"
+          {%- else %} {{ attribute.default }}
+          {%- endif %}
+        {%- else %} = 
+          {%- if attribute.optional == true %} null 
+          {%- else %} {% include 'inc/type_defaults' -%}
+          {%- endif %}
+        {%- endif %}
+      {%- endcapture %}
+
+      {%- capture nullable_type %}
+        {%- if attribute.optional == true %}?{%- endif -%}
+      {%- endcapture %}
+
+      {%- assign name = attribute.name -%}
+      {%- if name == primary_key %}
+    @PrimaryKey 
+      {%- endif -%}
+      {%- if attribute.optional == false and attribute.realm_ignored == false and name != primary_key%}
+    @Required 
+      {%- endif -%}
+      {%- if attribute.indexed == true %}
+    @Index 
+      {%- endif -%}
+      {%- if attribute.realm_ignored == true %}
+    @Ignore 
+      {%- endif -%}
+      {%- if attribute.json_key_path.size > 0 %}
+    @SerializedName("{{ attribute.json_key_path }}") 
+      {%- endif %}
+    var {{ name }}: {{ convert_type }}{{ nullable_type }}{{ default_value }}
+  {%- endif -%}
+{%- endfor -%}
