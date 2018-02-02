@@ -9,6 +9,14 @@
         {%- endif -%}
       {%- endcapture -%}
 
+      {%- capture is_primitive %}
+        {%- if attribute.realm_read_only.size == 0 and attribute.enum_type.size > 0 -%}
+          false
+        {%- else -%}
+          {%- include 'inc/type_primitives' -%} 
+        {%- endif -%}
+      {%- endcapture -%}
+
       {%- capture default_value %}
         {%- if attribute.default.size > 0 %} =
           {%- if convert_type == "Boolean" %}
@@ -16,8 +24,12 @@
           {%- elsif convert_type == "String" %} "{{ attribute.default }}"
           {%- else %} {{ attribute.default }}
           {%- endif %}
+        {%- elsif attribute.enum_type.size > 0 %} = 
+          {%- if attribute.optional == true %} null
+          {%- else %} "{{ attribute.enum_values.first }}"
+          {%- endif -%}
         {%- else %} = 
-          {%- if attribute.optional == true %} null 
+          {%- if attribute.optional == true and is_primitive == "false" %} null 
           {%- else %} {% include 'inc/type_defaults' -%}
           {%- endif %}
         {%- endif %}
@@ -31,7 +43,7 @@
       {%- if name == primary_key %}
     @PrimaryKey 
       {%- endif -%}
-      {%- if attribute.optional == false and attribute.realm_ignored == false and name != primary_key%}
+      {%- if attribute.optional == false and attribute.realm_ignored == false and name != primary_key and is_primitive == "false" %}
     @Required 
       {%- endif -%}
       {%- if attribute.indexed == true %}

@@ -19,7 +19,7 @@ class Shop : RealmObject() {
     var name: String = ""
     @Required
     @SerializedName("type")
-    var type: String = 0
+    var type: String = "TypeOne"
     @SerializedName("type")
     var typeOptional: String? = null
 

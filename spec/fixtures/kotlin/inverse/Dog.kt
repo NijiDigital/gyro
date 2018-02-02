@@ -12,7 +12,6 @@ class Dog : RealmObject() {
         const val NAME: String = "name"
     }
 
-    @Required
     var age: Short = 0
     @Required
     var name: String = ""

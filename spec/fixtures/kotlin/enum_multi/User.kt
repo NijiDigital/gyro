@@ -24,7 +24,7 @@ class User : RealmObject() {
     @Required
     var name: String = ""
     @Required
-    var type: String = 0
+    var type: String = "TypeBOne"
     var fidelityCard: FidelityCard? = null
 
     fun  getTypeEnum(): TypeB? {

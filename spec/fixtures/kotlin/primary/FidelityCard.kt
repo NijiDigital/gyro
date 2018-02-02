@@ -19,7 +19,6 @@ class FidelityCard : RealmObject() {
 
     @PrimaryKey
     var identifier: Short = 0
-    @Required
     var points: Int = 0
     var user: User? = null
 }

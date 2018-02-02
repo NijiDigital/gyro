@@ -18,6 +18,5 @@ class Product : RealmObject() {
     var brand: String = ""
     @PrimaryKey
     var name: String = ""
-    @Required
     var price: Int = 0
 }

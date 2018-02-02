@@ -22,10 +22,9 @@ class Product : RealmObject() {
     var brand: String = ""
     @Required
     var name: String = ""
-    @Required
     var price: Int = 0
     @Required
-    var type: String = 0
+    var type: String = "TypeAOne"
     var shop: Shop? = null
 
     fun  getTypeEnum(): TypeA? {

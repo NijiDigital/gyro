@@ -16,9 +16,7 @@ class FidelityCard : RealmObject() {
         const val USER: String = "user"
     }
 
-    @Required
     var identifier: Short = 0
-    @Required
     var points: Int = 0
     var user: User? = null
 }

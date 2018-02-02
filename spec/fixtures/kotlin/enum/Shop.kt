@@ -17,7 +17,7 @@ class Shop : RealmObject() {
     var name: String = ""
     var optionalValue: String? = null
     @Required
-    var type: String = 0
+    var type: String = "TypeOne"
 
     fun  getOptionalValueEnum(): OptValue? {
         return OptValue.get(optionalValue)

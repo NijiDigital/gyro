@@ -18,19 +18,13 @@ class Shop : RealmObject() {
         const val SLOGAN: String = "slogan"
     }
 
-    @Required
     var active: Boolean = true
-    @Required
     var budget: Double = 26000.35
-    @Required
     var isOpen: Boolean = false
     @Required
     var name: String = ""
-    @Required
     var numberOfArrivals: Int = 0
-    @Required
     var numberOfProducts: Int = 155
-    @Required
     var promo: Double = 0.0
     @Required
     var slogan: String = "The best place to be"
