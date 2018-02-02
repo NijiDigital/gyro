@@ -20,7 +20,7 @@ class Shop : RealmObject() {
     @Required
     var name: String = ""
     @Required
-    var type: String = 0
+    var type: String = "TypeAOne"
     var products: RealmList<Product>? = null
 
     fun  getTypeEnum(): TypeA? {
