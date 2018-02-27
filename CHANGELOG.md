@@ -2,7 +2,7 @@
 
 ## 1.1.1
 
-* Add swift4 compatibility  
+* Add swift4 compatibility.  
   [Jérémie GOAS](https://github.com/jgoas)
   [#41](https://github.com/NijiDigital/gyro/pull/41)
 
