@@ -14,9 +14,9 @@ final class User: Object {
     case fidelityCard = "fidelityCard"
   }
 
-  dynamic var birthday: Date = Date()
-  dynamic var name: String = ""
-  dynamic var fidelityCard: FidelityCard?
+  @objc dynamic var birthday: Date = Date()
+  @objc dynamic var name: String = ""
+  @objc dynamic var fidelityCard: FidelityCard?
 
   override static func primaryKey() -> String? {
     return "name"

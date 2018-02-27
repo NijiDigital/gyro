@@ -1,9 +1,9 @@
   {%- if attribute.optional == true %}
 
-  dynamic var {{ attribute.name }}: String?
+  @objc dynamic var {{ attribute.name }}: String?
   {%- else %}
 
-  dynamic var {{ attribute.name }}: String = ""
+  @objc dynamic var {{ attribute.name }}: String = ""
   {%- endif %}
   {%- assign enum_type = attribute.enum_type %}
   {%- assign enum_name = attribute.name %}

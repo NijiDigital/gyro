@@ -14,8 +14,8 @@ final class FidelityCard: Object {
     case user = "user"
   }
 
-  dynamic var identifier: Int16 = 0
+  @objc dynamic var identifier: Int16 = 0
   let points = RealmOptional<Int32>()
-  dynamic var user: User?
+  @objc dynamic var user: User?
 
 }

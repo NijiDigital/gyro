@@ -11,8 +11,8 @@ final class Product: Object {
     case price = "price"
   }
 
-  dynamic var brand: String?
-  dynamic var name: String = ""
+  @objc dynamic var brand: String?
+  @objc dynamic var name: String = ""
   let price = RealmOptional<Int32>()
 
 }

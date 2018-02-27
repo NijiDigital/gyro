@@ -16,13 +16,13 @@ final class Shop: Object {
         case AttrInteger64 = "attrInteger64"
     }
 
-    dynamic var attrDate: NSDate? = nil
-    dynamic var attrDateCustom: NSDate? = nil
-    dynamic var attrDecimal: Double = 0.0
-    dynamic var attrDouble: Double = 0.0
-    dynamic var attrFloat: Float = 0.0
-    dynamic var attrInteger16: Int16 = 0
-    dynamic var attrInteger32: Int32 = 0
-    dynamic var attrInteger64: Int64 = 0
+    @objc dynamic var attrDate: NSDate? = nil
+    @objc dynamic var attrDateCustom: NSDate? = nil
+    @objc dynamic var attrDecimal: Double = 0.0
+    @objc dynamic var attrDouble: Double = 0.0
+    @objc dynamic var attrFloat: Float = 0.0
+    @objc dynamic var attrInteger16: Int16 = 0
+    @objc dynamic var attrInteger32: Int32 = 0
+    @objc dynamic var attrInteger64: Int64 = 0
 
 }

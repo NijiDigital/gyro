@@ -3,7 +3,7 @@
   {%- if relationship.type == "to_many" %}
   let {{ relationship.name }} = List<{{ relationship.inverse_type }}>()
   {%- else %}
-  dynamic var {{ relationship.name }}: {{ relationship.inverse_type }}?
+  @objc dynamic var {{ relationship.name }}: {{ relationship.inverse_type }}?
   {%- endif %}
 {%- endif %}
 {%- endfor -%}
