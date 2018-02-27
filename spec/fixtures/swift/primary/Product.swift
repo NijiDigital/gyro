@@ -11,9 +11,9 @@ final class Product: Object {
     case price = "price"
   }
 
-  dynamic var brand: String = ""
-  dynamic var name: String = ""
-  dynamic var price: Int32 = 0
+  @objc dynamic var brand: String = ""
+  @objc dynamic var name: String = ""
+  @objc dynamic var price: Int32 = 0
 
   override static func primaryKey() -> String? {
     return "name"

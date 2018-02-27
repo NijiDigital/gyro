@@ -16,13 +16,13 @@ final class Shop: Object {
     case slogan = "slogan"
   }
 
-  dynamic var active: Bool = true
-  dynamic var budget: Double = 26000.35
-  dynamic var isOpen: Bool = false
-  dynamic var name: String = ""
-  dynamic var numberOfArrivals: Int32 = 0
-  dynamic var numberOfProducts: Int32 = 155
-  dynamic var promo: Double = 0.0
-  dynamic var slogan: String = "The best place to be"
+  @objc dynamic var active: Bool = true
+  @objc dynamic var budget: Double = 26000.35
+  @objc dynamic var isOpen: Bool = false
+  @objc dynamic var name: String = ""
+  @objc dynamic var numberOfArrivals: Int32 = 0
+  @objc dynamic var numberOfProducts: Int32 = 155
+  @objc dynamic var promo: Double = 0.0
+  @objc dynamic var slogan: String = "The best place to be"
 
 }
