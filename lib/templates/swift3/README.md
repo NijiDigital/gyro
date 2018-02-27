@@ -4,11 +4,11 @@
 | --------- | ----------------- |
 | Folder name | templates/swift3 |
 | Invocation example | `gyro -m <model> -t swift3 …` |
-| Language | Swift 3 |
+| Language | Swift 3 and Swift 4 |
 
 # When to use it
 
-This template is the reference for swift 3 with Realm generation code. 
+This template is the reference for swift 3 with Realm generation code. This template is compatible with swift 4.
 You can use it when you need to work with `Realm`
 
 # Caracteristics
@@ -20,7 +20,7 @@ In this template optional Realm objects (Attributes - RealmOptional - or Relatio
 {%- if attribute.is_number == true or attribute.is_bool == true %}
   let {{ attribute.name }} = RealmOptional<{{ convert_type }}>()
 {%- else %}
-  dynamic var {{ attribute.name }}: {{ convert_type }}?
+  @objc dynamic var {{ attribute.name }}: {{ convert_type }}?
 {%- endif -%}
 
 // Relationship generation
@@ -28,7 +28,7 @@ In this template optional Realm objects (Attributes - RealmOptional - or Relatio
   {%- if relationship.type == "to_many" %}
   let {{ relationship.name }} = List<{{ relationship.inverse_type }}>()
   {%- else %}
-  dynamic var {{ relationship.name }}: {{ relationship.inverse_type }}?
+  @objc dynamic var {{ relationship.name }}: {{ relationship.inverse_type }}?
   {%- endif %}
 {%- endif %}
 ```
@@ -52,10 +52,10 @@ final class Product: Object {
     case users = "users"
   }
 
-  dynamic var brand: String?
-  dynamic var name: String = ""
+  @objc dynamic var brand: String?
+  @objc dynamic var name: String = ""
   let price = RealmOptional<Int32>()
-  
+
   let users = List<Users>()
 }
 ```
