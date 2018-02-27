@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 1.1.1
+
+* Add swift4 compatibility  
+  [Jérémie GOAS](https://github.com/jgoas)
+  [#41](https://github.com/NijiDigital/gyro/pull/41)
+
 ## 1.1.0
 
 * Improve Android (Java) templates. Set default values for attributes.  
@@ -26,7 +32,7 @@
 * Add `import Foundation` statement to the Swift templates.  
   [Olivier Halligon](https://github.com/AliSoftware)
   [#36](https://github.com/NijiDigital/gyro/pull/36)
-  
+
 ## 1.0.0
 
 * Migrate from `nokogiri` to `REXML` to reduce installation issues.  
@@ -51,12 +57,12 @@
 ## 0.3.0
 
 * Annotations & Wrapper Types support for Android.  
-  
+
 
 ## 0.2.0
 
 * Better Handling of Optional Enums.  
-  
+
 
 ## 0.1.6
 
