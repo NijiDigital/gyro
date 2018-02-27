@@ -1,8 +1,8 @@
 # CHANGELOG
 
-## 1.1.1
+## master
 
-* Add swift4 compatibility.  
+* Now the swift3 template is compatible swift4 too, so you can use -t swift3 even for Swift 4.  
   [Jérémie GOAS](https://github.com/jgoas)
   [#41](https://github.com/NijiDigital/gyro/pull/41)
 
