@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## master
+## 1.2.0
 
 * Now the swift3 template is compatible swift4 too, so you can use -t swift3 even for Swift 4.  
   [Jérémie GOAS](https://github.com/jgoas)
