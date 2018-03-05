@@ -1,0 +1,30 @@
+{%- capture convert_type %}
+  {%- if attribute.realm_read_only.size == 0 and attribute.enum_type.size > 0 -%}
+    String
+  {%- else -%}
+    {%- if params.use_wrappers.size > 0 and attribute.optional == true -%}
+      {%- include 'inc/wrapper_type_converter' -%}
+    {%- else -%}
+      {%- include 'inc/type_converter' -%}
+    {%- endif %}
+  {%- endif %}
+{%- endcapture %}
+
+{%- case convert_type -%}
+{%- when 'integer_16' or 'short' -%}
+true
+{%- when 'integer_32' or 'int' -%}
+true
+{%- when 'integer_64' or 'long' -%}
+true
+{%- when 'double' or 'decimal' -%}
+true
+{%- when 'float' -%}
+true
+{%- when 'boolean' -%}
+true
+{%- when 'binary' -%}
+true
+{%- else -%}
+false
+{%- endcase -%}
