@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## master
+## 1.3.0
 
 * Add Android Kotlin templates. Use `-t android-kotlin` to use it.   
   [Xavier F. Gouchet](https://github.com/xgouchet)
