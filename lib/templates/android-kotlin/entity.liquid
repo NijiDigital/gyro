@@ -32,7 +32,9 @@ import io.realm.annotations.Index
 {%- if entity.has_primary_key == true %}
 import io.realm.annotations.PrimaryKey
 {%- endif %}
+{%- if entity.has_required == true %}
 import io.realm.annotations.Required
+{%- endif %}
 
 {% if entity.comment.size > 0 -%}
 /**
@@ -40,7 +42,7 @@ import io.realm.annotations.Required
  */
 {% endif %}
 {%- assign primary_key = entity.identity_attribute -%}
-class {{ entity.name }} : RealmObject() {
+open class {{ entity.name }} : RealmObject() {
 
     {%- include 'inc/attributes_enum' %}
     {%- include 'inc/relationships_enum' %}

@@ -7,7 +7,7 @@ import java.util.Date
 import io.realm.RealmObject
 import io.realm.annotations.Required
 
-class User : RealmObject() {
+open class User : RealmObject() {
 
     object Attributes {
         const val BIRTHDAY: String = "birthday"
@@ -27,9 +27,7 @@ class User : RealmObject() {
     var type: String = "TypeBOne"
     var fidelityCard: FidelityCard? = null
 
-    fun  getTypeEnum(): TypeB? {
-        return TypeB.get(type)
-    }
+    fun getTypeEnum(): TypeB? = TypeB.get(type)
 
     fun setTypeEnum(type: TypeB) {
         this.type = type.jsonValue

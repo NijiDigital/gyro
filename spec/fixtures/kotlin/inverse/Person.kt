@@ -4,9 +4,8 @@ package com.gyro.tests
 
 import io.realm.RealmList
 import io.realm.RealmObject
-import io.realm.annotations.Required
 
-class Person : RealmObject() {
+open class Person : RealmObject() {
 
     object Relationships {
         const val DOGS: String = "dogs"

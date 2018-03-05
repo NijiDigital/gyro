@@ -6,7 +6,7 @@ import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 import io.realm.annotations.Required
 
-class Product : RealmObject() {
+open class Product : RealmObject() {
 
     object Attributes {
         const val BRAND: String = "brand"
