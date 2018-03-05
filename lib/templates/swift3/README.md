@@ -11,7 +11,7 @@
 This template is the reference for swift 3 with Realm generation code. This template is compatible with swift 4.
 You can use it when you need to work with `Realm`
 
-# Caracteristics
+# Characteristics
 
 In this template optional Realm objects (Attributes - RealmOptional - or Relationships - List<> -) are `let` properties (conform to the Realm documentation) :
 

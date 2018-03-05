@@ -8,7 +8,7 @@
 
 If you want to use this template you need to work with `Realm`.
 
-# Caracteristics
+# Characteristics
 
 In this template you have additional parameters to inject constants : 
 

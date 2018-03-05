@@ -14,6 +14,7 @@
 
 PACKAGE_NAME = 'com.gyro.tests'.freeze
 ANDROID_TEMPLATE_DIR = 'lib/templates/android'.freeze
+MODELS = %w[default realm primary ignored inverse json_key_path enum enum_multi enum_json relationship_type].freeze
 
 module Gyro
   describe 'Liquid' do
@@ -21,8 +22,7 @@ module Gyro
       before do
         Gyro::Log.quiet = true
       end
-
-      %w[default realm primary ignored inverse json_key_path enum enum_multi enum_json relationship_type].each do |datamodel|
+      MODELS.each do |datamodel|
         it datamodel do
           xcdatamodel_dir = fixture('xcdatamodel', "#{datamodel}.xcdatamodel")
           xcdatamodel = Parser::XCDataModel::XCDataModel.new(xcdatamodel_dir)
