@@ -22,7 +22,7 @@ module Gyro
         Gyro::Log.quiet = true
       end
 
-      %w[default realm primary ignored inverse enum enum_multi enum_json].each do |datamodel|
+      %w[default realm primary ignored inverse json_key_path enum enum_multi enum_json relationship_type].each do |datamodel|
         it datamodel do
           xcdatamodel_dir = fixture('xcdatamodel', "#{datamodel}.xcdatamodel")
           xcdatamodel = Parser::XCDataModel::XCDataModel.new(xcdatamodel_dir)
@@ -34,18 +34,6 @@ module Gyro
             fixtures_files_dir = fixture('java', datamodel)
             compare_dirs(tmp_dir, fixtures_files_dir)
           end
-        end
-      end
-
-      it 'json' do
-        xcdatamodel_dir = fixture('xcdatamodel', 'json_key_path.xcdatamodel')
-        xcdatamodel = Parser::XCDataModel::XCDataModel.new(xcdatamodel_dir)
-        Dir.mktmpdir(TMP_DIR_NAME) do |tmp_dir|
-          template_dir = Pathname.new(ANDROID_TEMPLATE_DIR)
-          gen = Generator::Liquid.new(template_dir, tmp_dir, 'package' => PACKAGE_NAME)
-          gen.generate(xcdatamodel)
-          fixtures_files_dir = fixture('java', 'json')
-          compare_dirs(tmp_dir, fixtures_files_dir)
         end
       end
 
@@ -82,18 +70,6 @@ module Gyro
           gen = Generator::Liquid.new(template_dir, tmp_dir, options)
           gen.generate(xcdatamodel)
           fixtures_files_dir = fixture('java', 'wrappers_annotations')
-          compare_dirs(tmp_dir, fixtures_files_dir)
-        end
-      end
-
-      it 'relationship without value' do
-        xcdatamodel_dir = fixture('xcdatamodel', 'relationship_type.xcdatamodel')
-        xcdatamodel = Parser::XCDataModel::XCDataModel.new(xcdatamodel_dir)
-        Dir.mktmpdir(TMP_DIR_NAME) do |tmp_dir|
-          template_dir = Pathname.new(ANDROID_TEMPLATE_DIR)
-          gen = Generator::Liquid.new(template_dir, tmp_dir, 'package' => PACKAGE_NAME)
-          gen.generate(xcdatamodel)
-          fixtures_files_dir = fixture('java', 'no_value')
           compare_dirs(tmp_dir, fixtures_files_dir)
         end
       end

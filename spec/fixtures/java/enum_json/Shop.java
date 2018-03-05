@@ -21,7 +21,7 @@ public class Shop extends RealmObject {
     private String name;
     @SerializedName("type")
     private String type;
-    @SerializedName("type")
+    @SerializedName("typeOpt")
     private String typeOptional;
 
     public String getName() {

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="12141" systemVersion="16E195" minimumToolsVersion="Xcode 4.3" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="13772" systemVersion="17D102" minimumToolsVersion="Xcode 4.3" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
     <entity name="Shop" syncable="YES">
         <attribute name="name" attributeType="String" syncable="YES"/>
         <attribute name="type" attributeType="Integer 16" usesScalarValueType="NO" syncable="YES">
@@ -14,7 +14,7 @@
             <userInfo>
                 <entry key="enumType" value="Type2"/>
                 <entry key="enumValues" value="Type2One,Type2Two,Type2Three"/>
-                <entry key="JSONKeyPath" value="type"/>
+                <entry key="JSONKeyPath" value="typeOpt"/>
                 <entry key="JSONValues" value="json_type_one,json_type_two,json_type_three"/>
             </userInfo>
         </attribute>

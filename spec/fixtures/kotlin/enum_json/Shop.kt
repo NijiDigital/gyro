@@ -20,7 +20,7 @@ open class Shop : RealmObject() {
     @Required
     @SerializedName("type")
     var type: String = "TypeOne"
-    @SerializedName("type")
+    @SerializedName("typeOpt")
     var typeOptional: String? = null
 
     fun getTypeEnum(): Type? = Type.get(type)
