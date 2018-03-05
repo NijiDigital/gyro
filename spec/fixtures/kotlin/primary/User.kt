@@ -8,7 +8,7 @@ import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 import io.realm.annotations.Required
 
-class User : RealmObject() {
+open class User : RealmObject() {
 
     object Attributes {
         const val BIRTHDAY: String = "birthday"

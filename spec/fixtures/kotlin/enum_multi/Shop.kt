@@ -6,7 +6,7 @@ import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.Required
 
-class Shop : RealmObject() {
+open class Shop : RealmObject() {
 
     object Attributes {
         const val NAME: String = "name"
@@ -23,9 +23,7 @@ class Shop : RealmObject() {
     var type: String = "TypeAOne"
     var products: RealmList<Product>? = null
 
-    fun  getTypeEnum(): TypeA? {
-        return TypeA.get(type)
-    }
+    fun getTypeEnum(): TypeA? = TypeA.get(type)
 
     fun setTypeEnum(type: TypeA) {
         this.type = type.jsonValue

@@ -3,9 +3,7 @@
     {%- if attribute.realm_read_only.size == 0 and attribute.enum_type.size > 0 %}
         {%- assign name = attribute.name %}
         
-    fun  get{{ name | titleize }}Enum(): {{ attribute.enum_type }}? {
-        return {{ attribute.enum_type }}.get({{ name }})
-    }
+    fun get{{ name | titleize }}Enum(): {{ attribute.enum_type }}? = {{ attribute.enum_type }}.get({{ name }})
 
     fun set{{ name | titleize }}Enum({{ name }}: {{ attribute.enum_type }}) {
         this.{{ name }} = {{ name }}.jsonValue

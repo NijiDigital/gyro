@@ -5,7 +5,7 @@ package com.gyro.tests
 import io.realm.RealmObject
 import io.realm.annotations.Required
 
-class Product : RealmObject() {
+open class Product : RealmObject() {
 
     object Attributes {
         const val BRAND: String = "brand"
@@ -27,9 +27,7 @@ class Product : RealmObject() {
     var type: String = "TypeAOne"
     var shop: Shop? = null
 
-    fun  getTypeEnum(): TypeA? {
-        return TypeA.get(type)
-    }
+    fun getTypeEnum(): TypeA? = TypeA.get(type)
 
     fun setTypeEnum(type: TypeA) {
         this.type = type.jsonValue

@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## master
+
+* Add Android Kotlin templates.
+  [Xavier F. Gouchet](https://github.com/xgouchet)
+  [#42](https://github.com/NijiDigital/gyro/pull/42)
+
 ## 1.1.0
 
 * Improve Android (Java) templates. Set default values for attributes.  

@@ -4,9 +4,8 @@ package com.gyro.tests
 
 import io.realm.RealmObject
 import io.realm.annotations.Ignore
-import io.realm.annotations.Required
 
-class Owner : RealmObject() {
+open class Owner : RealmObject() {
 
     object Attributes {
         const val NAME: String = "name"

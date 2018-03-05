@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName
 import io.realm.RealmObject
 import io.realm.annotations.Required
 
-class Shop : RealmObject() {
+open class Shop : RealmObject() {
 
     object Attributes {
         const val NAME: String = "name"
@@ -23,17 +23,13 @@ class Shop : RealmObject() {
     @SerializedName("type")
     var typeOptional: String? = null
 
-    fun  getTypeEnum(): Type? {
-        return Type.get(type)
-    }
+    fun getTypeEnum(): Type? = Type.get(type)
 
     fun setTypeEnum(type: Type) {
         this.type = type.jsonValue
     }
 
-    fun  getTypeOptionalEnum(): Type2? {
-        return Type2.get(typeOptional)
-    }
+    fun getTypeOptionalEnum(): Type2? = Type2.get(typeOptional)
 
     fun setTypeOptionalEnum(typeOptional: Type2) {
         this.typeOptional = typeOptional.jsonValue

@@ -6,9 +6,8 @@ import java.util.List
 
 import io.realm.RealmList
 import io.realm.RealmObject
-import io.realm.annotations.Required
 
-class Animal : RealmObject() {
+open class Animal : RealmObject() {
 
     object Attributes {
         const val ATTRIBUTE: String = "attribute"
