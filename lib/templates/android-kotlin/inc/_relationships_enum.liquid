@@ -1,0 +1,10 @@
+{%- if entity.relationships.size > 0 and entity.has_only_inverse == false %}
+   
+    object Relationships {
+    {%- for relationship in entity.relationships -%}
+      {%- if relationship.inverse == false %}
+        const val {{ relationship.name | snake_case | upcase }}: String = "{{ relationship.name }}"
+      {%- endif -%}
+    {%- endfor  %}
+    }
+{%- endif -%}
