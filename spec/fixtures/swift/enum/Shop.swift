@@ -11,9 +11,9 @@ final class Shop: Object {
     case type = "type"
   }
 
-  dynamic var name: String = ""
+  @objc dynamic var name: String = ""
 
-  dynamic var optionalValue: String?
+  @objc dynamic var optionalValue: String?
   var optionalValueEnum: OptValue? {
     get {
       guard let optionalValue = optionalValue,
@@ -25,7 +25,7 @@ final class Shop: Object {
   }
 
 
-  dynamic var type: String = ""
+  @objc dynamic var type: String = ""
   var typeEnum: Type? {
     get {
       guard let enumValue = Type(rawValue: type) else { return nil }

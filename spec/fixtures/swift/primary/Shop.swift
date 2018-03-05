@@ -13,7 +13,7 @@ final class Shop: Object {
     case products = "products"
   }
 
-  dynamic var name: String = ""
+  @objc dynamic var name: String = ""
   let products = List<Product>()
 
   override static func primaryKey() -> String? {

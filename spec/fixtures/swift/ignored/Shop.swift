@@ -16,10 +16,10 @@ final class Shop: Object {
     case products = "products"
   }
 
-  dynamic var ignored: String = ""
-  dynamic var ignored2: String = ""
-  dynamic var name: String = ""
-  dynamic var owner: Owner?
+  @objc dynamic var ignored: String = ""
+  @objc dynamic var ignored2: String = ""
+  @objc dynamic var name: String = ""
+  @objc dynamic var owner: Owner?
   let products = List<Product>()
 
   // Specify properties to ignore (Realm won't persist these)

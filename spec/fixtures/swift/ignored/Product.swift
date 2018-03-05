@@ -9,6 +9,6 @@ final class Product: Object {
     case shop = "shop"
   }
 
-  dynamic var shop: Shop?
+  @objc dynamic var shop: Shop?
 
 }

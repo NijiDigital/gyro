@@ -19,7 +19,7 @@
             {%- include 'inc/optional_attribute_property' -%}
           {%- else -%}
             {%- comment -%} ******* GENERATE DEFAULT ATTRIBUTE PROPERTY ******* {% endcomment %}
-  dynamic var {{ attribute.name }}: {{ convert_type }} = {{ default_value }}
+  @objc dynamic var {{ attribute.name }}: {{ convert_type }} = {{ default_value }}
           {%- endif -%}
     {%- endif -%}
   {%- endif -%}
