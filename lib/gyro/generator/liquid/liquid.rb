@@ -21,7 +21,6 @@ module Gyro
 
       # PUBLIC METHODS #######################################################
 
-      # rubocop:disable Metrics/AbcSize
       def initialize(template_dir, output_dir, params)
         Gyro::Log.title('Generating Model')
 
@@ -38,7 +37,6 @@ module Gyro
         enum_fn_tpl = template_dir + 'filename.liquid' unless enum_fn_tpl.exist?
         @enum_filename_template = load_template(enum_fn_tpl, true)
       end
-      # rubocop:enable Metrics/AbcSize
 
       def generate(xcdatamodel)
         generate_entities(xcdatamodel)
