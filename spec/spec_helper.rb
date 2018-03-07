@@ -22,7 +22,6 @@ def fixture(*paths)
   FIXTURES_DIR.join(*paths)
 end
 
-# rubocop:disable Metrics/AbcSize
 def compare_dirs(generated_files_dir, fixtures_dir)
   generated_dir = Pathname.new(generated_files_dir)
 
@@ -35,7 +34,6 @@ def compare_dirs(generated_files_dir, fixtures_dir)
     expect(generated_file.read).to eq(fixture.read), "File: '#{fixture}' differ from expectation."
   end
 end
-# rubocop:enable Metrics/AbcSize
 
 def check_files_count(dir, expected_count)
   count = dir.find.select { |f| File.file?(f) }.count

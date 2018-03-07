@@ -2,6 +2,8 @@
 
 ## Master
 
+* Cleanup some ruby code (rubocop).  
+  [Olivier Halligon](https://github.com/AliSoftware)
 * Order the Primary Key (identity attribute) first when generating the class for the entity.  
   [Olivier Halligon](https://github.com/AliSoftware)
   [#45](https://github.com/NijiDigital/gyro/issue/45)
