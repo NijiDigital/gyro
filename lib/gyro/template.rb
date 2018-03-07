@@ -17,52 +17,96 @@ module Gyro
   #
   module Template
     def self.print_list
-      Gyro::Template.directory.children.select(&:directory?).each do |entry|
-        puts " - #{entry.basename}"
+      Gyro::Template.directory.children.sort_by(&:basename).each do |entry|
+        alias_name, target = Gyro::Template.resolve_alias(entry)
+        if alias_name
+          puts ' - '.colorize(:gray, :faint) + alias_name.colorize(:gray) + \
+               ' (alias for '.colorize(:gray, :faint) + \
+               target.colorize(:gray) + ')'.colorize(:gray, :faint)
+        elsif entry.directory?
+          puts ' - ' + entry.basename.to_s
+        end
       end
     end
 
     def self.print_infos(template)
-      readme = if template.include?('/')
-                 Pathname.new(template) + 'README.md'
-               else
-                 Gyro::Template.directory + template + 'README.md'
-               end
+      template_dir = Gyro::Template.find(template, false)
+      Gyro::Log.fail!("No template found at path or for name '#{template}'.") unless template_dir
+      readme = template_dir + 'README.md'
 
       Gyro::Log.fail!("No README.md found for template #{template}.") unless readme.exist?
       puts readme.read
     end
 
+    # Returns the Pathname representing the directory where all bundled templates are located
+    #
     def self.directory
       Pathname.new(File.dirname(__FILE__)) + '../templates'
     end
 
-    def self.find(template_param)
-      if template_param.include? '/'
-        find_by_path(template_param)
-      else
-        find_by_name(template_param)
-      end
+    # @param [Pathname] entry
+    #        The alias to resolve
+    # @return [(String, String)]
+    #         A 2-items array of [the alias name, the alias target name]
+    #         Or nil if the entry does not correspond to a valid template alias
+    #
+    def self.resolve_alias(entry)
+      return nil unless entry.exist?
+      return nil if entry.extname != '.alias'
+      base = entry.basename('.alias').to_s
+      target = entry.open(&:readline).chomp # Only read the first line of the file, the rest is ignored
+      return nil if File.basename(target) != target || target.include?('..') # Security measure
+      [base, target]
     end
 
+    # Resolve alias by name
+    #
+    # @return [(String, String)]
+    #         A 2-items array of [the alias name, the alias target name]
+    #         Or nil if the name does not correspond to a valid template alias
+    #
+    def self.resolve_alias_name(name)
+      path = Gyro::Template.directory + (name + '.alias')
+      resolve_alias(path)
+    end
+
+    # @param [String] template_param
+    #        The name or path of the template to find
+    # @return [Pathname]
+    #         The path to the template corresponding to that name or path
+    #
+    def self.find(template_param, fail_on_error = true)
+      template = if template_param.include?('/')
+                   find_by_path(template_param, fail_on_error)
+                 else
+                   find_by_name(template_param)
+                 end
+      if template.nil? && fail_on_error
+        Gyro::Log.fail!('You need to specify a valid template directory or name' \
+                        ' using the --template parameter (see --help for more info)')
+      end
+      template
+    end
+
+    # @param [String] path
+    #        The path to the template to find
+    # @return [Pathname]
+    #         The path to the template corresponding to that name or path
+    #
     def self.find_by_path(path)
       template_dir = Pathname.new(path)
-      unless template_dir.exist?
-        Gyro::Log.fail!('You need to specify existing template directory using --template option' \
-                        ' (see --help for more info)')
-      end
-
       return template_dir if template_dir.directory?
-      return template_dir.dirname if template_dir.file?
-      Gyro::Log.fail!('You need to specify right template directory using --template option' \
-                      ' (see --help for more info)')
     end
 
+    # @param [String] name
+    #        The name of the template to find among the templates bundled with gyro
+    # @return [Pathname]
+    #         The path to the template corresponding to that name or path
+    #
     def self.find_by_name(name)
-      template_dir = Gyro::Template.directory + name
-      return template_dir if template_dir.exist?
-      Gyro::Log.fail!('You need to specify existing default template name using --template option' \
-                      ' (see --help for more info)')
+      _, target = Gyro::Template.resolve_alias_name(name)
+      template_dir = Gyro::Template.directory + (target || name)
+      return template_dir if template_dir.directory?
     end
   end
 end
