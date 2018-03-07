@@ -1,5 +1,5 @@
 {%- if attribute.is_number == true or attribute.is_bool == true %}
-  let {{ attribute.name }} = RealmOptional<{{ convert_type }}>()
+  let {{ attribute.name }} = RealmOptional<{{ convert_type }}>(){%- if attribute.name == entity.identity_attribute %} /* Primary Key */{% endif -%}
 {%- else %}
-  @objc dynamic var {{ attribute.name }}: {{ convert_type }}?
+  @objc dynamic var {{ attribute.name }}: {{ convert_type }}?{%- if attribute.name == entity.identity_attribute %} /* Primary Key */{% endif -%}
 {%- endif -%}

@@ -6,7 +6,7 @@ import Foundation
 final class User: Object {
 
   enum Attributes: String {
-    case name = "name"
+    case name = "name" /* Primary Key */
     case birthday = "birthday"
   }
 
@@ -14,7 +14,7 @@ final class User: Object {
     case fidelityCard = "fidelityCard"
   }
 
-  @objc dynamic var name: String = ""
+  @objc dynamic var name: String = "" /* Primary Key */
   @objc dynamic var birthday: Date = Date()
   @objc dynamic var fidelityCard: FidelityCard?
 
