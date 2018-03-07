@@ -11,17 +11,17 @@ import io.realm.annotations.Required
 open class User : RealmObject() {
 
     object Attributes {
-        const val BIRTHDAY: String = "birthday"
         const val NAME: String = "name"
+        const val BIRTHDAY: String = "birthday"
     }
 
     object Relationships {
         const val FIDELITY_CARD: String = "fidelityCard"
     }
 
-    @Required
-    var birthday: Date = Date()
     @PrimaryKey
     var name: String = ""
+    @Required
+    var birthday: Date = Date()
     var fidelityCard: FidelityCard? = null
 }

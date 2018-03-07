@@ -36,7 +36,7 @@ module Gyro
 
         def to_h
           {
-            'attributes' => attributes.values.map(&:to_h),
+            'attributes' => attributes.values.sort_by { |a| a.name == identity_attribute ? '__' : a.name }.map(&:to_h),
             'relationships' => relationships.values.map(&:to_h),
             'name' => name,
             'parent' => parent,

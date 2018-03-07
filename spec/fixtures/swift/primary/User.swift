@@ -6,16 +6,16 @@ import Foundation
 final class User: Object {
 
   enum Attributes: String {
-    case birthday = "birthday"
     case name = "name"
+    case birthday = "birthday"
   }
 
   enum Relationships: String {
     case fidelityCard = "fidelityCard"
   }
 
-  @objc dynamic var birthday: Date = Date()
   @objc dynamic var name: String = ""
+  @objc dynamic var birthday: Date = Date()
   @objc dynamic var fidelityCard: FidelityCard?
 
   override static func primaryKey() -> String? {

@@ -22,18 +22,20 @@ def fixture(*paths)
   FIXTURES_DIR.join(*paths)
 end
 
+# rubocop:disable Metrics/AbcSize
 def compare_dirs(generated_files_dir, fixtures_dir)
   generated_dir = Pathname.new(generated_files_dir)
 
   fixtures_files = fixtures_dir.find.select { |file| File.file?(file) }
-  # expect(files_count(generated_dir)).to eq fixtures_files.count
   check_files_count(generated_dir, fixtures_files.count)
 
   fixtures_files.each do |fixture|
     generated_file = generated_dir + fixture.relative_path_from(fixtures_dir)
+    fixture.write(generated_file.read) if ENV['AUTO_FIX_FIXTURES']
     expect(generated_file.read).to eq(fixture.read), "File: '#{fixture}' differ from expectation."
   end
 end
+# rubocop:enable Metrics/AbcSize
 
 def check_files_count(dir, expected_count)
   count = dir.find.select { |f| File.file?(f) }.count

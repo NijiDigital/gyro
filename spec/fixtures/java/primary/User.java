@@ -10,8 +10,8 @@ import io.realm.annotations.PrimaryKey;
 public class User extends RealmObject {
 
     public static final class Attributes {
-        public static final String BIRTHDAY = "birthday";
         public static final String NAME = "name";
+        public static final String BIRTHDAY = "birthday";
 
         private Attributes() {
             // Hide constructor
@@ -26,18 +26,10 @@ public class User extends RealmObject {
         }
     }
 
-    private Date birthday;
     @PrimaryKey
     private String name;
+    private Date birthday;
     private FidelityCard fidelityCard;
-
-    public Date getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(final Date birthday) {
-        this.birthday = birthday;
-    }
 
     public String getName() {
         return name;
@@ -45,6 +37,14 @@ public class User extends RealmObject {
 
     public void setName(final String name) {
         this.name = name;
+    }
+
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(final Date birthday) {
+        this.birthday = birthday;
     }
 
     public FidelityCard getFidelityCard() {
