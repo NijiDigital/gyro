@@ -23,6 +23,7 @@ public class Shop extends RealmObject {
         }
     }
 
+    @Required
     private String name;
     private RealmList<Product> products;
 

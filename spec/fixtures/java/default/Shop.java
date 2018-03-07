@@ -24,10 +24,12 @@ public class Shop extends RealmObject {
     private boolean active = true;
     private double budget = 26000.35;
     private boolean isOpen;
+    @Required
     private String name;
     private int numberOfArrivals;
     private int numberOfProducts = 155;
     private double promo;
+    @Required
     private String slogan = "The best place to be";
 
     public boolean getActive() {

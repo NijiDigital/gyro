@@ -30,6 +30,7 @@ public class Shop extends RealmObject {
     private String ignored;
     @Ignore
     private String ignored2;
+    @Required
     private String name;
     private Owner owner;
     private RealmList<Product> products;

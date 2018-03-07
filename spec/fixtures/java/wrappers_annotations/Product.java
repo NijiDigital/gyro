@@ -17,6 +17,7 @@ public class Product extends RealmObject {
     }
 
     private String brand;
+    @Required
     private String name;
     private Integer price = 0;
 

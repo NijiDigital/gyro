@@ -18,7 +18,9 @@ public class Shop extends RealmObject {
         }
     }
 
+    @Required
     private String name;
+    @Required
     @SerializedName("type")
     private String type;
     @SerializedName("typeOpt")

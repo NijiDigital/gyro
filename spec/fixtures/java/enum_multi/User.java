@@ -26,8 +26,11 @@ public class User extends RealmObject {
         }
     }
 
+    @Required
     private Date birthday;
+    @Required
     private String name;
+    @Required
     private String type;
     private FidelityCard fidelityCard;
 

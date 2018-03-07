@@ -25,6 +25,7 @@ public class Shop extends RealmObject {
         }
     }
 
+    @Required
     @SerializedName("json_name")
     private String name;
     @SerializedName("products_key_json")

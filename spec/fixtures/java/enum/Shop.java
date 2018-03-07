@@ -16,8 +16,10 @@ public class Shop extends RealmObject {
         }
     }
 
+    @Required
     private String name;
     private String optionalValue;
+    @Required
     private String type;
 
     public String getName() {
