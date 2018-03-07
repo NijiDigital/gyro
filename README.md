@@ -58,13 +58,20 @@ gyro --model <model> --template <template-name> --output <output-dir> --param <k
 
 `<template-name>` is the name of the template. Below you have the list of templates.
 
-If you want additional information about templates you can go to the documentation for each :
+
+## Templates
+
+You can use `gyro -l` to list the names of all the bundled templates available.
+
+If you want additional information about a specific template, you can use `gyro -i <template_name>` to print its README documentation, which is also directly accessible on GitHub via the following links:
 
 - [android](lib/templates/android/README.md) (Java)
+- _Note: `android-java` is an alias name for the [android](lib/templates/android/README.md) template_
 - [android-kotlin](lib/templates/android-kotlin/README.md) (Kotlin)
 - [swift3](lib/templates/swift3/README.md) (Swift 3 & 4)
+- _Note: `swift4` is an alias name for the [swift3](lib/templates/swift3/README.md) template_
 - [decodable](lib/templates/decodable/README.md) (for Anviking's `Decodable` pod)
-- [swift3-variant](lib/templates/swift3-variant/README.md) _(Deprecated)_
+- [swift3-variant](lib/templates/swift3-variant/README.md) _(Deprecated, only for use with the `object-mapper` template)_
 - [object-mapper](lib/templates/object-mapper/README.md) _(Deprecated)_
 
 ## Annotating your `xcdatamodel`
@@ -77,7 +84,9 @@ _To define a User Info key in Xcode's xcdatamodel editor, select the entity or a
 
 With the help of these "user infos", you will be able to give Gyro extra information about your model classes. For example, you can tell which attribute is the primary key, the attributes to ignore, the JSON mappings, …
 
-**For more information about "user infos", you can see the 📖 [dedicated documentation here](UserInfoKeys.md) 📖 .**
+### 📖  Documentation of User Info Keys
+
+For more information about each "user infos" keys supported, you can see the 📖 [dedicated documentation here](UserInfoKeys.md).
 
 ## License
 
