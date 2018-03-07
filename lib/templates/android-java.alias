@@ -1,5 +1,0 @@
-android
-
-# Note: The template named 'android' was written in Java before Kotlin existed.
-#       So now that we have a Kotlin template for Android, this alias is
-#       mainly for disambiguation

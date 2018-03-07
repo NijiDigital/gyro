@@ -1,0 +1,10 @@
+android-java
+
+=== Note ===
+
+  The template named 'android-java' was originally just named `android`
+  and was written in Java before Kotlin even existed.
+
+  So this alias exists mainly for compatibility reasons, so that people
+  who used `-t android` in previous versions of `gyro` can still continue
+  to do so and that this new update of gyro doesn't break their setup.

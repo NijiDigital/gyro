@@ -13,7 +13,7 @@
 # limitations under the License.
 
 JAVA_PACKAGE_NAME = 'com.gyro.tests'.freeze
-JAVA_TEMPLATE_DIR = 'lib/templates/android'.freeze
+JAVA_TEMPLATE_DIR = 'lib/templates/android-java'.freeze
 JAVA_MODELS = %w[default realm primary ignored inverse json_key_path enum enum_multi enum_json relationship_type].freeze
 
 module Gyro
