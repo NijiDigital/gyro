@@ -21,7 +21,8 @@ module Gyro
         alias_name, target = Gyro::Template.resolve_alias(entry)
         if alias_name
           puts [
-            ' - '.colorize(:gray, :faint) + alias_name.colorize(:gray),
+            ' - '.colorize(:gray, :faint),
+            alias_name.colorize(:gray),
             ' (alias for '.colorize(:gray, :faint),
             target.colorize(:gray),
             ')'.colorize(:gray, :faint)

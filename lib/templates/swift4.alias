@@ -1,4 +1,6 @@
 swift3
 
-# Note: It happens that the `swift3` template is also compatible with Swift 4 without any change.
-# So we can use the same template for both Swift 3 and Swift 4
+=== Note ===
+
+  It happens that the `swift3` template is also compatible with Swift 4 without any change.
+  So we can use the same template for both Swift 3 and Swift 4

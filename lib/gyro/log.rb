@@ -22,7 +22,7 @@ module Gyro
     end
 
     def self.title(str) # bg yellow
-      puts "\n#{str.colorize(:blue, :gray)}" unless @quiet
+      puts "\n#{str.colorize(:gray, :blue)}" unless @quiet
     end
 
     def self.error(str)
