@@ -8,8 +8,8 @@ import io.realm.annotations.PrimaryKey;
 public class Product extends RealmObject {
 
     public static final class Attributes {
-        public static final String BRAND = "brand";
         public static final String NAME = "name";
+        public static final String BRAND = "brand";
         public static final String PRICE = "price";
 
         private Attributes() {
@@ -17,18 +17,10 @@ public class Product extends RealmObject {
         }
     }
 
-    private String brand;
     @PrimaryKey
     private String name;
+    private String brand;
     private int price = 0;
-
-    public String getBrand() {
-        return brand;
-    }
-
-    public void setBrand(final String brand) {
-        this.brand = brand;
-    }
 
     public String getName() {
         return name;
@@ -36,6 +28,14 @@ public class Product extends RealmObject {
 
     public void setName(final String name) {
         this.name = name;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(final String brand) {
+        this.brand = brand;
     }
 
     public int getPrice() {

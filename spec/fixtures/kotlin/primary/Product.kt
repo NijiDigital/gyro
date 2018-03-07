@@ -9,14 +9,14 @@ import io.realm.annotations.Required
 open class Product : RealmObject() {
 
     object Attributes {
-        const val BRAND: String = "brand"
         const val NAME: String = "name"
+        const val BRAND: String = "brand"
         const val PRICE: String = "price"
     }
 
-    @Required
-    var brand: String = ""
     @PrimaryKey
     var name: String = ""
+    @Required
+    var brand: String = ""
     var price: Int = 0
 }

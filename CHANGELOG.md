@@ -1,8 +1,14 @@
 # CHANGELOG
 
+## Master
+
+* Order the Primary Key (identity attribute) first when generating the class for the entity.  
+  [Olivier Halligon](https://github.com/AliSoftware)
+  [#45](https://github.com/NijiDigital/gyro/issue/45)
+
 ## 1.3.0
 
-* Add Android Kotlin templates. Use `-t android-kotlin` to use it.   
+* Add Android Kotlin templates. Use `-t android-kotlin` to use it.  
   [Xavier F. Gouchet](https://github.com/xgouchet)
   [#42](https://github.com/NijiDigital/gyro/pull/42)
 

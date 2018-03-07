@@ -6,14 +6,14 @@ import Foundation
 final class Shop: Object {
 
   enum Attributes: String {
-    case name = "name"
+    case name = "name" /* Primary Key */
   }
 
   enum Relationships: String {
     case products = "products"
   }
 
-  @objc dynamic var name: String = ""
+  @objc dynamic var name: String = "" /* Primary Key */
   let products = List<Product>()
 
   override static func primaryKey() -> String? {

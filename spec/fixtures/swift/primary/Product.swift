@@ -6,13 +6,13 @@ import Foundation
 final class Product: Object {
 
   enum Attributes: String {
+    case name = "name" /* Primary Key */
     case brand = "brand"
-    case name = "name"
     case price = "price"
   }
 
+  @objc dynamic var name: String = "" /* Primary Key */
   @objc dynamic var brand: String = ""
-  @objc dynamic var name: String = ""
   @objc dynamic var price: Int32 = 0
 
   override static func primaryKey() -> String? {
