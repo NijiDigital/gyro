@@ -25,9 +25,16 @@
         {%- endif %}
       {%- endcapture %}
 
+      {%- capture isPrimitives %}
+        {%- include 'inc/primitives' %}
+      {%- endcapture %}
+
       {%- assign name = attribute.name -%}
       {%- if name == primary_key %}
     @PrimaryKey
+      {%- endif -%}
+      {%- if attribute.optional == false and attribute.realm_ignored == false and name != primary_key and isPrimitives == "false" %}
+    @Required 
       {%- endif -%}
       {%- if attribute.indexed == true %}
     @Index
