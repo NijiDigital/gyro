@@ -65,8 +65,8 @@ You can use `gyro -l` to list the names of all the bundled templates available.
 
 If you want additional information about a specific template, you can use `gyro -i <template_name>` to print its README documentation, which is also directly accessible on GitHub via the following links:
 
-- [android](lib/templates/android/README.md) (Java)
-- _Note: `android-java` is an alias name for the [android](lib/templates/android/README.md) template_
+- [android-java](lib/templates/android-java/README.md) (Java)
+- _Note: `android` is an alias name for the [android-java](lib/templates/android-java/README.md) template_
 - [android-kotlin](lib/templates/android-kotlin/README.md) (Kotlin)
 - [swift3](lib/templates/swift3/README.md) (Swift 3 & 4)
 - _Note: `swift4` is an alias name for the [swift3](lib/templates/swift3/README.md) template_
