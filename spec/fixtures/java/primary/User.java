@@ -6,6 +6,7 @@ import java.util.Date;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
+import io.realm.annotations.Required;
 
 public class User extends RealmObject {
 
@@ -28,6 +29,7 @@ public class User extends RealmObject {
 
     @PrimaryKey
     private String name;
+    @Required
     private Date birthday;
     private FidelityCard fidelityCard;
 

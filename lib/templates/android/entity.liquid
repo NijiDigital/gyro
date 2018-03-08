@@ -30,6 +30,9 @@ import io.realm.annotations.Index;
 {%- if entity.has_primary_key == true %}
 import io.realm.annotations.PrimaryKey;
 {%- endif %}
+{%- if entity.has_required == true %}
+import io.realm.annotations.Required;
+{%- endif %}
 
 {% if entity.comment.size > 0 -%}
 /**

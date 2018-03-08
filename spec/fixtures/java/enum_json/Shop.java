@@ -5,6 +5,7 @@ package com.gyro.tests;
 import com.google.gson.annotations.SerializedName;
 
 import io.realm.RealmObject;
+import io.realm.annotations.Required;
 
 public class Shop extends RealmObject {
 
@@ -18,7 +19,9 @@ public class Shop extends RealmObject {
         }
     }
 
+    @Required
     private String name;
+    @Required
     @SerializedName("type")
     private String type;
     @SerializedName("typeOpt")

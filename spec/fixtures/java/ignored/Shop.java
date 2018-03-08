@@ -5,6 +5,7 @@ package com.gyro.tests;
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
+import io.realm.annotations.Required;
 
 public class Shop extends RealmObject {
 
@@ -30,6 +31,7 @@ public class Shop extends RealmObject {
     private String ignored;
     @Ignore
     private String ignored2;
+    @Required
     private String name;
     private Owner owner;
     private RealmList<Product> products;

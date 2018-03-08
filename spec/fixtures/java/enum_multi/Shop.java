@@ -4,6 +4,7 @@ package com.gyro.tests;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.annotations.Required;
 
 public class Shop extends RealmObject {
 
@@ -24,7 +25,9 @@ public class Shop extends RealmObject {
         }
     }
 
+    @Required
     private String name;
+    @Required
     private String type;
     private RealmList<Product> products;
 

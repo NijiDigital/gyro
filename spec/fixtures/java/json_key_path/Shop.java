@@ -6,6 +6,7 @@ import com.google.gson.annotations.SerializedName;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.annotations.Required;
 
 public class Shop extends RealmObject {
 
@@ -25,6 +26,7 @@ public class Shop extends RealmObject {
         }
     }
 
+    @Required
     @SerializedName("json_name")
     private String name;
     @SerializedName("products_key_json")

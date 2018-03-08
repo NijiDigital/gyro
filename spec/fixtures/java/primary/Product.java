@@ -4,6 +4,7 @@ package com.gyro.tests;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
+import io.realm.annotations.Required;
 
 public class Product extends RealmObject {
 
@@ -19,6 +20,7 @@ public class Product extends RealmObject {
 
     @PrimaryKey
     private String name;
+    @Required
     private String brand;
     private int price = 0;
 
