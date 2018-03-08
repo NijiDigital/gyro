@@ -4,6 +4,7 @@ package com.gyro.tests;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
+import io.realm.annotations.Required;
 
 public class Product extends RealmObject {
 
