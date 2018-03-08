@@ -1,18 +1,17 @@
 # Contributing to gyro
 
-> * How to contribute via Pull Requests
->   * How to use & test your local/modified version of gyro
->   * Unit tests / rspecs
-> * How gyro works internally
-> * Writing templates
->   * Liquid & filters used in gyro
->     * Patch: Handling spaces around tags
->     * Filters specific to gyro
->   * Templates directory organization
->   * Additional tips for editing templates
->     * Syntax Highlighting
->     * Auto-update output with kicker
-
+> * [How to contribute via Pull Requests](#how-to-contribute-via-pull-requests)
+>   * [How to use & test your local/modified version of gyro](#how-to-use--test-your-localmodified-version-of-gyro)
+>   * [Unit tests / rspecs](#unit-tests--rspec)
+> * [How gyro works internally](#how-gyro-works-internally)
+> * [Writing templates](#writing-templates)
+>   * [Liquid & filters used in gyro](#liquid--filters-used-in-gyro)
+>     * [Patch: Handling spaces around tags](#patch-handling-spaces-around-tags)
+>     * [Filters specific to gyro](#filters-specific-to-gyro)
+>   * [Templates directory organization](#templates-directory-organization)
+>   * [Additional tips for editing templates](#additional-tips-for-editing-templates)
+>     * [Syntax Highlighting](#syntax-highligting)
+>     * [Auto-update output with kicker](#auto-update-output-using-kicker)
 
 ## How to contribute via Pull Requests
 
