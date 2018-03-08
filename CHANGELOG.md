@@ -10,6 +10,10 @@
 * Add `@Required` Realm annotation in Java templates.  
   [Olivier Halligon](https://github.com/AliSoftware)
   [#44](https://github.com/NijiDigital/gyro/issue/44)
+* Add `CONTRIBUTING.md` to help onboarding new contributors.  
+  [Olivier Halligon](https://github.com/AliSoftware)
+  [#32](https://github.com/NijiDigital/gyro/issues/32)
+  [#50](https://github.com/NijiDigital/gyro/pull/50)
 
 ## 1.3.0
 

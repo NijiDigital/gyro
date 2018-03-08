@@ -41,11 +41,11 @@
 
 
 ```bash
-bundle install      # Install any necessary ruby dependencies
-bundle exec rspec   # Run the tests
-bundle exec rubocop # Check for code style
-bundle exec gyro -v # Run gyro -v using the local code, not the system-installed gyro
-bundle exec gyro -l # Same for any gyro command you want to test
+$ bundle install      # Install any necessary ruby dependencies
+$ bundle exec rspec   # Run the tests
+$ bundle exec rubocop # Check for code style
+$ bundle exec gyro -v # Run gyro -v using the local code, not the system-installed gyro
+$ bundle exec gyro -l # Same for any gyro command you want to test
 ```
 
 ### Unit Tests / rspec
@@ -57,10 +57,10 @@ In ruby, unit tests are called "specs".
 Those unit tests (specs) are located in the `spec` subdirectory, containing:
 
 * `spec/fixtures/xcdatamodel`: the input xcdatamodel used as input test fixtures of the various the tests
-* `spec/fixtures/<lang>`: the output fixtures (the output expected for each test) for various templates (currently: `java`, `kotlin`, `swift`
+* `spec/fixtures/<lang>`: the output fixtures (the output expected for each test) for various templates (currently: `java`, `kotlin`, `swift`)
 * `spec/gyro`: the tests themselves
 
-The tests in `spec/gyro` consist of invoking `gyro` with various input `xcdatamodel` and various options, letting gyro generate the output in a temporary folder, then compare the generated output with the expected one found in `spec/fixtures/<lang>`.
+The tests in `spec/gyro` consist of invoking `gyro` with various input `xcdatamodel`, templates and options, letting gyro generate the output in a temporary folder, then compare the generated output with the expected one found in `spec/fixtures/<lang>`.
 
 This means that the specs for `gyro` are only based on textual comparison, checking that it generates the expected… text. They **don't** check if what is generated will actually compile in Swift/Java/Kotlin (that would require to embed a swift, java & kotlin compiler just for that…)
 
@@ -127,13 +127,17 @@ If you plan to write your own templates:
 
 Liquid is a well known templating language, so chances are your favorite text editor (Sublime Text, Atom, …) has a syntax highlighting plugin for Liquid files. Be sure to check and install it, that will make editing your `.liquid` files way more readable!
 
-Liquid is more commonly used to generate HTML output rather than Swift/Java/Kotlin/… so some of those syntax highlighting plugins might be named "HTML+Liquid" or "HTML Liquid", but that is still better than monochrome text 😉
+> _Liquid is more commonly used to generate HTML output rather than Swift/Java/Kotlin/… so some of those syntax highlighting plugins might be named "HTML+Liquid" or "HTML Liquid", but that is still better than monochrome text_ 😉
 
-#### Auto-update output with kicker
+#### Auto-update output using `kicker`
 
 If you find yourself going back and forth between your text editor to modify a template and your terminal to run `bundle exec gyro` to test your template and see what is genenerated, there are some solutions to improve that.
 
-One of them is [kicker](https://github.com/alloy/kicker), which allows you to "watch" a directory for changes (typically the directory of the template you're editing) and automatically execute an arbitrary command (typically `bundle exec gyro -t your_template_being_tested -o /tmp/gyro_test -m spec/fixtures/xcdatamodel/some_model.xcdatamodel`) when one of the file is changed.
+One of them is [kicker](https://github.com/alloy/kicker), which allows you to "watch" a directory for changes (typically the directory of the template you're editing) and automatically execute an arbitrary command (typically `bundle exec gyro -t … -o … -m …`) when one of the file is changed.
+
+```bash
+kicker -e "bundle exec gyro -t your_template_being_edited -o /tmp/gyro_test -m spec/fixtures/xcdatamodel/some_model.xcdatamodel" lib/templates/your_template_being_edited
+```
 
 That way, you can easily open side-by-side in your favorite editor both your template and the output generated in some temp folder, and let `kicker` run in the background to auto-update the output without having to switch back to the Terminal each time 👍
 
