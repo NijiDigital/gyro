@@ -36,8 +36,14 @@ module Gyro
         attr_accessor :entities
 
         def initialize(xcdatamodel_dir)
-          Gyro::Log.fail!('Please target an xcdatamodel inside your xcdatamodeld') unless xcdatamodel_dir.extname != '.xcdatamodeld'
-          Gyro::Log.info("You are using an xcdatamodeld, please be sure you target the correct version of your xcdatamodel. Actual version using by gyro is : #{xcdatamodel_dir.basename}") unless !xcdatamodel_dir.to_path.include?('.xcdatamodeld')
+          is_xcdatamodeld = xcdatamodel_dir.extname != '.xcdatamodeld'
+          Gyro::Log.fail!('Please target an xcdatamodel inside your xcdatamodeld') unless is_xcdatamodeld
+          if xcdatamodel_dir.to_path.include?('.xcdatamodeld')
+            xcdatamodeld_info_message = 'You are using an xcdatamodeld, ' \
+                                        'please be sure you target the correct version of your xcdatamodel.' \
+                                        ' Actual version using by gyro is :' + xcdatamodel_dir.basename.to_path
+            Gyro::Log.info(xcdatamodeld_info_message)
+          end
           file_contents = xcdatamodel_dir + 'contents'
           Gyro::Log.fail!('Unable to find contents of xcdatamodel') unless file_contents.exist?
           @entities = {}
