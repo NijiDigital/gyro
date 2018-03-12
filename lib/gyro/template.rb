@@ -81,7 +81,7 @@ module Gyro
     #
     def self.find(template_param, fail_on_error = true)
       template = if template_param.include?('/')
-                   find_by_path(template_param, fail_on_error)
+                   find_by_path(template_param)
                  else
                    find_by_name(template_param)
                  end
