@@ -4,12 +4,17 @@
 
 * Order the Primary Key (identity attribute) first when generating the class for the entity.  
   [Olivier Halligon](https://github.com/AliSoftware)
-  [#45](https://github.com/NijiDigital/gyro/issue/45)
+  [#45](https://github.com/NijiDigital/gyro/issues/45)
 * Cleanup some ruby code (rubocop).  
   [Olivier Halligon](https://github.com/AliSoftware)
 * Add `@Required` Realm annotation in Java templates.  
   [Olivier Halligon](https://github.com/AliSoftware)
-  [#44](https://github.com/NijiDigital/gyro/issue/44)
+  [#44](https://github.com/NijiDigital/gyro/issues/44)
+* Support alias names for templates, for clarity of use.  
+  _This allows to use `-t swift4` to use the Swift4-compatible template originally named `swift3`, or `android-java` to use the template originally named `android` (and disambiguate with the Kotlin one)_.  
+  [Olivier Halligon](https://github.com/AliSoftware)
+  [#29](https://github.com/NijiDigital/gyro/issues/29)
+  [#49](https://github.com/NijiDigital/gyro/pull/49)
 
 ## 1.3.0
 

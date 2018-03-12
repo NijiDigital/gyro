@@ -2,8 +2,8 @@
 
 | Name      | Description       |
 | --------- | ----------------- |
-| Folder name | templates/android |
-| Invocation example | `gyro -m <model> -t android …` |
+| Folder name | templates/android-java |
+| Invocation example | `gyro -m <model> -t android-java …` |
 | Language | Java |
 
 If you want to use this template you need to work with `Realm`.
@@ -22,25 +22,25 @@ In this template you have additional parameters to inject constants :
 Package exemple :
 
 ```bash
-gyro -m <model> -t android -o <output> --param package:com.gyro.model.realm
+gyro -m <model> -t android-java -o <output> --param package:com.gyro.model.realm
 ```
 
 Use wrappers exemple :
 
 ```bash
-gyro -m <model> -t android -o <output> --param use_wrappers:true
+gyro -m <model> -t android-java -o <output> --param use_wrappers:true
 ```
 
 Support annotations exemple :
 
 ```bash
-gyro -m <model> -t android -o <output> --param support_annotations:true
+gyro -m <model> -t android-java -o <output> --param support_annotations:true
 ```
 
 And you can combine options :
 
 ```bash
-gyro -m <model> -t android -o <output> --param package:com.gyro.model.realm --param support_annotations:true --param use_wrappers:true
+gyro -m <model> -t android-java -o <output> --param package:com.gyro.model.realm --param support_annotations:true --param use_wrappers:true
 ```
 
 

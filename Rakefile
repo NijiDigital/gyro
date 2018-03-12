@@ -63,7 +63,6 @@ end
 
 ## Helper functions ##
 
-# rubocop:disable Metrics/MethodLength
 def line_type(line)
   return :empty if line.strip.empty?
   case line
