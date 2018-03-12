@@ -38,10 +38,10 @@ module Gyro
         def initialize(xcdatamodel_dir)
           is_xcdatamodeld = xcdatamodel_dir.extname != '.xcdatamodeld'
           Gyro::Log.fail!('Please target an xcdatamodel inside your xcdatamodeld') unless is_xcdatamodeld
-          if xcdatamodel_dir.to_path.include?('.xcdatamodeld')
+          if xcdatamodel_dir.parent.extname == '.xcdatamodeld'
             xcdatamodeld_info_message = 'You are using an xcdatamodeld, ' \
                                         'please be sure you target the correct version of your xcdatamodel.' \
-                                        ' Actual version using by gyro is :' + xcdatamodel_dir.basename.to_path
+                                        ' Actual version using by gyro is : ' + xcdatamodel_dir.basename.to_path
             Gyro::Log.info(xcdatamodeld_info_message)
           end
           file_contents = xcdatamodel_dir + 'contents'
