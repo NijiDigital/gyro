@@ -22,19 +22,19 @@ module Gyro
     end
 
     def self.title(str) # bg yellow
-      puts "\n\e[44;37m#{str}\e[0m" unless @quiet
+      puts "\n#{str.colorize(:gray, :blue)}" unless @quiet
     end
 
     def self.error(str)
-      puts "\e[1;31m! #{str}\e[0m" unless @quiet
+      puts "! #{str}".colorize(:red, :bold) unless @quiet
     end
 
     def self.info(str)
-      puts "\e[1;33m> #{str}\e[0m" unless @quiet
+      puts "> #{str}".colorize(:yellow, :bold) unless @quiet
     end
 
     def self.success(str)
-      puts "\e[1;32m√ #{str}\e[0m" unless @quiet
+      puts "√ #{str}".colorize(:green, :bold) unless @quiet
     end
 
     def self.fail!(message, stacktrace: false)
@@ -42,5 +42,22 @@ module Gyro
       raise message if stacktrace
       exit 1
     end
+  end
+end
+
+# Extending Ruby's String type to allow colorization via ANSI control codes
+#
+class String
+  ANSI_COLORS = %i[black red green yellow blue magenta cyan gray white].freeze
+  ANSI_MODES = %i[normal bold faint italic underline blink].freeze
+
+  def colorize(fg = :white, *options)
+    fg_code = 30 + (ANSI_COLORS.index(fg) || 7)
+    other_codes = options.map do |opt|
+      bg = ANSI_COLORS.index(opt)
+      bg.nil? ? ANSI_MODES.index(opt) : 40 + bg
+    end
+    codes = [fg_code, *other_codes].compact.join(';')
+    "\e[#{codes}m#{self}\e[0m"
   end
 end
