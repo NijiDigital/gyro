@@ -37,7 +37,7 @@ module Gyro
       puts "√ #{str}".colorize(:green, :bold) unless @quiet
     end
 
-    def self.fail!(message, stacktrace: false)
+    def self.fail!(message, stacktrace: true)
       Gyro::Log.error message
       raise message if stacktrace
       exit 1

@@ -24,10 +24,10 @@ module Gyro
         .to raise_error 'Unable to find contents of xcdatamodel'
     end
 
-    it 'check raising relationship error' do
-      xcdatamodel_dir = fixture('xcdatamodel', 'error_relationship.xcdatamodel')
+    it 'check raise an error for xcdatamodeld' do
+      xcdatamodel_dir = fixture('xcdatamodel', 'Model.xcdatamodeld')
       expect { Parser::XCDataModel::XCDataModel.new(xcdatamodel_dir) }
-        .to raise_error 'The relationship "user" from "FidelityCard" is wrong - please fix it'
+        .to raise_error 'Please target an xcdatamodel inside your xcdatamodeld'
     end
 
     it 'check raising undefined type error' do

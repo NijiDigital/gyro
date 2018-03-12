@@ -36,13 +36,13 @@ module Gyro
         attr_accessor :entities
 
         def initialize(xcdatamodel_dir)
-          contents_file = File.join(xcdatamodel_dir, 'contents')
-          Gyro::Log.fail!('Unable to find contents of xcdatamodel', stacktrace: true) unless File.exist?(contents_file)
+          Gyro::Log.fail!('Please target an xcdatamodel inside your xcdatamodeld') unless xcdatamodel_dir.extname != '.xcdatamodeld'
+          Gyro::Log.info("You are using an xcdatamodeld, please be sure you target the correct version of your xcdatamodel. Actual version using by gyro is : #{xcdatamodel_dir.basename}") unless !xcdatamodel_dir.to_path.include?('.xcdatamodeld')
+          file_contents = xcdatamodel_dir + 'contents'
+          Gyro::Log.fail!('Unable to find contents of xcdatamodel') unless file_contents.exist?
           @entities = {}
-          file = File.open(contents_file)
-          document_xml = Document.new(file)
-          file.close
-          load_entities(document_xml)
+          xml_document = Document.new(file_contents.open)
+          load_entities(xml_document)
         end
 
         def to_h
