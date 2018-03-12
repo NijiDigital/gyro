@@ -84,9 +84,9 @@ This allows us to be flexible about input and outputs we support.
 
 ### Liquid & filters used in gyro
 
-`gyro` uses Liquid 3.0, because Liquid 4.0 requires ruby 2.0 which was not installed by default until macOS High Sierra (previous versions of macOS had ruby 1.8 installed by default) — and we didn't want to impose that requirement of ruby 2.0 to use `gyro`.
+`gyro` uses [Liquid](https://github.com/Shopify/liquid) 3.0, because Liquid 4.0 requires ruby 2.1 which was not installed by default until macOS High Sierra (previous versions of macOS had ruby 2.0 installed by default) — and we didn't want to impose that requirement of ruby 2.1 to use `gyro`.
 
-> Once macOS High Sierra will be widespread enough, we'll probably migrate to Liquid 4.0, making `gyro` require ruby 2.0, but as of today that's not the case yet.
+> Once macOS High Sierra will be widespread enough, we'll probably migrate to Liquid 4.0, making `gyro` require ruby 2.1, but as of today that's not the case yet.
 
 However, we extended Liquid 3.0 inside gyro to patch it and add some filters (see below)
 
