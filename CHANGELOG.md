@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Master
+## 1.4.0
 
 * Order the Primary Key (identity attribute) first when generating the class for the entity.  
   [Olivier Halligon](https://github.com/AliSoftware)
