@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## master
+
+* Change system for alias and deprecated templates.  
+  _Now there is a config.yml inside template directory to manage alias and deprecated._  
+  [Steven Watremez](https://github.com/StevenWatremez)
+  [#35](https://github.com/NijiDigital/gyro/pull/35)
+
 ## 1.4.0
 
 * Order the Primary Key (identity attribute) first when generating the class for the entity.  

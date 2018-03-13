@@ -1,0 +1,15 @@
+alias:
+  #   The template named 'android-java' was originally just named `android`
+  #   and was written in Java before Kotlin even existed.
+  #
+  #   So this alias exists mainly for compatibility reasons, so that people
+  #   who used `-t android` in previous versions of `gyro` can still continue
+  #   to do so and that this new update of gyro doesn't break their setup.
+  android: android-java
+  #   It happens that the `swift3` template is also compatible with Swift 4 without any change.
+  #   So we can use the same template for both Swift 3 and Swift 4
+  swift4: swift3
+deprecated:
+  - object-mapper
+  - swift3-variant
+  - android

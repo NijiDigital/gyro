@@ -12,24 +12,42 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+require 'yaml'
+
 module Gyro
   # Gyro Template Helper
   #
   module Template
+
+    # Print template list representation
+    #
     def self.print_list
-      Gyro::Template.directory.children.sort_by(&:basename).each do |entry|
+      template_config_path = Gyro::Template.directory + 'config.yml'
+      template_config = YAML.load_file(template_config_path)
+      alias_template_hash = template_config['alias']
+      deprecated_template_list = template_config['deprecated']
+
+      alias_template_list = alias_template_hash.map{ |key, value| key }.to_a
+      directory_template_list = Gyro::Template.directory.children.select(&:directory?).map { |element| element.basename.to_s }
+      
+      fat_template_list = directory_template_list + alias_template_list
+      fat_template_list.each do |entry|
         alias_name, target = Gyro::Template.resolve_alias(entry)
+        print_array = [' - ']
+        if deprecated_template_list.include? (entry || alias_name)
+          print_array << '(deprecated) '.colorize(:gray, :faint)
+        end
         if alias_name
-          puts [
-            ' - '.colorize(:gray, :faint),
+          print_array << [
             alias_name.colorize(:gray),
             ' (alias for '.colorize(:gray, :faint),
             target.colorize(:gray),
-            ')'.colorize(:gray, :faint)
-          ].join
-        elsif entry.directory?
-          puts ' - ' + entry.basename.to_s
+            ')'.colorize(:gray, :faint),
+          ]
+        else
+          print_array << [ entry ]
         end
+        puts print_array.join
       end
     end
 
@@ -54,24 +72,14 @@ module Gyro
     #         A 2-items array of [the alias name, the alias target name]
     #         Or nil if the entry does not correspond to a valid template alias
     #
-    def self.resolve_alias(entry)
-      return nil unless entry.exist?
-      return nil if entry.extname != '.alias'
-      base = entry.basename('.alias').to_s
-      target = entry.open(&:readline).chomp # Only read the first line of the file, the rest is ignored
-      return nil if File.basename(target) != target || target.include?('..') # Security measure
-      [base, target]
-    end
+    def self.resolve_alias(name)
+      template_config_path = Gyro::Template.directory + 'config.yml'
+      config = YAML.load_file(template_config_path)
+      base = name
+      target = config['alias'][name]
 
-    # Resolve alias by name
-    #
-    # @return [(String, String)]
-    #         A 2-items array of [the alias name, the alias target name]
-    #         Or nil if the name does not correspond to a valid template alias
-    #
-    def self.resolve_alias_name(name)
-      path = Gyro::Template.directory + (name + '.alias')
-      resolve_alias(path)
+      return nil unless target
+      [base, target]
     end
 
     # @param [String] template_param
@@ -108,7 +116,7 @@ module Gyro
     #         The path to the template corresponding to that name or path
     #
     def self.find_by_name(name)
-      _, target = Gyro::Template.resolve_alias_name(name)
+      _, target = Gyro::Template.resolve_alias(name)
       template_dir = Gyro::Template.directory + (target || name)
       return template_dir if template_dir.directory?
     end
