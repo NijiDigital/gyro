@@ -23,16 +23,39 @@ module Gyro
     def self.print_list
       config_path = Gyro::Template.directory + 'config.yml'
       config = YAML.load_file(config_path)
-      alias_hash = config['alias']
-      deprecated = config['deprecated']
-      children_directory = Gyro::Template.directory.children
-      directory_list = children_directory.select(&:directory?).map(&:basename).map(&:to_s)
-      deprecated_list = deprecated.select { |t| alias_hash.key?(t) || directory_list.include?(t) }
-      non_deprecated_list = (directory_list + alias_hash.keys).reject { |t| deprecated.include?(t) }
-      print_template_list(non_deprecated_list.sort + deprecated_list.sort)
+      directories = Gyro::Template.directory.children.select(&:directory?).map(&:basename).map(&:to_s)
+      deprecated = select_deprecated_templates(directories, config)
+      non_deprecated = select_non_deprecated_templates(directories, config)
+      print_templates(non_deprecated.sort + deprecated.sort)
     end
 
-    def self.print_template_list(array)
+    # Select deprecated templates from the config file
+    #
+    # @param [Array<String>] directories
+    #        The array of directories name
+    # @param [Hash] config
+    #        The hash of template config yaml file 
+    # @return [Array<String>]
+    #         The array of deprecated templates
+    #
+    def self.select_deprecated_templates(directories, config)
+      config['deprecated'].select { |t| config['alias'].key?(t) || directories.include?(t) }
+    end
+
+    # Select non deprecated templates from the template directory and the config file
+    #
+    # @param [Array<String>] directories
+    #        The array of directories name
+    # @param [Hash] config
+    #        The hash of template config yaml file 
+    # @return [Array<String>]
+    #         The array of non deprecated templates
+    #
+    def self.select_non_deprecated_templates(directories, config)
+      (directories + config['alias'].keys).reject { |t| config['deprecated'].include?(t) }
+    end
+
+    def self.print_templates(array)
       config_path = Gyro::Template.directory + 'config.yml'
       config = YAML.load_file(config_path)
       array.each do |name|
