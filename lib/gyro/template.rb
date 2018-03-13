@@ -18,36 +18,35 @@ module Gyro
   # Gyro Template Helper
   #
   module Template
-
     # Print template list representation
     #
     def self.print_list
-      template_config_path = Gyro::Template.directory + 'config.yml'
-      template_config = YAML.load_file(template_config_path)
-      alias_template_hash = template_config['alias']
-      deprecated_template_list = template_config['deprecated']
+      config_path = Gyro::Template.directory + 'config.yml'
+      config = YAML.load_file(config_path)
+      alias_hash = config['alias']
+      deprecated = config['deprecated']
+      children_directory = Gyro::Template.directory.children
+      directory_list = children_directory.select(&:directory?).map(&:basename).map(&:to_s)
+      deprecated_list = deprecated.select { |t| alias_hash.key?(t) || directory_list.include?(t) }
+      non_deprecated_list = (directory_list + alias_hash.keys).reject { |t| deprecated.include?(t) }
+      print_template_list(non_deprecated_list.sort + deprecated_list.sort)
+    end
 
-      alias_template_list = alias_template_hash.map{ |key, value| key }.to_a
-      directory_template_list = Gyro::Template.directory.children.select(&:directory?).map { |element| element.basename.to_s }
-      
-      fat_template_list = directory_template_list + alias_template_list
-      fat_template_list.each do |entry|
-        alias_name, target = Gyro::Template.resolve_alias(entry)
-        print_array = [' - ']
-        if deprecated_template_list.include? (entry || alias_name)
-          print_array << '(deprecated) '.colorize(:gray, :faint)
+    def self.print_template_list(array)
+      config_path = Gyro::Template.directory + 'config.yml'
+      config = YAML.load_file(config_path)
+      array.each do |name|
+        alias_target = Gyro::Template.resolve_alias(name)
+        is_deprecated = config['deprecated'].include?(name)
+        txt = [' - ']
+        txt << name.colorize(is_deprecated ? :gray : :normal)
+        if alias_target
+          txt << ' (alias for '.colorize(:gray, :faint)
+          txt << alias_target.colorize(:gray)
+          txt << ')'.colorize(:gray, :faint)
         end
-        if alias_name
-          print_array << [
-            alias_name.colorize(:gray),
-            ' (alias for '.colorize(:gray, :faint),
-            target.colorize(:gray),
-            ')'.colorize(:gray, :faint),
-          ]
-        else
-          print_array << [ entry ]
-        end
-        puts print_array.join
+        txt << ' (deprecated)'.colorize(:yellow) if is_deprecated
+        puts txt.join
       end
     end
 
@@ -68,18 +67,17 @@ module Gyro
 
     # @param [Pathname] entry
     #        The alias to resolve
-    # @return [(String, String)]
-    #         A 2-items array of [the alias name, the alias target name]
+    # @return [String]
+    #         The alias target name
     #         Or nil if the entry does not correspond to a valid template alias
     #
     def self.resolve_alias(name)
-      template_config_path = Gyro::Template.directory + 'config.yml'
-      config = YAML.load_file(template_config_path)
-      base = name
+      config_path = Gyro::Template.directory + 'config.yml'
+      config = YAML.load_file(config_path)
       target = config['alias'][name]
-
+      
       return nil unless target
-      [base, target]
+      target
     end
 
     # @param [String] template_param
@@ -116,7 +114,7 @@ module Gyro
     #         The path to the template corresponding to that name or path
     #
     def self.find_by_name(name)
-      _, target = Gyro::Template.resolve_alias(name)
+      target = Gyro::Template.resolve_alias(name)
       template_dir = Gyro::Template.directory + (target || name)
       return template_dir if template_dir.directory?
     end
