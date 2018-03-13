@@ -34,7 +34,7 @@ module Gyro
     # @param [Array<String>] directories
     #        The array of directories name
     # @param [Hash] config
-    #        The hash of template config yaml file 
+    #        The hash of template config yaml file
     # @return [Array<String>]
     #         The array of deprecated templates
     #
@@ -47,7 +47,7 @@ module Gyro
     # @param [Array<String>] directories
     #        The array of directories name
     # @param [Hash] config
-    #        The hash of template config yaml file 
+    #        The hash of template config yaml file
     # @return [Array<String>]
     #         The array of non deprecated templates
     #
