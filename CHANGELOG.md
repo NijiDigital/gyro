@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## master
+* Improve error and warning messages when targetting an xcdatamodeld.  
+  [Steven Watremez](https://github.com/StevenWatremez)
+  [#53](https://github.com/NijiDigital/gyro/pull/53)
+
 ## 1.4.0
 
 * Order the Primary Key (identity attribute) first when generating the class for the entity.  
