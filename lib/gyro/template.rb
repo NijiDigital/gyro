@@ -75,7 +75,6 @@ module Gyro
       config_path = Gyro::Template.directory + 'config.yml'
       config = YAML.load_file(config_path)
       target = config['alias'][name]
-      
       return nil unless target
       target
     end
