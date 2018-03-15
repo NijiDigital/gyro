@@ -11,7 +11,6 @@ open class Shop : RealmObject() {
 
     object Attributes {
         const val NAME: String = "name"
-        const val READ_ONLY: String = "readOnly"
     }
 
     object Relationships {

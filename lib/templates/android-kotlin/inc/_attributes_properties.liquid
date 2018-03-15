@@ -1,8 +1,7 @@
 {% for attribute in entity.attributes -%}
-  {%- if attribute.realm_read_only.size == 0 -%}
       {%- comment %} ******* CONVERT TYPE CAPTURE ******* {% endcomment -%}
       {%- capture convert_type -%}
-        {%- if attribute.realm_read_only.size == 0 and attribute.enum_type.size > 0 -%}
+        {%- if attribute.enum_type.size > 0 -%}
           String
         {%- else -%}
           {%- include 'inc/type_converter' -%} 
@@ -10,7 +9,7 @@
       {%- endcapture -%}
 
       {%- capture is_primitive %}
-        {%- if attribute.realm_read_only.size == 0 and attribute.enum_type.size > 0 -%}
+        {%- if attribute.enum_type.size > 0 -%}
           false
         {%- else -%}
           {%- include 'inc/type_primitives' -%} 
@@ -56,5 +55,4 @@
     @SerializedName("{{ attribute.json_key_path }}") 
       {%- endif %}
     var {{ name }}: {{ convert_type }}{{ nullable_type }}{{ default_value }}
-  {%- endif -%}
 {%- endfor -%}

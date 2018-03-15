@@ -1,6 +1,6 @@
 {%- for relationship in entity.relationships -%}
   {%- capture relationship_type -%}
-    {%- if relationship.realm_read_only.size == 0 and relationship.enum_type.size > 0 -%}
+    {%- if relationship.enum_type.size > 0 -%}
       String
     {%- else -%}
       {%- if relationship.destination.size == 0 -%}
