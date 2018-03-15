@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## master
+
+* Fix entity comments for swift templates. Improve comments on attributes. Add comments on relationship.  
+  _Now you can use comment  info key on entity, attribute and relationship_.
+  [Steven Watremez](https://github.com/StevenWatremez)
+  [#56](https://github.com/NijiDigital/gyro/pull/56)
+
 ## 1.4.0
 
 * Order the Primary Key (identity attribute) first when generating the class for the entity.  
