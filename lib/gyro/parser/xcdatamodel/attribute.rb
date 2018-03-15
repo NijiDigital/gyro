@@ -116,13 +116,13 @@ module Gyro
           # rubocop:disable Style/GuardClause
           if @type == :undefined || @type.empty?
             msg = %(The attribute "#{@name}" from "#{@entity_name}" has no type - please fix it)
-            Gyro::Log.fail!(msg, stacktrace: true)
+            Gyro::Log.fail!(msg)
           end
           if !@json_key_path.empty? && !@enum_values.empty? && (@enum_values.size != @json_values.size)
             message = %(The attribute "#{@name}" from "#{@entity_name}" is wrongly annotated:) +
                       %(when declaring an type with enum and JSONKeyPath, you must have the same number of items) +
                       %(in the 'enumValues' and 'JSONValues' annotations.)
-            Gyro::Log.fail!(message, stacktrace: true)
+            Gyro::Log.fail!(message)
           end
           # rubocop:enable Style/GuardClause
         end

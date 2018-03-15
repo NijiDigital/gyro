@@ -15,13 +15,19 @@
 module Gyro
   describe Parser::XCDataModel do
     before do
-      Gyro::Log.quiet = true
+      Gyro::Log.in_test_context = true
     end
 
     it 'check raise an error for file' do
       xcdatamodel_dir = fixture('xcdatamodel', 'not_found.xcdatamodel')
       expect { Parser::XCDataModel::XCDataModel.new(xcdatamodel_dir) }
         .to raise_error 'Unable to find contents of xcdatamodel'
+    end
+
+    it 'check raise an error for xcdatamodeld' do
+      xcdatamodel_dir = fixture('xcdatamodel', 'Model.xcdatamodeld')
+      expect { Parser::XCDataModel::XCDataModel.new(xcdatamodel_dir) }
+        .to raise_error %(Please target an '.xcdatamodel' file inside your xcdatamodeld)
     end
 
     it 'check raising relationship error' do

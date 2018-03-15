@@ -73,12 +73,12 @@ module Gyro
           # rubocop:disable Style/GuardClause
           if inverse_type.empty? && destination.empty?
             message = %(The relationship "#{@name}" from "#{@entity_name}" is wrong - please fix it)
-            Gyro::Log.fail!(message, stacktrace: true)
+            Gyro::Log.fail!(message)
           end
           if !destination.empty? && type != :to_many
             message = %(The relationship "#{@name}" from "#{@entity_name}" is wrong - ) +
                       %(please set a 'No Value' relationship as 'To Many')
-            Gyro::Log.fail!(message, stacktrace: true)
+            Gyro::Log.fail!(message)
           end
           # rubocop:enable Style/GuardClause
         end

@@ -6,6 +6,9 @@
   _Now you can use comment  info key on entity, attribute and relationship_.
   [Steven Watremez](https://github.com/StevenWatremez)
   [#56](https://github.com/NijiDigital/gyro/pull/56)
+* Improve error and warning messages when targetting an xcdatamodeld.  
+  [Steven Watremez](https://github.com/StevenWatremez)
+  [#53](https://github.com/NijiDigital/gyro/pull/53)
 
 ## 1.4.0
 
