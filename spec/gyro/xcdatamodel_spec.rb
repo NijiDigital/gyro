@@ -27,7 +27,7 @@ module Gyro
     it 'check raise an error for xcdatamodeld' do
       xcdatamodel_dir = fixture('xcdatamodel', 'Model.xcdatamodeld')
       expect { Parser::XCDataModel::XCDataModel.new(xcdatamodel_dir) }
-        .to raise_error 'Please target an \'.xcdatamodel\' file inside your xcdatamodeld'
+        .to raise_error %(Please target an '.xcdatamodel' file inside your xcdatamodeld)
     end
 
     it 'check raising relationship error' do

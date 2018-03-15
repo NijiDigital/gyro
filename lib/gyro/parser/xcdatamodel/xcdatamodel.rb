@@ -37,7 +37,7 @@ module Gyro
 
         def initialize(xcdatamodel_dir)
           is_xcdatamodeld = xcdatamodel_dir.extname != '.xcdatamodeld'
-          Gyro::Log.fail!('Please target an \'.xcdatamodel\' file inside your xcdatamodeld') unless is_xcdatamodeld
+          Gyro::Log.fail!(%(Please target an '.xcdatamodel' file inside your xcdatamodeld)) unless is_xcdatamodeld
           if xcdatamodel_dir.parent.extname == '.xcdatamodeld'
             xcdatamodeld_info_message = 'You are using an xcdatamodeld, ' \
                                         'please be sure you target the correct version of your xcdatamodel.' \
@@ -47,9 +47,7 @@ module Gyro
           file_contents = xcdatamodel_dir + 'contents'
           Gyro::Log.fail!('Unable to find contents of xcdatamodel') unless file_contents.exist?
           @entities = {}
-          file = File.open(file_contents)
-          document_xml = Document.new(file)
-          file.close
+          document_xml = File.open(file_contents) { |file| Document.new(file) }
           load_entities(document_xml)
         end
 
