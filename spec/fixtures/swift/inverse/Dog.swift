@@ -6,8 +6,8 @@ import Foundation
 final class Dog: Object {
 
   enum Attributes: String {
-    case age = "age"
-    case name = "name"
+    static let age = "age"
+    static let name = "name"
   }
 
   @objc dynamic var age: Int16 = 0

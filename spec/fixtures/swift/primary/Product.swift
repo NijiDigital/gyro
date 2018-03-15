@@ -6,9 +6,9 @@ import Foundation
 final class Product: Object {
 
   enum Attributes: String {
-    case name = "name" /* Primary Key */
-    case brand = "brand"
-    case price = "price"
+    static let name = "name" /* Primary Key */
+    static let brand = "brand"
+    static let price = "price"
   }
 
   @objc dynamic var name: String = "" /* Primary Key */

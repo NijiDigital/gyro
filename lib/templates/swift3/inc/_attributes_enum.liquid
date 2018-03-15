@@ -6,7 +6,7 @@
             {%- if attribute.comment.size > 0 %}
     /// {{ attribute.comment }}
             {%- endif %}
-    case {{ attribute.name }} = "{{ attribute.name | escape_quotes }}"{% if attribute.name == entity.identity_attribute %} /* Primary Key */{% endif %}
+    static let {{ attribute.name }} = "{{ attribute.name | escape_quotes }}"{% if attribute.name == entity.identity_attribute %} /* Primary Key */{% endif %}
         {%- endif %}
     {%- endfor %}
   }

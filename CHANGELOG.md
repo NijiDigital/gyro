@@ -16,6 +16,9 @@
 * Improve error and warning messages when targetting an xcdatamodeld.  
   [Steven Watremez](https://github.com/StevenWatremez)
   [#53](https://github.com/NijiDigital/gyro/pull/53)
+* Change constants from `case` to `static let` in Attribute/Relationship enums.  
+  [Steven Watremez](https://github.com/StevenWatremez)
+  [#58](https://github.com/NijiDigital/gyro/pull/58)
 
 ## 1.4.0
 

@@ -6,12 +6,12 @@ import Foundation
 final class User: Object {
 
   enum Attributes: String {
-    case birthday = "birthday"
-    case name = "name"
+    static let birthday = "birthday"
+    static let name = "name"
   }
 
   enum Relationships: String {
-    case fidelityCard = "fidelityCard"
+    static let fidelityCard = "fidelityCard"
   }
 
   @objc dynamic var birthday: Date = Date()

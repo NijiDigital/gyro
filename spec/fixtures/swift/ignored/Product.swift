@@ -6,7 +6,7 @@ import Foundation
 final class Product: Object {
 
   enum Relationships: String {
-    case shop = "shop"
+    static let shop = "shop"
   }
 
   @objc dynamic var shop: Shop?

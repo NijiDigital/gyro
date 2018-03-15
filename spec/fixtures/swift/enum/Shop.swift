@@ -6,9 +6,9 @@ import Foundation
 final class Shop: Object {
 
   enum Attributes: String {
-    case name = "name"
-    case optionalValue = "optionalValue"
-    case type = "type"
+    static let name = "name"
+    static let optionalValue = "optionalValue"
+    static let type = "type"
   }
 
   @objc dynamic var name: String = ""
