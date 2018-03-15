@@ -455,15 +455,15 @@ enum Type: String {
 <a name="add-comments-to-the-generated-classes"></a>
 # Add comments to the generated classes
 
-To make the generated code more readable, it's possible to add comments on an entity — e.g. to provide a short description of what this entity is supposed to represent.
+To make the generated code more readable, it's possible to add comments on an entity/attribute/relationship — e.g. to provide a short description of what this entity/attribute/relationship is supposed to represent.
 
-To do so, simply add the following key/value pair to your **entity** in your `.xcdatamodel`:
+To do so, simply add the following key/value pair to your **entity/attribute/relationship** in your `.xcdatamodel`:
 
 | Key | Value |
 |-----|-------|
 | `comment` | `the_comment_text_here` |
 
-A code commend (`/** … */`) will then be generated (`.swift` (Swift) or `.java` (Android)) just before the class declaration, e.g. to help the developer understand what this class is for.
+A code comment will then be generated (`.swift` (Swift) or `.java` (Android)) just before the declaration, e.g. to help the developer understand what this class/attribute/relationship is for.
 
 
 ---

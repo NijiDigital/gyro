@@ -18,7 +18,7 @@ module Gyro
       # One Relationship between attributes in the xcdatamodel
       #
       class Relationship
-        attr_accessor :entity_name, :name, :type, :optional, :deletion_rule
+        attr_accessor :entity_name, :name, :type, :optional, :deletion_rule, :comment
         attr_accessor :inverse_name, :inverse_type, :json_key_path, :support_annotation, :json_ignored
         attr_accessor :realm_ignored
         attr_accessor :destination
@@ -38,6 +38,7 @@ module Gyro
           @realm_ignored = Gyro::Parser::XCDataModel.user_info(relationship_xml, 'realmIgnored').empty? ? false : true
           @json_ignored = Gyro::Parser::XCDataModel.user_info(relationship_xml, 'JSONIgnored').empty? ? false : true
           @support_annotation = Gyro::Parser::XCDataModel.user_info(relationship_xml, 'supportAnnotation')
+          @comment = Gyro::Parser::XCDataModel.user_info(relationship_xml, 'comment')
           load_type(relationship_xml)
           @destination = Gyro::Parser::XCDataModel.user_info(relationship_xml, 'destination')
           search_for_error
@@ -45,7 +46,7 @@ module Gyro
 
         def to_h
           { 'entity_name' => entity_name, 'name' => name, 'type' => type.to_s,
-            'optional' => optional, 'deletion_rule' => deletion_rule,
+            'optional' => optional, 'deletion_rule' => deletion_rule, 'comment' => comment,
             'inverse_name' => inverse_name, 'inverse_type' => inverse_type,
             'json_key_path' => json_key_path, 'json_ignored' => json_ignored,
             'support_annotation' => support_annotation,
