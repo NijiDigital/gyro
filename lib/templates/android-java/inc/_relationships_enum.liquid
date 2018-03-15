@@ -3,6 +3,9 @@
     public static final class Relationships {
     {%- for relationship in entity.relationships -%}
       {%- if relationship.inverse == false %}
+        {%- if relationship.comment.size > 0 %}
+        // {{ relationship.comment }}
+        {%- endif %}
         public static final String {{ relationship.name | snake_case | upcase }} = "{{ relationship.name }}";
       {%- endif -%}
     {%- endfor  %}

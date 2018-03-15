@@ -3,6 +3,9 @@
     object Relationships {
     {%- for relationship in entity.relationships -%}
       {%- if relationship.inverse == false %}
+        {%- if relationship.comment.size > 0 %}
+        // {{ relationship.comment }}
+        {%- endif %}
         const val {{ relationship.name | snake_case | upcase }}: String = "{{ relationship.name }}"
       {%- endif -%}
     {%- endfor  %}
