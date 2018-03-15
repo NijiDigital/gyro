@@ -76,6 +76,7 @@ rescue OptionParser::ParseError => e
   exit 1
 end
 
+# Model directory parsing
 if options[:model].nil?
   Gyro::Log.info('No model provided, trying to find one in the local directory…')
   options[:model] = Gyro::Parser::XCDataModel.find_in_dir(dir)
@@ -89,6 +90,8 @@ else
   dirname = File.dirname(options[:model])
   Gyro::Log.success("Using #{basename} in #{dirname}")
 end
+
+xcdatamodel_dir = Pathname.new(options[:model])
 
 # Liquid Templates
 if options[:template].nil?
@@ -114,12 +117,13 @@ end
 puts <<-INFO.gsub(/  \|/, '')
   |
   |#===================================
+  |# Model       : #{xcdatamodel_dir}
   |# Template    : #{template_dir}
   |# Output Dir  : #{output_dir}
   |# Params      : #{options[:params].inspect}
   |#===================================
 INFO
 
-xcdatamodel = Gyro::Parser::XCDataModel::XCDataModel.new(options[:model])
+xcdatamodel = Gyro::Parser::XCDataModel::XCDataModel.new(xcdatamodel_dir)
 gen = Gyro::Generator::Liquid.new(template_dir, output_dir, options[:params])
 gen.generate(xcdatamodel)
