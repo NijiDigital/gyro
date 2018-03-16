@@ -21,11 +21,9 @@ module Gyro
     # Print template list representation
     #
     def self.print_list
-      config_path = Gyro::Template.directory + 'config.yml'
-      config = YAML.load_file(config_path)
       directories = Gyro::Template.directory.children.select(&:directory?).map(&:basename).map(&:to_s)
-      deprecated = select_deprecated_templates(directories, config)
-      non_deprecated = select_non_deprecated_templates(directories, config)
+      deprecated = select_deprecated_templates(directories)
+      non_deprecated = select_non_deprecated_templates(directories)
       print_templates(non_deprecated.sort + deprecated.sort)
     end
 
@@ -33,12 +31,10 @@ module Gyro
     #
     # @param [Array<String>] directories
     #        The array of directories name
-    # @param [Hash] config
-    #        The hash of template config yaml file
     # @return [Array<String>]
     #         The array of deprecated templates
     #
-    def self.select_deprecated_templates(directories, config)
+    def self.select_deprecated_templates(directories)
       config['deprecated'].select { |t| config['alias'].key?(t) || directories.include?(t) }
     end
 
@@ -46,18 +42,14 @@ module Gyro
     #
     # @param [Array<String>] directories
     #        The array of directories name
-    # @param [Hash] config
-    #        The hash of template config yaml file
     # @return [Array<String>]
     #         The array of non deprecated templates
     #
-    def self.select_non_deprecated_templates(directories, config)
+    def self.select_non_deprecated_templates(directories)
       (directories + config['alias'].keys).reject { |t| config['deprecated'].include?(t) }
     end
 
     def self.print_templates(array)
-      config_path = Gyro::Template.directory + 'config.yml'
-      config = YAML.load_file(config_path)
       array.each do |name|
         alias_target = Gyro::Template.resolve_alias(name)
         is_deprecated = config['deprecated'].include?(name)
@@ -95,8 +87,6 @@ module Gyro
     #         Or nil if the entry does not correspond to a valid template alias
     #
     def self.resolve_alias(name)
-      config_path = Gyro::Template.directory + 'config.yml'
-      config = YAML.load_file(config_path)
       target = config['alias'][name]
       return nil unless target
       target
@@ -139,6 +129,12 @@ module Gyro
       target = Gyro::Template.resolve_alias(name)
       template_dir = Gyro::Template.directory + (target || name)
       return template_dir if template_dir.directory?
+    end
+
+    # Hash of Yaml config for templates
+    #
+    def self.config
+      @config ||= YAML.load_file(Gyro::Template.directory + 'config.yml')
     end
   end
 end
