@@ -4,7 +4,7 @@
     {%- for attribute in entity.attributes -%}
         {%- if attribute.realm_ignored or attribute.realm_read_only.size == 0 -%}
             {%- if attribute.comment.size > 0 %}
-    /** {{ attribute.comment }} **/
+    /// {{ attribute.comment }}
             {%- endif %}
     case {{ attribute.name }} = "{{ attribute.name | escape_quotes }}"{% if attribute.name == entity.identity_attribute %} /* Primary Key */{% endif %}
         {%- endif %}

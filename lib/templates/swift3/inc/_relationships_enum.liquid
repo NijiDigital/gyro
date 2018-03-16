@@ -11,6 +11,9 @@
         {%- endif -%}
 			{%- endcapture -%}
       {%- assign relationship_name = relationship_name %}
+        {%- if relationship.comment.size > 0 %}
+    /// {{ relationship.comment }}
+        {%- endif %}
     case {{ relationship_name | uncapitalize }} = "{{ relationship_name | escape_quotes }}"
     {%- endfor %}
   }

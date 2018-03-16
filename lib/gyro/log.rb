@@ -16,30 +16,30 @@ module Gyro
   # Print nice and colored output for various error/success/title messages of Gyro
   #
   module Log
-    @quiet = false
-    def self.quiet=(value)
-      @quiet = value
+    @in_test_context = false
+    def self.in_test_context=(value)
+      @in_test_context = value
     end
 
     def self.title(str) # bg yellow
-      puts "\n#{str.colorize(:gray, :blue)}" unless @quiet
+      puts "\n#{str.colorize(:gray, :blue)}" unless @in_test_context
     end
 
     def self.error(str)
-      puts "! #{str}".colorize(:red, :bold) unless @quiet
+      puts "! #{str}".colorize(:red, :bold) unless @in_test_context
     end
 
     def self.info(str)
-      puts "> #{str}".colorize(:yellow, :bold) unless @quiet
+      puts "> #{str}".colorize(:yellow, :bold) unless @in_test_context
     end
 
     def self.success(str)
-      puts "√ #{str}".colorize(:green, :bold) unless @quiet
+      puts "√ #{str}".colorize(:green, :bold) unless @in_test_context
     end
 
-    def self.fail!(message, stacktrace: false)
+    def self.fail!(message)
       Gyro::Log.error message
-      raise message if stacktrace
+      raise message if @in_test_context
       exit 1
     end
   end

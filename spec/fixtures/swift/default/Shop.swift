@@ -3,17 +3,25 @@
 import RealmSwift
 import Foundation
 
+/// Object representation from web service.
 final class Shop: Object {
 
   enum Attributes: String {
     case active = "active"
     case budget = "budget"
+    /// Define if this shop is open. This variable is updated every hours.
     case isOpen = "isOpen"
     case name = "name"
     case numberOfArrivals = "numberOfArrivals"
     case numberOfProducts = "numberOfProducts"
     case promo = "promo"
+    /// The company slogan about this shop
     case slogan = "slogan"
+  }
+
+  enum Relationships: String {
+    /// List of wholesaler
+    case wholesalers = "wholesalers"
   }
 
   @objc dynamic var active: Bool = true
@@ -24,5 +32,6 @@ final class Shop: Object {
   @objc dynamic var numberOfProducts: Int32 = 155
   @objc dynamic var promo: Double = 0.0
   @objc dynamic var slogan: String = "The best place to be"
+  let wholesalers = List<Shop>()
 
 }

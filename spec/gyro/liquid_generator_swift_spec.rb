@@ -20,7 +20,7 @@ module Gyro
   describe 'Liquid' do
     describe 'Swift' do
       before do
-        Gyro::Log.quiet = true
+        Gyro::Log.in_test_context = true
       end
 
       %w[default realm primary ignored inverse enum optional].each do |datamodel|

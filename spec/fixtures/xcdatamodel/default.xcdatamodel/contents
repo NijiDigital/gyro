@@ -1,16 +1,32 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="13772" systemVersion="16G1036" minimumToolsVersion="Xcode 4.3" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="13772" systemVersion="16G1212" minimumToolsVersion="Xcode 4.3" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
     <entity name="Shop" syncable="YES">
         <attribute name="active" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="budget" attributeType="Double" defaultValueString="26000.35" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="isOpen" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="isOpen" attributeType="Boolean" usesScalarValueType="NO" syncable="YES">
+            <userInfo>
+                <entry key="comment" value="Define if this shop is open. This variable is updated every hours."/>
+            </userInfo>
+        </attribute>
         <attribute name="name" attributeType="String" syncable="YES"/>
         <attribute name="numberOfArrivals" attributeType="Integer 32" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="numberOfProducts" attributeType="Integer 32" defaultValueString="155" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="promo" attributeType="Double" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="slogan" attributeType="String" defaultValueString="The best place to be" syncable="YES"/>
+        <attribute name="slogan" attributeType="String" defaultValueString="The best place to be" syncable="YES">
+            <userInfo>
+                <entry key="comment" value="The company slogan about this shop"/>
+            </userInfo>
+        </attribute>
+        <relationship name="wholesalers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Shop" syncable="YES">
+            <userInfo>
+                <entry key="comment" value="List of wholesaler"/>
+            </userInfo>
+        </relationship>
+        <userInfo>
+            <entry key="comment" value="Object representation from web service."/>
+        </userInfo>
     </entity>
     <elements>
-        <element name="Shop" positionX="160" positionY="192" width="128" height="165"/>
+        <element name="Shop" positionX="160" positionY="192" width="128" height="180"/>
     </elements>
 </model>
