@@ -51,8 +51,9 @@ class String
   ANSI_COLORS = %i[black red green yellow blue magenta cyan gray white].freeze
   ANSI_MODES = %i[normal bold faint italic underline blink].freeze
 
-  def colorize(fg = :white, *options)
-    fg_code = 30 + (ANSI_COLORS.index(fg) || 7)
+  def colorize(fg = :normal, *options)
+    fg_idx = ANSI_COLORS.index(fg)
+    fg_code = fg_idx.nil? ? ANSI_MODES.index(fg_idx) : 30 + fg_idx
     other_codes = options.map do |opt|
       bg = ANSI_COLORS.index(opt)
       bg.nil? ? ANSI_MODES.index(opt) : 40 + bg

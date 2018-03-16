@@ -12,24 +12,56 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+require 'yaml'
+
 module Gyro
   # Gyro Template Helper
   #
   module Template
+    # Print template list representation
+    #
     def self.print_list
-      Gyro::Template.directory.children.sort_by(&:basename).each do |entry|
-        alias_name, target = Gyro::Template.resolve_alias(entry)
-        if alias_name
-          puts [
-            ' - '.colorize(:gray, :faint),
-            alias_name.colorize(:gray),
-            ' (alias for '.colorize(:gray, :faint),
-            target.colorize(:gray),
-            ')'.colorize(:gray, :faint)
-          ].join
-        elsif entry.directory?
-          puts ' - ' + entry.basename.to_s
+      directories = Gyro::Template.directory.children.select(&:directory?).map(&:basename).map(&:to_s)
+      deprecated = select_deprecated_templates(directories)
+      non_deprecated = select_non_deprecated_templates(directories)
+      print_templates(non_deprecated.sort + deprecated.sort)
+    end
+
+    # Select deprecated templates from the config file
+    #
+    # @param [Array<String>] directories
+    #        The array of directories name
+    # @return [Array<String>]
+    #         The array of deprecated templates
+    #
+    def self.select_deprecated_templates(directories)
+      config['deprecated'].select { |t| config['alias'].key?(t) || directories.include?(t) }
+    end
+
+    # Select non deprecated templates from the template directory and the config file
+    #
+    # @param [Array<String>] directories
+    #        The array of directories name
+    # @return [Array<String>]
+    #         The array of non deprecated templates
+    #
+    def self.select_non_deprecated_templates(directories)
+      (directories + config['alias'].keys).reject { |t| config['deprecated'].include?(t) }
+    end
+
+    def self.print_templates(array)
+      array.each do |name|
+        alias_target = Gyro::Template.resolve_alias(name)
+        is_deprecated = config['deprecated'].include?(name)
+        txt = [' - ']
+        txt << name.colorize(is_deprecated ? :gray : :normal)
+        if alias_target
+          txt << ' (alias for '.colorize(:gray, :faint)
+          txt << alias_target.colorize(:gray)
+          txt << ')'.colorize(:gray, :faint)
         end
+        txt << ' (deprecated)'.colorize(:yellow) if is_deprecated
+        puts txt.join
       end
     end
 
@@ -50,28 +82,14 @@ module Gyro
 
     # @param [Pathname] entry
     #        The alias to resolve
-    # @return [(String, String)]
-    #         A 2-items array of [the alias name, the alias target name]
+    # @return [String]
+    #         The alias target name
     #         Or nil if the entry does not correspond to a valid template alias
     #
-    def self.resolve_alias(entry)
-      return nil unless entry.exist?
-      return nil if entry.extname != '.alias'
-      base = entry.basename('.alias').to_s
-      target = entry.open(&:readline).chomp # Only read the first line of the file, the rest is ignored
-      return nil if File.basename(target) != target || target.include?('..') # Security measure
-      [base, target]
-    end
-
-    # Resolve alias by name
-    #
-    # @return [(String, String)]
-    #         A 2-items array of [the alias name, the alias target name]
-    #         Or nil if the name does not correspond to a valid template alias
-    #
-    def self.resolve_alias_name(name)
-      path = Gyro::Template.directory + (name + '.alias')
-      resolve_alias(path)
+    def self.resolve_alias(name)
+      target = config['alias'][name]
+      return nil unless target
+      target
     end
 
     # @param [String] template_param
@@ -108,9 +126,15 @@ module Gyro
     #         The path to the template corresponding to that name or path
     #
     def self.find_by_name(name)
-      _, target = Gyro::Template.resolve_alias_name(name)
+      target = Gyro::Template.resolve_alias(name)
       template_dir = Gyro::Template.directory + (target || name)
       return template_dir if template_dir.directory?
+    end
+
+    # Hash of Yaml config for templates
+    #
+    def self.config
+      @config ||= YAML.load_file(Gyro::Template.directory + 'config.yml')
     end
   end
 end

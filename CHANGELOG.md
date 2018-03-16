@@ -2,8 +2,12 @@
 
 ## master
 
-* Fix entity comments for swift templates. Improve comments on attributes. Add comments on relationship.  
-  _Now you can use comment  info key on entity, attribute and relationship_.
+* Change system for alias and deprecated templates.  
+  _Now there is a config.yml inside template directory to manage alias and deprecated._  
+  [Steven Watremez](https://github.com/StevenWatremez)
+  [#35](https://github.com/NijiDigital/gyro/pull/35)
+* Fix entity comments for swift templates. Improve comments on attributes. Add comments on relationships.  
+  _Now you can use comment  info key on entity, attribute and relationship_.  
   [Steven Watremez](https://github.com/StevenWatremez)
   [#56](https://github.com/NijiDigital/gyro/pull/56)
 * Improve error and warning messages when targetting an xcdatamodeld.  
