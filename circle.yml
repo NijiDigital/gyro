@@ -1,4 +1,0 @@
-test:
-  pre:
-    - bundle exec rubocop
-    - bundle exec rake pr:check
