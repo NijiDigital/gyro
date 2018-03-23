@@ -2,6 +2,9 @@
 
 ## master
 
+* Migrate CircleCi from 1.0 to 2.0.  
+  [Steven Watremez](https://github.com/StevenWatremez)
+  [#63](https://github.com/NijiDigital/gyro/pull/63)
 * Change system for alias and deprecated templates.  
   _Now there is a config.yml inside template directory to manage alias and deprecated._  
   [Steven Watremez](https://github.com/StevenWatremez)

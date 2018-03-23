@@ -1,0 +1,38 @@
+default_steps: &default_steps
+  steps:
+    - checkout
+    - run:
+        name: Which ruby?
+        command: ruby -v
+    - run:
+        name: Which bundler?
+        command: bundle -v
+    - run:
+        name: Bundle Install
+        command: bundle check || bundle install
+    - run:
+        name: Launch tests
+        command: bundle exec rspec
+    - run:
+        name: Execute Rubocop
+        command: bundle exec rubocop
+    - run:
+        name: Check PR format
+        command: bundle exec rake pr:check
+
+version: 2
+jobs:
+  build_old_ruby:
+    docker:
+      - image: drecom/ubuntu-ruby:2.0.0-p648
+    <<: *default_steps
+  build_latest_ruby:
+    docker:
+      - image: circleci/ruby:latest
+    <<: *default_steps
+workflows:
+  version: 2
+  build:
+    jobs:
+      - build_old_ruby
+      - build_latest_ruby
