@@ -2,7 +2,7 @@
 namespace :pr do
   desc 'Check incoming PRs on CI'
   task :check do
-    if ENV['CIRCLE_PULL_REQUEST'].empty?
+    if ENV['CIRCLE_PULL_REQUEST'].nil? || ENV['CIRCLE_PULL_REQUEST'].empty?
       warn 'Not part of a Pull Request, so nothing to check in this task'
       next
     end
