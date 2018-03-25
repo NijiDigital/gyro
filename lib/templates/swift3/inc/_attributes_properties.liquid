@@ -9,17 +9,17 @@
     {%- include 'inc/type_converter' -%}
   {%- endcapture -%}
 
-  {%- if attribute.realm_read_only.size == 0 -%}
-    {%- if attribute.enum_values.size > 0 -%}
-      {%- comment -%} ******* GENERATE ENUM ATTRIBUTE PROPERTY ******* {% endcomment -%}
-      {%- include 'inc/enum_attribute_property' -%}
-    {%- else -%}{%- if attribute.optional == true -%}
+  {%- if attribute.enum_values.size > 0 -%}
+    {%- comment -%} ******* GENERATE ENUM ATTRIBUTE PROPERTY ******* {% endcomment -%}
+    {%- include 'inc/enum_attribute_property' -%}
+  {%- else -%}
+    {%- if attribute.optional == true -%}
       {% comment -%} ******* GENERATE OPTIONAL ATTRIBUTE PROPERTY ******* {% endcomment -%}
       {%- include 'inc/optional_attribute_property' -%}
     {%- else -%}
     {%- comment -%} ******* GENERATE DEFAULT ATTRIBUTE PROPERTY ******* {% endcomment %}
   @objc dynamic var {{ attribute.name }}: {{ convert_type }} = {{ default_value }} {%- if attribute.name == entity.identity_attribute %} /* Primary Key */{% endif -%}
-    {%- endif -%}{%- endif -%}
+    {%- endif -%}
   {%- endif -%}
 {%- endfor -%}
 

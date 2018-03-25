@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="12141" systemVersion="16E195" minimumToolsVersion="Xcode 4.3" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="13772" systemVersion="16G1212" minimumToolsVersion="Xcode 4.3" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
     <entity name="Owner" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="shop" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Shop" inverseName="owner" inverseEntity="Shop" syncable="YES">
@@ -23,17 +23,12 @@
             </userInfo>
         </attribute>
         <attribute name="name" attributeType="String" syncable="YES"/>
-        <attribute name="readOnly" attributeType="String" syncable="YES">
-            <userInfo>
-                <entry key="realmReadOnly" value="return self.name;"/>
-            </userInfo>
-        </attribute>
         <relationship name="owner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Owner" inverseName="shop" inverseEntity="Owner" syncable="YES"/>
         <relationship name="products" toMany="YES" deletionRule="Nullify" destinationEntity="Product" inverseName="shop" inverseEntity="Product" syncable="YES"/>
     </entity>
     <elements>
         <element name="Owner" positionX="135" positionY="225" width="128" height="75"/>
         <element name="Product" positionX="216" positionY="279" width="128" height="60"/>
-        <element name="Shop" positionX="54" positionY="144" width="128" height="135"/>
+        <element name="Shop" positionX="54" positionY="144" width="128" height="120"/>
     </elements>
 </model>

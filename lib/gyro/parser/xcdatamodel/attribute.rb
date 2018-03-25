@@ -19,7 +19,7 @@ module Gyro
       #
       class Attribute
         attr_accessor :entity_name, :name, :type, :optional, :indexed, :default
-        attr_accessor :realm_ignored, :realm_read_only, :enum_type, :enum_values
+        attr_accessor :realm_ignored, :enum_type, :enum_values
         attr_accessor :json_key_path, :json_values, :transformer, :comment, :support_annotation, :json_ignored
 
         alias optional? optional
@@ -36,7 +36,6 @@ module Gyro
           @default = attribute_xml.attributes['defaultValueString'].to_s
           @type = attribute_xml.attributes['attributeType'].to_s.downcase.tr(' ', '_').to_sym
           @realm_ignored = !Gyro::Parser::XCDataModel.user_info(attribute_xml, 'realmIgnored').empty?
-          @realm_read_only = Gyro::Parser::XCDataModel.user_info(attribute_xml, 'realmReadOnly')
           @enum_type = Gyro::Parser::XCDataModel.user_info(attribute_xml, 'enumType')
           @enum_values = Gyro::Parser::XCDataModel.user_info(attribute_xml, 'enumValues').split(',')
           @json_key_path = Gyro::Parser::XCDataModel.user_info(attribute_xml, 'JSONKeyPath')
@@ -55,7 +54,7 @@ module Gyro
             'optional' => optional,
             'indexed' => indexed,
             'default' => default,
-            'realm_ignored' => realm_ignored, 'realm_read_only' => realm_read_only,
+            'realm_ignored' => realm_ignored,
             'enum_type' => enum_type, 'enum_values' => enum_values,
             'json_key_path' => json_key_path, 'json_values' => json_values,
             'json_ignored' => json_ignored,
@@ -69,10 +68,6 @@ module Gyro
 
         def enum?
           !@enum_type.empty?
-        end
-
-        def read_only?
-          !@realm_read_only.empty?
         end
 
         def default?

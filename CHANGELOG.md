@@ -16,6 +16,9 @@
 * Improve error and warning messages when targetting an xcdatamodeld.  
   [Steven Watremez](https://github.com/StevenWatremez)
   [#53](https://github.com/NijiDigital/gyro/pull/53)
+* Stop supporting `realmReadOnly` user info key.  
+  [Steven Watremez](https://github.com/StevenWatremez)
+  [#57](https://github.com/NijiDigital/gyro/pull/57)
 
 ## 1.4.0
 

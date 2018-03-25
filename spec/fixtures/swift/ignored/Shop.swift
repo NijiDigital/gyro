@@ -6,8 +6,6 @@ import Foundation
 final class Shop: Object {
 
   enum Attributes: String {
-    case ignored = "ignored"
-    case ignored2 = "ignored2"
     case name = "name"
   }
 

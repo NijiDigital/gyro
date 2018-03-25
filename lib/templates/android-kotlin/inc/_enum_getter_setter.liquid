@@ -1,6 +1,6 @@
 {%- for attribute in entity.attributes %}
  
-    {%- if attribute.realm_read_only.size == 0 and attribute.enum_type.size > 0 %}
+    {%- if attribute.enum_type.size > 0 %}
         {%- assign name = attribute.name %}
         
     fun get{{ name | titleize }}Enum(): {{ attribute.enum_type }}? = {{ attribute.enum_type }}.get({{ name }})
