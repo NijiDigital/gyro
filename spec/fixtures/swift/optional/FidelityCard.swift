@@ -6,12 +6,12 @@ import Foundation
 final class FidelityCard: Object {
 
   enum Attributes: String {
-    case identifier = "identifier"
-    case points = "points"
+    static let identifier = "identifier"
+    static let points = "points"
   }
 
   enum Relationships: String {
-    case user = "user"
+    static let user = "user"
   }
 
   @objc dynamic var identifier: Int16 = 0

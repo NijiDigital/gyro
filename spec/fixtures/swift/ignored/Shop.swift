@@ -6,14 +6,14 @@ import Foundation
 final class Shop: Object {
 
   enum Attributes: String {
-    case ignored = "ignored"
-    case ignored2 = "ignored2"
-    case name = "name"
+    static let ignored = "ignored"
+    static let ignored2 = "ignored2"
+    static let name = "name"
   }
 
   enum Relationships: String {
-    case owner = "owner"
-    case products = "products"
+    static let owner = "owner"
+    static let products = "products"
   }
 
   @objc dynamic var ignored: String = ""

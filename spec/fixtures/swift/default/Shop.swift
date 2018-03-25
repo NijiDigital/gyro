@@ -7,21 +7,21 @@ import Foundation
 final class Shop: Object {
 
   enum Attributes: String {
-    case active = "active"
-    case budget = "budget"
+    static let active = "active"
+    static let budget = "budget"
     /// Define if this shop is open. This variable is updated every hours.
-    case isOpen = "isOpen"
-    case name = "name"
-    case numberOfArrivals = "numberOfArrivals"
-    case numberOfProducts = "numberOfProducts"
-    case promo = "promo"
+    static let isOpen = "isOpen"
+    static let name = "name"
+    static let numberOfArrivals = "numberOfArrivals"
+    static let numberOfProducts = "numberOfProducts"
+    static let promo = "promo"
     /// The company slogan about this shop
-    case slogan = "slogan"
+    static let slogan = "slogan"
   }
 
   enum Relationships: String {
     /// List of wholesaler
-    case wholesalers = "wholesalers"
+    static let wholesalers = "wholesalers"
   }
 
   @objc dynamic var active: Bool = true

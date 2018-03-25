@@ -6,11 +6,11 @@ import Foundation
 final class Shop: Object {
 
   enum Attributes: String {
-    case name = "name"
+    static let name = "name"
   }
 
   enum Relationships: String {
-    case products = "products"
+    static let products = "products"
   }
 
   @objc dynamic var name: String = ""

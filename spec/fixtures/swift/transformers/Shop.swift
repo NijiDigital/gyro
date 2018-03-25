@@ -6,14 +6,14 @@ import Foundation
 final class Shop: Object {
 
     enum Attributes: String {
-        case AttrDate = "attrDate"
-        case AttrDateCustom = "attrDateCustom"
-        case AttrDecimal = "attrDecimal"
-        case AttrDouble = "attrDouble"
-        case AttrFloat = "attrFloat"
-        case AttrInteger16 = "attrInteger16"
-        case AttrInteger32 = "attrInteger32"
-        case AttrInteger64 = "attrInteger64"
+        static let AttrDate = "attrDate"
+        static let AttrDateCustom = "attrDateCustom"
+        static let AttrDecimal = "attrDecimal"
+        static let AttrDouble = "attrDouble"
+        static let AttrFloat = "attrFloat"
+        static let AttrInteger16 = "attrInteger16"
+        static let AttrInteger32 = "attrInteger32"
+        static let AttrInteger64 = "attrInteger64"
     }
 
     @objc dynamic var attrDate: NSDate? = nil

@@ -6,7 +6,7 @@ import Foundation
 final class Person: Object {
 
   enum Relationships: String {
-    case dogs = "dogs"
+    static let dogs = "dogs"
   }
 
   let dogs = List<Dog>()
