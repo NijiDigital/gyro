@@ -11,7 +11,7 @@ enum class Type(val jsonValue: String) {
 
     companion object {
         @JvmStatic
-        fun get(jsonValue: String): Type? {
+        fun get(jsonValue: String?): Type? {
             return Type.values().firstOrNull { it.jsonValue == jsonValue }
         }
     }
