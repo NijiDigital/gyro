@@ -11,7 +11,7 @@ enum class OptValue(val jsonValue: String) {
 
     companion object {
         @JvmStatic
-        fun get(jsonValue: String): OptValue? {
+        fun get(jsonValue: String?): OptValue? {
             return OptValue.values().firstOrNull { it.jsonValue == jsonValue }
         }
     }

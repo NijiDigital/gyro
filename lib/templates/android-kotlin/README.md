@@ -38,17 +38,17 @@ import io.realm.RealmObject
 class FidelityCard: RealmObject() {
 
     object Attributes {
-        const val IDENTIFIER: String = "identifier";
-        const val POINTS: String = "points";
+        const val IDENTIFIER: String = "identifier"
+        const val POINTS: String = "points"
     }
 
     object Relationships {
-        const val USER: String = "user";
+        const val USER: String = "user"
     }
 
-    private var identifier: Short = 0;
-    private var points: Integer = 0;
-    private var user: User? = null;
+    private var identifier: Short = 0
+    private var points: Integer = 0
+    private var user: User? = null
 }
 ```
 

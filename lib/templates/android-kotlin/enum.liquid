@@ -21,7 +21,7 @@ enum class {{ attribute.enum_type }}(val jsonValue: String) {
 
     companion object {
         @JvmStatic
-        fun get(jsonValue: String): {{ attribute.enum_type }}? {
+        fun get(jsonValue: String?): {{ attribute.enum_type }}? {
             return {{ attribute.enum_type }}.values().firstOrNull { it.jsonValue == jsonValue }
         }
     }
