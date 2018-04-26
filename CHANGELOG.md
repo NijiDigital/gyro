@@ -16,6 +16,10 @@
 * Improve error and warning messages when targetting an xcdatamodeld.  
   [Steven Watremez](https://github.com/StevenWatremez)
   [#53](https://github.com/NijiDigital/gyro/pull/53)
+- Fix nullable enum methods in android-kotlin.  
+  [Xavier F. Gouchet](https://github.com/xgouchet)
+  [#68](https://github.com/NijiDigital/gyro/pull/68)
+
 
 ## 1.4.0
 
