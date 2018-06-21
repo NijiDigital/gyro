@@ -35,7 +35,7 @@ package com.gyro.model.realm
 
 import io.realm.RealmObject
 
-class FidelityCard: RealmObject() {
+open class FidelityCard: RealmObject() {
 
     object Attributes {
         const val IDENTIFIER: String = "identifier"
