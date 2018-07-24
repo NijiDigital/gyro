@@ -2,10 +2,10 @@
 	{%- if relationship.inverse == true %}
 	{% assign name_size = relationship.name | size | minus: 1 %}
 		{%- if relationship.type == "to_many" %}
-  let {{ relationship.name | truncate: name_size, '' }}s = LinkingObjects(fromType: {{ relationship.inverse_type }}.self, property: "{{ relationship.inverse_name }}")
+  {% if params.public %}public {% endif %}let {{ relationship.name | truncate: name_size, '' }}s = LinkingObjects(fromType: {{ relationship.inverse_type }}.self, property: "{{ relationship.inverse_name }}")
 		{%- else %}
-  let {{ relationship.name | truncate: name_size, '' }}s = LinkingObjects(fromType: {{ relationship.inverse_type }}.self, property: "{{ relationship.inverse_name }}")
-  var {{ relationship.name | truncate: name_size, '' }}: {{ relationship.inverse_type }}? { return {{ relationship.name | truncate: name_size, '' }}s.first }
+  {% if params.public %}public {% endif %}let {{ relationship.name | truncate: name_size, '' }}s = LinkingObjects(fromType: {{ relationship.inverse_type }}.self, property: "{{ relationship.inverse_name }}")
+  {% if params.public %}public {% endif %}var {{ relationship.name | truncate: name_size, '' }}: {{ relationship.inverse_type }}? { return {{ relationship.name | truncate: name_size, '' }}s.first }
 		{%- endif -%}
 	{%- endif -%}
 {%- endfor -%}

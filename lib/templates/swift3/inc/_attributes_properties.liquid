@@ -18,7 +18,7 @@
       {%- include 'inc/optional_attribute_property' -%}
     {%- else -%}
     {%- comment -%} ******* GENERATE DEFAULT ATTRIBUTE PROPERTY ******* {% endcomment %}
-  @objc dynamic var {{ attribute.name }}: {{ convert_type }} = {{ default_value }} {%- if attribute.name == entity.identity_attribute %} /* Primary Key */{% endif -%}
+  @objc {% if params.public %}public {% endif %}dynamic var {{ attribute.name }}: {{ convert_type }} = {{ default_value }} {%- if attribute.name == entity.identity_attribute %} /* Primary Key */{% endif -%}
     {%- endif -%}{%- endif -%}
   {%- endif -%}
 {%- endfor -%}

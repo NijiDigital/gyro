@@ -8,13 +8,15 @@
 
 If you want to use this template you need to work with `Realm`.
 
-# Characteristics
+# Customization
 
-In this template you have additional parameters to inject constants : 
+You can use the following parameters to inject custom values to this template (using `--param KEY:VALUE` on the command line): 
 
-- package (ex : **com.gyro.model.realm**)
-- use_wrappers (define if you want to use wrapper types (ex Boolean) instead of primitive types (ex boolean) when you attribute is **optional** inside xcdatamodel)
-- support_annotations (you can define annotation for properties ex : **@android.support.annotation.IntRange(from=0,to=255)** or **@android.support.annotation.Nullable**)
+| Parameter Key | Description |
+|---------------|-------------|
+| `package`     | The Android package in which the generated files will be generated (e.g. "`com.gyro.model.realm`") |
+| `use_wrappers` | Define this to `true` if you want to use wrapper types (e.g. `Boolean`) instead of primitive types (e.g. `boolean`) when your attribute is **optional** inside xcdatamodel |
+| `support_annotations` | Define this to `true` to generate `@android.support.annotation`s for properties (e.g. `@android.support.annotation.IntRange(from=0,to=255)`, `@android.support.annotation.Nullable`, etc) |
 
 # Usage
 

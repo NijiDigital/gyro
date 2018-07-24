@@ -1,6 +1,6 @@
 {%- if entity.has_indexed_attributes == true %}
 	// Specify properties to index
-	override static func indexedProperties() -> [String] {
+	override {% if params.public %}public {% endif %}static func indexedProperties() -> [String] {
 		return [
 			{%- capture enum_indexed_properties -%}
 				{%- for attribute in entity.attributes -%}

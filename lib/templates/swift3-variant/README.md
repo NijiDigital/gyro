@@ -10,9 +10,11 @@
 
 When you need to work with `ObjectMapper` and `Realm` together
 
-# Characteristics
+# Description
 
-In this template optional Realm objects (Attributes - RealmOptional - or Relationships - List<> -) are var properties :
+In this template optional Realm objects (Attributes - RealmOptional - or Relationships - List<> -) are var properties.
+
+This is not recommanded by Realm, and not conform to the Realm documentation (and can lead to bad behaviors with Realm if you happen to affect a new `List` or `RealmOptional` instance to those properties) but sadly this is required to work with the deprecated `ObjectMapper` template.
 
 ```
 // Attribute generation
@@ -31,8 +33,6 @@ In this template optional Realm objects (Attributes - RealmOptional - or Relatio
   {%- endif %}
 {%- endif %}
 ```
-
-This is not recommanded by Realm, and not conform to the Realm documentation (and can lead to bad behaviors with Realm if you happen to affect a new `List` or `RealmOptional` instance to those properties) but sadly this is required to work with the deprecated `ObjectMapper` template.
 
 # Generated Code
 
