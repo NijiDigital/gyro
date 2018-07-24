@@ -16,12 +16,15 @@
 * Improve error and warning messages when targetting an xcdatamodeld.  
   [Steven Watremez](https://github.com/StevenWatremez)
   [#53](https://github.com/NijiDigital/gyro/pull/53)
-- Fix nullable enum methods in android-kotlin.  
+* Fix nullable enum methods in android-kotlin.  
   [Xavier F. Gouchet](https://github.com/xgouchet)
   [#68](https://github.com/NijiDigital/gyro/pull/68)
-- Add a `--param public:true` param on `swift3`/`swift4` template to make generated code `public` instead of `internal`.  
+* Add a `--param public:true` param on `swift3`/`swift4` template to make generated code `public` instead of `internal`.  
   [Olivier Halligon](https://github.com/AliSoftware)
   [#70](https://github.com/NijiDigital/gyro/pull/70)
+* Renamed template `decodable` to `anviking-decodable` to avoid confusion with Swift 4's Codable (for which we don't have a template… yet).  
+  [Olivier Halligon](https://github.com/AliSoftware)
+  [#71](https://github.com/NijiDigital/gyro/pull/71)
 
 
 ## 1.4.0

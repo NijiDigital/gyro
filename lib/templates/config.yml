@@ -6,11 +6,20 @@ alias:
   #   who used `-t android` in previous versions of `gyro` can still continue
   #   to do so and that this new update of gyro doesn't break their setup.
   android: android-java
+  #   The template named 'anviking-decodable' was originally just named 'decodable'
+  #   as it was made to generate JSON parsing code using the Anviking/Decodable pod.
+  #
+  #   But now that Swift 4 has protocol Decodable, this template name is confusing,
+  #   so we decided to rename it anviking-decodable and deprecate the old name,
+  #   so that when we have time to create a template for Swift 4's Codable there
+  #   won't be any risk of confusion.
+  decodable: anviking-decodable
   #   It happens that the `swift3` template is also compatible with Swift 4 without any change.
   #   So we can use the same template for both Swift 3 and Swift 4
   swift4: swift3
 deprecated:
   - object-mapper
   - swift3-variant
-  - android
+  - android   # renamed android-java
+  - decodable # renamed anviking-decodable
   
