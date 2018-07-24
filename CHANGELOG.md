@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## master
+## 1.5.0
 
 * Migrate CircleCi from 1.0 to 2.0.  
   [Steven Watremez](https://github.com/StevenWatremez)
