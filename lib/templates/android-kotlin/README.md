@@ -8,11 +8,13 @@
 
 If you want to use this template you need to work with `Realm`.
 
-# Characteristics
+# Customization
 
-In this template you have additional parameters to inject constants : 
+You can use the following parameters to inject custom values to this template (using `--param KEY:VALUE` on the command line): 
 
-- package (ex : **com.gyro.model.realm**)
+| Parameter Key | Description |
+|---------------|-------------|
+| `package`     | The Android package in which the generated files will be generated (e.g. "`com.gyro.model.realm`") |
 
 # Usage
 

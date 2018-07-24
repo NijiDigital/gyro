@@ -1,5 +1,5 @@
 {%- if entity.relationships.size > 0 and entity.has_only_inverse == false %}
-  enum Relationships: String {
+  {% if params.public %}public {% endif %}enum Relationships: String {
     {%- for relationship in entity.relationships %}
       {%- capture relationship_name -%}
         {%- if relationship.inverse == true -%}
@@ -11,9 +11,6 @@
         {%- endif -%}
 			{%- endcapture -%}
       {%- assign relationship_name = relationship_name %}
-        {%- if relationship.comment.size > 0 %}
-    /// {{ relationship.comment }}
-        {%- endif %}
     case {{ relationship_name | uncapitalize }} = "{{ relationship_name | escape_quotes }}"
     {%- endfor %}
   }

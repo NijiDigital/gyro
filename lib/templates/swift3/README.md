@@ -11,9 +11,17 @@
 This template is the reference for swift 3 with Realm generation code. This template is compatible with swift 4.
 You can use it when you need to work with `Realm`
 
-# Characteristics
+# Customization
 
-In this template optional Realm objects (Attributes - RealmOptional - or Relationships - List<> -) are `let` properties (conform to the Realm documentation) :
+You can use the following parameters to inject custom values to this template (using `--param KEY:VALUE` on the command line): 
+
+| Parameter Key | Description |
+|---------------|-------------|
+| `public`       | If set to true, every generated model and properties will be declared `public`. Otherwise it will not be annotated with access scope keyword, so will default to `internal` |
+
+# Description
+
+In this template, optional Realm objects (Attributes - RealmOptional - or Relationships - List<> -) are `let` properties (which is conform to the Realm documentation). This is the template to use when you use RealmSwift.
 
 ```
 // Attribute generation

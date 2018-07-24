@@ -1,13 +1,13 @@
   {%- if attribute.optional == true %}
 
-  @objc dynamic var {{ attribute.name }}: String?
+  @objc {% if params.public %}public {% endif %}dynamic var {{ attribute.name }}: String?
   {%- else %}
 
-  @objc dynamic var {{ attribute.name }}: String = ""
+  @objc {% if params.public %}public {% endif %}dynamic var {{ attribute.name }}: String = ""
   {%- endif %}
   {%- assign enum_type = attribute.enum_type %}
   {%- assign enum_name = attribute.name %}
-  var {{ enum_name }}Enum: {{ enum_type | delete_objc_prefix }}? {
+  {% if params.public %}public {% endif %}var {{ enum_name }}Enum: {{ enum_type | delete_objc_prefix }}? {
     get {
       {%- if attribute.optional == true %}
       guard let {{ attribute.name }} = {{ attribute.name }},

@@ -1,6 +1,6 @@
 {%- if entity.has_ignored == true %}
   // Specify properties to ignore (Realm won't persist these)
-  override static func ignoredProperties() -> [String] {
+  override {% if params.public %}public {% endif %}static func ignoredProperties() -> [String] {
     return [
     {%- capture enum_ignored_properties -%}
       {%- for attribute in entity.attributes -%}

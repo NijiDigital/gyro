@@ -3,10 +3,7 @@
 import RealmSwift
 import Foundation
 
-{% if entity.comment.size > 0 -%}
-/// {{ entity.comment }}
-{% endif -%}
-final class {{ entity.name }}: Object {
+{% if params.public %}public {% endif %}final class {{ entity.name }}: Object {
     {%- include 'inc/attributes_enum' -%}
     {% include 'inc/relationships_enum' -%}
     {% include 'inc/attributes_properties' %}
