@@ -14,7 +14,7 @@
 
 SWIFT3_TEMPLATE_DIR = 'lib/templates/swift3'.freeze
 OBJMAPPER_TEMPLATE_DIR = 'lib/templates/object-mapper'.freeze
-DECODABLE_TEMPLATE_DIR = 'lib/templates/decodable'.freeze
+DECODABLE_TEMPLATE_DIR = 'lib/templates/anviking-decodable'.freeze
 
 module Gyro
   describe 'Liquid' do
