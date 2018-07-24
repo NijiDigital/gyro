@@ -10,7 +10,7 @@
   [Steven Watremez](https://github.com/StevenWatremez)
   [#35](https://github.com/NijiDigital/gyro/pull/35)
 * Fix entity comments for swift templates. Improve comments on attributes. Add comments on relationships.  
-  _Now you can use comment  info key on entity, attribute and relationship_.  
+  _Now you can use comment info key on entity, attribute and relationship_.  
   [Steven Watremez](https://github.com/StevenWatremez)
   [#56](https://github.com/NijiDigital/gyro/pull/56)
 * Improve error and warning messages when targetting an xcdatamodeld.  
@@ -19,6 +19,9 @@
 - Fix nullable enum methods in android-kotlin.  
   [Xavier F. Gouchet](https://github.com/xgouchet)
   [#68](https://github.com/NijiDigital/gyro/pull/68)
+- Add a `--param public:true` param on `swift3`/`swift4` template to make generated code `public` instead of `internal`.  
+  [Olivier Halligon](https://github.com/AliSoftware)
+  [#70](https://github.com/NijiDigital/gyro/pull/70)
 
 
 ## 1.4.0
