@@ -55,7 +55,7 @@ import RealmSwift
       {%- include 'inc/type_converter' -%}
       {%- endcapture %}
 
-      {%- if attribute.optional == true %}
+      {%- if attribute.optional == true and attribute.enum_type.size == 0 %}
         {%- case attribute.type -%}
         {%- when "integer_16" or "integer_32" or "integer_64" or "float" or "double" or "boolean" %}
     self.{{ attribute.name }}.value = try container.decodeIfPresent({{convert_type}}.self, forKey: .{{ attribute.name }})
@@ -63,7 +63,11 @@ import RealmSwift
     self.{{ attribute.name }} = try container.decodeIfPresent({{convert_type}}.self, forKey: .{{ attribute.name }})
         {%- endcase -%}
       {%- else %}
+      {%- if attribute.optional == true %}
+    self.{{ attribute.name }} = try container.decodeIfPresent(String.self, forKey: .{{ attribute.name }})
+    {%- else %}
     self.{{ attribute.name }} = try container.decode({{convert_type}}.self, forKey: .{{ attribute.name }})
+{%- endif %}
       {%- endif %}
     {%- endfor %}
 
@@ -73,13 +77,17 @@ import RealmSwift
     {%- endif -%}
 
     {%- for relationship in entity.relationships -%}
-      {%- if relationship.inverse == false -%}
+      {%- if relationship.inverse == false and relationship.realm_ignored == false -%}
         {% assign relationKey = relationship.name -%}
         {%- if relationship.type == "to_many" %}
     let new{{ relationKey }} = try container.decodeIfPresent([{{ relationship.inverse_type }}].self, forKey: .{{ relationKey }}) ?? [{{ relationship.inverse_type }}]()
     {{ relationKey }}.append(objectsIn: new{{ relationKey }})
         {%- else %}
+        {%- if attribute.optional == true %}
     self.{{ relationKey }} = try container.decode({{ relationship.inverse_type }}.self, forKey: .{{ relationKey }})
+        {%- else %}
+    self.{{ relationKey }} = try container.decodeIfPresent({{ relationship.inverse_type }}.self, forKey: .{{ relationKey }})
+        {%- endif -%}
         {%- endif -%}
       {%- endif -%}
     {%- endfor %}
