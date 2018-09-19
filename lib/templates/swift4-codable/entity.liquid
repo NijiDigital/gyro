@@ -77,16 +77,20 @@ import RealmSwift
     {%- endif -%}
 
     {%- for relationship in entity.relationships -%}
-      {%- if relationship.inverse == false and relationship.realm_ignored == false -%}
+      {%- if relationship.inverse == false -%}
+        {% assign relationType = relationship.inverse_type -%}
+        {%- if relationship.destination.size > 0 %}
+          {% assign relationType = relationship.destination -%}
+        {%- endif -%}
         {% assign relationKey = relationship.name -%}
         {%- if relationship.type == "to_many" %}
-    let new{{ relationKey }} = try container.decodeIfPresent([{{ relationship.inverse_type }}].self, forKey: .{{ relationKey }}) ?? [{{ relationship.inverse_type }}]()
+    let new{{ relationKey }} = try container.decodeIfPresent([{{ relationType }}].self, forKey: .{{ relationKey }}) ?? [{{ relationType }}]()
     {{ relationKey }}.append(objectsIn: new{{ relationKey }})
         {%- else %}
         {%- if attribute.optional == true %}
-    self.{{ relationKey }} = try container.decode({{ relationship.inverse_type }}.self, forKey: .{{ relationKey }})
+    self.{{ relationKey }} = try container.decode({{ relationType }}.self, forKey: .{{ relationKey }})
         {%- else %}
-    self.{{ relationKey }} = try container.decodeIfPresent({{ relationship.inverse_type }}.self, forKey: .{{ relationKey }})
+    self.{{ relationKey }} = try container.decodeIfPresent({{ relationType }}.self, forKey: .{{ relationKey }})
         {%- endif -%}
         {%- endif -%}
       {%- endif -%}
