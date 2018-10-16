@@ -14,7 +14,7 @@ The swift part is based on the swift 3 template.
 
 The swift4-codable implementation is in progress.
 
-The codable part only support the Decodable part, not the Encodable part.
+swift4-codable only support the Decodable part, not the Encodable part.
 
 The init(from decoder: Decoder) function is implemented because of Realm's Object support. For some reason, a List / RealmOptional extension does not work...
 
