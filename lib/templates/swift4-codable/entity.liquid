@@ -4,6 +4,7 @@ import Foundation
 import RealmSwift
 
 {% if params.public %}public {% endif %}final class {{ entity.name }}: Object, Decodable {
+  {%- include 'inc/attributes_enum' -%}
   {% include 'inc/attributes_properties' %}
   {% include 'inc/primary_key' -%}
   {% include 'inc/indexed_properties' -%}
