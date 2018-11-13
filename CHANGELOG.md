@@ -1,4 +1,6 @@
 # CHANGELOG
+## 1.5.1
+* Start Apple's Codable support
 
 ## 1.5.0
 

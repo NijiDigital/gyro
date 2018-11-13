@@ -14,6 +14,7 @@
 
 SWIFT3_TEMPLATE_DIR = 'lib/templates/swift3'.freeze
 OBJMAPPER_TEMPLATE_DIR = 'lib/templates/object-mapper'.freeze
+CODABLE_TEMPLATE_DIR = 'lib/templates/swift4-codable'.freeze
 DECODABLE_TEMPLATE_DIR = 'lib/templates/anviking-decodable'.freeze
 
 module Gyro
@@ -36,6 +37,18 @@ module Gyro
           end
         end
       end
+
+it 'transformer codable' do
+    xcdatamodel_dir = fixture('xcdatamodel', 'transformers-codable.xcdatamodel')
+    xcdatamodel = Gyro::Parser::XCDataModel::XCDataModel.new(xcdatamodel_dir)
+    Dir.mktmpdir(TMP_DIR_NAME) do |tmp_dir|
+        template_dir = Pathname.new(CODABLE_TEMPLATE_DIR)
+        gen = Generator::Liquid.new(template_dir, tmp_dir, {})
+        gen.generate(xcdatamodel)
+        fixtures_files_dir = fixture('swift', 'transformers', 'codable')
+        compare_dirs(tmp_dir, fixtures_files_dir)
+    end
+end
 
       it 'transformer object mapper' do
         xcdatamodel_dir = fixture('xcdatamodel', 'transformers.xcdatamodel')
