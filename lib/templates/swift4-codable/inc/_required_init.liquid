@@ -7,7 +7,7 @@
         {%- include 'inc/type_converter' -%}
       {%- endcapture -%}
       {%- assign initParams = initParams | append:  attribute.name | append: ': ' | append: attribute.name | append: ', ' -%}
-      let {{ attribute.name }} = try container.decode({{ convert_type }}{%- if attribute.optional == true -%}?{%- endif -%}.self, forKey: .{{ attribute.name }}){% if attribute.name == entity.identity_attribute %} /* Primary Key */{% endif %}
+      let {{ attribute.name }} = try{%- if attribute.optional == true -%}?{%- endif %} container.decode({{ convert_type }}{%- if attribute.optional == true -%}?{%- endif -%}.self, forKey: .{{ attribute.name }}){% if attribute.name == entity.identity_attribute %} /* Primary Key */{% endif %}
     {% endfor %}
 
     {%- for relationship in entity.relationships -%}
@@ -16,7 +16,7 @@
       {%- if relationship.type == "to_many" -%}
       let {{ relationship.name }} = try container.decode([{{ relationship.inverse_type }}].self, forKey: .{{ relationship.name }})
       {%- else -%}
-      let {{ relationship.name }}= try container.decode({{ relationship.inverse_type }}{%- if relationship.optional == true -%}?{%- endif -%}.self, forKey: .{{ relationship.name }})
+      let {{ relationship.name }} = try{%- if relationship.optional == true -%}?{%- endif %} container.decode({{ relationship.inverse_type }}{%- if relationship.optional == true -%}?{%- endif -%}.self, forKey: .{{ relationship.name }})
       {%- endif -%}
     {%- endif %}
     {% endfor %}
