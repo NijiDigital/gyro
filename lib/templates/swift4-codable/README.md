@@ -13,7 +13,7 @@ You can use it when you need to work with `Realm` and `Codable`
 
 # Customization
 
-You can use the following parameters to inject custom values to this template (using `--param KEY:VALUE` on the command line): 
+You can use the following parameters to inject custom values to this template (using `--param KEY:VALUE` on the command line):
 
 | Parameter Key | Description |
 |---------------|-------------|
@@ -22,24 +22,6 @@ You can use the following parameters to inject custom values to this template (u
 # Description
 
 In this template, optional Realm objects (Attributes - RealmOptional - or Relationships - List<> -) are `let` properties (which is conform to the Realm documentation). This is the template to use when you use RealmSwift.
-
-```
-// Attribute generation
-{%- if attribute.is_number == true or attribute.is_bool == true %}
-  let {{ attribute.name }} = RealmOptional<{{ convert_type }}>()
-{%- else %}
-  @objc dynamic var {{ attribute.name }}: {{ convert_type }}?
-{%- endif -%}
-
-// Relationship generation
-{%- if relationship.inverse == false %}
-  {%- if relationship.type == "to_many" %}
-  let {{ relationship.name }} = List<{{ relationship.inverse_type }}>()
-  {%- else %}
-  @objc dynamic var {{ relationship.name }}: {{ relationship.inverse_type }}?
-  {%- endif %}
-{%- endif %}
-```
 
 # Generated Code
 
@@ -51,9 +33,9 @@ In this template, optional Realm objects (Attributes - RealmOptional - or Relati
 import RealmSwift
 import Foundation
 
-final class Product: Object {
+final class Product: Object, Decodable {
 
-  enum Attributes: String {
+  enum Keys: String {
     case brand = "brand"
     case name = "name"
     case price = "price"
@@ -63,7 +45,24 @@ final class Product: Object {
   @objc dynamic var brand: String?
   @objc dynamic var name: String = ""
   let price = RealmOptional<Int32>()
-
   let users = List<Users>()
+
+  convenience required init(from decoder: Decoder) throws {
+   let container = try decoder.container(keyedBy: Keys.self)
+   let brand = try? container.decode(String?.self, forKey: .id)
+   let name = try container.decode(String.self, forKey: .body)
+   let price = try? container.decode(Int32?.self, forKey: .user_id)
+   let users = try container.decode([Users].self, forKey: .posts)
+   self.init(brand: brand, name: name, price: price, users: users)
+ }
+
+ convenience init(brand: String?, name: String, price: Int32?, users: [Users]) {
+   self.init()
+   self.brand = brand
+   self.name = name
+   self.price.value = price
+   self.postDescription = postDescription
+   self.users.append(objectsIn: users)
+ }
 }
 ```
