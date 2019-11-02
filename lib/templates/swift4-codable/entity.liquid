@@ -4,10 +4,11 @@ import RealmSwift
 import Foundation
 
 {% if params.public %}public {% endif %}final class {{ entity.name }}: Object, Decodable {
-    {%- include 'inc/attributes_enum' -%}
-    {% include 'inc/relationships_enum' -%}
-    {% include 'inc/attributes_properties' %}
-    {% include 'inc/primary_key' -%}
-    {% include 'inc/indexed_properties' -%}
-    {% include 'inc/ignored_properties' %}
+  {% include 'inc/keys_enum' %}
+  {% include 'inc/attributes_properties' %}
+  {% include 'inc/primary_key' %}
+  {% include 'inc/indexed_properties' %}
+  {% include 'inc/ignored_properties' %}
+  {% include 'inc/required_init' %}
+  {% include 'inc/init' %}
 }

@@ -1,0 +1,36 @@
+private enum Keys: String, CodingKey {
+{%- if entity.attributes.size > 0 %}
+  {% for attribute in entity.attributes %}
+    {%- assign attributeKey = attribute.name -%}
+    {%- if attribute.json_key_path.size > 0 -%}
+      {%- assign attributeKey = attribute.json_key_path -%}
+    {%- endif -%}
+    {%- if attribute.realm_ignored or attribute.realm_read_only.size == 0 -%}
+      {%- if attribute.comment.size > 0 -%}
+        /** {{ attribute.comment }} **/
+      {%- endif -%}
+      case {{ attribute.name }} = "{{ attributeKey | escape_quotes }}"{%- if attributeKey == entity.identity_attribute -%} /* Primary Key */{%- endif -%}
+    {%- endif %}
+  {% endfor %}
+{%- endif -%}
+
+{% if entity.relationships.size > 0 and entity.has_only_inverse == false -%}
+  {%- for relationship in entity.relationships -%}
+    {%- capture relationship_name -%}
+      {%- if relationship.inverse == true -%}
+        {%- assign name_size = relationship.name | size | minus: 1 -%}
+        {{ relationship.name | truncate: name_size, '' }}
+        {%- if relationship.type == "to_many" -%}s{%- endif -%}
+      {%- else  -%}
+        {{ relationship.name }}
+      {%- endif -%}
+    {%- endcapture -%}
+    {%- assign relationship_name = relationship_name -%}
+    {%- assign relationship_value = relationship_name -%}
+    {%- if relationship.json_key_path.size > 0 -%}
+      {%- assign relationship_value = relationship.json_key_path -%}
+    {%- endif -%}
+      case {{ relationship_name | uncapitalize }} = "{{ relationship_value | escape_quotes }}"
+  {%- endfor -%}
+{%- endif %}
+  }

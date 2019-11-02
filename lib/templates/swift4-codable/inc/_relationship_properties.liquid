@@ -1,7 +1,7 @@
 {%- for relationship in entity.relationships -%}
 {%- if relationship.inverse == false %}
   {%- if relationship.type == "to_many" %}
-  {% if params.public %}public {% endif %}var {{ relationship.name }} = List<{{ relationship.inverse_type }}>()
+  {% if params.public %}public {% endif %}let {{ relationship.name }} = List<{{ relationship.inverse_type }}>()
   {%- else %}
   @objc {% if params.public %}public {% endif %}dynamic var {{ relationship.name }}: {{ relationship.inverse_type }}?
   {%- endif %}
