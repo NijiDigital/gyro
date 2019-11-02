@@ -1,0 +1,40 @@
+{%- if entity.attributes.size > 0 %}
+  {%- assign initParams = "" -%}
+  {%- for attribute in entity.attributes -%}
+    {%- capture convert_type -%}
+      {%- include 'inc/type_converter' -%}
+    {%- endcapture -%}
+    {% capture newParam %}{{ attribute.name }}: {{ convert_type }}{%- if attribute.optional == true -%}?{%- endif -%}, {% endcapture %}
+    {%- assign initParams = initParams | append: newParam -%}
+  {%- endfor -%}
+
+  {%- for relationship in entity.relationships -%}
+  {%- if relationship.inverse == false -%}
+    {%- if relationship.type == "to_many" -%}
+      {% capture newParam %}{{ relationship.name }}: [{{ relationship.inverse_type }}], {% endcapture %}
+      {%- assign initParams = initParams | append: newParam -%}
+    {%- else -%}
+      {% capture newParam %}{{ relationship.name }}: {{ relationship.inverse_type }}{%- if relationship.optional == true -%}?{%- endif -%}, {% endcapture %}
+      {%- assign initParams = initParams | append: newParam -%}
+    {%- endif -%}
+  {%- endif %}
+  {% endfor %}
+
+  {%- assign size = initParams | size | minus: 2 -%}
+  convenience init({{ initParams | slice: 0, size }}) {
+    self.init()
+    {% for attribute in entity.attributes -%}
+      self.{{ attribute.name }}{%- if attribute.optional == true and attribute.is_number == true or attribute.is_bool == true %}.value{%- endif %} = {{ attribute.name }}
+    {% endfor -%}
+
+    {%- for relationship in entity.relationships -%}
+    {%- if relationship.inverse == false -%}
+      {%- if relationship.type == "to_many" -%}
+        self.{{ relationship.name }}.append(objectsIn: {{ relationship.name }})
+      {%- else -%}
+        self.{{ relationship.name }}{%- if relationship.optional == true and relationship.is_number == true or relationship.is_bool == true %}.value{%- endif %} = {{ relationship.name }}
+      {%- endif -%}
+    {%- endif %}
+    {% endfor %}
+  }
+{%- endif -%}

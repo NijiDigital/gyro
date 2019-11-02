@@ -70,6 +70,7 @@ If you want additional information about a specific template, you can use `gyro 
 - [android-kotlin](lib/templates/android-kotlin/README.md) (Kotlin)
 - [swift3](lib/templates/swift3/README.md) (Swift 3 & 4)
 - _Note: `swift4` is an alias name for the [swift3](lib/templates/swift3/README.md) template_
+- [swift4-codable](lib/templates/swift3/README.md) (Swift 4 Apple's Codable)
 - [decodable](lib/templates/decodable/README.md) (for Anviking's `Decodable` pod)
 - [swift3-variant](lib/templates/swift3-variant/README.md) _(Deprecated, only for use with the `object-mapper` template)_
 - [object-mapper](lib/templates/object-mapper/README.md) _(Deprecated)_

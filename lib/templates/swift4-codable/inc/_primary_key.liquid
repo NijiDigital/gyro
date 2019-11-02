@@ -1,0 +1,5 @@
+{%- if entity.has_primary_key == true %}
+  override {% if params.public %}public {% endif %}static func primaryKey() -> String? {
+    return "{{ entity.identity_attribute }}"
+  }
+{% endif -%}
